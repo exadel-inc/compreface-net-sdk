@@ -11,6 +11,8 @@ using Exadel.Compreface.Configuration;
 using Flurl;
 using Flurl.Http;
 using Exadel.Compreface.DTOs.HelperDTOs;
+using Exadel.Compreface.Exceptions;
+using System.Reflection;
 
 namespace Exadel.Compreface.Services;
 
@@ -24,19 +26,27 @@ public class ExampleSubjectService
     }
     public async Task<AddExampleSubjectResponse> AddExampleSubject(AddExampleSubjectRequest request)
     {
-        var requestUrl = $"{_configuration.BaseUrl}recognition/faces";
+        try
+        {
+            var requestUrl = $"{_configuration.BaseUrl}recognition/faces";
 
-        var response = await requestUrl
-            .SetQueryParams(new
-            {
-                subject = request.Subject,
-                det_prob_threshold = request.DetProbThreShold,
-            })
-            .PostMultipartAsync(mp =>
-                mp.AddFile("file", fileName: request.FileName, path: request.FilePath))
-            .ReceiveJson<AddExampleSubjectResponse>();
+            var response = await requestUrl
+                .SetQueryParams(new
+                {
+                    subject = request.Subject,
+                    det_prob_threshold = request.DetProbThreShold,
+                })
+                .PostMultipartAsync(mp =>
+                    mp.AddFile("file", fileName: request.FileName, path: request.FilePath))
+                .ReceiveJson<AddExampleSubjectResponse>();
 
-        return response;
+            return response;
+        }
+
+        catch(Exception ex)
+        {
+            throw new ServiceException("AddExampleSubject", ex.Message);
+        }
     }
 
     public async Task<AddBase64ExampleSubjectResponse> AddBase64ExampleSubjectAsync(AddBase64ExampleSubjectRequest request)
