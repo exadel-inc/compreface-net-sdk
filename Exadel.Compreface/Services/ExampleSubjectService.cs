@@ -12,7 +12,6 @@ using Flurl;
 using Flurl.Http;
 using Exadel.Compreface.DTOs.HelperDTOs;
 using Exadel.Compreface.Exceptions;
-using System.Reflection;
 
 namespace Exadel.Compreface.Services;
 
