@@ -1,4 +1,4 @@
-﻿namespace Exadel.Compreface.DTOs.HelperDTOs.BaseFaceRequest;
+﻿namespace Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
 
 public class BaseFaceRequest
 {

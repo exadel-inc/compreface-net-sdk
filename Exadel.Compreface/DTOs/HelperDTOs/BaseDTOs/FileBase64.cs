@@ -1,4 +1,4 @@
-﻿namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject
+﻿namespace Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs
 {
     public class FileBase
     {

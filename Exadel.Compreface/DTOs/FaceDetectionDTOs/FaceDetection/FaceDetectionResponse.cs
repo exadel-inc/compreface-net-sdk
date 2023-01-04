@@ -1,10 +1,5 @@
 ﻿using Exadel.Compreface.DTOs.HelperDTOs;
-using Exadel.Compreface.DTOs.HelperDTOs.BaseRequests;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
 
 namespace Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection
 {

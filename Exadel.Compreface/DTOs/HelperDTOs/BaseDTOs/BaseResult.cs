@@ -1,6 +1,4 @@
-﻿using Exadel.Compreface.DTOs.HelperDTOs;
-
-namespace Exadel.Compreface.DTOs.HelperDTOs.BaseRequests;
+﻿namespace Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
 
 public class BaseResult
 {

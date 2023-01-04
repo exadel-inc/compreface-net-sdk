@@ -1,5 +1,5 @@
 ﻿using Exadel.Compreface.DTOs.HelperDTOs;
-using Exadel.Compreface.DTOs.HelperDTOs.BaseRequests;
+using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
 
 namespace Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 

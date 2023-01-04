@@ -1,4 +1,4 @@
-﻿using Exadel.Compreface.DTOs.HelperDTOs.BaseFaceRequest;
+﻿using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
 
 namespace Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection
 {
