@@ -23,11 +23,6 @@ public class ComprefaceClient
 
     public ComprefaceClient(ComprefaceConfiguration configuration)
     {
-        FlurlHttp.GlobalSettings.BeforeCall += call =>
-        {
-            call.Request.Headers.Add("x-api-key", configuration.ApiKey);
-        };
-
         FaceDetectionService = new FaceDetectionService(configuration);
         ExampleSubjectService = new ExampleSubjectService(configuration);
         SubjectService = new SubjectService(configuration);

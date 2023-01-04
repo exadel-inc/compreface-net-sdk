@@ -1,4 +1,4 @@
-﻿using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
+﻿using Exadel.Compreface.DTOs.HelperDTOs;
 
 namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject
 {
@@ -8,6 +8,6 @@ namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject
 
         public decimal? DetProbThreShold { get; set; }
 
-        public FileBase File { get; set; }
+        public FileBase64 File { get; set; }
     }
 }
