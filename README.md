@@ -294,3 +294,26 @@ var imageBytes = File.ReadAllBytes("file path here");
             
         }
 ```
+
+**Face Setection Service**
+
+*Face Detection Service*
+```
+        await comprefaceClientV2.FaceDetectionService.FaceDetectionAsync(
+            new DTOs.FaceDetectionDTOs.FaceDetection.FaceDetectionRequest()
+            {
+                DetProbThreshold = 0.91m,
+                FacePlugins = new List<string>()
+            {
+                "age",
+                "gender",
+                "mask",
+                "calculator",
+            },
+                Status = true,
+                FileName = file name with format
+                FilePath = full path to the file,
+                Limit = 0
+            }
+            );
+```
