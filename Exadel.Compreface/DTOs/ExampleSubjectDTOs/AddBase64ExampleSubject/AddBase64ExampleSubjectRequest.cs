@@ -1,6 +1,4 @@
-﻿using Exadel.Compreface.DTOs.HelperDTOs;
-
-namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject
+﻿namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject
 {
     public class AddBase64ExampleSubjectRequest
     {
