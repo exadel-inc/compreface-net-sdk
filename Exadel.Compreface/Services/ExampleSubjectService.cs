@@ -22,7 +22,8 @@ public class ExampleSubjectService
     {
         _configuration = configuration;
     }
-    public async Task<AddExampleSubjectResponse> AddExampleSubject(AddExampleSubjectRequest request)
+
+    public async Task<AddExampleSubjectResponse> AddExampleSubjectAsync(AddExampleSubjectRequest request)
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/faces";
 
@@ -55,7 +56,7 @@ public class ExampleSubjectService
         return response;
     }
 
-    public async Task<ListAllExampleSubjectResponse> GetAllExampleSubjects(ListAllExampleSubjectRequest request)
+    public async Task<ListAllExampleSubjectResponse> GetAllExampleSubjectsAsync(ListAllExampleSubjectRequest request)
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/faces";
 
