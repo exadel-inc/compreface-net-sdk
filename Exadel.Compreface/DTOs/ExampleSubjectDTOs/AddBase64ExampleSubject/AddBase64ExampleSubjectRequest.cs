@@ -8,6 +8,6 @@ namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject
 
         public decimal? DetProbThreShold { get; set; }
 
-        public FileBase64 File { get; set; }
+        public string File { get; set; }
     }
 }

@@ -11,6 +11,7 @@ using Exadel.Compreface.Configuration;
 using Flurl;
 using Flurl.Http;
 using Exadel.Compreface.DTOs.HelperDTOs;
+using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 
 namespace Exadel.Compreface.Services;
 
@@ -50,7 +51,7 @@ public class ExampleSubjectService
                 subject = request.Subject,
                 det_prob_threshold = request.DetProbThreShold,
             })
-            .PostJsonAsync(request.File)
+            .PostJsonAsync(new { file = request.File})
             .ReceiveJson<AddBase64ExampleSubjectResponse>();
 
         return response;

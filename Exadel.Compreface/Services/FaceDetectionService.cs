@@ -46,7 +46,7 @@ namespace Exadel.Compreface.Services
                     face_plugins = string.Join(",", faceDetectionRequest.FacePlugins),
                     status = faceDetectionRequest.Status,
                 })
-                .PostJsonAsync(faceDetectionRequest.File)
+                .PostJsonAsync(new { file = faceDetectionRequest.File })
                 .ReceiveJson<FaceDetectionBase64Response>();
 
             return response;
