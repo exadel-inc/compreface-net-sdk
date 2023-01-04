@@ -1,6 +1,6 @@
 ﻿using Exadel.Compreface.DTOs.HelperDTOs;
 
-namespace Exadel.Compreface.DTOs.ExampleSubject.ListAllExampleSubject;
+namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
 
 public class ListAllExampleSubjectResponse
 {

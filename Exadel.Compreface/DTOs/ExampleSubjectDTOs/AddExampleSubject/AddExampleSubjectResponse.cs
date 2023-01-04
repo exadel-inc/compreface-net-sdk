@@ -1,4 +1,4 @@
-﻿namespace Exadel.Compreface.DTOs.ExampleSubject.AddExampleSubject;
+﻿namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 
 public class AddExampleSubjectResponse
 {
