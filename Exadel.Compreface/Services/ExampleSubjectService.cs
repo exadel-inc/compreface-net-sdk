@@ -25,9 +25,8 @@ public class ExampleSubjectService
                 subject = request.Subject,
                 det_prob_threshold = request.DetProbThreShold,
             })
-            .PostMultipartAsync(mp =>
-                mp.AddFile("file", fileName: request.FileName, path: request.FilePath))
-            .ReceiveJson<AddExampleSubjectResponse>();
+            .PostMultipartAsync<AddExampleSubjectResponse>(mp =>
+                mp.AddFile("file", fileName: request.FileName, path: request.FilePath));
 
         return response;
     }
