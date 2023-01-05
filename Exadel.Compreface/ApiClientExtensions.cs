@@ -182,8 +182,41 @@ public static class ApiClientExtensions
 
         return response;
     }
+
+    public static async Task<byte[]> GetBytesFromRemoteAsync(
+        this Url requestUrl,
+        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var response = await requestUrl
+                .GetBytesAsync(completionOption, cancellationToken);
+
+            return response;
+        }
+        catch (FlurlHttpTimeoutException exception)
+        {
+            throw await ThrowServiceTimeoutExceptionAsync(exception);
+        }
+        catch(FlurlHttpException exception)
+        {
+            throw await ThrowServiceExceptionAsync(exception);
+        }
+    }
+
+    public static async Task<byte[]> GetBytesFromRemoteAsync(
+        this string requestUrl,
+        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
+        CancellationToken cancellationToken = default)
+    {
+        var response = await new Flurl.Url(requestUrl)
+            .GetBytesFromRemoteAsync(completionOption, cancellationToken);
+
+        return response;
+    }
     
-    private static async Task<ServiceTimeoutException> ThrowServiceExceptionAsync(FlurlHttpTimeoutException exception)
+    private static async Task<ServiceTimeoutException> ThrowServiceTimeoutExceptionAsync(FlurlHttpTimeoutException exception)
     {
         var exceptionMessage = await exception.GetResponseStringAsync();
         return new ServiceTimeoutException(exceptionMessage);

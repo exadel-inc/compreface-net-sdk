@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Json;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
+﻿using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteAllSubjectExamples;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteImageById;
@@ -9,7 +8,6 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageBySubjectId;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
 using Exadel.Compreface.Configuration;
 using Flurl;
-using Flurl.Http;
 using Exadel.Compreface.DTOs.HelperDTOs;
 
 namespace Exadel.Compreface.Services;
@@ -48,8 +46,7 @@ public class ExampleSubjectService
                 subject = request.Subject,
                 det_prob_threshold = request.DetProbThreShold,
             })
-            .PostJsonAsync(request.File)
-            .ReceiveJson<AddBase64ExampleSubjectResponse>();
+            .PostJsonAsync<AddBase64ExampleSubjectResponse>(request.File);
 
         return response;
     }
@@ -76,9 +73,9 @@ public class ExampleSubjectService
 
         var response = await requestUrl.
             SetQueryParam("subject", request.Subject)
-            .DeleteAsync(HttpCompletionOption.ResponseContentRead);
+            .DeleteJsonAsync<DeleteAllExamplesResponse>();
 
-        return await response.ResponseMessage.Content.ReadFromJsonAsync<DeleteAllExamplesResponse>();
+        return response;
     }
 
     public async Task<DeleteImageByIdResponse> DeleteImageByIdAsync(DeleteImageByIdRequest request)
@@ -87,8 +84,7 @@ public class ExampleSubjectService
 
         var response = await requestUrl
             .AppendPathSegment(request.ImageId.ToString())
-            .DeleteAsync()
-            .ReceiveJson<DeleteImageByIdResponse>();
+            .DeleteJsonAsync<DeleteImageByIdResponse>();
 
         return response;
     }
@@ -99,8 +95,7 @@ public class ExampleSubjectService
 
         var response = await requestUrl
             .AppendPathSegment("delete")
-            .PostJsonAsync(deleteMultipleExamplesRequest.ImageIdList)
-            .ReceiveJson<List<Face>>();
+            .PostJsonAsync<List<Face>>(deleteMultipleExamplesRequest.ImageIdList);
 
         return new DeleteMultipleExamplesResponse() { Faces = response }; ;
 
@@ -112,7 +107,7 @@ public class ExampleSubjectService
 
         var response = await requestUrl
             .AppendPathSegments(downloadImageByIdRequest.RecognitionApiKey.ToString(), "/images/", downloadImageByIdRequest.ImageId.ToString())
-            .GetBytesAsync();
+            .GetBytesFromRemoteAsync();
 
         return response;
     }
@@ -123,7 +118,7 @@ public class ExampleSubjectService
 
         var response = await requestUrl
             .AppendPathSegments(downloadImageBySubjectIdRequest.ImageId.ToString(), "/img")
-            .GetBytesAsync();
+            .GetBytesFromRemoteAsync();
 
         return response;
     }
