@@ -6,6 +6,6 @@
 
         public decimal? DetProbThreShold { get; set; }
 
-        public FileBase File { get; set; }
+        public string File { get; set; }
     }
 }

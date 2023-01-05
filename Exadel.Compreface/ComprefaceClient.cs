@@ -13,6 +13,8 @@ public class ComprefaceClient
 
     public RecognitionService RecognitionService { get; private set; }
 
+    public FaceDetectionService FaceDetectionService { get; private set; }
+
     public ComprefaceClient(string apiKey, string host) : this(new ComprefaceConfiguration(apiKey, host))
     { }
 
@@ -21,6 +23,7 @@ public class ComprefaceClient
 
     public ComprefaceClient(ComprefaceConfiguration configuration)
     {
+        FaceDetectionService = new FaceDetectionService(configuration);
         InitializeApiKeyInRequestHeader(configuration.ApiKey);
         ExampleSubjectService = new ExampleSubjectService(configuration);
         SubjectService = new SubjectService(configuration);

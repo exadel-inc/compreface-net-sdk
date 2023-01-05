@@ -1,6 +1,6 @@
-﻿namespace Exadel.Compreface.DTOs.RecognitionDTOs.BaseRequests;
+﻿namespace Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
 
-public class BaseRecognitionRequest
+public class BaseFaceRequest
 {
     public int? Limit { get; set; }
 

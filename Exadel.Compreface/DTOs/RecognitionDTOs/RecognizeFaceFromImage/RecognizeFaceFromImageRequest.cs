@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using Exadel.Compreface.DTOs.RecognitionDTOs.BaseRequests;
+﻿using Exadel.Compreface.DTOs.RecognitionDTOs.BaseRequests;
 
 namespace Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 
