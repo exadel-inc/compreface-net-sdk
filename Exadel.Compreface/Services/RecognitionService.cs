@@ -30,9 +30,8 @@ public class RecognitionService
                 face_plugins = string.Join(",", request.FacePlugins),
                 status = request.Status,
             })
-            .PostMultipartAsync(mp =>
-                mp.AddFile("file", fileName: request.FileName, path: request.FilePath))
-            .ReceiveJson<RecognizeFaceFromImageResponse>();
+            .PostMultipartAsync<RecognizeFaceFromImageResponse>(mp =>
+                mp.AddFile("file", fileName: request.FileName, path: request.FilePath));
 
         return response;
     }
@@ -51,8 +50,7 @@ public class RecognitionService
                 face_plugins = string.Join(",", request.FacePlugins),
                 status = request.Status,
             })
-            .PostJsonAsync(body: new { file = request.FileBase64Value })
-            .ReceiveJson<RecognizeFaceFromImageResponse>();
+            .PostJsonAsync<RecognizeFaceFromImageResponse>(body: new { file = request.FileBase64Value });
 
         return response;
     }
@@ -69,9 +67,8 @@ public class RecognitionService
                 face_plugins = string.Join(",", request.FacePlugins),
                 status = request.Status,
             })
-            .PostMultipartAsync(mp =>
-                mp.AddFile("file", fileName: request.FileName, path: request.FilePath))
-            .ReceiveJson<VerifyFacesFromImageResponse>();
+            .PostMultipartAsync<VerifyFacesFromImageResponse>(mp =>
+                mp.AddFile("file", fileName: request.FileName, path: request.FilePath));
 
         return response;
     }
@@ -88,8 +85,7 @@ public class RecognitionService
                 face_plugins = string.Join(",", request.FacePlugins),
                 status = request.Status,
             })
-            .PostJsonAsync(body: new {file = request.FileBase64Value})
-            .ReceiveJson<VerifyFacesFromImageResponse>();
+            .PostJsonAsync<VerifyFacesFromImageResponse>(body: new { file = request.FileBase64Value });
 
         return response;
     }

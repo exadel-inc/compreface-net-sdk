@@ -30,42 +30,35 @@ public class SubjectService
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/subjects";
 
-        var response = await requestUrl.PostJsonAsync(request);
-        var subjectDto = await response.ResponseMessage.Content.ReadFromJsonAsync<AddSubjectResponse>();
+        var response = await requestUrl.PostJsonAsync<AddSubjectResponse>(request);
 
-        return subjectDto;
+        return response;
     }
 
     public async Task<RenameSubjectResponse> RenameSubject(RenameSubjectRequest request)
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/subjects/{request.CurrentSubject}";
         var response = await requestUrl
-            .PutJsonAsync(request.Subject);
+            .PutJsonAsync<RenameSubjectResponse>(body: request.Subject);
         
-        var subjectDto = await response.ResponseMessage.Content.ReadFromJsonAsync<RenameSubjectResponse>();
-
-        return subjectDto;
+        return response;
     }
 
     public async Task<DeleteSubjectResponse> DeleteSubject(DeleteSubjectRequest request)
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/subjects/{request.ActualSubject}";
 
-        var response = await requestUrl.DeleteAsync();
+        var response = await requestUrl.DeleteJsonAsync<DeleteSubjectResponse>();
         
-        var deleteSubjectResponse = await response.ResponseMessage.Content.ReadFromJsonAsync<DeleteSubjectResponse>();
-        
-        return deleteSubjectResponse;
+        return response;
     }
 
     public async Task<DeleteAllSubjectsResponse> DeleteAllSubjects()
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/subjects";
 
-        var response = await requestUrl.DeleteAsync();
+        var response = await requestUrl.DeleteJsonAsync<DeleteAllSubjectsResponse>();
 
-        var deleteAllSubjectsResponse = await response.ResponseMessage.Content.ReadFromJsonAsync<DeleteAllSubjectsResponse>();
-        
-        return deleteAllSubjectsResponse;
+        return response;
     }
 }
