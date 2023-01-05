@@ -24,8 +24,21 @@ public class ComprefaceClient
     public ComprefaceClient(ComprefaceConfiguration configuration)
     {
         FaceDetectionService = new FaceDetectionService(configuration);
+        InitializeApiKeyInRequestHeader(configuration.ApiKey);
         ExampleSubjectService = new ExampleSubjectService(configuration);
         SubjectService = new SubjectService(configuration);
         RecognitionService = new RecognitionService(configuration);
+    }
+    
+    /// <summary>
+    /// Adds Api Key to request header before sending http request to a given endpoint 
+    /// </summary>
+    /// <param name="apiKey">Valid api key for compreface api</param>
+    private static void InitializeApiKeyInRequestHeader(string apiKey)
+    {
+        FlurlHttp.GlobalSettings.BeforeCall += apiCall =>
+        {
+            apiCall.Request.Headers.Add("x-api-key", apiKey);
+        };
     }
 }
