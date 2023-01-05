@@ -9,7 +9,6 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
 using Exadel.Compreface.Configuration;
 using Flurl;
 using Exadel.Compreface.DTOs.HelperDTOs;
-using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 
 namespace Exadel.Compreface.Services;
 

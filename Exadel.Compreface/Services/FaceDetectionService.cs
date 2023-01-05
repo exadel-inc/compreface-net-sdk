@@ -27,9 +27,8 @@ namespace Exadel.Compreface.Services
                     face_plugins = string.Join(",", faceDetectionRequest.FacePlugins),
                     status = faceDetectionRequest.Status,
                 })
-                .PostMultipartAsync(mp =>
-                    mp.AddFile("file", fileName: faceDetectionRequest.FileName, path: faceDetectionRequest.FilePath))
-                .ReceiveJson<FaceDetectionResponse>();
+                .PostMultipartAsync<FaceDetectionResponse>(mp =>
+                    mp.AddFile("file", fileName: faceDetectionRequest.FileName, path: faceDetectionRequest.FilePath));
 
             return response;
         }
@@ -46,8 +45,7 @@ namespace Exadel.Compreface.Services
                     face_plugins = string.Join(",", faceDetectionRequest.FacePlugins),
                     status = faceDetectionRequest.Status,
                 })
-                .PostJsonAsync(new { file = faceDetectionRequest.File })
-                .ReceiveJson<FaceDetectionBase64Response>();
+                .PostJsonAsync<FaceDetectionBase64Response>(new { file = faceDetectionRequest.File });
 
             return response;
         }
