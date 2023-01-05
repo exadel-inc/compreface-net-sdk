@@ -25,7 +25,7 @@ public static class ApiClientExtensions
         }
         catch(FlurlHttpTimeoutException exception)
         {
-            throw await ThrowServiceExceptionAsync(exception);
+            throw await ThrowServiceTimeoutExceptionAsync(exception);
         }
         catch (FlurlHttpException exception)
         {
@@ -60,7 +60,7 @@ public static class ApiClientExtensions
         }
         catch(FlurlHttpTimeoutException exception)
         {
-            throw await ThrowServiceExceptionAsync(exception);
+            throw await ThrowServiceTimeoutExceptionAsync(exception);
         }
         catch (FlurlHttpException exception)
         {
@@ -95,7 +95,7 @@ public static class ApiClientExtensions
         }
         catch(FlurlHttpTimeoutException exception)
         {
-            throw await ThrowServiceExceptionAsync(exception);
+            throw await ThrowServiceTimeoutExceptionAsync(exception);
         }
         catch (FlurlHttpException exception)
         {
@@ -129,7 +129,7 @@ public static class ApiClientExtensions
         }
         catch(FlurlHttpTimeoutException exception)
         {
-            throw await ThrowServiceExceptionAsync(exception);
+            throw await ThrowServiceTimeoutExceptionAsync(exception);
         }
         catch (FlurlHttpException exception)
         {
@@ -163,7 +163,7 @@ public static class ApiClientExtensions
         }
         catch(FlurlHttpTimeoutException exception)
         {
-            throw await ThrowServiceExceptionAsync(exception);
+            throw await ThrowServiceTimeoutExceptionAsync(exception);
         }
         catch (FlurlHttpException exception)
         {
