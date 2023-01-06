@@ -5,6 +5,10 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exadel.Compreface", "Exadel.Compreface\Exadel.Compreface.csproj", "{F056624D-D598-4D8A-82C3-D64A7E395B3E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3BD43F51-B881-4B5F-AC38-A732EE6ACFA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exadel.Compreface.Tests", "Exadel.Compreface.Tests\Exadel.Compreface.Tests.csproj", "{6EE4D2A0-92AD-4A11-B9E2-5CDEADBDAF24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{F056624D-D598-4D8A-82C3-D64A7E395B3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F056624D-D598-4D8A-82C3-D64A7E395B3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F056624D-D598-4D8A-82C3-D64A7E395B3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EE4D2A0-92AD-4A11-B9E2-5CDEADBDAF24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EE4D2A0-92AD-4A11-B9E2-5CDEADBDAF24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EE4D2A0-92AD-4A11-B9E2-5CDEADBDAF24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EE4D2A0-92AD-4A11-B9E2-5CDEADBDAF24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6EE4D2A0-92AD-4A11-B9E2-5CDEADBDAF24} = {3BD43F51-B881-4B5F-AC38-A732EE6ACFA5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F554D1E-BD8B-4DB5-9474-64B2BE1D2D8C}
