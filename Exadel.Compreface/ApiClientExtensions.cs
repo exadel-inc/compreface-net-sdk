@@ -1,4 +1,7 @@
-﻿using Exadel.Compreface.Exceptions;
+﻿using System.Text.Json;
+using Exadel.Compreface.DTOs.FaceVerificationDTOs;
+using Exadel.Compreface.Exceptions;
+using Exadel.Compreface.Helpers;
 using Flurl;
 using Flurl.Http;
 using Flurl.Http.Content;

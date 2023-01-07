@@ -1,5 +1,8 @@
 ﻿using System.Text.Json;
 using Exadel.Compreface.Configuration;
+using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
+using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
+using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.Helpers;
 using Flurl.Http;
 using Microsoft.Extensions.Configuration;

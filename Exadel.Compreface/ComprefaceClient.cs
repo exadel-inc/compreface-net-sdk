@@ -15,6 +15,8 @@ public class ComprefaceClient
 
     public FaceDetectionService FaceDetectionService { get; private set; }
 
+    public FaceVerificationService FaceVerificationService { get; set; }
+
     public ComprefaceClient(string apiKey, string host) : this(new ComprefaceConfiguration(apiKey, host))
     { }
 
@@ -28,6 +30,7 @@ public class ComprefaceClient
         ExampleSubjectService = new ExampleSubjectService(configuration);
         SubjectService = new SubjectService(configuration);
         RecognitionService = new RecognitionService(configuration);
+        FaceVerificationService = new FaceVerificationService(configuration);
     }
     
     /// <summary>
