@@ -25,8 +25,8 @@ public class ComprefaceClient
 
     public ComprefaceClient(ComprefaceConfiguration configuration)
     {
-        FaceDetectionService = new FaceDetectionService(configuration);
         InitializeApiKeyInRequestHeader(configuration.ApiKey);
+        FaceDetectionService = new FaceDetectionService(configuration);
         ExampleSubjectService = new ExampleSubjectService(configuration);
         SubjectService = new SubjectService(configuration);
         RecognitionService = new RecognitionService(configuration);
