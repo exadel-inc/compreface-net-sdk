@@ -7,11 +7,16 @@ namespace Exadel.Compreface.Tests.Services
 {
     public class FaceDetectionServiceTest
     {
+        private readonly ComprefaceClient comprefaceApiClient;
+        public FaceDetectionServiceTest()
+        {
+            comprefaceApiClient = new ComprefaceClient(new ComprefaceConfiguration(API_KEY_DETECTION_SERVICE, BASE_URL));
+        }
+
         [Fact]
         public async Task FaceDetectionAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            var apiClient = new ComprefaceClient(new ComprefaceConfiguration(API_KEY_DETECTION_SERVICE, BASE_URL));
             var faceDetectionRequest = new FaceDetectionRequest()
             {
                 DetProbThreshold = 0.91m,
@@ -29,7 +34,7 @@ namespace Exadel.Compreface.Tests.Services
             };
 
             //Act
-           var faceDetectionResponse = await apiClient.FaceDetectionService.FaceDetectionAsync(faceDetectionRequest);
+           var faceDetectionResponse = await comprefaceApiClient.FaceDetectionService.FaceDetectionAsync(faceDetectionRequest);
 
             //Assert
             Assert.IsType<FaceDetectionResponse>(faceDetectionResponse);
@@ -39,7 +44,6 @@ namespace Exadel.Compreface.Tests.Services
         public async Task FaceDetectionBase64Async_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            var apiClient = new ComprefaceClient(new ComprefaceConfiguration(API_KEY_DETECTION_SERVICE, BASE_URL));
             var faceDetectionBase64Request = new FaceDetectionBase64Request()
             {
                 DetProbThreshold = 0.91m,
@@ -56,7 +60,7 @@ namespace Exadel.Compreface.Tests.Services
             };
 
             //Act
-            var faceDetectionResponse = await apiClient.FaceDetectionService.FaceDetectionBase64Async(faceDetectionBase64Request);
+            var faceDetectionResponse = await comprefaceApiClient.FaceDetectionService.FaceDetectionBase64Async(faceDetectionBase64Request);
 
             //Assert
             Assert.IsType<FaceDetectionBase64Response>(faceDetectionResponse);
