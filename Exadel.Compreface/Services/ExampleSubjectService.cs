@@ -47,7 +47,7 @@ public class ExampleSubjectService
                 subject = request.Subject,
                 det_prob_threshold = request.DetProbThreShold,
             })
-            .PostJsonAsync<AddBase64ExampleSubjectResponse>(request.File);
+            .PostJsonAsync<AddBase64ExampleSubjectResponse>(body: new {file = request.File });
 
         return response;
     }
