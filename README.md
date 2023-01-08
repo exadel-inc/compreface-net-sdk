@@ -335,3 +335,50 @@ var imageBytes = File.ReadAllBytes("file path here");
         }
     );
 ```
+
+
+**Face Verification Service**
+
+*Face Verification Service endpoint*
+
+```
+var faceVerificationRequest = new FaceVerificationWithBase64Request()
+        {
+            DetProbThreshold = 0.88m,
+            FacePlugins = new List<string>()
+            {
+                "age",
+                "mask",
+                "calculator",
+                "gender",
+            },
+            SourceImageFileName = file name for source image,
+            SourceImageFilePath = file path for source image,
+            TargetImageFileName = file name for target image,
+            TargetImageFilePath = file path for target image,
+            Status = true,
+        };
+        
+        var faceVerificationResponse = await comprefaceClient.FaceVerificationService.VerifyImageAsync(faceVerificationRequest);
+```
+
+*Face Verification Service endpoint, Base64*
+
+```
+var faceVerificationWith64Request = new FaceVerificationWithBase64Request()
+        {
+            DetProbThreshold = 0.88m,
+            FacePlugins = new List<string>()
+            {
+                "age",
+                "mask",
+                "calculator",
+                "gender",
+            },
+            SourceImageWithBase64 = source image's base64 value,
+            TargetImageWithBase64 = target image's base64 value,
+            Status = true,
+        };
+        
+        var faceVerificationResponse = await comprefaceClientV2.FaceVerificationService.VerifyBase64ImageAsync(faceVerificationRequest);
+```
