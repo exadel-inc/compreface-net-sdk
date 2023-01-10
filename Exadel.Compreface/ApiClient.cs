@@ -155,7 +155,7 @@ public class ApiClient : IApiClient
         return response;
     }
 
-    public virtual async Task<TResponse> PostMultipartAsync<TResponse>(
+    public async Task<TResponse> PostMultipartAsync<TResponse>(
         Url requestUrl,
         Action<CapturedMultipartContent> buildContent, 
         HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
