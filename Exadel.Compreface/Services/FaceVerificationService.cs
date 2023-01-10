@@ -9,26 +9,30 @@ namespace Exadel.Compreface.Services;
 public class FaceVerificationService
 {
     private readonly IComprefaceConfiguration _comprefaceConfiguration;
+    private readonly ApiClient _apiClient;
 
-    public FaceVerificationService(IComprefaceConfiguration comprefaceConfiguration)
+    public FaceVerificationService(IComprefaceConfiguration configuration, ApiClient apiClient)
     {
-        _comprefaceConfiguration = comprefaceConfiguration;
+        _comprefaceConfiguration = configuration;
+        _apiClient = apiClient;
     }
 
     public async Task<FaceVerificationResponse> VerifyImageAsync(FaceVerificationRequest request)
     {
         var requestUrl = $"{_comprefaceConfiguration.BaseUrl}verification/verify";
-
-        var response = await requestUrl
+        var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
                 limit = request.Limit,
                 det_prob_threshold = request.DetProbThreshold,
                 face_plugins = string.Join(",", request.FacePlugins),
                 status = request.Status,
-            })
-            .PostMultipartAsync<FaceVerificationResponse>(
-                mp =>
+            });
+        
+        var response = await 
+            _apiClient.PostMultipartAsync<FaceVerificationResponse>(
+                requestUrl: requestUrlWithQueryParameters,
+                buildContent: mp =>
                 {
                     mp.AddFile(name: "source_image", fileName: request.SourceImageFileName,
                         path: request.SourceImageFilePath);
@@ -43,16 +47,18 @@ public class FaceVerificationService
     public async Task<FaceVerificationResponse> VerifyBase64ImageAsync(FaceVerificationWithBase64Request request)
     {
         var requestUrl = $"{_comprefaceConfiguration.BaseUrl}verification/verify";
-
-        var response = await requestUrl
+        var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
                 limit = request.Limit,
                 det_prob_threshold = request.DetProbThreshold,
                 face_plugins = string.Join(",", request.FacePlugins),
                 status = request.Status,
-            })
-            .PostJsonAsync<FaceVerificationResponse>(
+            });
+        
+        var response = await 
+            _apiClient.PostJsonAsync<FaceVerificationResponse>(
+                requestUrl: requestUrlWithQueryParameters,
                 body: new
                 {
                     source_image = request.SourceImageWithBase64,

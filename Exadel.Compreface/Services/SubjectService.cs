@@ -12,16 +12,18 @@ namespace Exadel.Compreface.Services;
 public class SubjectService
 {
     private readonly ComprefaceConfiguration _configuration;
-    
-    public SubjectService(ComprefaceConfiguration configuration)
+    private readonly ApiClient _apiClient;
+
+    public SubjectService(ComprefaceConfiguration configuration, ApiClient apiClient)
     {
         _configuration = configuration;
+        _apiClient = apiClient;
     }
 
     public async Task<GetAllSubjectResponse> GetAllSubject()
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/subjects/";
-        var response = await requestUrl.GetJsonAsync<GetAllSubjectResponse>();
+        var response = await _apiClient.GetJsonAsync<GetAllSubjectResponse>(requestUrl);
 
         return response;
     }
@@ -30,7 +32,7 @@ public class SubjectService
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/subjects";
 
-        var response = await requestUrl.PostJsonAsync<AddSubjectResponse>(request);
+        var response = await _apiClient.PostJsonAsync<AddSubjectResponse>(requestUrl, request);
 
         return response;
     }
@@ -38,8 +40,8 @@ public class SubjectService
     public async Task<RenameSubjectResponse> RenameSubject(RenameSubjectRequest request)
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/subjects/{request.CurrentSubject}";
-        var response = await requestUrl
-            .PutJsonAsync<RenameSubjectResponse>(body: request.Subject);
+        var response = await _apiClient
+            .PutJsonAsync<RenameSubjectResponse>(requestUrl, body: request.Subject);
         
         return response;
     }
@@ -48,7 +50,7 @@ public class SubjectService
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/subjects/{request.ActualSubject}";
 
-        var response = await requestUrl.DeleteJsonAsync<DeleteSubjectResponse>();
+        var response = await _apiClient.DeleteJsonAsync<DeleteSubjectResponse>(requestUrl);
         
         return response;
     }
@@ -57,7 +59,7 @@ public class SubjectService
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/subjects";
 
-        var response = await requestUrl.DeleteJsonAsync<DeleteAllSubjectsResponse>();
+        var response = await _apiClient.DeleteJsonAsync<DeleteAllSubjectsResponse>(requestUrl);
 
         return response;
     }

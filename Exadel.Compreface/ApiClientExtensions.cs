@@ -11,10 +11,10 @@ namespace Exadel.Compreface;
 /// <summary>
 /// Wrapper on top of Flurl.Http package's extension methods
 /// </summary>
-public static class ApiClientExtensions
+public class ApiClient
 {
-    public static async Task<TResponse> GetJsonAsync<TResponse>(
-        this Url requestUrl, 
+    public async Task<TResponse> GetJsonAsync<TResponse>(
+        Url requestUrl,
         HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
         CancellationToken cancellationToken = default)
     {
@@ -36,18 +36,20 @@ public static class ApiClientExtensions
         }
     }
     
-    public static async Task<TResponse> GetJsonAsync<TResponse>(
-        this string requestUrl, 
+    public async Task<TResponse> GetJsonAsync<TResponse>(
+        string requestUrl, 
         HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
         CancellationToken cancellationToken = default)
     {
-        var response = await new Url(requestUrl).GetJsonAsync<TResponse>(completionOption, cancellationToken);
+        var url = new Flurl.Url(requestUrl);
+        
+        var response = await GetJsonAsync<TResponse>(url, completionOption, cancellationToken);
 
         return response;
     }
     
-    public static async Task<TResponse> PostJsonAsync<TResponse>(
-        this Url requestUrl, 
+    public async Task<TResponse> PostJsonAsync<TResponse>(
+        Url requestUrl, 
         object body, 
         HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
         CancellationToken cancellationToken = default)
@@ -71,19 +73,21 @@ public static class ApiClientExtensions
         }
     }
 
-    public static async Task<TResponse> PostJsonAsync<TResponse>(
-        this string requestUrl,
+    public async Task<TResponse> PostJsonAsync<TResponse>(
+        string requestUrl,
         object body, 
         HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
         CancellationToken cancellationToken = default)
         where TResponse : class
     {
-        var response = await new Flurl.Url(requestUrl).PostJsonAsync<TResponse>(body, completionOption, cancellationToken);
+        var url = new Flurl.Url(requestUrl);
+        
+        var response = await PostJsonAsync<TResponse>(url, body, completionOption, cancellationToken);
         return response;
     }
 
-    public static async Task<TResponse> PutJsonAsync<TResponse>(
-        this Url requestUrl,
+    public async Task<TResponse> PutJsonAsync<TResponse>(
+        Url requestUrl,
         object body, 
         HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
         CancellationToken cancellationToken = default)
@@ -106,19 +110,21 @@ public static class ApiClientExtensions
         }
     }
 
-    public static async Task<TResponse> PutJsonAsync<TResponse>(
-        this string requestUrl, 
+    public async Task<TResponse> PutJsonAsync<TResponse>(
+        string requestUrl, 
         object body, 
         HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
         CancellationToken cancellationToken = default)
     {
-        var response = await new Flurl.Url(requestUrl).PutJsonAsync<TResponse>(body, completionOption, cancellationToken);
+        var url = new Flurl.Url(requestUrl);
+        
+        var response = await PutJsonAsync<TResponse>(url, body, completionOption, cancellationToken);
 
         return response;
     }
 
-    public static async Task<TResponse> DeleteJsonAsync<TResponse>(
-        this Url requestUrl, 
+    public async Task<TResponse> DeleteJsonAsync<TResponse>(
+        Url requestUrl, 
         HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
         CancellationToken cancellationToken = default)
     {
@@ -140,18 +146,20 @@ public static class ApiClientExtensions
         }
     }
 
-    public static async Task<TResponse> DeleteJsonAsync<TResponse>(
-        this string requestUrl, 
+    public async Task<TResponse> DeleteJsonAsync<TResponse>(
+        string requestUrl, 
         HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
         CancellationToken cancellationToken = default)
     {
-        var response = await new Flurl.Url(requestUrl).DeleteJsonAsync<TResponse>(completionOption, cancellationToken);
+        var url = new Flurl.Url(requestUrl);
+        
+        var response = await DeleteJsonAsync<TResponse>(url, completionOption, cancellationToken);
 
         return response;
     }
 
-    public static async Task<TResponse> PostMultipartAsync<TResponse>(
-        this Url requestUrl,
+    public virtual async Task<TResponse> PostMultipartAsync<TResponse>(
+        Url requestUrl,
         Action<CapturedMultipartContent> buildContent, 
         HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
         CancellationToken cancellationToken = default)
@@ -174,20 +182,21 @@ public static class ApiClientExtensions
         }
     }
 
-    public static async Task<TResponse> PostMultipartAsync<TResponse>(
-        this string requestUrl,
+    public async Task<TResponse> PostMultipartAsync<TResponse>(
+        string requestUrl,
         Action<CapturedMultipartContent> buildContent, 
         HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
         CancellationToken cancellationToken = default)
     {
-        var response = await new Url(requestUrl)
-            .PostMultipartAsync<TResponse>(buildContent, completionOption, cancellationToken);
+        var url = new Flurl.Url(requestUrl);
+        
+        var response = await PostMultipartAsync<TResponse>(url, buildContent, completionOption, cancellationToken);
 
         return response;
     }
 
-    public static async Task<byte[]> GetBytesFromRemoteAsync(
-        this Url requestUrl,
+    public async Task<byte[]> GetBytesFromRemoteAsync(
+        Url requestUrl,
         HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
         CancellationToken cancellationToken = default)
     {
@@ -208,13 +217,14 @@ public static class ApiClientExtensions
         }
     }
 
-    public static async Task<byte[]> GetBytesFromRemoteAsync(
-        this string requestUrl,
+    public async Task<byte[]> GetBytesFromRemoteAsync(
+        string requestUrl,
         HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
         CancellationToken cancellationToken = default)
     {
-        var response = await new Flurl.Url(requestUrl)
-            .GetBytesFromRemoteAsync(completionOption, cancellationToken);
+        var url = new Flurl.Url(requestUrl);
+        
+        var response = await GetBytesFromRemoteAsync(url, completionOption, cancellationToken);
 
         return response;
     }

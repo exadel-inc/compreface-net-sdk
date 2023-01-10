@@ -34,16 +34,20 @@ public class Program
         };
 
         FlurlHttp.GlobalSettings.JsonSerializer = new SystemJsonSerializer(jsonOptions);
-
-        var comprefaceClientV1 = new ComprefaceClient(
-            configuration: configuration,
-            sectionForApiKey: "Compreface:ApiKey (optional naming)",
-            sectionForBaseUrl: "Compreface:BaseUrl (optional naming)");
-        
+        var apiClient = new ApiClient();
+        // var comprefaceClientV1 = new ComprefaceClient(
+        //     configuration: configuration,
+        //     sectionForApiKey: "Compreface:ApiKey (optional naming)",
+        //     sectionForBaseUrl: "Compreface:BaseUrl (optional naming)");
+        //
         var comprefaceClientV2 = new ComprefaceClient(
-            apiKey: "COMPREFACE API KEY", 
-            host: "HOST BASE URL");
+            apiKey: "746f45a6-b35e-4087-a79a-a686b3c47fb7", 
+            host: "http://localhost:8000/api/v1/");
         
-        var comprefaceClientV3 = new ComprefaceClient(comprefaceConfiguration);
+        // var comprefaceClientV3 = new ComprefaceClient(comprefaceConfiguration);
+
+        var subjects = await comprefaceClientV2.SubjectService.GetAllSubject();
+
+        Console.WriteLine("");
     }
 }
