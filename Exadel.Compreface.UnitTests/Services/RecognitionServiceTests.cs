@@ -282,7 +282,7 @@ namespace Exadel.Compreface.UnitTests.Services
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new TResponse());
         }
-        
+
         private void VerifyPostJson<TResponse>() where TResponse : class, new()
         {
             _apiClientMock.Verify(apiClient =>
