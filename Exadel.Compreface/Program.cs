@@ -34,9 +34,16 @@ public class Program
         };
 
         FlurlHttp.GlobalSettings.JsonSerializer = new SystemJsonSerializer(jsonOptions);
-        var comprefaceClientV2 = new ComprefaceClient(
-            apiKey: "API KEY", 
-            host: "BASE URL");
         
+        var comprefaceClientV1 = new ComprefaceClient(
+            configuration: configuration,
+            sectionForApiKey: "Compreface:ApiKey (optional naming)",
+            sectionForBaseUrl: "Compreface:BaseUrl (optional naming)");
+
+        var comprefaceClientV2 = new ComprefaceClient(
+            apiKey: "COMPREFACE API KEY", 
+            host: "HOST BASE URL");
+
+        var comprefaceClientV3 = new ComprefaceClient(comprefaceConfiguration);
     }
 }
