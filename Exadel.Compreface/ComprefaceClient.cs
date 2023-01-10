@@ -25,12 +25,15 @@ public class ComprefaceClient
 
     public ComprefaceClient(ComprefaceConfiguration configuration)
     {
+        var apiClient = new ApiClient(); 
+        
         InitializeApiKeyInRequestHeader(configuration.ApiKey);
-        FaceDetectionService = new FaceDetectionService(configuration);
-        ExampleSubjectService = new ExampleSubjectService(configuration);
-        SubjectService = new SubjectService(configuration);
-        RecognitionService = new RecognitionService(configuration);
-        FaceVerificationService = new FaceVerificationService(configuration);
+        
+        FaceDetectionService = new FaceDetectionService(apiClient: apiClient, configuration: configuration);
+        ExampleSubjectService = new ExampleSubjectService(apiClient: apiClient, configuration: configuration);
+        SubjectService = new SubjectService(apiClient: apiClient, configuration: configuration);
+        RecognitionService = new RecognitionService(apiClient: apiClient, configuration: configuration);
+        FaceVerificationService = new FaceVerificationService(apiClient: apiClient, configuration: configuration);
     }
     
     /// <summary>

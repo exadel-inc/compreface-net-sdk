@@ -11,17 +11,18 @@ namespace Exadel.Compreface.Services;
 public class RecognitionService
 {
     private readonly ComprefaceConfiguration _configuration;
+    private readonly IApiClient _apiClient;
 
-    public RecognitionService(ComprefaceConfiguration configuration)
+    public RecognitionService(ComprefaceConfiguration configuration, IApiClient apiClient)
     {
         _configuration = configuration;
+        _apiClient = apiClient;
     }
     
     public async Task<RecognizeFaceFromImageResponse> RecognizeFaceFromImage(RecognizeFaceFromImageRequest request)
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/recognize";
-
-        var response = await requestUrl
+        var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
                 limit = request.Limit,
@@ -29,8 +30,12 @@ public class RecognitionService
                 det_prob_threshold = request.DetProbThreshold,
                 face_plugins = string.Join(",", request.FacePlugins),
                 status = request.Status,
-            })
-            .PostMultipartAsync<RecognizeFaceFromImageResponse>(mp =>
+            });
+        
+        var response = await 
+            _apiClient.PostMultipartAsync<RecognizeFaceFromImageResponse>(
+                requestUrl: requestUrlWithQueryParameters,
+                buildContent: mp =>
                 mp.AddFile("file", fileName: request.FileName, path: request.FilePath));
 
         return response;
@@ -40,8 +45,7 @@ public class RecognitionService
         RecognizeFacesFromImageWithBase64Request request)
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/recognize";
-
-        var response = await requestUrl
+        var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
                 limit = request.Limit,
@@ -49,8 +53,12 @@ public class RecognitionService
                 det_prob_threshold = request.DetProbThreshold,
                 face_plugins = string.Join(",", request.FacePlugins),
                 status = request.Status,
-            })
-            .PostJsonAsync<RecognizeFaceFromImageResponse>(body: new { file = request.FileBase64Value });
+            });
+        
+        var response = await 
+            _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(
+                requestUrl: requestUrlWithQueryParameters, 
+                body: new { file = request.FileBase64Value });
 
         return response;
     }
@@ -58,16 +66,19 @@ public class RecognitionService
     public async Task<VerifyFacesFromImageResponse> VerifyFacesFromImage(VerifyFacesFromImageRequest request)
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/faces/{request.ImageId}/verify";
-
-        var response = await requestUrl
+        var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
                 limit = request.Limit,
                 det_prob_threshold = request.DetProbThreshold,
                 face_plugins = string.Join(",", request.FacePlugins),
                 status = request.Status,
-            })
-            .PostMultipartAsync<VerifyFacesFromImageResponse>(mp =>
+            });
+        
+        var response = await 
+            _apiClient.PostMultipartAsync<VerifyFacesFromImageResponse>(
+                requestUrl: requestUrlWithQueryParameters,
+                buildContent: mp =>
                 mp.AddFile("file", fileName: request.FileName, path: request.FilePath));
 
         return response;
@@ -76,16 +87,19 @@ public class RecognitionService
     public async Task<VerifyFacesFromImageResponse> VerifyFacesFromBase64File(VerifyFacesFromImageWithBase64Request request)
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/faces/{request.ImageId}/verify";
-
-        var response = await requestUrl
+        var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
                 limit = request.Limit,
                 det_prob_threshold = request.DetProbThreshold,
                 face_plugins = string.Join(",", request.FacePlugins),
                 status = request.Status,
-            })
-            .PostJsonAsync<VerifyFacesFromImageResponse>(body: new { file = request.FileBase64Value });
+            });
+        
+        var response = await 
+            _apiClient.PostJsonAsync<VerifyFacesFromImageResponse>(
+                requestUrl: requestUrlWithQueryParameters,
+                body: new { file = request.FileBase64Value });
 
         return response;
     }
