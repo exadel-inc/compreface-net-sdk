@@ -382,3 +382,41 @@ var faceVerificationWith64Request = new FaceVerificationWithBase64Request()
         
         var faceVerificationResponse = await comprefaceClientV2.FaceVerificationService.VerifyBase64ImageAsync(faceVerificationRequest);
 ```
+
+
+# Contributing
+
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are greatly appreciated.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+After creating your first contributing pull request, you will receive a request to sign our Contributor License Agreement by commenting your pull request with a special message.
+
+## Report Bugs
+
+Please report any bugs [here](https://github.com/exadel-inc/compreface-net-sdk/issues).
+
+If you are reporting a bug, please specify:
+
+- Your operating system name and version
+- Any details about your local setup that might be helpful in troubleshooting
+- Detailed steps to reproduce the bug
+
+
+## Submit Feedback
+
+The best way to send us feedback is to file an issue at https://github.com/exadel-inc/compreface-net-sdk/issues.
+
+If you are proposing a feature, please:
+
+- Explain in detail how it should work.
+- Keep the scope as narrow as possible to make it easier to implement.
+
+
+# License info
+
+CompreFace .NET SDK is open-source facial recognition SDK released under the [Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0.html).
