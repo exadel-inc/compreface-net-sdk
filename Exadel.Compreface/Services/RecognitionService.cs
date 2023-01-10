@@ -11,9 +11,9 @@ namespace Exadel.Compreface.Services;
 public class RecognitionService
 {
     private readonly ComprefaceConfiguration _configuration;
-    private readonly ApiClient _apiClient;
+    private readonly IApiClient _apiClient;
 
-    public RecognitionService(ComprefaceConfiguration configuration, ApiClient apiClient)
+    public RecognitionService(ComprefaceConfiguration configuration, IApiClient apiClient)
     {
         _configuration = configuration;
         _apiClient = apiClient;

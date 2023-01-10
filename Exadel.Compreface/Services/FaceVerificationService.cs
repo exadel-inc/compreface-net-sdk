@@ -9,9 +9,9 @@ namespace Exadel.Compreface.Services;
 public class FaceVerificationService
 {
     private readonly IComprefaceConfiguration _comprefaceConfiguration;
-    private readonly ApiClient _apiClient;
+    private readonly IApiClient _apiClient;
 
-    public FaceVerificationService(IComprefaceConfiguration configuration, ApiClient apiClient)
+    public FaceVerificationService(IComprefaceConfiguration configuration, IApiClient apiClient)
     {
         _comprefaceConfiguration = configuration;
         _apiClient = apiClient;

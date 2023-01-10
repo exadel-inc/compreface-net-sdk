@@ -1,4 +1,5 @@
 using Exadel.Compreface.Configuration;
+using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 using Exadel.Compreface.Services;
 using Flurl.Http.Content;
@@ -9,12 +10,12 @@ namespace Exadel.Compreface.UnitTests;
 
 public class ExampleSubjectServiceTests
 {
-    private readonly Mock<ApiClient> _apiClientMock;
+    private readonly Mock<IApiClient> _apiClientMock;
     private readonly ExampleSubjectService _exampleSubjectService;
 
     public ExampleSubjectServiceTests()
     {
-        _apiClientMock = new Mock<ApiClient>();
+        _apiClientMock = new Mock<IApiClient>();
         var randomString = GetRandomString();
         var apiKey = randomString;
         var baseUrl = randomString;
@@ -31,40 +32,61 @@ public class ExampleSubjectServiceTests
     [Fact]
     public async Task AddExampleSubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
-        var request = new AddExampleSubjectRequest()
-        {
-            Subject = "some",
-            FileName = "somefile",
-            FilePath = "some path",
-        };
+        // Arrange
+        var request = new AddExampleSubjectRequest();
 
-        var requestUrl = new Flurl.Url("some url");
-        Action<CapturedMultipartContent> buildContent = (mp) =>
-        {
-            mp.AddFile("adaf", "fasfaf", "asfasff");
-        };
-        
         _apiClientMock.Setup(apiClient =>
             apiClient.PostMultipartAsync<AddExampleSubjectResponse>(
-                requestUrl,
-                buildContent,
-                HttpCompletionOption.ResponseContentRead,
-                default))
-            .ReturnsAsync(new AddExampleSubjectResponse()
-            {
-                ImageId = Guid.NewGuid(),
-                Subject = "some",
-            });
+                It.IsAny<Flurl.Url>(),
+                It.IsAny<Action<CapturedMultipartContent>>(),
+                It.IsAny<HttpCompletionOption>(),
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new AddExampleSubjectResponse());
         
+        // Act
         var response = await _exampleSubjectService.AddExampleSubjectAsync(request);
         
-        Assert.IsNotType<AddExampleSubjectResponse>(response);
+        // Assert
+        Assert.IsType<AddExampleSubjectResponse>(response);
 
         _apiClientMock.Verify(client => 
             client.PostMultipartAsync<AddExampleSubjectResponse>(
-                requestUrl, 
-                buildContent, 
-                HttpCompletionOption.ResponseContentRead, 
-                default), Times.Once);
+                It.IsAny<Flurl.Url>(), 
+                It.IsAny<Action<CapturedMultipartContent>>(), 
+                It.IsAny<HttpCompletionOption>(), 
+                It.IsAny<CancellationToken>()), Times.Once);
+        
+        _apiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task AddBase64ExampleSubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
+    {
+        // Arrange
+        var request = new AddBase64ExampleSubjectRequest();
+
+        _apiClientMock.Setup(apiClient =>
+                apiClient.PostJsonAsync<AddBase64ExampleSubjectResponse>(
+                    It.IsAny<Flurl.Url>(),
+                    It.IsAny<Action<CapturedMultipartContent>>(),
+                    It.IsAny<HttpCompletionOption>(),
+                    It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new AddBase64ExampleSubjectResponse());
+        
+        
+        //Act
+        var response = await _exampleSubjectService.AddBase64ExampleSubjectAsync(request);
+        
+        // Assert
+        Assert.IsType<AddBase64ExampleSubjectResponse>(response);
+        
+        _apiClientMock.Verify(client => 
+            client.PostJsonAsync<AddBase64ExampleSubjectResponse>(
+                It.IsAny<Flurl.Url>(), 
+                It.IsAny<Action<CapturedMultipartContent>>(), 
+                It.IsAny<HttpCompletionOption>(), 
+                It.IsAny<CancellationToken>()), Times.Once);
+        
+        _apiClientMock.VerifyNoOtherCalls();
     }
 }

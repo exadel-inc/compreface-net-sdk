@@ -12,9 +12,9 @@ namespace Exadel.Compreface.Services;
 public class SubjectService
 {
     private readonly ComprefaceConfiguration _configuration;
-    private readonly ApiClient _apiClient;
+    private readonly IApiClient _apiClient;
 
-    public SubjectService(ComprefaceConfiguration configuration, ApiClient apiClient)
+    public SubjectService(ComprefaceConfiguration configuration, IApiClient apiClient)
     {
         _configuration = configuration;
         _apiClient = apiClient;

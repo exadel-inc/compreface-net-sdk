@@ -1,7 +1,4 @@
-﻿using System.Text.Json;
-using Exadel.Compreface.DTOs.FaceVerificationDTOs;
-using Exadel.Compreface.Exceptions;
-using Exadel.Compreface.Helpers;
+﻿using Exadel.Compreface.Exceptions;
 using Flurl;
 using Flurl.Http;
 using Flurl.Http.Content;
@@ -11,7 +8,7 @@ namespace Exadel.Compreface;
 /// <summary>
 /// Wrapper on top of Flurl.Http package's extension methods
 /// </summary>
-public class ApiClient
+public class ApiClient : IApiClient
 {
     public async Task<TResponse> GetJsonAsync<TResponse>(
         Url requestUrl,

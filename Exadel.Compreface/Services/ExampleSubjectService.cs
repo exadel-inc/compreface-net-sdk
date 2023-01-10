@@ -1,23 +1,23 @@
-﻿using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
+﻿using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
+using Exadel.Compreface.Configuration;
+using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteAllSubjectExamples;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteImageById;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteMultipleExamples;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageById;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageBySubjectId;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
-using Exadel.Compreface.Configuration;
-using Flurl;
 using Exadel.Compreface.DTOs.HelperDTOs;
+using Flurl;
 
 namespace Exadel.Compreface.Services;
 
 public class ExampleSubjectService
 {
     private readonly IComprefaceConfiguration _configuration;
-    private readonly ApiClient _apiClient;
+    private readonly IApiClient _apiClient;
 
-    public ExampleSubjectService(ComprefaceConfiguration configuration, ApiClient apiClient)
+    public ExampleSubjectService(ComprefaceConfiguration configuration, IApiClient apiClient)
     {
         _configuration = configuration;
         _apiClient = apiClient;
