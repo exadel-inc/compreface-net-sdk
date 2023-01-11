@@ -30,15 +30,17 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 Subject = SUBJECT_NAME,
                 FileName = FILE_NAME
             };
+
             var expectedAddExampleSubjectResponse = await comprefaceApiClient.ExampleSubjectService.AddExampleSubjectAsync(exampleSubject);
 
             //Act
-            var result  = await comprefaceApiClient.ExampleSubjectService.GetAllExampleSubjectsAsync(new ListAllExampleSubjectRequest() { Subject = SUBJECT_NAME});
+            var result = await comprefaceApiClient.ExampleSubjectService.GetAllExampleSubjectsAsync(new ListAllExampleSubjectRequest() { Subject = SUBJECT_NAME });
 
             //Assert
             Assert.Equivalent(expectedAddExampleSubjectResponse, result.Faces
                 .First(x => x.ImageId == expectedAddExampleSubjectResponse.ImageId & x.Subject == expectedAddExampleSubjectResponse.Subject), true);
-            //await comprefaceApiClient.ExampleSubjectService.DeleteImageByIdAsync(new DeleteImageByIdRequest() { ImageId = expectedAddExampleSubjectResponse.ImageId });
+
+            await comprefaceApiClient.ExampleSubjectService.DeleteImageByIdAsync(new DeleteImageByIdRequest() { ImageId = expectedAddExampleSubjectResponse.ImageId });
         }
 
         [Fact]
@@ -52,11 +54,16 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 File = IMAGE_BASE64_STRING
             };
 
+            var expectedAddBase64ExampleSubjectResponse = await comprefaceApiClient.ExampleSubjectService.AddBase64ExampleSubjectAsync(addBase64ExampleSubjectRequest);
+
             //Act
-            var addExampleSubjectBase64Response = await comprefaceApiClient.ExampleSubjectService.AddBase64ExampleSubjectAsync(addBase64ExampleSubjectRequest);
+            var result = await comprefaceApiClient.ExampleSubjectService.GetAllExampleSubjectsAsync(new ListAllExampleSubjectRequest() { Subject = SUBJECT_NAME });
 
             //Assert
-            Assert.IsType<AddBase64ExampleSubjectResponse>(addExampleSubjectBase64Response);
+            Assert.Equivalent(expectedAddBase64ExampleSubjectResponse, result.Faces
+            .First(x => x.ImageId == expectedAddBase64ExampleSubjectResponse.ImageId & x.Subject == expectedAddBase64ExampleSubjectResponse.Subject), true);
+
+            await comprefaceApiClient.ExampleSubjectService.DeleteImageByIdAsync(new DeleteImageByIdRequest() { ImageId = expectedAddBase64ExampleSubjectResponse.ImageId });
         }
 
         [Fact]
