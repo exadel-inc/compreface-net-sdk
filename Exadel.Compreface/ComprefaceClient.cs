@@ -37,7 +37,16 @@ public class ComprefaceClient
         RecognitionService = new RecognitionService(apiClient: apiClient, configuration: configuration);
         FaceVerificationService = new FaceVerificationService(apiClient: apiClient, configuration: configuration);
     }
-    
+
+    /// <summary>
+    /// Configures all the needed external configs for <see cref="ComprefaceClient"/> 
+    /// </summary>
+    private static void InitializeComprefaceClientConfigs(string apiKey)
+    {
+        InitializeApiKeyInRequestHeader(apiKey);
+        InitializeSnakeCaseJsonConfigs();
+    }
+
     /// <summary>
     /// Adds Api Key to request header before sending http request to a given endpoint 
     /// </summary>
