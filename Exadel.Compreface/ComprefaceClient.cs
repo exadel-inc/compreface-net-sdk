@@ -1,4 +1,6 @@
-﻿using Exadel.Compreface.Configuration;
+﻿using System.Text.Json;
+using Exadel.Compreface.Configuration;
+using Exadel.Compreface.Helpers;
 using Exadel.Compreface.Services;
 using Flurl.Http;
 using Microsoft.Extensions.Configuration;
@@ -25,9 +27,9 @@ public class ComprefaceClient
 
     public ComprefaceClient(ComprefaceConfiguration configuration)
     {
-        var apiClient = new ApiClient(); 
+        var apiClient = new ApiClient();
         
-        InitializeApiKeyInRequestHeader(configuration.ApiKey);
+        InitializeComprefaceClientConfigs(configuration.ApiKey);
         
         FaceDetectionService = new FaceDetectionService(apiClient: apiClient, configuration: configuration);
         ExampleSubjectService = new SubjectExampleService(apiClient: apiClient, configuration: configuration);
@@ -46,5 +48,19 @@ public class ComprefaceClient
         {
             apiCall.Request.Headers.Add("x-api-key", apiKey);
         };
+    }
+
+    /// <summary>
+    /// Creates the instance of <see cref="SystemJsonSerializer"/> instance and binds it to Flurl's built-in JsonSerializer 
+    /// </summary>
+    private static void InitializeSnakeCaseJsonConfigs()
+    {
+        var jsonOptions = new JsonSerializerOptions()
+        {
+            PropertyNamingPolicy = SnakeCaseToCamelCaseNamingPolicy.Policy,
+            PropertyNameCaseInsensitive = true,
+        };
+
+        FlurlHttp.GlobalSettings.JsonSerializer = new SystemJsonSerializer(jsonOptions);
     }
 }
