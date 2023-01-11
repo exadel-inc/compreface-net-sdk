@@ -3,8 +3,10 @@ using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
 
 namespace Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection
 {
-    public class FaceDetectionResponse : BaseResult
+    public class FaceDetectionResponse
     {
-        public PluginVersions PluginVersions { get; set; }
+            public IList<BaseResult> Result { get; set; }
+
+            public PluginVersions PluginsVersions { get; set; }
     }
 }

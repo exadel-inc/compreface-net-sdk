@@ -52,7 +52,7 @@ public class ExampleSubjectService
             });
         
         var response = await _apiClient
-            .PostJsonAsync<AddBase64ExampleSubjectResponse>(requestUrlWithQueryParameters, request.File);
+            .PostJsonAsync<AddBase64ExampleSubjectResponse>(requestUrlWithQueryParameters,new { file = request.File });
 
         return response;
     }
