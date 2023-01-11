@@ -1,4 +1,6 @@
-﻿using Exadel.Compreface.Configuration;
+﻿using System.Text.Json;
+using Exadel.Compreface.Configuration;
+using Exadel.Compreface.Helpers;
 using Exadel.Compreface.Services;
 using Flurl.Http;
 using Microsoft.Extensions.Configuration;
@@ -25,15 +27,24 @@ public class ComprefaceClient
 
     public ComprefaceClient(ComprefaceConfiguration configuration)
     {
-        var apiClient = new ApiClient(); 
+        var apiClient = new ApiClient();
         
-        InitializeApiKeyInRequestHeader(configuration.ApiKey);
+        InitializeComprefaceClientConfigs(configuration.ApiKey);
         
-        FaceDetectionService = new FaceDetectionService(apiClient: apiClient, configuration: configuration);
-        ExampleSubjectService = new ExampleSubjectService(apiClient: apiClient, configuration: configuration);
-        SubjectService = new SubjectService(apiClient: apiClient, configuration: configuration);
-        RecognitionService = new RecognitionService(apiClient: apiClient, configuration: configuration);
-        FaceVerificationService = new FaceVerificationService(apiClient: apiClient, configuration: configuration);
+        FaceDetectionService = new FaceDetectionService(configuration, apiClient);
+        ExampleSubjectService = new ExampleSubjectService(configuration, apiClient);
+        SubjectService = new SubjectService(configuration, apiClient);
+        RecognitionService = new RecognitionService(configuration, apiClient);
+        FaceVerificationService = new FaceVerificationService(configuration, apiClient);
+    }
+
+    /// <summary>
+    /// Configures all the needed external configs for <see cref="ComprefaceClient"/> 
+    /// </summary>
+    private static void InitializeComprefaceClientConfigs(string apiKey)
+    {
+        InitializeApiKeyInRequestHeader(apiKey);
+        InitializeSnakeCaseJsonConfigs();
     }
     
     /// <summary>
@@ -46,5 +57,19 @@ public class ComprefaceClient
         {
             apiCall.Request.Headers.Add("x-api-key", apiKey);
         };
+    }
+
+    /// <summary>
+    /// Creates the instance of <see cref="SystemJsonSerializer"/> instance and binds it to Flurl's built-in JsonSerializer 
+    /// </summary>
+    private static void InitializeSnakeCaseJsonConfigs()
+    {
+        var jsonOptions = new JsonSerializerOptions()
+        {
+            PropertyNamingPolicy = SnakeCaseToCamelCaseNamingPolicy.Policy,
+            PropertyNameCaseInsensitive = true,
+        };
+
+        FlurlHttp.GlobalSettings.JsonSerializer = new SystemJsonSerializer(jsonOptions);
     }
 }
