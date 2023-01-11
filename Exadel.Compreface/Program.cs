@@ -1,10 +1,4 @@
-﻿using System.Text.Json;
-using Exadel.Compreface.Configuration;
-using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
-using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
-using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
-using Exadel.Compreface.Helpers;
-using Flurl.Http;
+﻿using Exadel.Compreface.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,24 +20,16 @@ public class Program
 
         var comprefaceConfiguration = serviceProvider.GetRequiredService<IOptions<ComprefaceConfiguration>>().Value;
         var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-
-        var jsonOptions = new JsonSerializerOptions()
-        {
-            PropertyNamingPolicy = SnakeCaseToCamelCaseNamingPolicy.Policy,
-            PropertyNameCaseInsensitive = true,
-        };
-
-        FlurlHttp.GlobalSettings.JsonSerializer = new SystemJsonSerializer(jsonOptions);
-
+        
         var comprefaceClientV1 = new ComprefaceClient(
             configuration: configuration,
             sectionForApiKey: "Compreface:ApiKey (optional naming)",
             sectionForBaseUrl: "Compreface:BaseUrl (optional naming)");
-        
+
         var comprefaceClientV2 = new ComprefaceClient(
             apiKey: "COMPREFACE API KEY", 
             host: "HOST BASE URL");
-        
+
         var comprefaceClientV3 = new ComprefaceClient(comprefaceConfiguration);
     }
 }

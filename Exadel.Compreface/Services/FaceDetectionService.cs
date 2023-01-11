@@ -9,26 +9,31 @@ namespace Exadel.Compreface.Services
     public class FaceDetectionService
     {
         private readonly IComprefaceConfiguration _configuration;
+        private readonly IApiClient _apiClient;
 
-        public FaceDetectionService(ComprefaceConfiguration configuration)
+        public FaceDetectionService(ComprefaceConfiguration configuration, IApiClient apiClient)
         {
             _configuration= configuration;
+            _apiClient = apiClient;
         }
 
         public async Task<FaceDetectionResponse> FaceDetectionAsync(FaceDetectionRequest faceDetectionRequest)
         {
             var requestUrl = $"{_configuration.BaseUrl}detection/detect";
-
-            var response = await requestUrl
+            var requestUrlWithQueryParameters = requestUrl
                 .SetQueryParams(new
                 {
                     limit = faceDetectionRequest.Limit,
                     det_prob_threshold = faceDetectionRequest.DetProbThreshold,
                     face_plugins = string.Join(",", faceDetectionRequest.FacePlugins),
                     status = faceDetectionRequest.Status,
-                })
-                .PostMultipartAsync<FaceDetectionResponse>(mp =>
-                    mp.AddFile("file", fileName: faceDetectionRequest.FileName, path: faceDetectionRequest.FilePath));
+                });
+            
+            var response = await 
+                _apiClient.PostMultipartAsync<FaceDetectionResponse>(
+                    requestUrl: requestUrlWithQueryParameters,
+                    buildContent: mp =>
+                        mp.AddFile("file", fileName: faceDetectionRequest.FileName, path: faceDetectionRequest.FilePath));
 
             return response;
         }
@@ -36,16 +41,19 @@ namespace Exadel.Compreface.Services
         public async Task<FaceDetectionBase64Response> FaceDetectionBase64Async(FaceDetectionBase64Request faceDetectionRequest)
         {
             var requestUrl = $"{_configuration.BaseUrl}detection/detect";
-
-            var response = await requestUrl
+            var requestUrlWithQueryParameters = requestUrl
                 .SetQueryParams(new
                 {
                     limit = faceDetectionRequest.Limit,
                     det_prob_threshold = faceDetectionRequest.DetProbThreshold,
                     face_plugins = string.Join(",", faceDetectionRequest.FacePlugins),
                     status = faceDetectionRequest.Status,
-                })
-                .PostJsonAsync<FaceDetectionBase64Response>(new { file = faceDetectionRequest.File });
+                });
+            
+            var response = await 
+                _apiClient.PostJsonAsync<FaceDetectionBase64Response>(
+                    requestUrl: requestUrlWithQueryParameters, 
+                    body: new { file = faceDetectionRequest.File });
 
             return response;
         }
