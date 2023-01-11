@@ -6,7 +6,7 @@ using Flurl.Http.Content;
 using Moq;
 using Tynamix.ObjectFiller;
 
-namespace Exadel.Compreface.UnitTests;
+namespace Exadel.Compreface.UnitTests.Services;
 
 public class SubjectExampleServiceTests
 {
@@ -28,7 +28,7 @@ public class SubjectExampleServiceTests
     {
         return new Filler<string>().Create();
     }
-    
+
     [Fact]
     public async Task AddExampleSubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
@@ -42,20 +42,20 @@ public class SubjectExampleServiceTests
                 It.IsAny<HttpCompletionOption>(),
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AddExampleSubjectResponse());
-        
+
         // Act
         var response = await _exampleSubjectService.AddSubjectExampleAsync(request);
         
         // Assert
         Assert.IsType<AddExampleSubjectResponse>(response);
 
-        _apiClientMock.Verify(client => 
+        _apiClientMock.Verify(client =>
             client.PostMultipartAsync<AddExampleSubjectResponse>(
-                It.IsAny<Flurl.Url>(), 
-                It.IsAny<Action<CapturedMultipartContent>>(), 
-                It.IsAny<HttpCompletionOption>(), 
+                It.IsAny<Flurl.Url>(),
+                It.IsAny<Action<CapturedMultipartContent>>(),
+                It.IsAny<HttpCompletionOption>(),
                 It.IsAny<CancellationToken>()), Times.Once);
-        
+
         _apiClientMock.VerifyNoOtherCalls();
     }
 
@@ -72,21 +72,21 @@ public class SubjectExampleServiceTests
                     It.IsAny<HttpCompletionOption>(),
                     It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AddBase64ExampleSubjectResponse());
-        
-        
+
+
         //Act
         var response = await _exampleSubjectService.AddBase64SubjectExampleAsync(request);
         
         // Assert
         Assert.IsType<AddBase64ExampleSubjectResponse>(response);
-        
-        _apiClientMock.Verify(client => 
+
+        _apiClientMock.Verify(client =>
             client.PostJsonAsync<AddBase64ExampleSubjectResponse>(
-                It.IsAny<Flurl.Url>(), 
-                It.IsAny<Action<CapturedMultipartContent>>(), 
-                It.IsAny<HttpCompletionOption>(), 
+                It.IsAny<Flurl.Url>(),
+                It.IsAny<Action<CapturedMultipartContent>>(),
+                It.IsAny<HttpCompletionOption>(),
                 It.IsAny<CancellationToken>()), Times.Once);
-        
+
         _apiClientMock.VerifyNoOtherCalls();
     }
 }
