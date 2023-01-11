@@ -7,7 +7,7 @@ namespace Exadel.Compreface;
 
 public class ComprefaceClient
 {
-    public ExampleSubjectService ExampleSubjectService { get; private set; }
+    public SubjectExampleService ExampleSubjectService { get; private set; }
 
     public SubjectService SubjectService { get; private set; }
 
@@ -30,7 +30,7 @@ public class ComprefaceClient
         InitializeApiKeyInRequestHeader(configuration.ApiKey);
         
         FaceDetectionService = new FaceDetectionService(apiClient: apiClient, configuration: configuration);
-        ExampleSubjectService = new ExampleSubjectService(apiClient: apiClient, configuration: configuration);
+        ExampleSubjectService = new SubjectExampleService(apiClient: apiClient, configuration: configuration);
         SubjectService = new SubjectService(apiClient: apiClient, configuration: configuration);
         RecognitionService = new RecognitionService(apiClient: apiClient, configuration: configuration);
         FaceVerificationService = new FaceVerificationService(apiClient: apiClient, configuration: configuration);

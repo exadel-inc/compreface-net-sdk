@@ -12,18 +12,18 @@ using Flurl;
 
 namespace Exadel.Compreface.Services;
 
-public class ExampleSubjectService
+public class SubjectExampleService
 {
     private readonly IComprefaceConfiguration _configuration;
     private readonly IApiClient _apiClient;
 
-    public ExampleSubjectService(ComprefaceConfiguration configuration, IApiClient apiClient)
+    public SubjectExampleService(ComprefaceConfiguration configuration, IApiClient apiClient)
     {
         _configuration = configuration;
         _apiClient = apiClient;
     }
 
-    public async Task<AddExampleSubjectResponse> AddExampleSubjectAsync(AddExampleSubjectRequest request)
+    public async Task<AddExampleSubjectResponse> AddSubjectExampleAsync(AddExampleSubjectRequest request)
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
@@ -41,7 +41,7 @@ public class ExampleSubjectService
         return response;
     }
 
-    public async Task<AddBase64ExampleSubjectResponse> AddBase64ExampleSubjectAsync(AddBase64ExampleSubjectRequest request)
+    public async Task<AddBase64ExampleSubjectResponse> AddBase64SubjectExampleAsync(AddBase64ExampleSubjectRequest request)
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
@@ -57,7 +57,7 @@ public class ExampleSubjectService
         return response;
     }
 
-    public async Task<ListAllExampleSubjectResponse> GetAllExampleSubjectsAsync(ListAllExampleSubjectRequest request)
+    public async Task<ListAllExampleSubjectResponse> GetAllSubjectExamplesAsync(ListAllExampleSubjectRequest request)
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/faces";
         var requestUrlWithQueryParameters = requestUrl

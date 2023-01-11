@@ -8,12 +8,12 @@ using Tynamix.ObjectFiller;
 
 namespace Exadel.Compreface.UnitTests;
 
-public class ExampleSubjectServiceTests
+public class SubjectExampleServiceTests
 {
     private readonly Mock<IApiClient> _apiClientMock;
-    private readonly ExampleSubjectService _exampleSubjectService;
+    private readonly SubjectExampleService _exampleSubjectService;
 
-    public ExampleSubjectServiceTests()
+    public SubjectExampleServiceTests()
     {
         _apiClientMock = new Mock<IApiClient>();
         var randomString = GetRandomString();
@@ -21,7 +21,7 @@ public class ExampleSubjectServiceTests
         var baseUrl = randomString;
         var configuration = new ComprefaceConfiguration(apiKey, baseUrl);
         
-        _exampleSubjectService = new ExampleSubjectService(configuration, _apiClientMock.Object);
+        _exampleSubjectService = new SubjectExampleService(configuration, _apiClientMock.Object);
     }
 
     private string GetRandomString()
@@ -44,7 +44,7 @@ public class ExampleSubjectServiceTests
             .ReturnsAsync(new AddExampleSubjectResponse());
         
         // Act
-        var response = await _exampleSubjectService.AddExampleSubjectAsync(request);
+        var response = await _exampleSubjectService.AddSubjectExampleAsync(request);
         
         // Assert
         Assert.IsType<AddExampleSubjectResponse>(response);
@@ -75,7 +75,7 @@ public class ExampleSubjectServiceTests
         
         
         //Act
-        var response = await _exampleSubjectService.AddBase64ExampleSubjectAsync(request);
+        var response = await _exampleSubjectService.AddBase64SubjectExampleAsync(request);
         
         // Assert
         Assert.IsType<AddBase64ExampleSubjectResponse>(response);
