@@ -5,8 +5,8 @@ namespace Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection
 {
     public class FaceDetectionResponse
     {
-        public IList<BaseResult> Result { get; set; }   
-        
-        public PluginVersions PluginsVersions { get; set; }
+            public IList<BaseResult> Result { get; set; }
+
+            public PluginVersions PluginsVersions { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace Exadel.Compreface;
 
 public class ComprefaceClient
 {
-    public ExampleSubjectService ExampleSubjectService { get; private set; }
+    public SubjectExampleService ExampleSubjectService { get; private set; }
 
     public SubjectService SubjectService { get; private set; }
 
@@ -31,11 +31,11 @@ public class ComprefaceClient
         
         InitializeComprefaceClientConfigs(configuration.ApiKey);
         
-        FaceDetectionService = new FaceDetectionService(configuration, apiClient);
-        ExampleSubjectService = new ExampleSubjectService(configuration, apiClient);
-        SubjectService = new SubjectService(configuration, apiClient);
-        RecognitionService = new RecognitionService(configuration, apiClient);
-        FaceVerificationService = new FaceVerificationService(configuration, apiClient);
+        FaceDetectionService = new FaceDetectionService(apiClient: apiClient, configuration: configuration);
+        ExampleSubjectService = new SubjectExampleService(apiClient: apiClient, configuration: configuration);
+        SubjectService = new SubjectService(apiClient: apiClient, configuration: configuration);
+        RecognitionService = new RecognitionService(apiClient: apiClient, configuration: configuration);
+        FaceVerificationService = new FaceVerificationService(apiClient: apiClient, configuration: configuration);
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ public class ComprefaceClient
         InitializeApiKeyInRequestHeader(apiKey);
         InitializeSnakeCaseJsonConfigs();
     }
-    
+
     /// <summary>
     /// Adds Api Key to request header before sending http request to a given endpoint 
     /// </summary>
