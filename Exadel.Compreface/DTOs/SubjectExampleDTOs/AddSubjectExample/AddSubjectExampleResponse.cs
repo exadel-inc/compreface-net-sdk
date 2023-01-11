@@ -1,6 +1,6 @@
 ﻿namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 
-public class AddExampleSubjectResponse
+public class AddSubjectExampleResponse
 {
     public Guid ImageId { get; set; }
 

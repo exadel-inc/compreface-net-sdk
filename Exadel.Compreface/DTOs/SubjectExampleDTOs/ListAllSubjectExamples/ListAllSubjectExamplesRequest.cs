@@ -1,6 +1,6 @@
 ﻿namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
 
-public class ListAllExampleSubjectRequest
+public class ListAllSubjectExamplesRequest
 {
     public int? Page { get; set; }
     

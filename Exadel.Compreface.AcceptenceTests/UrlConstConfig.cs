@@ -22,6 +22,8 @@
 
         public const string SUBJECT_NAME = "Stars";
 
+        public const string TEST_SUBJECT_NAME = "Test Subject Name";
+
         public const string FILE_NAME = "brad-pitt_24.jpg";
 
         public const string FILE_PATH = "C:\\Users\\ukalenik\\Desktop\\brad-pitt_24.jpg";

@@ -33,24 +33,24 @@ public class SubjectExampleServiceTests
     public async Task AddExampleSubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
-        var request = new AddExampleSubjectRequest();
+        var request = new AddSubjectExampleRequest();
 
         _apiClientMock.Setup(apiClient =>
-            apiClient.PostMultipartAsync<AddExampleSubjectResponse>(
+            apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
                 It.IsAny<Flurl.Url>(),
                 It.IsAny<Action<CapturedMultipartContent>>(),
                 It.IsAny<HttpCompletionOption>(),
                 It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new AddExampleSubjectResponse());
+            .ReturnsAsync(new AddSubjectExampleResponse());
         
         // Act
         var response = await _exampleSubjectService.AddSubjectExampleAsync(request);
         
         // Assert
-        Assert.IsType<AddExampleSubjectResponse>(response);
+        Assert.IsType<AddSubjectExampleResponse>(response);
 
         _apiClientMock.Verify(client => 
-            client.PostMultipartAsync<AddExampleSubjectResponse>(
+            client.PostMultipartAsync<AddSubjectExampleResponse>(
                 It.IsAny<Flurl.Url>(), 
                 It.IsAny<Action<CapturedMultipartContent>>(), 
                 It.IsAny<HttpCompletionOption>(), 
@@ -63,25 +63,25 @@ public class SubjectExampleServiceTests
     public async Task AddBase64ExampleSubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
-        var request = new AddBase64ExampleSubjectRequest();
+        var request = new AddBase64SubjectExampleRequest();
 
         _apiClientMock.Setup(apiClient =>
-                apiClient.PostJsonAsync<AddBase64ExampleSubjectResponse>(
+                apiClient.PostJsonAsync<AddBase64SubjectExampleResponse>(
                     It.IsAny<Flurl.Url>(),
                     It.IsAny<Action<CapturedMultipartContent>>(),
                     It.IsAny<HttpCompletionOption>(),
                     It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new AddBase64ExampleSubjectResponse());
+            .ReturnsAsync(new AddBase64SubjectExampleResponse());
         
         
         //Act
         var response = await _exampleSubjectService.AddBase64SubjectExampleAsync(request);
         
         // Assert
-        Assert.IsType<AddBase64ExampleSubjectResponse>(response);
+        Assert.IsType<AddBase64SubjectExampleResponse>(response);
         
         _apiClientMock.Verify(client => 
-            client.PostJsonAsync<AddBase64ExampleSubjectResponse>(
+            client.PostJsonAsync<AddBase64SubjectExampleResponse>(
                 It.IsAny<Flurl.Url>(), 
                 It.IsAny<Action<CapturedMultipartContent>>(), 
                 It.IsAny<HttpCompletionOption>(), 
