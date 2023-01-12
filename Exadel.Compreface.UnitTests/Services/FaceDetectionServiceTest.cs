@@ -1,6 +1,5 @@
 ﻿using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
-using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.Services;
 using Flurl.Http.Content;
 using Flurl;
