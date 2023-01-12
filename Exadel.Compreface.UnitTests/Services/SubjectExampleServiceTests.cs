@@ -6,7 +6,7 @@ using Flurl.Http.Content;
 using Moq;
 using Tynamix.ObjectFiller;
 
-namespace Exadel.Compreface.UnitTests;
+namespace Exadel.Compreface.UnitTests.Services;
 
 public class SubjectExampleServiceTests
 {
@@ -28,7 +28,7 @@ public class SubjectExampleServiceTests
     {
         return new Filler<string>().Create();
     }
-    
+
     [Fact]
     public async Task AddExampleSubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
@@ -55,7 +55,7 @@ public class SubjectExampleServiceTests
                 It.IsAny<Action<CapturedMultipartContent>>(), 
                 It.IsAny<HttpCompletionOption>(), 
                 It.IsAny<CancellationToken>()), Times.Once);
-        
+
         _apiClientMock.VerifyNoOtherCalls();
     }
 
@@ -86,7 +86,7 @@ public class SubjectExampleServiceTests
                 It.IsAny<Action<CapturedMultipartContent>>(), 
                 It.IsAny<HttpCompletionOption>(), 
                 It.IsAny<CancellationToken>()), Times.Once);
-        
+
         _apiClientMock.VerifyNoOtherCalls();
     }
 }
