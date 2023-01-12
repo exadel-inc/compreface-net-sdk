@@ -4,20 +4,28 @@
     {
         public const string BASE_URL = "http://localhost:8000/api/v1/";
 
-        //public const string FACE_DETECTION_SERVICE_QUERY = "detection/detect/";
+        /// <summary>
+        /// Firs of all you should create CompreFace account
+        /// => Create an application inside your account
+        /// => Create new Detection service
+        /// => Copy and paste here created Api key 
+        /// </summary>
+        public const string API_KEY_DETECTION_SERVICE = "Detection service api key";
 
-        //public const string EXAMPLE_SUBJECT_SERVICE_QUERY = "recognition/faces/";
-
-        //public const string RECOGNITION_SERVICE_QUERY = "recognition/recognize";
-
-        //public const string SUBJECT_SERVICE_QUERY = "recognition/recognize";
-
-        public const string API_KEY_DETECTION_SERVICE = "d2403a77-ae38-41af-ab94-8fb82515dd59";
-
-        public const string API_KEY_SUBJECT_SERVICE = "9cd290ce-62be-4c77-ae68-4a6605453783";
-
+        /// <summary>
+        /// Firs of all you should create CompreFace account
+        /// => Create an application inside your account
+        /// => Create new Recognition service
+        /// => Copy and paste here created Api key 
+        /// </summary>
         public const string API_KEY_RECOGNITION_SERVICE = "9cd290ce-62be-4c77-ae68-4a6605453783";
 
+        /// <summary>
+        /// Firs of all you should create CompreFace account
+        /// => Create an application inside your account
+        /// => Create new Verification service
+        /// => Copy and paste here created Api key 
+        /// </summary>
         public const string API_KEY_VERIFICATION_SERVICE = "d2403a77-ae38-41af-ab94-8fb82515dd59";
 
         public const string SUBJECT_NAME = "Stars";
@@ -26,7 +34,7 @@
 
         public const string FILE_NAME = "brad-pitt_24.jpg";
 
-        public const string FILE_PATH = "C:\\Users\\ukalenik\\Desktop\\brad-pitt_24.jpg";
+        public const string FILE_PATH = "TestData\\brad-pitt_24.jpg";
 
         public const string IMAGE_ID = "b4da2515-b1d9-4a92-b9bf-576ca7954d75";
 

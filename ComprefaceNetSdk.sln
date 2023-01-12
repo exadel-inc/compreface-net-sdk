@@ -5,9 +5,9 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exadel.Compreface", "Exadel.Compreface\Exadel.Compreface.csproj", "{F056624D-D598-4D8A-82C3-D64A7E395B3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exadel.Compreface.UnitTests", "Exadel.Compreface.UnitTests\Exadel.Compreface.UnitTests.csproj", "{BA070E01-7A81-40D5-A470-740DACBF3B01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exadel.Compreface.UnitTests", "Exadel.Compreface.UnitTests\Exadel.Compreface.UnitTests.csproj", "{BA070E01-7A81-40D5-A470-740DACBF3B01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exadel.Compreface.AcceptenceTests", "Exadel.Compreface.AcceptenceTests\Exadel.Compreface.AcceptenceTests.csproj", "{84E10A9B-1C7A-4C63-916C-31A2A0C784DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exadel.Compreface.AcceptenceTests", "Exadel.Compreface.AcceptenceTests\Exadel.Compreface.AcceptenceTests.csproj", "{84E10A9B-1C7A-4C63-916C-31A2A0C784DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
