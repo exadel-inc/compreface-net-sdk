@@ -25,8 +25,4 @@
       <ProjectReference Include="..\Exadel.Compreface\Exadel.Compreface.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="TestData\" />
-    </ItemGroup>
-
 </Project>

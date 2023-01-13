@@ -31,14 +31,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task AddSubjectExampleAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            string filePath = Path.GetFullPath($"..\\..\\..\\{FILE_PATH}");
             var addNewSubjectResponse = await comprefaceApiClient.SubjectService.AddSubject(
                 new AddSubjectRequest() { Subject = TEST_SUBJECT_NAME });
 
             var subjectExample = new AddSubjectExampleRequest()
             {
                 DetProbThreShold = 0.81m,
-                FilePath = filePath,
+                FilePath = FILE_PATH,
                 Subject = addNewSubjectResponse.Subject,
                 FileName = FILE_NAME
             };
