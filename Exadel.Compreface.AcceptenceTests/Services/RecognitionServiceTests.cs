@@ -10,7 +10,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
     public class RecognitionServiceTests
     {
         private const string BASE_URL = "http://localhost:8000/api/v1/";
-        private const string API_KEY = "1c4ed2f6-beb6-45c0-8126-547d26bde205";
+        private const string API_KEY = "00000000-0000-0000-0000-000000000002";
         private const string FILE_PATH = @"..\..\..\Resources\Images\brad-pitt_24.jpg";
         private const string FILE_NAME = "brad-pitt_24.jpg";
 
@@ -26,7 +26,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         {
             var configuration = new ComprefaceConfiguration(API_KEY, BASE_URL);
             var client = new ComprefaceClient(configuration);
-            var imageId = "f7588e3d-f7ed-4e6f-8b9e-8580d30e8a2c";
+            var imageId = "4c3ba0aa-e383-4a57-b9f5-926bbecc15b1";
             var detProbThreshold = 0.85m;
             var status = true;
             var facePlugins = new List<string>()
