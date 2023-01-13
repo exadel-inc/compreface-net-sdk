@@ -10,7 +10,7 @@
         /// => Create new Detection service
         /// => Copy and paste here created Api key 
         /// </summary>
-        public const string API_KEY_DETECTION_SERVICE = "Detection service api key";
+        public const string API_KEY_DETECTION_SERVICE = "00000000-0000-0000-0000-000000000003";
 
         /// <summary>
         /// Firs of all you should create CompreFace account
@@ -18,7 +18,7 @@
         /// => Create new Recognition service
         /// => Copy and paste here created Api key 
         /// </summary>
-        public const string API_KEY_RECOGNITION_SERVICE = "Recognition service api key";
+        public const string API_KEY_RECOGNITION_SERVICE = "00000000-0000-0000-0000-000000000002";
 
         /// <summary>
         /// Firs of all you should create CompreFace account
@@ -26,7 +26,7 @@
         /// => Create new Verification service
         /// => Copy and paste here created Api key 
         /// </summary>
-        public const string API_KEY_VERIFICATION_SERVICE = "Verification service api key";
+        public const string API_KEY_VERIFICATION_SERVICE = "00000000-0000-0000-0000-000000000004";
 
         public const string SUBJECT_NAME = "Stars";
 
