@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
+﻿namespace Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
 
 public class GetAllSubjectResponse
 {

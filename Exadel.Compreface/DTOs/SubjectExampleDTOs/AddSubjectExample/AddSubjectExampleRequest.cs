@@ -1,6 +1,6 @@
 ﻿namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 
-public class AddExampleSubjectRequest
+public class AddSubjectExampleRequest
 {
     public string Subject { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject
 {
-    public class AddBase64ExampleSubjectRequest
+    public class AddBase64SubjectExampleRequest
     {
         public string Subject { get; set; }
 
