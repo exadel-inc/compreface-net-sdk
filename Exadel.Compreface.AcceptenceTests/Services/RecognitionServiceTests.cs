@@ -4,16 +4,12 @@ using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
 using Exadel.Compreface.Services;
+using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
 {
     public class RecognitionServiceTests
     {
-        private const string BASE_URL = "http://localhost:8000/api/v1/";
-        private const string API_KEY = "00000000-0000-0000-0000-000000000002";
-        private const string FILE_PATH = @"..\..\..\Resources\Images\brad-pitt_24.jpg";
-        private const string FILE_NAME = "brad-pitt_24.jpg";
-
         private RecognitionService _recognitionService;
 
         private RecognizeFaceFromImageRequest _request;
@@ -24,9 +20,8 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
         public RecognitionServiceTests()
         {
-            var configuration = new ComprefaceConfiguration(API_KEY, BASE_URL);
+            var configuration = new ComprefaceConfiguration(API_KEY_RECOGNITION_SERVICE, BASE_URL);
             var client = new ComprefaceClient(configuration);
-            var imageId = "4c3ba0aa-e383-4a57-b9f5-926bbecc15b1";
             var detProbThreshold = 0.85m;
             var status = true;
             var facePlugins = new List<string>()
@@ -61,7 +56,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 DetProbThreshold = detProbThreshold,
                 FacePlugins = facePlugins,
                 Status = status,
-                ImageId = new Guid(imageId)
+                ImageId = new Guid(IMAGE_ID)
             };
             _verifyRequest64 = new VerifyFacesFromImageWithBase64Request()
             {
@@ -69,7 +64,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 DetProbThreshold = detProbThreshold,
                 FacePlugins = facePlugins,
                 Status = status,
-                ImageId = new Guid(imageId)
+                ImageId = new Guid(IMAGE_ID)
             };
         }
 
