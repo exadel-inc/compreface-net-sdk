@@ -23,7 +23,7 @@ public class SubjectExampleService
         _apiClient = apiClient;
     }
 
-    public async Task<AddExampleSubjectResponse> AddSubjectExampleAsync(AddExampleSubjectRequest request)
+    public async Task<AddSubjectExampleResponse> AddSubjectExampleAsync(AddSubjectExampleRequest request)
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
@@ -33,7 +33,7 @@ public class SubjectExampleService
                 det_prob_threshold = request.DetProbThreShold,
             });
         
-        var response = await _apiClient.PostMultipartAsync<AddExampleSubjectResponse>(
+        var response = await _apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
             requestUrl: requestUrlWithQueryParameters,
             buildContent: mp =>
                 mp.AddFile("file", fileName: request.FileName, path: request.FilePath)); 
@@ -41,7 +41,7 @@ public class SubjectExampleService
         return response;
     }
 
-    public async Task<AddBase64ExampleSubjectResponse> AddBase64SubjectExampleAsync(AddBase64ExampleSubjectRequest request)
+    public async Task<AddBase64SubjectExampleResponse> AddBase64SubjectExampleAsync(AddBase64SubjectExampleRequest request)
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
@@ -52,12 +52,12 @@ public class SubjectExampleService
             });
         
         var response = await _apiClient
-            .PostJsonAsync<AddBase64ExampleSubjectResponse>(requestUrlWithQueryParameters,new { file = request.File });
+            .PostJsonAsync<AddBase64SubjectExampleResponse>(requestUrlWithQueryParameters,new { file = request.File });
 
         return response;
     }
 
-    public async Task<ListAllExampleSubjectResponse> GetAllSubjectExamplesAsync(ListAllExampleSubjectRequest request)
+    public async Task<ListAllSubjectExamplesResponse> GetAllSubjectExamplesAsync(ListAllSubjectExamplesRequest request)
     {
         var requestUrl = $"{_configuration.BaseUrl}recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
@@ -68,7 +68,7 @@ public class SubjectExampleService
                 subject = request.Subject,
             });
             
-        var response = await _apiClient.GetJsonAsync<ListAllExampleSubjectResponse>(requestUrlWithQueryParameters);
+        var response = await _apiClient.GetJsonAsync<ListAllSubjectExamplesResponse>(requestUrlWithQueryParameters);
 
         return response;
     }
@@ -106,13 +106,12 @@ public class SubjectExampleService
         var response = await 
             _apiClient.PostJsonAsync<List<Face>>(requestUrlWithQueryParameters, deleteMultipleExamplesRequest.ImageIdList);
 
-        return new DeleteMultipleExamplesResponse() { Faces = response }; ;
-
+        return new DeleteMultipleExamplesResponse() { Faces = response };
     }
 
     public async Task<byte[]> DownloadImageByIdAsync(DownloadImageByIdRequest downloadImageByIdRequest)
     {
-        var requestUrl = $"{_configuration.BaseUrl}recognition/faces";
+        var requestUrl = $"{_configuration.BaseUrl}static";
         var requestUrlWithQueryParameters = requestUrl
             .AppendPathSegments(
                 downloadImageByIdRequest.RecognitionApiKey.ToString(),
