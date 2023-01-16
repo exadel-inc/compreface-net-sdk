@@ -75,7 +75,6 @@ public class SubjectExampleServiceTests
                     It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AddBase64SubjectExampleResponse());
         
-        
         //Act
         var response = await _exampleSubjectService.AddBase64SubjectExampleAsync(request);
         
