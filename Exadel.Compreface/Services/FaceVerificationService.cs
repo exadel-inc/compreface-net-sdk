@@ -1,3 +1,4 @@
+using Exadel.Compreface.Clients.Interfaces;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
@@ -19,7 +20,7 @@ public class FaceVerificationService
 
     public async Task<FaceVerificationResponse> VerifyImageAsync(FaceVerificationRequest request)
     {
-        var requestUrl = $"{_comprefaceConfiguration.BaseUrl}verification/verify";
+        var requestUrl = $"{_comprefaceConfiguration.Domain}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -28,7 +29,9 @@ public class FaceVerificationService
                 face_plugins = string.Join(",", request.FacePlugins),
                 status = request.Status,
             });
-        
+
+        requestUrlWithQueryParameters.Port = Convert.ToInt32(_comprefaceConfiguration.Port);
+
         var response = await 
             _apiClient.PostMultipartAsync<FaceVerificationResponse>(
                 requestUrl: requestUrlWithQueryParameters,
@@ -46,7 +49,7 @@ public class FaceVerificationService
     
     public async Task<FaceVerificationResponse> VerifyBase64ImageAsync(FaceVerificationWithBase64Request request)
     {
-        var requestUrl = $"{_comprefaceConfiguration.BaseUrl}verification/verify";
+        var requestUrl = $"{_comprefaceConfiguration.Domain}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -55,7 +58,9 @@ public class FaceVerificationService
                 face_plugins = string.Join(",", request.FacePlugins),
                 status = request.Status,
             });
-        
+
+        requestUrlWithQueryParameters.Port = Convert.ToInt32(_comprefaceConfiguration.Port);
+
         var response = await 
             _apiClient.PostJsonAsync<FaceVerificationResponse>(
                 requestUrl: requestUrlWithQueryParameters,

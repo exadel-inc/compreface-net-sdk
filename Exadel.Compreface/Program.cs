@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Exadel.Compreface.Clients;
+using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
 
 namespace Exadel.Compreface;
 
@@ -20,16 +22,11 @@ public class Program
 
         var comprefaceConfiguration = serviceProvider.GetRequiredService<IOptions<ComprefaceConfiguration>>().Value;
         var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-        
-        var comprefaceClientV1 = new ComprefaceClient(
-            configuration: configuration,
-            sectionForApiKey: "Compreface:ApiKey (optional naming)",
-            sectionForBaseUrl: "Compreface:BaseUrl (optional naming)");
 
-        var comprefaceClientV2 = new ComprefaceClient(
-            apiKey: "COMPREFACE API KEY", 
-            host: "HOST BASE URL");
+        var faceDetectionClient = new FaceDetectionClient(apiKey: "00000000-0000-0000-0000-000000000003", domain: "http://localhost", port: "8000");
 
-        var comprefaceClientV3 = new ComprefaceClient(comprefaceConfiguration);
+        var faceRecognitionClient = new FaceRecognitionClient(apiKey: "00000000-0000-0000-0000-000000000002", domain: "http://localhost", port: "8000");
+
+        var faceVerificationClient = new FaceVerificationClient(apiKey: "00000000-0000-0000-0000-000000000004", domain: "http://localhost", port: "8000");
     }
 }

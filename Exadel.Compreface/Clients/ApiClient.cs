@@ -1,9 +1,10 @@
-﻿using Exadel.Compreface.Exceptions;
+﻿using Exadel.Compreface.Clients.Interfaces;
+using Exadel.Compreface.Exceptions;
 using Flurl;
 using Flurl.Http;
 using Flurl.Http.Content;
 
-namespace Exadel.Compreface;
+namespace Exadel.Compreface.Clients;
 
 /// <summary>
 /// Wrapper on top of Flurl.Http package's extension methods
@@ -12,7 +13,7 @@ public class ApiClient : IApiClient
 {
     public async Task<TResponse> GetJsonAsync<TResponse>(
         Url requestUrl,
-        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
+        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
         CancellationToken cancellationToken = default)
     {
         try
@@ -23,7 +24,7 @@ public class ApiClient : IApiClient
 
             return response;
         }
-        catch(FlurlHttpTimeoutException exception)
+        catch (FlurlHttpTimeoutException exception)
         {
             throw await ThrowServiceTimeoutExceptionAsync(exception);
         }
@@ -32,23 +33,23 @@ public class ApiClient : IApiClient
             throw await ThrowServiceExceptionAsync(exception);
         }
     }
-    
+
     public async Task<TResponse> GetJsonAsync<TResponse>(
-        string requestUrl, 
-        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
+        string requestUrl,
+        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
         CancellationToken cancellationToken = default)
     {
-        var url = new Flurl.Url(requestUrl);
-        
+        var url = new Url(requestUrl);
+
         var response = await GetJsonAsync<TResponse>(url, completionOption, cancellationToken);
 
         return response;
     }
-    
+
     public async Task<TResponse> PostJsonAsync<TResponse>(
-        Url requestUrl, 
-        object body, 
-        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
+        Url requestUrl,
+        object body,
+        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
         CancellationToken cancellationToken = default)
         where TResponse : class
     {
@@ -60,7 +61,7 @@ public class ApiClient : IApiClient
 
             return response;
         }
-        catch(FlurlHttpTimeoutException exception)
+        catch (FlurlHttpTimeoutException exception)
         {
             throw await ThrowServiceTimeoutExceptionAsync(exception);
         }
@@ -72,21 +73,21 @@ public class ApiClient : IApiClient
 
     public async Task<TResponse> PostJsonAsync<TResponse>(
         string requestUrl,
-        object body, 
-        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
+        object body,
+        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
         CancellationToken cancellationToken = default)
         where TResponse : class
     {
-        var url = new Flurl.Url(requestUrl);
-        
+        var url = new Url(requestUrl);
+
         var response = await PostJsonAsync<TResponse>(url, body, completionOption, cancellationToken);
         return response;
     }
 
     public async Task<TResponse> PutJsonAsync<TResponse>(
         Url requestUrl,
-        object body, 
-        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
+        object body,
+        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
         CancellationToken cancellationToken = default)
     {
         try
@@ -97,7 +98,7 @@ public class ApiClient : IApiClient
 
             return response;
         }
-        catch(FlurlHttpTimeoutException exception)
+        catch (FlurlHttpTimeoutException exception)
         {
             throw await ThrowServiceTimeoutExceptionAsync(exception);
         }
@@ -108,21 +109,21 @@ public class ApiClient : IApiClient
     }
 
     public async Task<TResponse> PutJsonAsync<TResponse>(
-        string requestUrl, 
-        object body, 
-        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
+        string requestUrl,
+        object body,
+        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
         CancellationToken cancellationToken = default)
     {
-        var url = new Flurl.Url(requestUrl);
-        
+        var url = new Url(requestUrl);
+
         var response = await PutJsonAsync<TResponse>(url, body, completionOption, cancellationToken);
 
         return response;
     }
 
     public async Task<TResponse> DeleteJsonAsync<TResponse>(
-        Url requestUrl, 
-        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
+        Url requestUrl,
+        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
         CancellationToken cancellationToken = default)
     {
         try
@@ -133,7 +134,7 @@ public class ApiClient : IApiClient
 
             return response;
         }
-        catch(FlurlHttpTimeoutException exception)
+        catch (FlurlHttpTimeoutException exception)
         {
             throw await ThrowServiceTimeoutExceptionAsync(exception);
         }
@@ -144,12 +145,12 @@ public class ApiClient : IApiClient
     }
 
     public async Task<TResponse> DeleteJsonAsync<TResponse>(
-        string requestUrl, 
-        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
+        string requestUrl,
+        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
         CancellationToken cancellationToken = default)
     {
-        var url = new Flurl.Url(requestUrl);
-        
+        var url = new Url(requestUrl);
+
         var response = await DeleteJsonAsync<TResponse>(url, completionOption, cancellationToken);
 
         return response;
@@ -157,8 +158,8 @@ public class ApiClient : IApiClient
 
     public async Task<TResponse> PostMultipartAsync<TResponse>(
         Url requestUrl,
-        Action<CapturedMultipartContent> buildContent, 
-        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
+        Action<CapturedMultipartContent> buildContent,
+        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
         CancellationToken cancellationToken = default)
     {
         try
@@ -169,7 +170,7 @@ public class ApiClient : IApiClient
 
             return response;
         }
-        catch(FlurlHttpTimeoutException exception)
+        catch (FlurlHttpTimeoutException exception)
         {
             throw await ThrowServiceTimeoutExceptionAsync(exception);
         }
@@ -181,12 +182,12 @@ public class ApiClient : IApiClient
 
     public async Task<TResponse> PostMultipartAsync<TResponse>(
         string requestUrl,
-        Action<CapturedMultipartContent> buildContent, 
-        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, 
+        Action<CapturedMultipartContent> buildContent,
+        HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
         CancellationToken cancellationToken = default)
     {
-        var url = new Flurl.Url(requestUrl);
-        
+        var url = new Url(requestUrl);
+
         var response = await PostMultipartAsync<TResponse>(url, buildContent, completionOption, cancellationToken);
 
         return response;
@@ -208,7 +209,7 @@ public class ApiClient : IApiClient
         {
             throw await ThrowServiceTimeoutExceptionAsync(exception);
         }
-        catch(FlurlHttpException exception)
+        catch (FlurlHttpException exception)
         {
             throw await ThrowServiceExceptionAsync(exception);
         }
@@ -219,19 +220,19 @@ public class ApiClient : IApiClient
         HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
         CancellationToken cancellationToken = default)
     {
-        var url = new Flurl.Url(requestUrl);
-        
+        var url = new Url(requestUrl);
+
         var response = await GetBytesFromRemoteAsync(url, completionOption, cancellationToken);
 
         return response;
     }
-    
+
     private static async Task<ServiceTimeoutException> ThrowServiceTimeoutExceptionAsync(FlurlHttpTimeoutException exception)
     {
         var exceptionMessage = await exception.GetResponseStringAsync();
         return new ServiceTimeoutException(exceptionMessage);
     }
-    
+
     private static async Task<ServiceException> ThrowServiceExceptionAsync(FlurlHttpException exception)
     {
         var exceptionMessage = await exception.GetResponseStringAsync();
