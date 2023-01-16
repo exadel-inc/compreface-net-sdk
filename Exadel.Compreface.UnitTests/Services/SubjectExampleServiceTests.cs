@@ -30,7 +30,7 @@ public class SubjectExampleServiceTests
     }
 
     [Fact]
-    public async Task AddExampleSubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
+    public async Task AddSubjectExampleAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
         var request = new AddExampleSubjectRequest();
@@ -60,7 +60,7 @@ public class SubjectExampleServiceTests
     }
 
     [Fact]
-    public async Task AddBase64ExampleSubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
+    public async Task AddBase64SubjectExampleAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
         var request = new AddBase64ExampleSubjectRequest();
