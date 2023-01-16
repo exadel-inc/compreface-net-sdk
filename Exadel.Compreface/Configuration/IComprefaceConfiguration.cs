@@ -2,7 +2,9 @@
 
 public interface IComprefaceConfiguration
 {
-    public string BaseUrl { get; }
+    public string Domain { get; }
+
+    public string Port { get; }
 
     public string ApiKey { get; }
 }

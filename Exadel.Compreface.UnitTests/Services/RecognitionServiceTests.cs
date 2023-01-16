@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients.Interfaces;
+using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
@@ -19,8 +20,9 @@ namespace Exadel.Compreface.UnitTests.Services
         public RecognitionServiceTests()
         {
             var apiKey = GetRandomString();
-            var baseUrl = GetRandomString();
-            var configuration = new ComprefaceConfiguration(apiKey, baseUrl);
+            var domain = GetRandomString();
+            var port = new Random().Next().ToString();
+            var configuration = new ComprefaceConfiguration(apiKey, domain, port);
 
             _apiClientMock = new Mock<IApiClient>();
             _recognitionService = new RecognitionService(configuration, _apiClientMock.Object);

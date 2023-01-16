@@ -1,3 +1,4 @@
+using Exadel.Compreface.Clients.Interfaces;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
@@ -18,9 +19,10 @@ public class SubjectExampleServiceTests
         _apiClientMock = new Mock<IApiClient>();
         var randomString = GetRandomString();
         var apiKey = randomString;
-        var baseUrl = randomString;
-        var configuration = new ComprefaceConfiguration(apiKey, baseUrl);
-        
+        var domain = randomString;
+        var port = new Random().Next().ToString();
+        var configuration = new ComprefaceConfiguration(apiKey, domain, port);
+
         _exampleSubjectService = new SubjectExampleService(configuration, _apiClientMock.Object);
     }
 
