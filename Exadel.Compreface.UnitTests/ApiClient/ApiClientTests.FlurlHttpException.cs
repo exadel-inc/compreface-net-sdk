@@ -2,9 +2,7 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
 using Exadel.Compreface.Exceptions;
 using Flurl.Http;
-using Flurl.Http.Testing;
 using Moq;
-using Tynamix.ObjectFiller;
 
 namespace Exadel.Compreface.UnitTests.ApiClient;
 
@@ -13,7 +11,7 @@ public partial class ApiClientTests
     [Fact]
     public async Task GetJsonAsync_ShouldHandleFlurlHttpExceptionAndThrowServiceException()
     {
-        _httpTest.RespondWith(ExceptionMessage, 400);
+        _httpTest.RespondWith(ExceptionMessage, BadRequestStatusCode);
         
         var httpException = It.IsAny<FlurlHttpException>();
         _httpTest.SimulateException(httpException);
@@ -31,7 +29,7 @@ public partial class ApiClientTests
     {
         var httpException = It.IsAny<FlurlHttpException>();
         
-        _httpTest.RespondWith(ExceptionMessage, 400);
+        _httpTest.RespondWith(ExceptionMessage, BadRequestStatusCode);
         _httpTest.SimulateException(httpException);
         
         var apiClient = new Compreface.ApiClient();
@@ -48,7 +46,7 @@ public partial class ApiClientTests
     {
         var httpException = It.IsAny<FlurlHttpException>();
         
-        _httpTest.RespondWith(ExceptionMessage, 400);
+        _httpTest.RespondWith(ExceptionMessage, BadRequestStatusCode);
         _httpTest.SimulateException(httpException);
         
         var apiClient = new Compreface.ApiClient();
@@ -65,7 +63,7 @@ public partial class ApiClientTests
     {
         var httpException = It.IsAny<FlurlHttpException>();
         
-        _httpTest.RespondWith(ExceptionMessage, 400);
+        _httpTest.RespondWith(ExceptionMessage, BadRequestStatusCode);
         _httpTest.SimulateException(httpException);
         
         var apiClient = new Compreface.ApiClient();
@@ -81,7 +79,7 @@ public partial class ApiClientTests
     {
         var httpException = It.IsAny<FlurlHttpException>();
         
-        _httpTest.RespondWith(ExceptionMessage, 400);
+        _httpTest.RespondWith(ExceptionMessage, BadRequestStatusCode);
         _httpTest.SimulateException(httpException);
         
         var randomstring = GetRandomString();
@@ -100,7 +98,7 @@ public partial class ApiClientTests
     {
         var httpException = It.IsAny<FlurlHttpException>();
         
-        _httpTest.RespondWith(ExceptionMessage, 400);
+        _httpTest.RespondWith(ExceptionMessage, BadRequestStatusCode);
         _httpTest.SimulateException(httpException);
         
         var apiClient = new Compreface.ApiClient();

@@ -11,10 +11,10 @@ public partial class ApiClientTests : IDisposable
     {
         _httpTest = new HttpTest();
     }
-    
-    public const string RequestUrl = "http://site.com";
-    public const string ExceptionMessage = "{\"message\":\"Somethingbadhappened!!!\",\"code\":20}";
 
+    private const string RequestUrl = "http://site.com";
+    private const string ExceptionMessage = "{\"message\":\"Something bad happened!!!\",\"code\":20}";
+    private const string SuccessMessage = "{\"message\":\"Everything is good so far!!!\"}";
     public const int BadRequestStatusCode = 400;
     
     private static string GetRandomString()

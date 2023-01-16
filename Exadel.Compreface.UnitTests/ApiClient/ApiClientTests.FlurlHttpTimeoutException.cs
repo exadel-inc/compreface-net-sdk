@@ -2,7 +2,6 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
 using Exadel.Compreface.Exceptions;
 using Flurl.Http;
-using Flurl.Http.Testing;
 using Moq;
 
 namespace Exadel.Compreface.UnitTests.ApiClient;
