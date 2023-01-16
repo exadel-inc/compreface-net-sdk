@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients;
+using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Exadel.Compreface.Services;
@@ -15,8 +16,8 @@ namespace Exadel.Compreface.AcceptenceTests.Services
      
         public FaceDetectionServiceTest()
         {
-            var configuration = new ComprefaceConfiguration(API_KEY_DETECTION_SERVICE, BASE_URL);
-            var client = new ComprefaceClient(configuration);
+            var configuration = new ComprefaceConfiguration(API_KEY_DETECTION_SERVICE, DOMAIN, PORT);
+            var client = new FaceDetectionClient(configuration);
             var detProbThreshold = 0.85m;
             var status = true;
             var limit = 0;
