@@ -75,7 +75,7 @@ public class FaceVerificationTests
         // Assert
         Assert.IsType<FaceVerificationResponse>(response);
         Assert.NotNull(response);
-        // Assert.NotNull(response);
+        
         VerifyPostJson<FaceVerificationResponse>();
         _apiClientMock.VerifyNoOtherCalls();
     }
