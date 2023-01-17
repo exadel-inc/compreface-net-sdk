@@ -6,6 +6,7 @@ using Flurl;
 using Moq;
 using Tynamix.ObjectFiller;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
+using Exadel.Compreface.Clients.Interfaces;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
@@ -17,8 +18,9 @@ namespace Exadel.Compreface.UnitTests.Services
         public FaceDetectionServiceTest()
         {
             var apiKey = GetRandomString();
-            var baseUrl = GetRandomString();
-            var configuration = new ComprefaceConfiguration(apiKey, baseUrl);
+            var domain = GetRandomString();
+            var port = new Random().Next().ToString();
+            var configuration = new ComprefaceConfiguration(apiKey, domain, port);
 
             _apiClientMock = new Mock<IApiClient>();
             _faceDetectionService = new FaceDetectionService(configuration, _apiClientMock.Object);

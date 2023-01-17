@@ -1,9 +1,11 @@
-﻿using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients.Interfaces;
+using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteAllSubjects;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
 using Exadel.Compreface.DTOs.SubjectDTOs.RenameSubject;
+using Flurl;
 
 namespace Exadel.Compreface.Services;
 
@@ -20,7 +22,8 @@ public class SubjectService
 
     public async Task<GetAllSubjectResponse> GetAllSubject()
     {
-        var requestUrl = $"{_configuration.BaseUrl}recognition/subjects/";
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects/";
+
         var response = await _apiClient.GetJsonAsync<GetAllSubjectResponse>(requestUrl);
 
         return response;
@@ -28,7 +31,7 @@ public class SubjectService
 
     public async Task<AddSubjectResponse> AddSubject(AddSubjectRequest request)
     {
-        var requestUrl = $"{_configuration.BaseUrl}recognition/subjects";
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects";
 
         var response = await _apiClient.PostJsonAsync<AddSubjectResponse>(requestUrl, request);
 
@@ -37,7 +40,8 @@ public class SubjectService
 
     public async Task<RenameSubjectResponse> RenameSubject(RenameSubjectRequest request)
     {
-        var requestUrl = $"{_configuration.BaseUrl}recognition/subjects/{request.CurrentSubject}";
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects/{request.CurrentSubject}";
+
         var response = await _apiClient
             .PutJsonAsync<RenameSubjectResponse>(requestUrl, body: request.Subject);
         
@@ -46,7 +50,7 @@ public class SubjectService
 
     public async Task<DeleteSubjectResponse> DeleteSubject(DeleteSubjectRequest request)
     {
-        var requestUrl = $"{_configuration.BaseUrl}recognition/subjects/{request.ActualSubject}";
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects/{request.ActualSubject}";
 
         var response = await _apiClient.DeleteJsonAsync<DeleteSubjectResponse>(requestUrl);
         
@@ -55,7 +59,7 @@ public class SubjectService
 
     public async Task<DeleteAllSubjectsResponse> DeleteAllSubjects()
     {
-        var requestUrl = $"{_configuration.BaseUrl}recognition/subjects";
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects";
 
         var response = await _apiClient.DeleteJsonAsync<DeleteAllSubjectsResponse>(requestUrl);
 
