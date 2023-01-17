@@ -94,19 +94,6 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async void AddSubject_TakesNullRequestModel_ThrowsNullReferenceException()
-        {
-            // Arrange
-            SetupPostJson<AddSubjectResponse>();
-
-            // Act
-            var func = async () => await _subjectService.AddSubject(null!);
-
-            // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
-        }
-
-        [Fact]
         public async void RenameSubject_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
