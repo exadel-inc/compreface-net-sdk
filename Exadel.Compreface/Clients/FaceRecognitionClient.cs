@@ -23,12 +23,12 @@ namespace Exadel.Compreface.Clients
         {
             var apiClient = new ApiClient();
 
-            ConfigInitializer.InitializeApiKeyInRequestHeader(configuration.ApiKey);
-            ConfigInitializer.InitializeSnakeCaseJsonConfigs();
-
             SubjectExampleService = new SubjectExampleService(apiClient: apiClient, configuration: configuration);
             SubjectService = new SubjectService(apiClient: apiClient, configuration: configuration);
             RecognitionService = new RecognitionService(apiClient: apiClient, configuration: configuration);
+
+            ConfigInitializer.InitializeApiKeyInRequestHeader(configuration.ApiKey);
+            ConfigInitializer.InitializeSnakeCaseJsonConfigs();
         }
     }
 }

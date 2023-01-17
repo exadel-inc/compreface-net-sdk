@@ -4,7 +4,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Exadel.Compreface.Clients;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
 
 namespace Exadel.Compreface;
 
