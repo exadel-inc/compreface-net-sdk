@@ -17,6 +17,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         private AddSubjectRequest _addSubjectRequest;
         private RenameSubjectRequest _renameSubjectRequest;
         private DeleteSubjectRequest _deleteSubjectRequest;
+        private DeleteSubjectRequest _renamedSubjectDeleteRequest;
 
         public SubjectServiceTests()
         {
@@ -39,6 +40,10 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             _deleteSubjectRequest = new DeleteSubjectRequest
             {
                 ActualSubject = subjectName
+            };
+            _renamedSubjectDeleteRequest = new DeleteSubjectRequest
+            {
+                ActualSubject = renamedSubjectName
             };
         }
 
@@ -100,15 +105,11 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async void RenameSubject_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
-            var renamedSubjectDeleteRequest = new DeleteSubjectRequest
-            {
-                ActualSubject = _renameSubjectRequest.Subject
-            };
             await _subjectService.AddSubject(_addSubjectRequest);
 
             // Act
             var response = await _subjectService.RenameSubject(_renameSubjectRequest);
-            await _subjectService.DeleteSubject(renamedSubjectDeleteRequest);
+            await _subjectService.DeleteSubject(_renamedSubjectDeleteRequest);
 
             // Assert
             Assert.IsType<RenameSubjectResponse>(response);
@@ -118,15 +119,11 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async void RenameSubject_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
-            var renamedSubjectDeleteRequest = new DeleteSubjectRequest
-            {
-                ActualSubject = _renameSubjectRequest.Subject
-            };
             await _subjectService.AddSubject(_addSubjectRequest);
 
             // Act
             var response = await _subjectService.RenameSubject(_renameSubjectRequest);
-            await _subjectService.DeleteSubject(renamedSubjectDeleteRequest);
+            await _subjectService.DeleteSubject(_renamedSubjectDeleteRequest);
 
             // Assert
             Assert.NotNull(response);
