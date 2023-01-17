@@ -68,7 +68,7 @@ public class SubjectExampleServiceTests
         _apiClientMock.Setup(apiClient =>
                 apiClient.PostJsonAsync<AddBase64ExampleSubjectResponse>(
                     It.IsAny<Flurl.Url>(),
-                    It.IsAny<Action<CapturedMultipartContent>>(),
+                    It.IsAny<object>(),
                     It.IsAny<HttpCompletionOption>(),
                     It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AddBase64ExampleSubjectResponse());
@@ -83,7 +83,7 @@ public class SubjectExampleServiceTests
         _apiClientMock.Verify(client =>
             client.PostJsonAsync<AddBase64ExampleSubjectResponse>(
                 It.IsAny<Flurl.Url>(),
-                It.IsAny<Action<CapturedMultipartContent>>(),
+                It.IsAny<object>(),
                 It.IsAny<HttpCompletionOption>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
