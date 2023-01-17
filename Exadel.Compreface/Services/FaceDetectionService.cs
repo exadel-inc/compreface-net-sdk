@@ -20,7 +20,7 @@ namespace Exadel.Compreface.Services
 
         public async Task<FaceDetectionResponse> FaceDetectionAsync(FaceDetectionRequest faceDetectionRequest)
         {
-            var requestUrl = $"{_configuration.Domain}/api/v1/detection/detect";
+            var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/detection/detect";
             var requestUrlWithQueryParameters = requestUrl
                 .SetQueryParams(new
                 {
@@ -29,8 +29,6 @@ namespace Exadel.Compreface.Services
                     face_plugins = string.Join(",", faceDetectionRequest.FacePlugins),
                     status = faceDetectionRequest.Status,
                 });
-
-            requestUrlWithQueryParameters.Port = Convert.ToInt32(_configuration.Port);
             
             var response = await 
                 _apiClient.PostMultipartAsync<FaceDetectionResponse>(
@@ -43,7 +41,7 @@ namespace Exadel.Compreface.Services
 
         public async Task<FaceDetectionBase64Response> FaceDetectionBase64Async(FaceDetectionBase64Request faceDetectionRequest)
         {
-            var requestUrl = $"{_configuration.Domain}/api/v1/detection/detect";
+            var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/detection/detect";
             var requestUrlWithQueryParameters = requestUrl
                 .SetQueryParams(new
                 {
@@ -52,8 +50,6 @@ namespace Exadel.Compreface.Services
                     face_plugins = string.Join(",", faceDetectionRequest.FacePlugins),
                     status = faceDetectionRequest.Status,
                 });
-
-            requestUrlWithQueryParameters.Port = Convert.ToInt32(_configuration.Port);
 
             var response = await 
                 _apiClient.PostJsonAsync<FaceDetectionBase64Response>(

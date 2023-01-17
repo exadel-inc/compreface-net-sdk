@@ -2,9 +2,7 @@
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.Helpers;
 using Exadel.Compreface.Services;
-using Flurl.Http;
 using Microsoft.Extensions.Configuration;
-using System.Text.Json;
 
 namespace Exadel.Compreface.Clients
 {
@@ -22,10 +20,10 @@ namespace Exadel.Compreface.Clients
         {
             var apiClient = new ApiClient();
 
+            FaceDetectionService = new FaceDetectionService(apiClient: apiClient, configuration: configuration);
+
             ConfigInitializer.InitializeApiKeyInRequestHeader(configuration.ApiKey);
             ConfigInitializer.InitializeSnakeCaseJsonConfigs();
-
-            FaceDetectionService = new FaceDetectionService(apiClient: apiClient, configuration: configuration);
         }
     }
 }
