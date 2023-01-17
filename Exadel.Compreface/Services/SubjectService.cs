@@ -22,60 +22,46 @@ public class SubjectService
 
     public async Task<GetAllSubjectResponse> GetAllSubject()
     {
-        var requestUrl = $"{_configuration.Domain}/api/v1/recognition/subjects/";
-        var url = new Url(requestUrl);
-        url.Port = Convert.ToInt32(_configuration.Port);
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects/";
 
-        var response = await _apiClient.GetJsonAsync<GetAllSubjectResponse>(url);
+        var response = await _apiClient.GetJsonAsync<GetAllSubjectResponse>(requestUrl);
 
         return response;
     }
 
     public async Task<AddSubjectResponse> AddSubject(AddSubjectRequest request)
     {
-        var requestUrl = $"{_configuration.Domain}/api/v1/recognition/subjects";
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects";
 
-        var url = new Url(requestUrl);
-        url.Port = Convert.ToInt32(_configuration.Port);
-
-        var response = await _apiClient.PostJsonAsync<AddSubjectResponse>(url, request);
+        var response = await _apiClient.PostJsonAsync<AddSubjectResponse>(requestUrl, request);
 
         return response;
     }
 
     public async Task<RenameSubjectResponse> RenameSubject(RenameSubjectRequest request)
     {
-        var requestUrl = $"{_configuration.Domain}/api/v1/recognition/subjects/{request.CurrentSubject}";
-
-        var url = new Url(requestUrl);
-        url.Port = Convert.ToInt32(_configuration.Port);
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects/{request.CurrentSubject}";
 
         var response = await _apiClient
-            .PutJsonAsync<RenameSubjectResponse>(url, body: request.Subject);
+            .PutJsonAsync<RenameSubjectResponse>(requestUrl, body: request.Subject);
         
         return response;
     }
 
     public async Task<DeleteSubjectResponse> DeleteSubject(DeleteSubjectRequest request)
     {
-        var requestUrl = $"{_configuration.Domain}/api/v1/recognition/subjects/{request.ActualSubject}";
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects/{request.ActualSubject}";
 
-        var url = new Url(requestUrl);
-        url.Port = Convert.ToInt32(_configuration.Port);
-
-        var response = await _apiClient.DeleteJsonAsync<DeleteSubjectResponse>(url);
+        var response = await _apiClient.DeleteJsonAsync<DeleteSubjectResponse>(requestUrl);
         
         return response;
     }
 
     public async Task<DeleteAllSubjectsResponse> DeleteAllSubjects()
     {
-        var requestUrl = $"{_configuration.Domain}/api/v1/recognition/subjects";
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects";
 
-        var url = new Url(requestUrl);
-        url.Port = Convert.ToInt32(_configuration.Port);
-
-        var response = await _apiClient.DeleteJsonAsync<DeleteAllSubjectsResponse>(url);
+        var response = await _apiClient.DeleteJsonAsync<DeleteAllSubjectsResponse>(requestUrl);
 
         return response;
     }

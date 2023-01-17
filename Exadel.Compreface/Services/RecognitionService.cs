@@ -22,7 +22,7 @@ public class RecognitionService
     
     public async Task<RecognizeFaceFromImageResponse> RecognizeFaceFromImage(RecognizeFaceFromImageRequest request)
     {
-        var requestUrl = $"{_configuration.Domain}/api/v1/recognition/recognize";
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/recognize";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -32,8 +32,6 @@ public class RecognitionService
                 face_plugins = string.Join(",", request.FacePlugins),
                 status = request.Status,
             });
-
-        requestUrlWithQueryParameters.Port = Convert.ToInt32(_configuration.Port);
 
         var response = await 
             _apiClient.PostMultipartAsync<RecognizeFaceFromImageResponse>(
@@ -47,7 +45,7 @@ public class RecognitionService
     public async Task<RecognizeFaceFromImageResponse> RecognizeFaceFromBase64File(
         RecognizeFacesFromImageWithBase64Request request)
     {
-        var requestUrl = $"{_configuration.Domain}/api/v1/recognition/recognize";
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/recognize";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -57,8 +55,6 @@ public class RecognitionService
                 face_plugins = string.Join(",", request.FacePlugins),
                 status = request.Status,
             });
-
-        requestUrlWithQueryParameters.Port = Convert.ToInt32(_configuration.Port);
 
         var response = await 
             _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(
@@ -70,7 +66,7 @@ public class RecognitionService
 
     public async Task<VerifyFacesFromImageResponse> VerifyFacesFromImage(VerifyFacesFromImageRequest request)
     {
-        var requestUrl = $"{_configuration.Domain}/api/v1/recognition/faces/{request.ImageId}/verify";
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -79,8 +75,6 @@ public class RecognitionService
                 face_plugins = string.Join(",", request.FacePlugins),
                 status = request.Status,
             });
-
-        requestUrlWithQueryParameters.Port = Convert.ToInt32(_configuration.Port);
 
         var response = await 
             _apiClient.PostMultipartAsync<VerifyFacesFromImageResponse>(
@@ -93,7 +87,7 @@ public class RecognitionService
     
     public async Task<VerifyFacesFromImageResponse> VerifyFacesFromBase64File(VerifyFacesFromImageWithBase64Request request)
     {
-        var requestUrl = $"{_configuration.Domain}/api/v1/recognition/faces/{request.ImageId}/verify";
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -102,8 +96,6 @@ public class RecognitionService
                 face_plugins = string.Join(",", request.FacePlugins),
                 status = request.Status,
             });
-
-        requestUrlWithQueryParameters.Port = Convert.ToInt32(_configuration.Port);
 
         var response = await 
             _apiClient.PostJsonAsync<VerifyFacesFromImageResponse>(
