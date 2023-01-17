@@ -10,7 +10,7 @@ public partial class ApiClientTests
     public async Task GetJsonAsync_ShouldUseGETHttpMethod()
     {
         // simulating api calls here and constructing fake response
-        _httpTest.RespondWith(SuccessMessage, 200);
+        _httpTest.RespondWith(SuccessMessage, SuccessRequestStatusCode);
         
         var apiClient = new Compreface.ApiClient();
         
@@ -27,7 +27,7 @@ public partial class ApiClientTests
     public async Task PostJsonAsync_ShouldUsePOSTHttpMethod()
     {
         // simulating api calls here and constructing fake response
-        _httpTest.RespondWith(SuccessMessage, 200);
+        _httpTest.RespondWith(SuccessMessage, SuccessRequestStatusCode);
         
         var apiClient = new Compreface.ApiClient();
         
@@ -44,7 +44,7 @@ public partial class ApiClientTests
     public async Task PutJsonAsync_ShouldUsePUTHttpMethod()
     {
         // simulating api calls here and constructing fake response
-        _httpTest.RespondWith(SuccessMessage, 200);
+        _httpTest.RespondWith(SuccessMessage, SuccessRequestStatusCode);
         
         var apiClient = new Compreface.ApiClient();
         
@@ -61,7 +61,7 @@ public partial class ApiClientTests
     public async Task DeleteJsonAsync_ShoulUseDELETEHttpMethod()
     {
         // simulating api calls here and constructing fake response
-        _httpTest.RespondWith(SuccessMessage, 200);
+        _httpTest.RespondWith(SuccessMessage, SuccessRequestStatusCode);
         
         var apiClient = new Compreface.ApiClient();
         
@@ -79,7 +79,7 @@ public partial class ApiClientTests
         var randomstring = GetRandomString();
         
         // simulating api calls here and constructing fake response
-        _httpTest.RespondWith(SuccessMessage, 200);
+        _httpTest.RespondWith(SuccessMessage, SuccessRequestStatusCode);
         
         var apiClient = new Compreface.ApiClient();
         
@@ -98,7 +98,7 @@ public partial class ApiClientTests
     public async Task GetBytesFromRemoteAsync_ShouldUseGETHttpMethod()
     {
         // simulating api calls here and constructing fake response
-        _httpTest.RespondWith(SuccessMessage, 200);
+        _httpTest.RespondWith(SuccessMessage, SuccessRequestStatusCode);
         
         var apiClient = new Compreface.ApiClient();
         
