@@ -12,7 +12,7 @@ using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
-namespace Exadel.Compreface.AcceptenceTests.Services
+namespace Exadel.Compreface.AcceptenceTests.Services.SubjectExampleService
 {
     public class SubjectExampleServiceTest
     {
@@ -29,17 +29,15 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
+        [SubjectExampleTestBeforeAfter]
         public async Task AddSubjectExampleAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            var addNewSubjectResponse = await faceRecognitionClient.SubjectService.AddSubject(
-                new AddSubjectRequest() { Subject = TEST_SUBJECT_NAME });
-
             var subjectExample = new AddSubjectExampleRequest()
             {
                 DetProbThreShold = 0.81m,
                 FilePath = FILE_PATH,
-                Subject = addNewSubjectResponse.Subject,
+                Subject = TEST_SUBJECT_NAME,
                 FileName = FILE_NAME
             };
 
@@ -47,7 +45,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             //Act
             var resultList = await faceRecognitionClient.SubjectExampleService.GetAllSubjectExamplesAsync(
-                new ListAllSubjectExamplesRequest() { Subject = addNewSubjectResponse.Subject });
+                new ListAllSubjectExamplesRequest() { Subject = TEST_SUBJECT_NAME });
 
             var actualSubjectExample = resultList.Faces
                 .First(x => x.ImageId == expectedAddExampleSubjectResponse.ImageId & x.Subject == expectedAddExampleSubjectResponse.Subject);
@@ -55,24 +53,20 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             //Assert
             Assert.Equal(expectedAddExampleSubjectResponse.Subject, actualSubjectExample.Subject);
             Assert.Equal(expectedAddExampleSubjectResponse.ImageId, actualSubjectExample.ImageId);
-
-            await faceRecognitionClient.SubjectExampleService.ClearSubjectAsync(new DeleteAllExamplesRequest() { Subject = addNewSubjectResponse.Subject });
         }
 
         [Fact]
+        [SubjectExampleTestBeforeAfter]
         public async Task AddBase64SubjectExampleAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            var addNewSubjectResponse = await faceRecognitionClient.SubjectService.AddSubject(
-                new AddSubjectRequest() { Subject = TEST_SUBJECT_NAME });
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_NAME;
 
-            addBase64SubjectExampleRequest.Subject = addNewSubjectResponse.Subject;
-           
             var expectedAddBase64SubjectExampleResponse = await faceRecognitionClient.SubjectExampleService.AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
 
             //Act
             var resultList = await faceRecognitionClient.SubjectExampleService.GetAllSubjectExamplesAsync(
-                new ListAllSubjectExamplesRequest() { Subject = addNewSubjectResponse.Subject });
+                new ListAllSubjectExamplesRequest() { Subject = TEST_SUBJECT_NAME });
 
             var actualSubjectExample = resultList.Faces
                     .First(x => x.ImageId == expectedAddBase64SubjectExampleResponse.ImageId & x.Subject == expectedAddBase64SubjectExampleResponse.Subject);
@@ -80,25 +74,21 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             //Assert
             Assert.Equal(expectedAddBase64SubjectExampleResponse.Subject, actualSubjectExample.Subject);
             Assert.Equal(expectedAddBase64SubjectExampleResponse.ImageId, actualSubjectExample.ImageId);
-
-            await faceRecognitionClient.SubjectExampleService.ClearSubjectAsync(new DeleteAllExamplesRequest() { Subject = addNewSubjectResponse.Subject });
         }
 
         [Fact]
+        [SubjectExampleTestBeforeAfter]
         public async Task GetAllSubjectExamplesAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            var addNewSubjectResponse = await faceRecognitionClient.SubjectService.AddSubject(
-                new AddSubjectRequest() { Subject = TEST_SUBJECT_NAME });
-
             var allSubjectExamples = new ListAllSubjectExamplesRequest()
             {
                 Page = 0,
                 Size = 0,
-                Subject = addNewSubjectResponse.Subject
+                Subject = TEST_SUBJECT_NAME
             };
 
-            addBase64SubjectExampleRequest.Subject = addNewSubjectResponse.Subject;
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_NAME;
 
             var expectedCount = 3;
             for (int counter = expectedCount; counter > 0; counter--)
@@ -112,19 +102,14 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             //Assert
             Assert.Equal(actualCount, expectedCount);
-
-            await faceRecognitionClient.SubjectExampleService.ClearSubjectAsync(
-                new DeleteAllExamplesRequest() { Subject = addNewSubjectResponse.Subject });
         }
 
         [Fact]
+        [SubjectExampleTestBeforeAfter]
         public async Task ClearSubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            var addNewSubjectResponse = await faceRecognitionClient.SubjectService.AddSubject(
-                new AddSubjectRequest() { Subject = TEST_SUBJECT_NAME });
-
-            addBase64SubjectExampleRequest.Subject = addNewSubjectResponse.Subject;
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_NAME;
 
             var expectedCount = 3;
 
@@ -135,20 +120,18 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             //Act
             var actualResponse = await faceRecognitionClient.SubjectExampleService.ClearSubjectAsync(
-                new DeleteAllExamplesRequest() { Subject = addNewSubjectResponse.Subject });
+                new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_NAME });
 
             //Assert
             Assert.Equal(expectedCount, actualResponse.Deleted);
         }
 
         [Fact]
+        [SubjectExampleTestBeforeAfter]
         public async Task DeleteImageByIdAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            var addNewSubjectResponse = await faceRecognitionClient.SubjectService.AddSubject(
-                new AddSubjectRequest() { Subject = TEST_SUBJECT_NAME });
-
-            addBase64SubjectExampleRequest.Subject = addNewSubjectResponse.Subject;
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_NAME;
             var testImage = await faceRecognitionClient.SubjectExampleService.AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
 
             var deleteImageByIdRequest = new DeleteImageByIdRequest()
@@ -162,19 +145,14 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             //Assert
             Assert.Equal(testImage.Subject, actualDeleteImageByIdResponse.Subject);
             Assert.Equal(testImage.ImageId, actualDeleteImageByIdResponse.ImageId);
-
-            await faceRecognitionClient.SubjectService.DeleteSubject(
-                new DeleteSubjectRequest() { ActualSubject = testImage.Subject });
         }
 
         [Fact]
+        [SubjectExampleTestBeforeAfter]
         public async Task DeletMultipleExamplesAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            var addNewSubjectResponse = await faceRecognitionClient.SubjectService.AddSubject(
-                new AddSubjectRequest() { Subject = TEST_SUBJECT_NAME });
-
-            addBase64SubjectExampleRequest.Subject = addNewSubjectResponse.Subject;
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_NAME;
 
             var expectedCount = 3;
             List<Guid> unnecessaryExampleList = new List<Guid>();
@@ -196,19 +174,14 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             //Assert
             Assert.Equal(expectedFacesCount, actualFacesCount);
-
-            await faceRecognitionClient.SubjectService.DeleteSubject(
-                new DeleteSubjectRequest() { ActualSubject = addNewSubjectResponse.Subject });
         }
 
         [Fact]
+        [SubjectExampleTestBeforeAfter]
         public async Task DownloadImageByIdAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            var addNewSubjectResponse = await faceRecognitionClient.SubjectService.AddSubject(
-                new AddSubjectRequest() { Subject = TEST_SUBJECT_NAME });
-
-            addBase64SubjectExampleRequest.Subject = addNewSubjectResponse.Subject;
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_NAME;
 
             var testImage = await faceRecognitionClient.SubjectExampleService.AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
 
@@ -220,18 +193,14 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             //Assert
             Assert.Equal(expectedResult, actualResult);
-
-            await faceRecognitionClient.SubjectExampleService.ClearSubjectAsync(new DeleteAllExamplesRequest() { Subject = addNewSubjectResponse.Subject });
         }
 
         [Fact]
+        [SubjectExampleTestBeforeAfter]
         public async Task DownloadImageBySubjectIdAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            var addNewSubjectResponse = await faceRecognitionClient.SubjectService.AddSubject(
-                new AddSubjectRequest() { Subject = TEST_SUBJECT_NAME });
-
-            addBase64SubjectExampleRequest.Subject = addNewSubjectResponse.Subject;
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_NAME;
 
             var testImage = await faceRecognitionClient.SubjectExampleService.AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
 
@@ -243,9 +212,6 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             //Assert
             Assert.Equal(expectedResult, actualResult);
-
-            await faceRecognitionClient.SubjectExampleService.ClearSubjectAsync(
-                new DeleteAllExamplesRequest() { Subject = addNewSubjectResponse.Subject });
         }
     }
 }

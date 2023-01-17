@@ -1,3 +1,4 @@
+using Exadel.Compreface.Clients.Interfaces;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
@@ -18,8 +19,9 @@ public class FaceVerificationTests
     public FaceVerificationTests()
     {
         var apiKey = GetRandomString();
-        var baseUrl = GetRandomString();
-        var configuration = new ComprefaceConfiguration(apiKey, baseUrl);
+        var domain = GetRandomString();
+        var port = new Random().Next().ToString();
+        var configuration = new ComprefaceConfiguration(apiKey, domain, port);
 
         _apiClientMock = new Mock<IApiClient>();
         _faceVerificationService = new FaceVerificationService(configuration, _apiClientMock.Object);
