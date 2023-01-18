@@ -12,7 +12,7 @@ public partial class ApiClientTests
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
         
-        var apiClient = new Compreface.ApiClient();
+        var apiClient = new Clients.ApiClient();
         
         await apiClient.GetJsonAsync<GetAllSubjectResponse>(
             requestUrl: RequestUrl);
@@ -29,7 +29,7 @@ public partial class ApiClientTests
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
         
-        var apiClient = new Compreface.ApiClient();
+        var apiClient = new Clients.ApiClient();
         
         await apiClient.PostJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
@@ -46,7 +46,7 @@ public partial class ApiClientTests
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
         
-        var apiClient = new Compreface.ApiClient();
+        var apiClient = new Clients.ApiClient();
         
         await apiClient.PutJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
@@ -63,7 +63,7 @@ public partial class ApiClientTests
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
         
-        var apiClient = new Compreface.ApiClient();
+        var apiClient = new Clients.ApiClient();
         
         await apiClient.DeleteJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl);
@@ -81,7 +81,7 @@ public partial class ApiClientTests
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
         
-        var apiClient = new Compreface.ApiClient();
+        var apiClient = new Clients.ApiClient();
         
         await apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
@@ -100,7 +100,7 @@ public partial class ApiClientTests
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
         
-        var apiClient = new Compreface.ApiClient();
+        var apiClient = new Clients.ApiClient();
         
         await apiClient.GetBytesFromRemoteAsync(
             requestUrl: RequestUrl);

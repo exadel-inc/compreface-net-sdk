@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients;
+using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
@@ -30,8 +31,8 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
         public RecognitionServiceTests()
         {
-            var configuration = new ComprefaceConfiguration(API_KEY_RECOGNITION_SERVICE, BASE_URL);
-            var client = new ComprefaceClient(configuration);
+            var configuration = new ComprefaceConfiguration(API_KEY_RECOGNITION_SERVICE, DOMAIN, PORT);
+            var client = new FaceRecognitionClient(configuration);
             var detProbThreshold = 0.85m;
             var status = true;
             var facePlugins = new List<string>()

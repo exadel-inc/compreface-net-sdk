@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients;
+using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteAllSubjects;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
@@ -21,8 +22,8 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
         public SubjectServiceTests()
         {
-            var configuration = new ComprefaceConfiguration(API_KEY_RECOGNITION_SERVICE, BASE_URL);
-            var client = new ComprefaceClient(configuration);
+            var configuration = new ComprefaceConfiguration(API_KEY_RECOGNITION_SERVICE, DOMAIN, PORT);
+            var client = new FaceRecognitionClient(configuration);
             var subjectName = "Some guy's name 1";
             var renamedSubjectName = "Unknown";
 

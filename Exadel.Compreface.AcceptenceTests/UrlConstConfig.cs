@@ -2,7 +2,9 @@
 {
     public static class UrlConstConfig
     {
-        public const string BASE_URL = "http://localhost:8000/api/v1/";
+        public const string DOMAIN = "http://localhost";
+
+        public const string PORT = "8000";
 
         public const string API_KEY_DETECTION_SERVICE = "00000000-0000-0000-0000-000000000003";
 

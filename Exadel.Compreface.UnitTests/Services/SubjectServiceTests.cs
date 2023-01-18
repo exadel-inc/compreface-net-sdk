@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients.Interfaces;
+using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteAllSubjects;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
@@ -18,8 +19,9 @@ namespace Exadel.Compreface.UnitTests.Services
         public SubjectServiceTests()
         {
             var apiKey = GetRandomString();
-            var baseUrl = GetRandomString();
-            var configuration = new ComprefaceConfiguration(apiKey, baseUrl);
+            var domain = GetRandomString();
+            var port = new Random().Next().ToString();
+            var configuration = new ComprefaceConfiguration(apiKey, domain, port);
 
             _apiClientMock = new Mock<IApiClient>();
             _subjectService = new SubjectService(configuration, _apiClientMock.Object);

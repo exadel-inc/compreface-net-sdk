@@ -16,7 +16,7 @@ public partial class ApiClientTests
         var httpException = It.IsAny<FlurlHttpException>();
         _httpTest.SimulateException(httpException);
 
-        var apiClient = new Compreface.ApiClient();
+        var apiClient = new Clients.ApiClient();
         
         var responseCall = apiClient.GetJsonAsync<GetAllSubjectResponse>(
             requestUrl: RequestUrl);
@@ -32,7 +32,7 @@ public partial class ApiClientTests
         _httpTest.RespondWith(ExceptionMessage, BadResponseStatusCode);
         _httpTest.SimulateException(httpException);
         
-        var apiClient = new Compreface.ApiClient();
+        var apiClient = new Clients.ApiClient();
         
         var responseCall = apiClient.PostJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
@@ -49,7 +49,7 @@ public partial class ApiClientTests
         _httpTest.RespondWith(ExceptionMessage, BadResponseStatusCode);
         _httpTest.SimulateException(httpException);
         
-        var apiClient = new Compreface.ApiClient();
+        var apiClient = new Clients.ApiClient();
         
         var responseCall = apiClient.PutJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
@@ -66,7 +66,7 @@ public partial class ApiClientTests
         _httpTest.RespondWith(ExceptionMessage, BadResponseStatusCode);
         _httpTest.SimulateException(httpException);
         
-        var apiClient = new Compreface.ApiClient();
+        var apiClient = new Clients.ApiClient();
         
         var responseCall = apiClient.DeleteJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl);
@@ -83,7 +83,7 @@ public partial class ApiClientTests
         _httpTest.SimulateException(httpException);
         
         var randomstring = GetRandomString();
-        var apiClient = new Compreface.ApiClient();
+        var apiClient = new Clients.ApiClient();
         
         var responseCall = apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
@@ -101,7 +101,7 @@ public partial class ApiClientTests
         _httpTest.RespondWith(ExceptionMessage, BadResponseStatusCode);
         _httpTest.SimulateException(httpException);
         
-        var apiClient = new Compreface.ApiClient();
+        var apiClient = new Clients.ApiClient();
         
         var responseCall = apiClient.GetBytesFromRemoteAsync(
             requestUrl: RequestUrl);
