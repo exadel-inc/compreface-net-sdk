@@ -8,8 +8,6 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteMultipleExamples;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageById;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageBySubjectId;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
-using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
-using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
@@ -60,13 +58,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task AddBase64SubjectExampleAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_NAME;
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
             var expectedAddBase64SubjectExampleResponse = await faceRecognitionClient.SubjectExampleService.AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
 
             //Act
             var resultList = await faceRecognitionClient.SubjectExampleService.GetAllSubjectExamplesAsync(
-                new ListAllSubjectExamplesRequest() { Subject = TEST_SUBJECT_NAME });
+                new ListAllSubjectExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
 
             var actualSubjectExample = resultList.Faces
                     .First(x => x.ImageId == expectedAddBase64SubjectExampleResponse.ImageId & x.Subject == expectedAddBase64SubjectExampleResponse.Subject);
@@ -85,10 +83,10 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             {
                 Page = 0,
                 Size = 0,
-                Subject = TEST_SUBJECT_NAME
+                Subject = TEST_SUBJECT_EXAMPLE_NAME
             };
 
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_NAME;
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
             var expectedCount = 3;
             for (int counter = expectedCount; counter > 0; counter--)
@@ -109,7 +107,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task ClearSubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_NAME;
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
             var expectedCount = 3;
 
@@ -120,7 +118,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             //Act
             var actualResponse = await faceRecognitionClient.SubjectExampleService.ClearSubjectAsync(
-                new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_NAME });
+                new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
 
             //Assert
             Assert.Equal(expectedCount, actualResponse.Deleted);
@@ -131,7 +129,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DeleteImageByIdAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_NAME;
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
             var testImage = await faceRecognitionClient.SubjectExampleService.AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
 
             var deleteImageByIdRequest = new DeleteImageByIdRequest()
@@ -152,7 +150,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DeletMultipleExamplesAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_NAME;
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
             var expectedCount = 3;
             List<Guid> unnecessaryExampleList = new List<Guid>();
@@ -181,7 +179,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DownloadImageByIdAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_NAME;
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
             var testImage = await faceRecognitionClient.SubjectExampleService.AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
 
@@ -200,7 +198,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DownloadImageBySubjectIdAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_NAME;
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
             var testImage = await faceRecognitionClient.SubjectExampleService.AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
 
