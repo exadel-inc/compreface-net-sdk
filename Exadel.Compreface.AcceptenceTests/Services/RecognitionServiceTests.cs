@@ -43,7 +43,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 "detector",
                 "calculator"
             };
-            var subjectName = "Subject Name";
+            var subjectName = TEST_SUBJECT_RECOGNITION_NAME;
 
             _subjectService = client.SubjectService;
             _subjectExampleService = client.SubjectExampleService;
