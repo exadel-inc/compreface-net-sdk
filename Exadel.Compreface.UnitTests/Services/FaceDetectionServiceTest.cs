@@ -1,8 +1,5 @@
 ﻿using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.Services;
-using Flurl.Http.Content;
-using Flurl;
-using Moq;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 
 namespace Exadel.Compreface.UnitTests.Services

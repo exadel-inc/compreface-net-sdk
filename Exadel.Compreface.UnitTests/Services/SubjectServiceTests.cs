@@ -4,7 +4,6 @@ using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
 using Exadel.Compreface.DTOs.SubjectDTOs.RenameSubject;
 using Exadel.Compreface.Services;
-using Moq;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
