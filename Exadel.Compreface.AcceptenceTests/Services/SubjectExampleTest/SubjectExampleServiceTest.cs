@@ -12,7 +12,7 @@ using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
-namespace Exadel.Compreface.AcceptenceTests.Services.SubjectExampleService
+namespace Exadel.Compreface.AcceptenceTests.Services
 {
     public class SubjectExampleServiceTest
     {
