@@ -32,7 +32,7 @@ public class SubjectExampleServiceTests
     }
 
     [Fact]
-    public async Task AddExampleSubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
+    public async Task AddSubjectExampleAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
         var request = new AddSubjectExampleRequest();
@@ -62,7 +62,7 @@ public class SubjectExampleServiceTests
     }
 
     [Fact]
-    public async Task AddBase64ExampleSubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
+    public async Task AddBase64SubjectExampleAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
         var request = new AddBase64SubjectExampleRequest();
@@ -70,7 +70,7 @@ public class SubjectExampleServiceTests
         _apiClientMock.Setup(apiClient =>
                 apiClient.PostJsonAsync<AddBase64SubjectExampleResponse>(
                     It.IsAny<Flurl.Url>(),
-                    It.IsAny<Action<CapturedMultipartContent>>(),
+                    It.IsAny<object>(),
                     It.IsAny<HttpCompletionOption>(),
                     It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AddBase64SubjectExampleResponse());
@@ -80,12 +80,12 @@ public class SubjectExampleServiceTests
         
         // Assert
         Assert.IsType<AddBase64SubjectExampleResponse>(response);
-        
-        _apiClientMock.Verify(client => 
+
+        _apiClientMock.Verify(client =>
             client.PostJsonAsync<AddBase64SubjectExampleResponse>(
-                It.IsAny<Flurl.Url>(), 
-                It.IsAny<Action<CapturedMultipartContent>>(), 
-                It.IsAny<HttpCompletionOption>(), 
+                It.IsAny<Flurl.Url>(),
+                It.IsAny<object>(),
+                It.IsAny<HttpCompletionOption>(),
                 It.IsAny<CancellationToken>()), Times.Once);
 
         _apiClientMock.VerifyNoOtherCalls();
