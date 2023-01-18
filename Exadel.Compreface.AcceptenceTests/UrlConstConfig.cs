@@ -12,8 +12,6 @@
 
         public const string API_KEY_VERIFICATION_SERVICE = "00000000-0000-0000-0000-000000000004";
 
-        public const string SUBJECT_NAME = "Stars";
-
         public const string TEST_SUBJECT_NAME = "Test Subject Name";
 
         public const string FILE_NAME = "brad-pitt_24.jpg";
