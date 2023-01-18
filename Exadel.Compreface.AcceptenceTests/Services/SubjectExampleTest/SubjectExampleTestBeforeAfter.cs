@@ -1,8 +1,8 @@
 ﻿using Exadel.Compreface.Clients;
 using Exadel.Compreface.Configuration;
+using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteAllSubjectExamples;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
-using System.Diagnostics;
 using System.Reflection;
 using Xunit.Sdk;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
@@ -21,7 +21,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.SubjectExampleService
 
         public async override void Before(MethodInfo methodUnderTest)
         {
-            await faceRecognitionClient.SubjectService.DeleteSubject(new DeleteSubjectRequest() { ActualSubject = TEST_SUBJECT_NAME });
+            await faceRecognitionClient.SubjectExampleService.ClearSubjectAsync(new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_NAME });
 
             await faceRecognitionClient.SubjectService.AddSubject(
                  new AddSubjectRequest() { Subject = TEST_SUBJECT_NAME });
