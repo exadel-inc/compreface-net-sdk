@@ -153,7 +153,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
             var expectedCount = 3;
-            List<Guid> unnecessaryExampleList = new List<Guid>();
+            var unnecessaryExampleList = new List<Guid>();
 
             for (int counter = expectedCount; counter > 0; counter--)
             {

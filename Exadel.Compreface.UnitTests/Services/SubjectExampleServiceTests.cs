@@ -1,8 +1,6 @@
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 using Exadel.Compreface.Services;
-using Flurl.Http.Content;
-using Moq;
 
 namespace Exadel.Compreface.UnitTests.Services;
 
