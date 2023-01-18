@@ -1,5 +1,4 @@
-﻿using Exadel.Compreface.Configuration;
-using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
+﻿using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
@@ -7,23 +6,16 @@ using Exadel.Compreface.Services;
 using Flurl;
 using Flurl.Http.Content;
 using Moq;
-using Tynamix.ObjectFiller;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
-    public class RecognitionServiceTests
+    public class RecognitionServiceTests : AbstractBaseServiceTests
     {
-        private readonly Mock<IApiClient> _apiClientMock;
         private readonly RecognitionService _recognitionService;
 
         public RecognitionServiceTests()
         {
-            var apiKey = GetRandomString();
-            var baseUrl = GetRandomString();
-            var configuration = new ComprefaceConfiguration(apiKey, baseUrl);
-
-            _apiClientMock = new Mock<IApiClient>();
-            _recognitionService = new RecognitionService(configuration, _apiClientMock.Object);
+            _recognitionService = new RecognitionService(Configuration, ApiClientMock.Object);
         }
 
         [Fact]
@@ -44,7 +36,7 @@ namespace Exadel.Compreface.UnitTests.Services
             Assert.IsType<RecognizeFaceFromImageResponse>(response);
 
             VerifyPostMultipart<RecognizeFaceFromImageResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -65,7 +57,7 @@ namespace Exadel.Compreface.UnitTests.Services
             Assert.NotNull(response);
 
             VerifyPostMultipart<RecognizeFaceFromImageResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -99,7 +91,7 @@ namespace Exadel.Compreface.UnitTests.Services
             Assert.IsType<RecognizeFaceFromImageResponse>(response);
 
             VerifyPostJson<RecognizeFaceFromImageResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -120,7 +112,7 @@ namespace Exadel.Compreface.UnitTests.Services
             Assert.NotNull(response);
 
             VerifyPostJson<RecognizeFaceFromImageResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -154,7 +146,7 @@ namespace Exadel.Compreface.UnitTests.Services
             Assert.IsType<VerifyFacesFromImageResponse>(response);
 
             VerifyPostMultipart<VerifyFacesFromImageResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -175,7 +167,7 @@ namespace Exadel.Compreface.UnitTests.Services
             Assert.NotNull(response);
 
             VerifyPostMultipart<VerifyFacesFromImageResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -209,7 +201,7 @@ namespace Exadel.Compreface.UnitTests.Services
             Assert.IsType<VerifyFacesFromImageResponse>(response);
 
             VerifyPostJson<VerifyFacesFromImageResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -230,7 +222,7 @@ namespace Exadel.Compreface.UnitTests.Services
             Assert.NotNull(response);
 
             VerifyPostJson<VerifyFacesFromImageResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -244,53 +236,6 @@ namespace Exadel.Compreface.UnitTests.Services
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
-        }
-
-        private static string GetRandomString()
-        {
-            return new Filler<string>().Create();
-        }
-
-        private void SetupPostMultipart<TResponse>() where TResponse : new()
-        {
-            _apiClientMock.Setup(apiClient =>
-                apiClient.PostMultipartAsync<TResponse>(
-                    It.IsAny<Url>(),
-                    It.IsAny<Action<CapturedMultipartContent>>(),
-                    It.IsAny<HttpCompletionOption>(),
-                    It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new TResponse());
-        }
-
-        private void VerifyPostMultipart<TResponse>()
-        {
-            _apiClientMock.Verify(apiClient =>
-            apiClient.PostMultipartAsync<TResponse>(
-                It.IsAny<Url>(),
-                It.IsAny<Action<CapturedMultipartContent>>(),
-                It.IsAny<HttpCompletionOption>(),
-                It.IsAny<CancellationToken>()), Times.Once);
-        }
-
-        private void SetupPostJson<TResponse>() where TResponse : class, new()
-        {
-            _apiClientMock.Setup(apiClient =>
-                apiClient.PostJsonAsync<TResponse>(
-                    It.IsAny<Url>(),
-                    It.IsAny<object>(),
-                    It.IsAny<HttpCompletionOption>(),
-                    It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new TResponse());
-        }
-
-        private void VerifyPostJson<TResponse>() where TResponse : class, new()
-        {
-            _apiClientMock.Verify(apiClient =>
-                apiClient.PostJsonAsync<TResponse>(
-                    It.IsAny<Url>(),
-                    It.IsAny<object>(),
-                    It.IsAny<HttpCompletionOption>(),
-                    It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }
