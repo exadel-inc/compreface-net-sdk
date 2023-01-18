@@ -35,7 +35,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             {
                 DetProbThreShold = 0.81m,
                 FilePath = FILE_PATH,
-                Subject = TEST_SUBJECT_NAME,
+                Subject = TEST_SUBJECT_EXAMPLE_NAME,
                 FileName = FILE_NAME
             };
 
@@ -43,7 +43,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             //Act
             var resultList = await faceRecognitionClient.SubjectExampleService.GetAllSubjectExamplesAsync(
-                new ListAllSubjectExamplesRequest() { Subject = TEST_SUBJECT_NAME });
+                new ListAllSubjectExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
 
             var actualSubjectExample = resultList.Faces
                 .First(x => x.ImageId == expectedAddExampleSubjectResponse.ImageId & x.Subject == expectedAddExampleSubjectResponse.Subject);
