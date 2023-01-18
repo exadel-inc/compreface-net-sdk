@@ -78,10 +78,10 @@ public class SubjectExampleServiceTests
         var response = await _exampleSubjectService.AddBase64SubjectExampleAsync(request);
         
         // Assert
-        Assert.IsType<AddBase64ExampleSubjectResponse>(response);
+        Assert.IsType<AddBase64SubjectExampleResponse>(response);
 
         _apiClientMock.Verify(client =>
-            client.PostJsonAsync<AddBase64ExampleSubjectResponse>(
+            client.PostJsonAsync<AddBase64SubjectExampleResponse>(
                 It.IsAny<Flurl.Url>(),
                 It.IsAny<object>(),
                 It.IsAny<HttpCompletionOption>(),

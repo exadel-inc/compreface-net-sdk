@@ -36,7 +36,7 @@ public partial class ApiClientTests
         
         var apiClient = new Compreface.ApiClient();
         
-        var responseCall = apiClient.PostJsonAsync<AddExampleSubjectResponse>(
+        var responseCall = apiClient.PostJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
             body: It.IsAny<object>());
         
@@ -54,7 +54,7 @@ public partial class ApiClientTests
         
         var apiClient = new Compreface.ApiClient();
         
-        var responseCall = apiClient.PutJsonAsync<AddExampleSubjectResponse>(
+        var responseCall = apiClient.PutJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
             body: It.IsAny<object>());
 
@@ -72,7 +72,7 @@ public partial class ApiClientTests
         
         var apiClient = new Compreface.ApiClient();
         
-        var responseCall = apiClient.DeleteJsonAsync<AddExampleSubjectResponse>(
+        var responseCall = apiClient.DeleteJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl);
 
         await Assert.ThrowsAsync<ServiceTimeoutException>(async () => await responseCall);
@@ -90,7 +90,7 @@ public partial class ApiClientTests
         var randomstring = GetRandomString();
         var apiClient = new Compreface.ApiClient();
         
-        var responseCall = apiClient.PostMultipartAsync<AddExampleSubjectResponse>(
+        var responseCall = apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
             mp =>
                 mp.AddFile(randomstring, fileName: randomstring, path: randomstring));

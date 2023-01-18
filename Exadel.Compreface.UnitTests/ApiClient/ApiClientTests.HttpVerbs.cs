@@ -31,7 +31,7 @@ public partial class ApiClientTests
         
         var apiClient = new Compreface.ApiClient();
         
-        await apiClient.PostJsonAsync<AddExampleSubjectResponse>(
+        await apiClient.PostJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
             body: It.IsAny<object>());
 
@@ -48,7 +48,7 @@ public partial class ApiClientTests
         
         var apiClient = new Compreface.ApiClient();
         
-        await apiClient.PutJsonAsync<AddExampleSubjectResponse>(
+        await apiClient.PutJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
             body: It.IsAny<object>());
 
@@ -65,7 +65,7 @@ public partial class ApiClientTests
         
         var apiClient = new Compreface.ApiClient();
         
-        await apiClient.DeleteJsonAsync<AddExampleSubjectResponse>(
+        await apiClient.DeleteJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl);
 
         _httpTest
@@ -83,7 +83,7 @@ public partial class ApiClientTests
         
         var apiClient = new Compreface.ApiClient();
         
-        await apiClient.PostMultipartAsync<AddExampleSubjectResponse>(
+        await apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
             mp =>
                 mp.AddFile(randomstring, fileName: randomstring, path: randomstring));
