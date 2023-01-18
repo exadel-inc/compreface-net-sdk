@@ -1,34 +1,18 @@
-using Exadel.Compreface.Clients.Interfaces;
-using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 using Exadel.Compreface.Services;
 using Flurl.Http.Content;
 using Moq;
-using Tynamix.ObjectFiller;
 
 namespace Exadel.Compreface.UnitTests.Services;
 
-public class SubjectExampleServiceTests
+public class SubjectExampleServiceTests : AbstractBaseServiceTests
 {
-    private readonly Mock<IApiClient> _apiClientMock;
     private readonly SubjectExampleService _exampleSubjectService;
 
     public SubjectExampleServiceTests()
     {
-        _apiClientMock = new Mock<IApiClient>();
-        var randomString = GetRandomString();
-        var apiKey = randomString;
-        var domain = randomString;
-        var port = new Random().Next().ToString();
-        var configuration = new ComprefaceConfiguration(apiKey, domain, port);
-
-        _exampleSubjectService = new SubjectExampleService(configuration, _apiClientMock.Object);
-    }
-
-    private string GetRandomString()
-    {
-        return new Filler<string>().Create();
+        _exampleSubjectService = new SubjectExampleService(Configuration, ApiClientMock.Object);
     }
 
     [Fact]
@@ -37,13 +21,7 @@ public class SubjectExampleServiceTests
         // Arrange
         var request = new AddSubjectExampleRequest();
 
-        _apiClientMock.Setup(apiClient =>
-            apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
-                It.IsAny<Flurl.Url>(),
-                It.IsAny<Action<CapturedMultipartContent>>(),
-                It.IsAny<HttpCompletionOption>(),
-                It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new AddSubjectExampleResponse());
+        SetupPostMultipart<AddSubjectExampleResponse>();
         
         // Act
         var response = await _exampleSubjectService.AddSubjectExampleAsync(request);
@@ -51,14 +29,8 @@ public class SubjectExampleServiceTests
         // Assert
         Assert.IsType<AddSubjectExampleResponse>(response);
 
-        _apiClientMock.Verify(client => 
-            client.PostMultipartAsync<AddSubjectExampleResponse>(
-                It.IsAny<Flurl.Url>(), 
-                It.IsAny<Action<CapturedMultipartContent>>(), 
-                It.IsAny<HttpCompletionOption>(), 
-                It.IsAny<CancellationToken>()), Times.Once);
-
-        _apiClientMock.VerifyNoOtherCalls();
+        VerifyPostMultipart<AddSubjectExampleResponse>();
+        ApiClientMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -67,13 +39,7 @@ public class SubjectExampleServiceTests
         // Arrange
         var request = new AddBase64SubjectExampleRequest();
 
-        _apiClientMock.Setup(apiClient =>
-                apiClient.PostJsonAsync<AddBase64SubjectExampleResponse>(
-                    It.IsAny<Flurl.Url>(),
-                    It.IsAny<object>(),
-                    It.IsAny<HttpCompletionOption>(),
-                    It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new AddBase64SubjectExampleResponse());
+        SetupPostJson<AddBase64SubjectExampleResponse>();
         
         //Act
         var response = await _exampleSubjectService.AddBase64SubjectExampleAsync(request);
@@ -81,13 +47,7 @@ public class SubjectExampleServiceTests
         // Assert
         Assert.IsType<AddBase64SubjectExampleResponse>(response);
 
-        _apiClientMock.Verify(client =>
-            client.PostJsonAsync<AddBase64SubjectExampleResponse>(
-                It.IsAny<Flurl.Url>(),
-                It.IsAny<object>(),
-                It.IsAny<HttpCompletionOption>(),
-                It.IsAny<CancellationToken>()), Times.Once);
-
-        _apiClientMock.VerifyNoOtherCalls();
+        VerifyPostJson<AddBase64SubjectExampleResponse>();
+        ApiClientMock.VerifyNoOtherCalls();
     }
 }
