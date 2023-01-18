@@ -2,7 +2,7 @@
 
 namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
 
-public class ListAllExampleSubjectResponse
+public class ListAllSubjectExamplesResponse
 {
     public IList<Face> Faces { get; set; }
 
