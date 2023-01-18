@@ -7,7 +7,7 @@ using System.Reflection;
 using Xunit.Sdk;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
-namespace Exadel.Compreface.AcceptenceTests.Services.SubjectExampleService
+namespace Exadel.Compreface.AcceptenceTests.Services
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class SubjectExampleTestBeforeAfter : BeforeAfterTestAttribute
