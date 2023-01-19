@@ -1,7 +1,5 @@
 ﻿using Exadel.Compreface.Clients;
 using Exadel.Compreface.Configuration;
-using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
-using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
@@ -12,10 +10,10 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 {
     public class FaceVerificationServiceTest
     {
-        private FaceVerificationService _faceVerificationService;
+        private readonly FaceVerificationService _faceVerificationService;
 
-        private FaceVerificationRequest _faceVerificationRequest;
-        private FaceVerificationWithBase64Request _faceVerificationBase64Request;
+        private readonly FaceVerificationRequest _faceVerificationRequest;
+        private readonly FaceVerificationWithBase64Request _faceVerificationBase64Request;
 
         public FaceVerificationServiceTest()
         {
