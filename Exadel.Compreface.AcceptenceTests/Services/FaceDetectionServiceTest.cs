@@ -9,10 +9,10 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 {
     public class FaceDetectionServiceTest
     {
-        private FaceDetectionService _faceDetectionService;
+        private readonly FaceDetectionService _faceDetectionService;
 
-        private FaceDetectionRequest _faceDetectionRequest;
-        private FaceDetectionBase64Request _faceDetectionBase64Request;
+        private readonly FaceDetectionRequest _faceDetectionRequest;
+        private readonly FaceDetectionBase64Request _faceDetectionBase64Request;
      
         public FaceDetectionServiceTest()
         {

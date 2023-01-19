@@ -13,12 +13,12 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 {
     public class SubjectServiceTests
     {
-        private SubjectService _subjectService;
+        private readonly SubjectService _subjectService;
 
-        private AddSubjectRequest _addSubjectRequest;
-        private RenameSubjectRequest _renameSubjectRequest;
-        private DeleteSubjectRequest _deleteSubjectRequest;
-        private DeleteSubjectRequest _renamedSubjectDeleteRequest;
+        private readonly AddSubjectRequest _addSubjectRequest;
+        private readonly RenameSubjectRequest _renameSubjectRequest;
+        private readonly DeleteSubjectRequest _deleteSubjectRequest;
+        private readonly DeleteSubjectRequest _renamedSubjectDeleteRequest;
 
         public SubjectServiceTests()
         {
