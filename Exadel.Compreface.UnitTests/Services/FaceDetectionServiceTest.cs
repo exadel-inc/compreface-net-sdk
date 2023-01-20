@@ -1,7 +1,6 @@
 ﻿using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.Services;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
-using Exadel.Compreface.Clients.Interfaces;
 using Flurl;
 
 namespace Exadel.Compreface.UnitTests.Services
@@ -79,7 +78,7 @@ namespace Exadel.Compreface.UnitTests.Services
                 FacePlugins = new List<string>()
             };
 
-            SetupPostJson<FaceDetectionResponse>();
+            SetupPostJson<FaceDetectionResponse, Url>();
 
             // Act
             var response = await _faceDetectionService.FaceDetectionBase64Async(request);
@@ -87,8 +86,8 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.IsType<FaceDetectionResponse>(response);
 
-            VerifyPostJson<FaceDetectionResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            VerifyPostJson<FaceDetectionResponse, Url>();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -100,7 +99,7 @@ namespace Exadel.Compreface.UnitTests.Services
                 FacePlugins = new List<string>()
             };
 
-            SetupPostJson<FaceDetectionResponse>();
+            SetupPostJson<FaceDetectionResponse, Url>();
 
             // Act
             var response = await _faceDetectionService.FaceDetectionBase64Async(request);
@@ -108,15 +107,15 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.NotNull(response);
 
-            VerifyPostJson<FaceDetectionResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            VerifyPostJson<FaceDetectionResponse, Url>();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
         public async Task FaceDetectionBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
-            SetupPostJson<FaceDetectionResponse>();
+            SetupPostJson<FaceDetectionResponse, Url>();
 
             // Act
             var func = async () => await _faceDetectionService.FaceDetectionBase64Async(null!);

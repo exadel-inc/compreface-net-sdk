@@ -3,6 +3,7 @@ using Flurl.Http.Content;
 using Flurl;
 using Moq;
 using Tynamix.ObjectFiller;
+using Exadel.Compreface.Clients.Interfaces;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
@@ -16,8 +17,9 @@ namespace Exadel.Compreface.UnitTests.Services
         {
             var apiKey = GetRandomString();
             var baseUrl = GetRandomString();
+            var port = GetRandomString();
 
-            Configuration = new ComprefaceConfiguration(apiKey, baseUrl);
+            Configuration = new ComprefaceConfiguration(apiKey, baseUrl, port);
             ApiClientMock = new Mock<IApiClient>();
         }
 
