@@ -49,7 +49,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async void GetAllSubject_Executes_ReturnsProperResponseModel()
+        public async Task GetAllSubject_Executes_ReturnsProperResponseModel()
         {
             // Act
             var response = await _subjectService.GetAllSubject();
@@ -59,7 +59,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async void GetAllSubject_Executes_ReturnsNotNull()
+        public async Task GetAllSubject_Executes_ReturnsNotNull()
         {
             // Act
             var response = await _subjectService.GetAllSubject();
@@ -69,7 +69,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async void AddSubject_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task AddSubject_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
             var response = await _subjectService.AddSubject(_addSubjectRequest);
@@ -82,7 +82,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async void AddSubject_TakesRequestModel_ReturnsNotNull()
+        public async Task AddSubject_TakesRequestModel_ReturnsNotNull()
         {
             // Act
             var response = await _subjectService.AddSubject(_addSubjectRequest);
@@ -93,7 +93,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async void AddSubject_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task AddSubject_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Act
             var func = async () => await _subjectService.AddSubject(null!);
@@ -103,7 +103,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async void RenameSubject_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task RenameSubject_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             await _subjectService.AddSubject(_addSubjectRequest);
@@ -117,7 +117,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async void RenameSubject_TakesRequestModel_ReturnsNotNull()
+        public async Task RenameSubject_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             await _subjectService.AddSubject(_addSubjectRequest);
@@ -131,7 +131,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async void RenameSubject_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task RenameSubject_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Act
             var func = async () => await _subjectService.RenameSubject(null!);
@@ -141,7 +141,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async void DeleteSubject_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DeleteSubject_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             await _subjectService.AddSubject(_addSubjectRequest);
@@ -154,7 +154,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async void DeleteSubject_TakesRequestModel_ReturnsNotNull()
+        public async Task DeleteSubject_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             await _subjectService.AddSubject(_addSubjectRequest);
@@ -167,7 +167,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async void DeleteSubject_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DeleteSubject_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Act
             var func = async () => await _subjectService.DeleteSubject(null!);
@@ -177,7 +177,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async void DeleteAllSubjects_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DeleteAllSubjects_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
             var response = await _subjectService.DeleteAllSubjects();
@@ -187,7 +187,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async void DeleteAllSubjects_TakesRequestModel_ReturnsNotNull()
+        public async Task DeleteAllSubjects_TakesRequestModel_ReturnsNotNull()
         {
             // Act
             var response = await _subjectService.DeleteAllSubjects();

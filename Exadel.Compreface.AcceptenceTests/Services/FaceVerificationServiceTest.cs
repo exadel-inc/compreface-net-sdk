@@ -76,7 +76,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async void VerifyImageAsync_TakesNullRequest_ThrowsException()
+        public async Task VerifyImageAsync_TakesNullRequest_ThrowsException()
         {
             // Act
             var func = async () => await _faceVerificationService.VerifyImageAsync(null!);
@@ -106,7 +106,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async void VerifyBase64ImageAsync_TakesNullRequest_ThrowsException()
+        public async Task VerifyBase64ImageAsync_TakesNullRequest_ThrowsException()
         {
             // Act
             var func = async () => await _faceVerificationService.VerifyBase64ImageAsync(null!);
