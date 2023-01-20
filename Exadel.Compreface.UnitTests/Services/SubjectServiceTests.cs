@@ -54,7 +54,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Arrange
             var request = new AddSubjectRequest();
 
-            SetupPostJson<AddSubjectResponse>();
+            SetupPostJson<AddSubjectResponse, string>();
 
             // Act
             var response = await _subjectService.AddSubject(request);
@@ -62,7 +62,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.IsType<AddSubjectResponse>(response);
 
-            VerifyPostJson<AddSubjectResponse>();
+            VerifyPostJson<AddSubjectResponse, string>();
             ApiClientMock.VerifyNoOtherCalls();
         }
 
@@ -72,7 +72,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Arrange
             var request = new AddSubjectRequest();
 
-            SetupPostJson<AddSubjectResponse>();
+            SetupPostJson<AddSubjectResponse, string>();
 
             // Act
             var response = await _subjectService.AddSubject(request);
@@ -80,7 +80,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.NotNull(response);
 
-            VerifyPostJson<AddSubjectResponse>();
+            VerifyPostJson<AddSubjectResponse, string>();
             ApiClientMock.VerifyNoOtherCalls();
         }
 

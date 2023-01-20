@@ -1,6 +1,7 @@
 ﻿using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.Services;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
+using Flurl;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
@@ -77,7 +78,7 @@ namespace Exadel.Compreface.UnitTests.Services
                 FacePlugins = new List<string>()
             };
 
-            SetupPostJson<FaceDetectionBase64Response>();
+            SetupPostJson<FaceDetectionBase64Response, Url>();
 
             // Act
             var response = await _faceDetectionService.FaceDetectionBase64Async(request);
@@ -85,7 +86,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.IsType<FaceDetectionBase64Response>(response);
 
-            VerifyPostJson<FaceDetectionBase64Response>();
+            VerifyPostJson<FaceDetectionBase64Response, Url>();
             ApiClientMock.VerifyNoOtherCalls();
         }
 
@@ -98,7 +99,7 @@ namespace Exadel.Compreface.UnitTests.Services
                 FacePlugins = new List<string>()
             };
 
-            SetupPostJson<FaceDetectionBase64Response>();
+            SetupPostJson<FaceDetectionBase64Response, Url>();
 
             // Act
             var response = await _faceDetectionService.FaceDetectionBase64Async(request);
@@ -106,7 +107,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.NotNull(response);
 
-            VerifyPostJson<FaceDetectionBase64Response>();
+            VerifyPostJson<FaceDetectionBase64Response, Url>();
             ApiClientMock.VerifyNoOtherCalls();
         }
 
@@ -114,7 +115,7 @@ namespace Exadel.Compreface.UnitTests.Services
         public async Task FaceDetectionBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
-            SetupPostJson<FaceDetectionBase64Response>();
+            SetupPostJson<FaceDetectionBase64Response, Url>();
 
             // Act
             var func = async () => await _faceDetectionService.FaceDetectionBase64Async(null!);
