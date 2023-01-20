@@ -19,5 +19,5 @@ var downloadImageByIdRequest = new DownloadImageByIdRequest()
     ImageId = Guid.Parse("Image id here")
 };
 
-await faceRecognitionClient.SubjectExampleService.DownloadImageByIdAsync(downloadImageByIdRequest);
+var imageBytes = await faceRecognitionClient.SubjectExampleService.DownloadImageByIdAsync(downloadImageByIdRequest);
 			

@@ -17,7 +17,7 @@
   <Namespace>Exadel.Compreface.DTOs.SubjectDTOs.RenameSubject</Namespace>
 </Query>
 
-var faceRecognitionClient = new FaceDetectionClient("PASTE YOUR API KEY", "http://localhost", "8000");
+var faceDetectionClient = new FaceDetectionClient("PASTE YOUR API KEY", "http://localhost", "8000");
 
 var faceDetectionBase64Request = new FaceDetectionBase64Request()
 {
@@ -35,4 +35,9 @@ var faceDetectionBase64Request = new FaceDetectionBase64Request()
     
 };
 
- await faceRecognitionClient.FaceDetectionService.FaceDetectionBase64Async(faceDetectionBase64Request);
+var response = await faceDetectionClient.FaceDetectionService.FaceDetectionBase64Async(faceDetectionBase64Request);
+
+foreach(var result in response.Result)
+{
+	// observe result object 
+}

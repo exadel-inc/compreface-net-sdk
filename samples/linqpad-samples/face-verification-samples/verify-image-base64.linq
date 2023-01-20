@@ -36,3 +36,8 @@ var faceVerificationWith64Request = new FaceVerificationWithBase64Request()
 };
 
 var faceVerificationResponse = await faceVerificationClient.FaceVerificationService.VerifyBase64ImageAsync(faceVerificationWith64Request);
+
+foreach(var result in faceVerificationResponse.Result)
+{
+	// observe result object 
+}

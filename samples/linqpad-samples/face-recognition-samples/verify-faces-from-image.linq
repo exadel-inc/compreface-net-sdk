@@ -35,7 +35,7 @@ var verifyFacesFromImageResponse = await faceRecognitionClient.RecognitionServic
 
 foreach (var result in verifyFacesFromImageResponse.Result)
 {
-    
+	// observe result object    
 }
 
 

@@ -22,5 +22,6 @@ var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
 	 File = "File with base64 value"
 };
 
-await faceRecognitionClient.SubjectExampleService.AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
+var response = await faceRecognitionClient.SubjectExampleService.AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
 
+Console.WriteLine($"Image id: {response.ImageId}. Subject name: {response.Subject}");
