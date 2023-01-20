@@ -61,25 +61,58 @@ namespace Exadel.Compreface.UnitTests.Services
                 It.IsAny<CancellationToken>()), Times.Once);
         }
 
-        protected void SetupPostJson<TResponse>() where TResponse : class, new()
+        protected void SetupPostJson<TResponse, TUrl>() where TResponse : class, new()
         {
-            ApiClientMock.Setup(apiClient =>
+            if (typeof(TUrl).IsEquivalentTo(typeof(Url)))
+            {
+                ApiClientMock.Setup(apiClient =>
+                apiClient.PostJsonAsync<TResponse>(
+                    It.IsAny<Url>(),
+                    It.IsAny<object>(),
+                    It.IsAny<HttpCompletionOption>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new TResponse());
+            }
+            else if (typeof(TUrl).IsEquivalentTo(typeof(string)))
+            {
+                ApiClientMock.Setup(apiClient =>
                 apiClient.PostJsonAsync<TResponse>(
                     It.IsAny<string>(),
                     It.IsAny<object>(),
                     It.IsAny<HttpCompletionOption>(),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new TResponse());
+            }
+            else
+            {
+                throw new Exception("Only string and Url types are possible");
+            }
         }
 
-        protected void VerifyPostJson<TResponse>() where TResponse : class, new()
+        protected void VerifyPostJson<TResponse, TUrl>() where TResponse : class, new()
         {
-            ApiClientMock.Verify(apiClient =>
+            if (typeof(TUrl).IsEquivalentTo(typeof(Url)))
+            {
+                ApiClientMock.Verify(apiClient =>
+                apiClient.PostJsonAsync<TResponse>(
+                    It.IsAny<Url>(),
+                    It.IsAny<object>(),
+                    It.IsAny<HttpCompletionOption>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+            }
+            else if (typeof(TUrl).IsEquivalentTo(typeof(string)))
+            {
+                ApiClientMock.Verify(apiClient =>
                 apiClient.PostJsonAsync<TResponse>(
                     It.IsAny<string>(),
                     It.IsAny<object>(),
                     It.IsAny<HttpCompletionOption>(),
                     It.IsAny<CancellationToken>()), Times.Once);
+            }
+            else
+            {
+                throw new Exception("Only string and Url types are possible");
+            }
         }
 
         protected void SetupPutJson<TResponse>() where TResponse : class, new()

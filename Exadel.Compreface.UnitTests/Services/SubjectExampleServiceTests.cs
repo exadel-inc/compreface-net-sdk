@@ -1,6 +1,7 @@
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 using Exadel.Compreface.Services;
+using Flurl;
 
 namespace Exadel.Compreface.UnitTests.Services;
 
@@ -37,7 +38,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         // Arrange
         var request = new AddBase64SubjectExampleRequest();
 
-        SetupPostJson<AddBase64SubjectExampleResponse>();
+        SetupPostJson<AddBase64SubjectExampleResponse, Url>();
         
         //Act
         var response = await _exampleSubjectService.AddBase64SubjectExampleAsync(request);
@@ -45,7 +46,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         // Assert
         Assert.IsType<AddBase64SubjectExampleResponse>(response);
 
-        VerifyPostJson<AddBase64SubjectExampleResponse>();
+        VerifyPostJson<AddBase64SubjectExampleResponse, Url>();
         ApiClientMock.VerifyNoOtherCalls();
     }
 }

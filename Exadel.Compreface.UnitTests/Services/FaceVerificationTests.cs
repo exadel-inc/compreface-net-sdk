@@ -2,6 +2,7 @@ using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
 using Exadel.Compreface.Services;
+using Flurl;
 
 namespace Exadel.Compreface.UnitTests.Services;
 
@@ -56,7 +57,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests
             FacePlugins = new List<string>()
         };
 
-        SetupPostJson<FaceVerificationResponse>();
+        SetupPostJson<FaceVerificationResponse, Url>();
 
         // Act
         var response = await _faceVerificationService.VerifyBase64ImageAsync(request);
@@ -65,7 +66,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests
         Assert.IsType<FaceVerificationResponse>(response);
         Assert.NotNull(response);
         
-        VerifyPostJson<FaceVerificationResponse>();
+        VerifyPostJson<FaceVerificationResponse, Url>();
         ApiClientMock.VerifyNoOtherCalls();
     }
     
@@ -73,7 +74,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests
     public async Task VerifyBase64ImageAsync_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
-        SetupPostJson<FaceVerificationResponse>();
+        SetupPostJson<FaceVerificationResponse, Url>();
         
         // Act
         var responseCall = async () => await _faceVerificationService.VerifyBase64ImageAsync(null!);

@@ -3,6 +3,7 @@ using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
 using Exadel.Compreface.Services;
+using Flurl;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
@@ -79,7 +80,7 @@ namespace Exadel.Compreface.UnitTests.Services
                 FacePlugins = new List<string>()
             };
 
-            SetupPostJson<RecognizeFaceFromImageResponse>();
+            SetupPostJson<RecognizeFaceFromImageResponse, Url>();
 
             // Act
             var response = await _recognitionService.RecognizeFaceFromBase64File(request);
@@ -87,7 +88,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.IsType<RecognizeFaceFromImageResponse>(response);
 
-            VerifyPostJson<RecognizeFaceFromImageResponse>();
+            VerifyPostJson<RecognizeFaceFromImageResponse, Url>();
             ApiClientMock.VerifyNoOtherCalls();
         }
 
@@ -100,7 +101,7 @@ namespace Exadel.Compreface.UnitTests.Services
                 FacePlugins = new List<string>()
             };
 
-            SetupPostJson<RecognizeFaceFromImageResponse>();
+            SetupPostJson<RecognizeFaceFromImageResponse, Url>();
 
             // Act
             var response = await _recognitionService.RecognizeFaceFromBase64File(request);
@@ -108,7 +109,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.NotNull(response);
 
-            VerifyPostJson<RecognizeFaceFromImageResponse>();
+            VerifyPostJson<RecognizeFaceFromImageResponse, Url>();
             ApiClientMock.VerifyNoOtherCalls();
         }
 
@@ -116,7 +117,7 @@ namespace Exadel.Compreface.UnitTests.Services
         public async void RecognizeFaceFromBase64File_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
-            SetupPostJson<RecognizeFaceFromImageResponse>();
+            SetupPostJson<RecognizeFaceFromImageResponse, Url>();
 
             // Act
             var func = async () => await _recognitionService.RecognizeFaceFromBase64File(null!);
@@ -189,7 +190,7 @@ namespace Exadel.Compreface.UnitTests.Services
                 FacePlugins = new List<string>()
             };
 
-            SetupPostJson<VerifyFacesFromImageResponse>();
+            SetupPostJson<VerifyFacesFromImageResponse, Url>();
 
             // Act
             var response = await _recognitionService.VerifyFacesFromBase64File(request);
@@ -197,7 +198,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.IsType<VerifyFacesFromImageResponse>(response);
 
-            VerifyPostJson<VerifyFacesFromImageResponse>();
+            VerifyPostJson<VerifyFacesFromImageResponse, Url>();
             ApiClientMock.VerifyNoOtherCalls();
         }
 
@@ -210,7 +211,7 @@ namespace Exadel.Compreface.UnitTests.Services
                 FacePlugins = new List<string>()
             };
 
-            SetupPostJson<VerifyFacesFromImageResponse>();
+            SetupPostJson<VerifyFacesFromImageResponse, Url>();
 
             // Act
             var response = await _recognitionService.VerifyFacesFromBase64File(request);
@@ -218,7 +219,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.NotNull(response);
 
-            VerifyPostJson<VerifyFacesFromImageResponse>();
+            VerifyPostJson<VerifyFacesFromImageResponse, Url>();
             ApiClientMock.VerifyNoOtherCalls();
         }
 
@@ -226,7 +227,7 @@ namespace Exadel.Compreface.UnitTests.Services
         public async void VerifyFacesFromBase64File_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
-            SetupPostJson<VerifyFacesFromImageResponse>();
+            SetupPostJson<VerifyFacesFromImageResponse, Url>();
 
             // Act
             var func = async () => await _recognitionService.VerifyFacesFromBase64File(null!);

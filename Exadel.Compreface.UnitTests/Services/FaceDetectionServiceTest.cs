@@ -2,6 +2,7 @@
 using Exadel.Compreface.Services;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Exadel.Compreface.Clients.Interfaces;
+using Flurl;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
