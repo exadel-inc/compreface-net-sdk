@@ -88,7 +88,7 @@ namespace Exadel.Compreface.FaceDetectionServiceTest
             var response = await _faceDetectionService.FaceDetectionBase64Async(_faceDetectionBase64Request);
 
             // Assert
-            Assert.IsType<FaceDetectionBase64Response>(response);
+            Assert.IsType<FaceDetectionResponse>(response);
         }
 
         [Fact]
