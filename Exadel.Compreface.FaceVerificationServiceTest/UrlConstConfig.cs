@@ -1,4 +1,5 @@
-﻿namespace Exadel.Compreface.SubjectExampleSrviceTest
+﻿namespace Exadel.Compreface.FaceVerivicationServiceTest
+
 {
     public static class UrlConstConfig
     {
@@ -6,9 +7,7 @@
 
         public const string PORT = "8000";
 
-        public const string API_KEY_RECOGNITION_SERVICE = "00000000-0000-0000-0000-000000000002";
-
-        public const string TEST_SUBJECT_EXAMPLE_NAME = "Test Example Subject Name";
+        public const string API_KEY_VERIFICATION_SERVICE = "00000000-0000-0000-0000-000000000004";
 
         public const string FILE_NAME = "brad-pitt_24.jpg";
 

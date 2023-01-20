@@ -8,9 +8,9 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteMultipleExamples;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageById;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageBySubjectId;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
-using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
+using static Exadel.Compreface.SubjectExampleSrviceTest.UrlConstConfig;
 
-namespace Exadel.Compreface.AcceptenceTests.Services
+namespace Exadel.Compreface.SubjectExampleSrviceTest
 {
     public class SubjectExampleServiceTest
     {

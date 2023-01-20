@@ -8,9 +8,9 @@ using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.Services;
-using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
+using static Exadel.Compreface.FaceRecognitionServiceTest.UrlConstConfig;
 
-namespace Exadel.Compreface.AcceptenceTests.Services
+namespace Exadel.Compreface.FaceRecognitionServiceTest
 {
     public class RecognitionServiceTests
     {

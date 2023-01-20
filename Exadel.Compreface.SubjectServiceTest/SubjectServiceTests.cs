@@ -7,9 +7,9 @@ using Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
 using Exadel.Compreface.DTOs.SubjectDTOs.RenameSubject;
 using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services;
-using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
+using static Exadel.Compreface.SubjectServiceTest.UrlConstConfig;
 
-namespace Exadel.Compreface.AcceptenceTests.Services
+namespace Exadel.Compreface.SubjectServiceTest
 {
     public class SubjectServiceTests
     {

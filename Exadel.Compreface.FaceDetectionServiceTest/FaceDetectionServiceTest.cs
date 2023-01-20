@@ -3,9 +3,9 @@ using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Exadel.Compreface.Services;
-using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
+using static Exadel.Compreface.FaceDetectionServiceTest.UrlConstConfig;
 
-namespace Exadel.Compreface.AcceptenceTests.Services
+namespace Exadel.Compreface.FaceDetectionServiceTest
 {
     public class FaceDetectionServiceTest
     {

@@ -1,4 +1,4 @@
-﻿namespace Exadel.Compreface.SubjectExampleSrviceTest
+﻿namespace Exadel.Compreface.FaceRecognitionServiceTest
 {
     public static class UrlConstConfig
     {
@@ -8,7 +8,7 @@
 
         public const string API_KEY_RECOGNITION_SERVICE = "00000000-0000-0000-0000-000000000002";
 
-        public const string TEST_SUBJECT_EXAMPLE_NAME = "Test Example Subject Name";
+        public const string TEST_SUBJECT_RECOGNITION_NAME = "Test Rcognition Subject Name";
 
         public const string FILE_NAME = "brad-pitt_24.jpg";
 

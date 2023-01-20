@@ -5,9 +5,9 @@ using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using System.Reflection;
 using Xunit.Sdk;
-using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
+using static Exadel.Compreface.SubjectExampleSrviceTest.UrlConstConfig;
 
-namespace Exadel.Compreface.AcceptenceTests.Services
+namespace Exadel.Compreface.SubjectExampleSrviceTest
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class SubjectExampleTestBeforeAfter : BeforeAfterTestAttribute

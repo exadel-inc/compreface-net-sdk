@@ -4,9 +4,9 @@ using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
 using Exadel.Compreface.Services;
-using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
+using static Exadel.Compreface.FaceVerivicationServiceTest.UrlConstConfig;
 
-namespace Exadel.Compreface.AcceptenceTests.Services
+namespace Exadel.Compreface.FaceVerivicationServiceTest.Services
 {
     public class FaceVerificationServiceTest
     {
