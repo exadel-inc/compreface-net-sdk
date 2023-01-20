@@ -16,10 +16,10 @@ namespace Exadel.Compreface.UnitTests.Services
         public AbstractBaseServiceTests()
         {
             var apiKey = GetRandomString();
-            var baseUrl = GetRandomString();
+            var domain = GetRandomString();
             var port = GetRandomString();
 
-            Configuration = new ComprefaceConfiguration(apiKey, baseUrl, port);
+            Configuration = new ComprefaceConfiguration(apiKey, domain, port);
             ApiClientMock = new Mock<IApiClient>();
         }
 
