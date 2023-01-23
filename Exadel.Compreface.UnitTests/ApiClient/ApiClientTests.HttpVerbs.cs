@@ -12,7 +12,9 @@ public partial class ApiClientTests
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
         
-        var apiClient = new Clients.ApiClient();
+        var randomstring = GetRandomString();
+
+        var apiClient = new Clients.ApiClient(apiKey: randomstring);
         
         await apiClient.GetJsonAsync<GetAllSubjectResponse>(
             requestUrl: RequestUrl);
@@ -29,7 +31,9 @@ public partial class ApiClientTests
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
         
-        var apiClient = new Clients.ApiClient();
+        var randomstring = GetRandomString();
+
+        var apiClient = new Clients.ApiClient(apiKey: randomstring);
         
         await apiClient.PostJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
@@ -46,7 +50,9 @@ public partial class ApiClientTests
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
         
-        var apiClient = new Clients.ApiClient();
+        var randomstring = GetRandomString();
+
+        var apiClient = new Clients.ApiClient(apiKey: randomstring);
         
         await apiClient.PutJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
@@ -63,7 +69,9 @@ public partial class ApiClientTests
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
         
-        var apiClient = new Clients.ApiClient();
+        var randomstring = GetRandomString();
+
+        var apiClient = new Clients.ApiClient(apiKey: randomstring);
         
         await apiClient.DeleteJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl);
@@ -81,7 +89,7 @@ public partial class ApiClientTests
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
         
-        var apiClient = new Clients.ApiClient();
+        var apiClient = new Clients.ApiClient(apiKey: randomstring);
         
         await apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
@@ -99,8 +107,10 @@ public partial class ApiClientTests
     {
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
-        
-        var apiClient = new Clients.ApiClient();
+
+        var randomstring = GetRandomString();
+
+        var apiClient = new Clients.ApiClient(apiKey: randomstring);
         
         await apiClient.GetBytesFromRemoteAsync(
             requestUrl: RequestUrl);
