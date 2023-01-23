@@ -34,7 +34,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         {
             var configuration = new ComprefaceConfiguration(API_KEY_RECOGNITION_SERVICE, DOMAIN, PORT);
             var client = new FaceRecognitionClient(configuration);
-            var detProbThreshold = 0.85m;
+            var detProbThreshold = 0.90m;
             var status = true;
             var facePlugins = new List<string>()
             {

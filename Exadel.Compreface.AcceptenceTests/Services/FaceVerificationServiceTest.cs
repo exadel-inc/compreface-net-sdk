@@ -15,7 +15,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
         private readonly FaceVerificationRequest _faceVerificationRequest;
         private readonly FaceVerificationWithBase64Request _faceVerificationBase64Request;
-
+        
         public FaceVerificationServiceTest()
         {
             var configuration = new ComprefaceConfiguration(API_KEY_VERIFICATION_SERVICE, DOMAIN, PORT);
