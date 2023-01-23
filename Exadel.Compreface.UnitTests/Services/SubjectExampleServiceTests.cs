@@ -1,8 +1,11 @@
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
+using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteAllSubjectExamples;
+using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteImageById;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteMultipleExamples;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageById;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageBySubjectId;
+using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
 using Exadel.Compreface.DTOs.HelperDTOs;
 using Exadel.Compreface.Services;
 using Flurl;
@@ -272,6 +275,150 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
 
         // Act
         var func = async () => await _exampleSubjectService.DownloadImageBySubjectIdAsync(null!);
+
+        // Assert
+        await Assert.ThrowsAsync<NullReferenceException>(func);
+    }
+
+    [Fact]
+    public async Task GetAllSubjectExamplesAsync_TakesRequestModel_ReturnsProperResponseModel()
+    {
+        // Arrange
+        var request = new ListAllSubjectExamplesRequest();
+
+        SetupGetJson<ListAllSubjectExamplesResponse, Url>();
+
+        // Act
+        var response = await _exampleSubjectService.GetAllSubjectExamplesAsync(request);
+
+        // Assert
+        Assert.IsType<ListAllSubjectExamplesResponse>(response);
+
+        VerifyGetJson<ListAllSubjectExamplesResponse, Url>();
+        ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task GetAllSubjectExamplesAsync_TakesRequestModel_ReturnsNotNull()
+    {
+        // Arrange
+        var request = new ListAllSubjectExamplesRequest();
+
+        SetupGetJson<ListAllSubjectExamplesResponse, Url>();
+
+        // Act
+        var response = await _exampleSubjectService.GetAllSubjectExamplesAsync(request);
+
+        // Assert
+        Assert.NotNull(response);
+        VerifyGetJson<ListAllSubjectExamplesResponse, Url>();
+        ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task GetAllSubjectExamplesAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    {
+        // Arrange
+        SetupGetJson<ListAllSubjectExamplesResponse>();
+
+        // Act
+        var func = async () => await _exampleSubjectService.GetAllSubjectExamplesAsync(null!);
+
+        // Assert
+        await Assert.ThrowsAsync<NullReferenceException>(func);
+    }
+
+    [Fact]
+    public async Task ClearSubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
+    {
+        // Arrange
+        var request = new DeleteAllExamplesRequest();
+
+        SetupDeleteJson<DeleteAllExamplesResponse, Url>();
+
+        // Act
+        var response = await _exampleSubjectService.ClearSubjectAsync(request);
+
+        // Assert
+        Assert.IsType<DeleteAllExamplesResponse>(response);
+
+        VerifyDeleteJson<DeleteAllExamplesResponse, Url>();
+        ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task ClearSubjectAsync_TakesRequestModel_ReturnsNotNull()
+    {
+        // Arrange
+        var request = new DeleteAllExamplesRequest();
+
+        SetupDeleteJson<DeleteAllExamplesResponse, Url>();
+
+        // Act
+        var response = await _exampleSubjectService.ClearSubjectAsync(request);
+
+        // Assert
+        Assert.NotNull(response);
+        VerifyDeleteJson<DeleteAllExamplesResponse, Url>();
+        ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task ClearSubjectAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    {
+        // Arrange
+        SetupDeleteJson<DeleteAllExamplesResponse, Url>();
+
+        // Act
+        var func = async () => await _exampleSubjectService.ClearSubjectAsync(null!);
+
+        // Assert
+        await Assert.ThrowsAsync<NullReferenceException>(func);
+    }
+
+    [Fact]
+    public async Task DeleteImageByIdAsync_TakesRequestModel_ReturnsProperResponseModel()
+    {
+        // Arrange
+        var request = new DeleteImageByIdRequest();
+
+        SetupDeleteJson<DeleteImageByIdResponse, Url>();
+
+        // Act
+        var response = await _exampleSubjectService.DeleteImageByIdAsync(request);
+
+        // Assert
+        Assert.IsType<DeleteImageByIdResponse>(response);
+
+        VerifyDeleteJson<DeleteImageByIdResponse, Url>();
+        ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task DeleteImageByIdAsync_TakesRequestModel_ReturnsNotNull()
+    {
+        // Arrange
+        var request = new DeleteImageByIdRequest();
+
+        SetupDeleteJson<DeleteImageByIdResponse, Url>();
+
+        // Act
+        var response = await _exampleSubjectService.DeleteImageByIdAsync(request);
+
+        // Assert
+        Assert.NotNull(response);
+        VerifyDeleteJson<DeleteImageByIdResponse, Url>();
+        ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task DeleteImageByIdAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    {
+        // Arrange
+        SetupDeleteJson<DeleteImageByIdResponse, Url>();
+
+        // Act
+        var func = async () => await _exampleSubjectService.DeleteImageByIdAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
