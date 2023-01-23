@@ -1,5 +1,7 @@
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
+using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteMultipleExamples;
+using Exadel.Compreface.DTOs.HelperDTOs;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
 using Exadel.Compreface.Services;
@@ -109,6 +111,59 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
 
         // Act
         var func = async () => await _exampleSubjectService.AddBase64SubjectExampleAsync(null!);
+
+        // Assert
+        await Assert.ThrowsAsync<NullReferenceException>(func);
+    }
+
+    [Fact]
+    public async Task DeletMultipleExamplesAsync_TakesRequestModel_ReturnsProperResponseModel()
+    {
+        // Arrange
+        var request = new DeleteMultipleExampleRequest()
+        {
+            ImageIdList = new List<Guid>()
+        };
+
+        SetupPostJson<List<Face>, Url>();
+
+        // Act
+        var response = await _exampleSubjectService.DeletMultipleExamplesAsync(request);
+
+        // Assert
+        Assert.IsType<DeleteMultipleExamplesResponse>(response);
+        VerifyPostJson<List<Face>, Url>();
+        ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task DeletMultipleExamplesAsync_TakesRequestModel_ReturnsNotNull()
+    {
+        // Arrange
+        var request = new DeleteMultipleExampleRequest()
+        {
+            ImageIdList = new List<Guid>()
+        };
+
+        SetupPostJson<List<Face>, Url>();
+
+        // Act
+        var response = await _exampleSubjectService.DeletMultipleExamplesAsync(request);
+
+        // Assert
+        Assert.NotNull(response);
+        VerifyPostJson<List<Face>, Url>();
+        ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task DeletMultipleExamplesAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    {
+        // Arrange
+        SetupPostJson<List<Face>, Url>();
+
+        // Act
+        var func = async () => await _exampleSubjectService.DeletMultipleExamplesAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
