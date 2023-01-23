@@ -23,6 +23,25 @@ namespace Exadel.Compreface.UnitTests.Services
             ApiClientMock = new Mock<IApiClient>();
         }
 
+        protected void SetupGetBytesFromRemote()
+        {
+            ApiClientMock.Setup(apiClient =>
+                apiClient.GetBytesFromRemoteAsync(
+                    It.IsAny<Url>(),
+                    It.IsAny<HttpCompletionOption>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Array.Empty<byte>());
+        }
+
+        protected void VerifyGetBytesFromRemote()
+        {
+            ApiClientMock.Verify(apiClient =>
+                apiClient.GetBytesFromRemoteAsync(
+                    It.IsAny<Url>(),
+                    It.IsAny<HttpCompletionOption>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+        }
+
         protected void SetupGetJson<TResponse>() where TResponse : new()
         {
             ApiClientMock.Setup(apiClient =>
@@ -157,7 +176,7 @@ namespace Exadel.Compreface.UnitTests.Services
                     It.IsAny<CancellationToken>()), Times.Once);
         }
 
-        private static string GetRandomString()
+        protected static string GetRandomString()
         {
             return new Filler<string>().Create();
         }

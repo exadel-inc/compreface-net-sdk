@@ -1,6 +1,7 @@
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteMultipleExamples;
+using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageById;
 using Exadel.Compreface.DTOs.HelperDTOs;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
@@ -164,6 +165,61 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
 
         // Act
         var func = async () => await _exampleSubjectService.DeletMultipleExamplesAsync(null!);
+
+        // Assert
+        await Assert.ThrowsAsync<NullReferenceException>(func);
+    }
+
+    [Fact]
+    public async Task DownloadImageByIdAsync_TakesRequestModel_ReturnsProperResponseModel()
+    {
+        // Arrange
+        var request = new DownloadImageByIdRequest()
+        {
+            ImageId = Guid.NewGuid(),
+            RecognitionApiKey = Guid.NewGuid()
+        };
+
+        SetupGetBytesFromRemote();
+
+        // Act
+        var response = await _exampleSubjectService.DownloadImageByIdAsync(request);
+
+        // Assert
+        Assert.IsType<byte[]>(response);
+        VerifyGetBytesFromRemote();
+        ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task DownloadImageByIdAsync_TakesRequestModel_ReturnsNotNull()
+    {
+        // Arrange
+        var request = new DownloadImageByIdRequest()
+        {
+            ImageId = Guid.NewGuid(),
+            RecognitionApiKey = Guid.NewGuid()
+        };
+
+        SetupGetBytesFromRemote();
+
+        // Act
+        var response = await _exampleSubjectService.DownloadImageByIdAsync(request);
+
+        // Assert
+        Assert.NotNull(response);
+        VerifyGetBytesFromRemote();
+        ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task DownloadImageByIdAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    {
+        // Arrange
+        SetupGetBytesFromRemote();
+
+        // Act
+        var func = async () => await _exampleSubjectService.DownloadImageByIdAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
