@@ -35,6 +35,37 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
+    public async Task AddSubjectExampleAsync_TakesRequestModel_ReturnsNotNull()
+    {
+        // Arrange
+        var request = new AddSubjectExampleRequest();
+
+        SetupPostMultipart<AddSubjectExampleResponse>();
+
+        // Act
+        var response = await _exampleSubjectService.AddSubjectExampleAsync(request);
+
+        // Assert
+        Assert.NotNull(response);
+
+        VerifyPostMultipart<AddSubjectExampleResponse>();
+        ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task AddSubjectExampleAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    {
+        // Arrange
+        SetupPostMultipart<AddSubjectExampleResponse>();
+
+        // Act
+        var func = async () => await _exampleSubjectService.AddSubjectExampleAsync(null!);
+
+        // Assert
+        await Assert.ThrowsAsync<NullReferenceException>(func);
+    }
+
+    [Fact]
     public async Task AddBase64SubjectExampleAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
