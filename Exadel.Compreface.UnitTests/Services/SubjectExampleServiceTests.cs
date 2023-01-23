@@ -1,5 +1,7 @@
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
+using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
+using Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
 using Exadel.Compreface.Services;
 using Flurl;
 
@@ -48,5 +50,36 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
 
         VerifyPostJson<AddBase64SubjectExampleResponse, Url>();
         ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task AddBase64SubjectExampleAsync_TakesRequestModel_ReturnsNotNull()
+    {
+        // Arrange
+        var request = new AddBase64SubjectExampleRequest();
+
+        SetupPostJson<AddBase64SubjectExampleResponse, Url>();
+
+        // Act
+        var response = await _exampleSubjectService.AddBase64SubjectExampleAsync(request);
+
+        // Assert
+        Assert.NotNull(response);
+
+        VerifyPostJson<AddBase64SubjectExampleResponse, Url>();
+        ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task AddBase64SubjectExampleAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    {
+        // Arrange
+        SetupPostJson<AddBase64SubjectExampleResponse, Url>();
+
+        // Act
+        var func = async () => await _exampleSubjectService.AddBase64SubjectExampleAsync(null!);
+
+        // Assert
+        await Assert.ThrowsAsync<NullReferenceException>(func);
     }
 }
