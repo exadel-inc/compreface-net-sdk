@@ -23,6 +23,25 @@ namespace Exadel.Compreface.UnitTests.Services
             ApiClientMock = new Mock<IApiClient>();
         }
 
+        protected void SetupGetBytesFromRemote()
+        {
+            ApiClientMock.Setup(apiClient =>
+                apiClient.GetBytesFromRemoteAsync(
+                    It.IsAny<Url>(),
+                    It.IsAny<HttpCompletionOption>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Array.Empty<byte>());
+        }
+
+        protected void VerifyGetBytesFromRemote()
+        {
+            ApiClientMock.Verify(apiClient =>
+                apiClient.GetBytesFromRemoteAsync(
+                    It.IsAny<Url>(),
+                    It.IsAny<HttpCompletionOption>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+        }
+
         protected void SetupGetJson<TResponse>() where TResponse : new()
         {
             ApiClientMock.Setup(apiClient =>
@@ -33,11 +52,30 @@ namespace Exadel.Compreface.UnitTests.Services
                 .ReturnsAsync(new TResponse());
         }
 
+        protected void SetupGetJson<TResponse, TUrl>() where TResponse : new()
+        {
+            ApiClientMock.Setup(apiClient =>
+                apiClient.GetJsonAsync<TResponse>(
+                    It.IsAny<Url>(),
+                    It.IsAny<HttpCompletionOption>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new TResponse());
+        }
+
         protected void VerifyGetJson<TResponse>()
         {
             ApiClientMock.Verify(apiClient =>
                 apiClient.GetJsonAsync<TResponse>(
                     It.IsAny<string>(),
+                    It.IsAny<HttpCompletionOption>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        protected void VerifyGetJson<TResponse, TUrl>()
+        {
+            ApiClientMock.Verify(apiClient =>
+                apiClient.GetJsonAsync<TResponse>(
+                    It.IsAny<Url>(),
                     It.IsAny<HttpCompletionOption>(),
                     It.IsAny<CancellationToken>()), Times.Once);
         }
@@ -148,6 +186,16 @@ namespace Exadel.Compreface.UnitTests.Services
                 .ReturnsAsync(new TResponse());
         }
 
+        protected void SetupDeleteJson<TResponse, TUrl>() where TResponse : class, new()
+        {
+            ApiClientMock.Setup(apiClient =>
+                apiClient.DeleteJsonAsync<TResponse>(
+                    It.IsAny<Url>(),
+                    It.IsAny<HttpCompletionOption>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new TResponse());
+        }
+
         protected void VerifyDeleteJson<TResponse>() where TResponse : class
         {
             ApiClientMock.Verify(apiClient =>
@@ -157,7 +205,16 @@ namespace Exadel.Compreface.UnitTests.Services
                     It.IsAny<CancellationToken>()), Times.Once);
         }
 
-        private static string GetRandomString()
+        protected void VerifyDeleteJson<TResponse, TUrl>() where TResponse : class
+        {
+            ApiClientMock.Verify(apiClient =>
+                apiClient.DeleteJsonAsync<TResponse>(
+                    It.IsAny<Url>(),
+                    It.IsAny<HttpCompletionOption>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        protected static string GetRandomString()
         {
             return new Filler<string>().Create();
         }
