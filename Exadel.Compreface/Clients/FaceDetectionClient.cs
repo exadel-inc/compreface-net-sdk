@@ -22,7 +22,6 @@ namespace Exadel.Compreface.Clients
 
             FaceDetectionService = new FaceDetectionService(apiClient: apiClient, configuration: configuration);
 
-            // ConfigInitializer.InitializeApiKeyInRequestHeader(configuration.ApiKey);
             ConfigInitializer.InitializeSnakeCaseJsonConfigs();
         }
     }

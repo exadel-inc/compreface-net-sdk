@@ -23,7 +23,6 @@ namespace Exadel.Compreface.Clients
 
             FaceVerificationService = new FaceVerificationService(apiClient: apiClient, configuration: configuration);
 
-            // ConfigInitializer.InitializeApiKeyInRequestHeader(configuration.ApiKey);
             ConfigInitializer.InitializeSnakeCaseJsonConfigs();
         }
     }

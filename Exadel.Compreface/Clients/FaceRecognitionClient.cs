@@ -27,7 +27,6 @@ namespace Exadel.Compreface.Clients
             SubjectService = new SubjectService(apiClient: apiClient, configuration: configuration);
             RecognitionService = new RecognitionService(apiClient: apiClient, configuration: configuration);
 
-            // ConfigInitializer.InitializeApiKeyInRequestHeader(configuration.ApiKey);
             ConfigInitializer.InitializeSnakeCaseJsonConfigs();
         }
     }
