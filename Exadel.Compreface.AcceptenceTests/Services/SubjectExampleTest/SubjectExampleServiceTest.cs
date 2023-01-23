@@ -12,6 +12,7 @@ using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
 {
+    [Collection("Sequential")]
     public class SubjectExampleServiceTest
     {
         private readonly FaceRecognitionClient faceRecognitionClient;
@@ -153,7 +154,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
             var expectedCount = 3;
-            List<Guid> unnecessaryExampleList = new List<Guid>();
+            var unnecessaryExampleList = new List<Guid>();
 
             for (int counter = expectedCount; counter > 0; counter--)
             {

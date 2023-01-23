@@ -7,6 +7,7 @@ using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
 {
+    [Collection("Sequential")]
     public class FaceDetectionServiceTest
     {
         private readonly FaceDetectionService _faceDetectionService;
@@ -72,7 +73,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async void FaceDetectionAsync_TakesNullRequest_ThrowsException()
+        public async Task FaceDetectionAsync_TakesNullRequest_ThrowsException()
         {
             // Act
             var func = async () => await _faceDetectionService.FaceDetectionAsync(null!);
@@ -102,7 +103,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async void FaceDetectionBase64Async_TakesNullRequest_ThrowsException()
+        public async Task FaceDetectionBase64Async_TakesNullRequest_ThrowsException()
         {
             // Act
             var func = async () => await _faceDetectionService.FaceDetectionBase64Async(null!);

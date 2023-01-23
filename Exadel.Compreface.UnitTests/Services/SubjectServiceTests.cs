@@ -1,34 +1,23 @@
-﻿using Exadel.Compreface.Clients.Interfaces;
-using Exadel.Compreface.Configuration;
-using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
+﻿using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteAllSubjects;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
 using Exadel.Compreface.DTOs.SubjectDTOs.RenameSubject;
 using Exadel.Compreface.Services;
-using Moq;
-using Tynamix.ObjectFiller;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
-    public class SubjectServiceTests
+    public class SubjectServiceTests : AbstractBaseServiceTests
     {
-        private readonly Mock<IApiClient> _apiClientMock;
         private readonly SubjectService _subjectService;
 
         public SubjectServiceTests()
         {
-            var apiKey = GetRandomString();
-            var domain = GetRandomString();
-            var port = new Random().Next().ToString();
-            var configuration = new ComprefaceConfiguration(apiKey, domain, port);
-
-            _apiClientMock = new Mock<IApiClient>();
-            _subjectService = new SubjectService(configuration, _apiClientMock.Object);
+            _subjectService = new SubjectService(Configuration, ApiClientMock.Object);
         }
 
         [Fact]
-        public async void GetAllSubject_Executes_ReturnsProperResponseModel()
+        public async Task GetAllSubject_Executes_ReturnsProperResponseModel()
         {
             // Arrange
             SetupGetJson<GetAllSubjectResponse>();
@@ -40,11 +29,11 @@ namespace Exadel.Compreface.UnitTests.Services
             Assert.IsType<GetAllSubjectResponse>(response);
 
             VerifyGetJson<GetAllSubjectResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
-        public async void GetAllSubject_Executes_ReturnsNotNull()
+        public async Task GetAllSubject_Executes_ReturnsNotNull()
         {
             // Arrange
             SetupGetJson<GetAllSubjectResponse>();
@@ -56,16 +45,16 @@ namespace Exadel.Compreface.UnitTests.Services
             Assert.NotNull(response);
 
             VerifyGetJson<GetAllSubjectResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
-        public async void AddSubject_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task AddSubject_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new AddSubjectRequest();
 
-            SetupPostJson<AddSubjectResponse>();
+            SetupPostJson<AddSubjectResponse, string>();
 
             // Act
             var response = await _subjectService.AddSubject(request);
@@ -73,17 +62,17 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.IsType<AddSubjectResponse>(response);
 
-            VerifyPostJson<AddSubjectResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            VerifyPostJson<AddSubjectResponse, string>();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
-        public async void AddSubject_TakesRequestModel_ReturnsNotNull()
+        public async Task AddSubject_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             var request = new AddSubjectRequest();
 
-            SetupPostJson<AddSubjectResponse>();
+            SetupPostJson<AddSubjectResponse, string>();
 
             // Act
             var response = await _subjectService.AddSubject(request);
@@ -91,12 +80,12 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.NotNull(response);
 
-            VerifyPostJson<AddSubjectResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            VerifyPostJson<AddSubjectResponse, string>();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
-        public async void RenameSubject_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task RenameSubject_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new RenameSubjectRequest();
@@ -110,11 +99,11 @@ namespace Exadel.Compreface.UnitTests.Services
             Assert.IsType<RenameSubjectResponse>(response);
 
             VerifyPutJson<RenameSubjectResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
-        public async void RenameSubject_TakesRequestModel_ReturnsNotNull()
+        public async Task RenameSubject_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             var request = new RenameSubjectRequest();
@@ -128,11 +117,11 @@ namespace Exadel.Compreface.UnitTests.Services
             Assert.NotNull(response);
 
             VerifyPutJson<RenameSubjectResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
-        public async void RenameSubject_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task RenameSubject_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
             SetupPutJson<RenameSubjectRequest>();
@@ -145,7 +134,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async void DeleteSubject_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DeleteSubject_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new DeleteSubjectRequest();
@@ -159,11 +148,11 @@ namespace Exadel.Compreface.UnitTests.Services
             Assert.IsType<DeleteSubjectResponse>(response);
 
             VerifyDeleteJson<DeleteSubjectResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
-        public async void DeleteSubject_TakesRequestModel_ReturnsNotNull()
+        public async Task DeleteSubject_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             var request = new DeleteSubjectRequest();
@@ -177,11 +166,11 @@ namespace Exadel.Compreface.UnitTests.Services
             Assert.NotNull(response);
 
             VerifyDeleteJson<DeleteSubjectResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
-        public async void DeleteSubject_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DeleteSubject_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
             SetupDeleteJson<DeleteSubjectRequest>();
@@ -194,7 +183,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async void DeleteAllSubjects_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DeleteAllSubjects_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             SetupDeleteJson<DeleteAllSubjectsResponse>();
@@ -206,11 +195,11 @@ namespace Exadel.Compreface.UnitTests.Services
             Assert.IsType<DeleteAllSubjectsResponse>(response);
 
             VerifyDeleteJson<DeleteAllSubjectsResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
+            ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
-        public async void DeleteAllSubjects_TakesRequestModel_ReturnsNotNull()
+        public async Task DeleteAllSubjects_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             SetupDeleteJson<DeleteAllSubjectsResponse>();
@@ -222,92 +211,7 @@ namespace Exadel.Compreface.UnitTests.Services
             Assert.NotNull(response);
 
             VerifyDeleteJson<DeleteAllSubjectsResponse>();
-            _apiClientMock.VerifyNoOtherCalls();
-        }
-
-        private static string GetRandomString()
-        {
-            return new Filler<string>().Create();
-        }
-
-        private void SetupGetJson<TResponse>() where TResponse : new()
-        {
-            _apiClientMock.Setup(apiClient =>
-                apiClient.GetJsonAsync<TResponse>(
-                    It.IsAny<string>(),
-                    It.IsAny<HttpCompletionOption>(),
-                    It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new TResponse());
-        }
-
-        private void VerifyGetJson<TResponse>()
-        {
-            _apiClientMock.Verify(apiClient =>
-                apiClient.GetJsonAsync<TResponse>(
-                    It.IsAny<string>(),
-                    It.IsAny<HttpCompletionOption>(),
-                    It.IsAny<CancellationToken>()), Times.Once);
-        }
-
-        private void SetupPostJson<TResponse>() where TResponse : class, new()
-        {
-            _apiClientMock.Setup(apiClient =>
-                apiClient.PostJsonAsync<TResponse>(
-                    It.IsAny<string>(),
-                    It.IsAny<object>(),
-                    It.IsAny<HttpCompletionOption>(),
-                    It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new TResponse());
-        }
-
-        private void VerifyPostJson<TResponse>() where TResponse : class
-        {
-            _apiClientMock.Verify(apiClient =>
-                apiClient.PostJsonAsync<TResponse>(
-                    It.IsAny<string>(),
-                    It.IsAny<object>(),
-                    It.IsAny<HttpCompletionOption>(),
-                    It.IsAny<CancellationToken>()), Times.Once);
-        }
-
-        private void SetupPutJson<TResponse>() where TResponse : class, new()
-        {
-            _apiClientMock.Setup(apiClient =>
-                apiClient.PutJsonAsync<TResponse>(
-                    It.IsAny<string>(),
-                    It.IsAny<object>(),
-                    It.IsAny<HttpCompletionOption>(),
-                    It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new TResponse());
-        }
-
-        private void VerifyPutJson<TResponse>() where TResponse : class
-        {
-            _apiClientMock.Verify(apiClient =>
-                apiClient.PutJsonAsync<TResponse>(
-                    It.IsAny<string>(),
-                    It.IsAny<object>(),
-                    It.IsAny<HttpCompletionOption>(),
-                    It.IsAny<CancellationToken>()), Times.Once);
-        }
-
-        private void SetupDeleteJson<TResponse>() where TResponse : class, new()
-        {
-            _apiClientMock.Setup(apiClient =>
-                apiClient.DeleteJsonAsync<TResponse>(
-                    It.IsAny<string>(),
-                    It.IsAny<HttpCompletionOption>(),
-                    It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new TResponse());
-        }
-
-        private void VerifyDeleteJson<TResponse>() where TResponse : class
-        {
-            _apiClientMock.Verify(apiClient =>
-                apiClient.DeleteJsonAsync<TResponse>(
-                    It.IsAny<string>(),
-                    It.IsAny<HttpCompletionOption>(),
-                    It.IsAny<CancellationToken>()), Times.Once);
+            ApiClientMock.VerifyNoOtherCalls();
         }
     }
 }
