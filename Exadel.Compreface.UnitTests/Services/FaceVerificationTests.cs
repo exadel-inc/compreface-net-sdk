@@ -99,21 +99,6 @@ public class FaceVerificationTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task VerifyBase64ImageAsync_TakesIncorrectRequestModel_ThrowsArgumentNullException()
-    {
-        // Arrange
-        var request = new FaceVerificationWithBase64Request();
-
-        SetupPostJson<FaceVerificationResponse, Url>();
-
-        // Act
-        var responseCall = async () => await _faceVerificationService.VerifyBase64ImageAsync(request);
-
-        // Assert
-        await Assert.ThrowsAsync<ArgumentNullException>(responseCall);
-    }
-
-    [Fact]
     public async Task VerifyBase64ImageAsync_TakesIncorrectRequestModel_ThrowsArgumentArgumentNullException()
     {
         // Arrange

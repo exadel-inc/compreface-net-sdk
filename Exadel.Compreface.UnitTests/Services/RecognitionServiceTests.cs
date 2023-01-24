@@ -212,6 +212,21 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
+        public async Task VerifyFacesFromImage_TakesIncorrectRequestModel_ThrowsArgumentNullException()
+        {
+            // Arrange
+            var request = new VerifyFacesFromImageRequest();
+
+            SetupPostMultipart<VerifyFacesFromImageResponse>();
+
+            // Act
+            var func = async () => await _recognitionService.VerifyFacesFromImage(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
+        }
+
+        [Fact]
         public async Task VerifyFacesFromBase64File_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
