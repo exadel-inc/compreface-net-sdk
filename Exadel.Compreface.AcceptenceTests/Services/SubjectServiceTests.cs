@@ -11,7 +11,6 @@ using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
 {
-    [Collection("Sequential")]
     public class SubjectServiceTests
     {
         private readonly SubjectService _subjectService;
