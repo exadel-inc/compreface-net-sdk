@@ -21,9 +21,5 @@ jobs:
           path-to-cla-document: 'https://github.com/exadel-inc/compreface-net-sdk/blob/develop/CLA.md'
           branch: 'CLA-signatures'
           allowlist: bot*
-      - name: Install dependencies
-        run: dotnet restore
-      - name: Build
-        run: dotnet build --configuration Release --no-restore
       - name: Test
         run: dotnet test --no-restore --verbosity normal
