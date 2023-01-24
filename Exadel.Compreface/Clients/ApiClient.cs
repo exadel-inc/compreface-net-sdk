@@ -11,6 +11,12 @@ namespace Exadel.Compreface.Clients;
 /// </summary>
 public class ApiClient : IApiClient
 {
+    private readonly string _apiKey;
+    
+    public ApiClient(string apiKey)
+    {
+        _apiKey = apiKey;    
+    }
     public async Task<TResponse> GetJsonAsync<TResponse>(
         Url requestUrl,
         HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
@@ -19,6 +25,7 @@ public class ApiClient : IApiClient
         try
         {
             var response = await requestUrl
+                .WithHeader("x-api-key", _apiKey)
                 .GetAsync(completionOption, cancellationToken: cancellationToken)
                 .ReceiveJson<TResponse>();
 
@@ -56,6 +63,7 @@ public class ApiClient : IApiClient
         try
         {
             var response = await requestUrl
+                .WithHeader("x-api-key", _apiKey)
                 .PostJsonAsync(body, completionOption, cancellationToken)
                 .ReceiveJson<TResponse>();
 
@@ -93,6 +101,7 @@ public class ApiClient : IApiClient
         try
         {
             var response = await requestUrl
+                .WithHeader("x-api-key", _apiKey)
                 .PutJsonAsync(body, completionOption, cancellationToken)
                 .ReceiveJson<TResponse>();
 
@@ -129,6 +138,7 @@ public class ApiClient : IApiClient
         try
         {
             var response = await requestUrl
+                .WithHeader("x-api-key", _apiKey)
                 .DeleteAsync(completionOption, cancellationToken)
                 .ReceiveJson<TResponse>();
 
@@ -165,6 +175,7 @@ public class ApiClient : IApiClient
         try
         {
             var response = await requestUrl
+                .WithHeader("x-api-key", _apiKey)
                 .PostMultipartAsync(buildContent, completionOption, cancellationToken)
                 .ReceiveJson<TResponse>();
 
@@ -201,6 +212,7 @@ public class ApiClient : IApiClient
         try
         {
             var response = await requestUrl
+                .WithHeader("x-api-key", _apiKey)
                 .GetBytesAsync(completionOption, cancellationToken);
 
             return response;

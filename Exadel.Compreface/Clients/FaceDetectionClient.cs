@@ -18,11 +18,10 @@ namespace Exadel.Compreface.Clients
 
         public FaceDetectionClient(ComprefaceConfiguration configuration)
         {
-            var apiClient = new ApiClient();
+            var apiClient = new ApiClient(configuration.ApiKey);
 
             FaceDetectionService = new FaceDetectionService(apiClient: apiClient, configuration: configuration);
 
-            ConfigInitializer.InitializeApiKeyInRequestHeader(configuration.ApiKey);
             ConfigInitializer.InitializeSnakeCaseJsonConfigs();
         }
     }

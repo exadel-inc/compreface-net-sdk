@@ -19,11 +19,10 @@ namespace Exadel.Compreface.Clients
 
         public FaceVerificationClient(ComprefaceConfiguration configuration)
         {
-            var apiClient = new ApiClient();
+            var apiClient = new ApiClient(configuration.ApiKey);
 
             FaceVerificationService = new FaceVerificationService(apiClient: apiClient, configuration: configuration);
 
-            ConfigInitializer.InitializeApiKeyInRequestHeader(configuration.ApiKey);
             ConfigInitializer.InitializeSnakeCaseJsonConfigs();
         }
     }

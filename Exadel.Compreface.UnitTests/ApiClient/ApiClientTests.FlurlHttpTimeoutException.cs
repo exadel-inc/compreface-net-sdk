@@ -17,7 +17,9 @@ public partial class ApiClientTests
             .SimulateTimeout()
             .SimulateException(httpException);
         
-        var apiClient = new Clients.ApiClient();
+        var randomstring = GetRandomString();
+
+        var apiClient = new Clients.ApiClient(apiKey: randomstring);
         
         var responseCall = apiClient.GetJsonAsync<GetAllSubjectResponse>(
             requestUrl: RequestUrl);
@@ -34,7 +36,9 @@ public partial class ApiClientTests
             .SimulateTimeout()
             .SimulateException(httpException);
         
-        var apiClient = new Clients.ApiClient();
+        var randomstring = GetRandomString();
+
+        var apiClient = new Clients.ApiClient(apiKey: randomstring);
         
         var responseCall = apiClient.PostJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
@@ -52,7 +56,9 @@ public partial class ApiClientTests
             .SimulateTimeout()
             .SimulateException(httpException);
         
-        var apiClient = new Clients.ApiClient();
+        var randomstring = GetRandomString();
+
+        var apiClient = new Clients.ApiClient(apiKey: randomstring);
         
         var responseCall = apiClient.PutJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
@@ -70,7 +76,9 @@ public partial class ApiClientTests
             .SimulateTimeout()
             .SimulateException(httpException);
         
-        var apiClient = new Clients.ApiClient();
+        var randomstring = GetRandomString();
+
+        var apiClient = new Clients.ApiClient(apiKey: randomstring);
         
         var responseCall = apiClient.DeleteJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl);
@@ -88,7 +96,8 @@ public partial class ApiClientTests
             .SimulateException(httpException);
         
         var randomstring = GetRandomString();
-        var apiClient = new Clients.ApiClient();
+
+        var apiClient = new Clients.ApiClient(apiKey: randomstring);
         
         var responseCall = apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
@@ -107,7 +116,9 @@ public partial class ApiClientTests
             .SimulateTimeout()
             .SimulateException(httpException);
         
-        var apiClient = new Clients.ApiClient();
+        var randomstring = GetRandomString();
+
+        var apiClient = new Clients.ApiClient(apiKey: randomstring);
         
         var responseCall = apiClient.GetBytesFromRemoteAsync(
             requestUrl: RequestUrl);

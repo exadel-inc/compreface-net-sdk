@@ -21,13 +21,12 @@ namespace Exadel.Compreface.Clients
 
         public FaceRecognitionClient(ComprefaceConfiguration configuration)
         {
-            var apiClient = new ApiClient();
+            var apiClient = new ApiClient(configuration.ApiKey);
 
             SubjectExampleService = new SubjectExampleService(apiClient: apiClient, configuration: configuration);
             SubjectService = new SubjectService(apiClient: apiClient, configuration: configuration);
             RecognitionService = new RecognitionService(apiClient: apiClient, configuration: configuration);
 
-            ConfigInitializer.InitializeApiKeyInRequestHeader(configuration.ApiKey);
             ConfigInitializer.InitializeSnakeCaseJsonConfigs();
         }
     }

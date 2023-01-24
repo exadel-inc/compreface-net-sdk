@@ -8,7 +8,6 @@ using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
 {
-    [Collection("Sequential")]
     public class FaceVerificationServiceTest
     {
         private readonly FaceVerificationService _faceVerificationService;
