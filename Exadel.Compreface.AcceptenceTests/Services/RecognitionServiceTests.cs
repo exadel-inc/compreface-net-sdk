@@ -61,14 +61,12 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             _addSubjectExampleRequest = new AddSubjectExampleRequest
             {
                 Subject = subjectName,
-                FilePath = FILE_PATH,
-                FileName = FILE_NAME,
+                File = FILE_PATH,
                 DetProbThreShold = detProbThreshold
             };
 
             _request = new RecognizeFaceFromImageRequest
             {
-                FileName = FILE_NAME,
                 FilePath = FILE_PATH,
                 DetProbThreshold = detProbThreshold,
                 FacePlugins = facePlugins,
@@ -84,7 +82,6 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             _verifyRequest = new VerifyFacesFromImageRequest()
             {
-                FileName = FILE_NAME,
                 FilePath = FILE_PATH,
                 DetProbThreshold = detProbThreshold,
                 FacePlugins = facePlugins,

@@ -3,6 +3,7 @@ using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
+using Exadel.Compreface.Helpers;
 using Flurl;
 
 namespace Exadel.Compreface.Services;
@@ -35,9 +36,9 @@ public class FaceVerificationService
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
                 {
-                    mp.AddFile(name: "source_image", fileName: request.SourceImageFileName,
+                    mp.AddFile(name: "source_image", fileName: FileHelpers.GenerateFileName(request.SourceImageFilePath),
                         path: request.SourceImageFilePath);
-                    mp.AddFile(name: "target_image", fileName: request.TargetImageFileName,
+                    mp.AddFile(name: "target_image", fileName: FileHelpers.GenerateFileName(request.TargetImageFilePath),
                         path: request.TargetImageFilePath);
                 }
             );

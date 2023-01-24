@@ -2,6 +2,7 @@
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
+using Exadel.Compreface.Helpers;
 using Flurl;
 using Flurl.Http;
 
@@ -34,7 +35,7 @@ namespace Exadel.Compreface.Services
                 _apiClient.PostMultipartAsync<FaceDetectionResponse>(
                     requestUrl: requestUrlWithQueryParameters,
                     buildContent: mp =>
-                        mp.AddFile("file", fileName: faceDetectionRequest.FileName, path: faceDetectionRequest.FilePath));
+                        mp.AddFile("file", fileName: FileHelpers.GenerateFileName(faceDetectionRequest.FilePath), path: faceDetectionRequest.FilePath));
 
             return response;
         }

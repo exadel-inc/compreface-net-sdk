@@ -10,6 +10,7 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
 using Exadel.Compreface.DTOs.HelperDTOs;
 using Flurl;
 using Exadel.Compreface.Clients.Interfaces;
+using Exadel.Compreface.Helpers;
 
 namespace Exadel.Compreface.Services;
 
@@ -24,7 +25,7 @@ public class SubjectExampleService
         _apiClient = apiClient;
     }
 
-    public async Task<AddSubjectExampleResponse> AddSubjectExampleAsync(AddSubjectExampleRequest request)
+    public async Task<AddSubjectExampleResponse> AddSubjectExampleAsync(AddSubjectExampleRequest request, bool isFileInTheRemoteServer=false)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
@@ -33,14 +34,38 @@ public class SubjectExampleService
                 subject = request.Subject,
                 det_prob_threshold = request.DetProbThreShold,
             });
+        AddSubjectExampleResponse? response = null;
+        
+        if (isFileInTheRemoteServer)
+        {
+            var fileByte = await _apiClient.GetBytesFromRemoteAsync(
+                requestUrl: requestUrlWithQueryParameters);
 
-        var response = await _apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
+            var fileInBase64String = Convert.ToBase64String(fileByte);
+            
+            // TODO: add standard mapper logic here instead of mapping manually!!!
+            var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
+            {
+                DetProbThreShold = request.DetProbThreShold,
+                File = fileInBase64String,
+                Subject = request.Subject,
+            };
+
+            response =
+                await _apiClient.PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+
+            return response;
+        }
+        
+        response = await _apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
             requestUrl: requestUrlWithQueryParameters,
             buildContent: mp =>
-                mp.AddFile("file", fileName: request.FileName, path: request.FilePath)); 
+                mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.File), path: request.File)); 
 
         return response;
     }
+    
+    // public async Task<AddSubjectExampleResponse> AddSubjectExampleAsync()
 
     public async Task<AddBase64SubjectExampleResponse> AddBase64SubjectExampleAsync(AddBase64SubjectExampleRequest request)
     {
