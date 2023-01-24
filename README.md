@@ -1,6 +1,6 @@
 # CompreFace .NET SDK
 
-This library can be used to simplify access to Compreface from .NET
+CompreFace NET SDK makes face recognition into your application even easier.
 
 # Table of content
 - [Requirements](#requirements)
