@@ -70,6 +70,21 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
+        public async Task FaceDetectionAsync_TakesIncorrectRequestModel_ThrowsArgumentNullException()
+        {
+            // Arrange
+            var request = new FaceDetectionRequest();
+
+            SetupPostMultipart<FaceDetectionResponse>();
+
+            // Act
+            var func = async () => await _faceDetectionService.FaceDetectionAsync(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
+        }
+
+        [Fact]
         public async Task FaceDetectionBase64Async_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
