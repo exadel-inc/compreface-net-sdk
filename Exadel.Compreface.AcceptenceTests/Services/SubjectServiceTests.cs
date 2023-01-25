@@ -23,11 +23,11 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public SubjectServiceTests()
         {
             var configuration = new ComprefaceConfiguration(API_KEY_RECOGNITION_SERVICE, DOMAIN, PORT);
-            var client = new FaceRecognitionClient(configuration);
+            var client = new ApiClient(configuration);
             var subjectName = TEST_SUBJECT_NAME;
             var renamedSubjectName = RENAMED_SUBJECT_NAME;
 
-            _subjectService = client.SubjectService;
+            _subjectService = client.GetService<SubjectService>(API_KEY_RECOGNITION_SERVICE);
 
             _addSubjectRequest = new AddSubjectRequest
             {
