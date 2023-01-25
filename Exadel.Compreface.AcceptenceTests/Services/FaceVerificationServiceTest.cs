@@ -31,7 +31,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 "calculator"
             };
 
-            _faceVerificationService = client.GetService<FaceVerificationService>(API_KEY_DETECTION_SERVICE);
+            _faceVerificationService = client.GetService<FaceVerificationService>(API_KEY_VERIFICATION_SERVICE);
             _faceVerificationRequest = new FaceVerificationRequest
             {
                 SourceImageFilePath = FILE_PATH,
