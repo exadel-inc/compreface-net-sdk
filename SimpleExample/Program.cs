@@ -6,7 +6,7 @@ var faceRecognitionClient = new FaceRecognitionClient(
     domain: "http://localhost",
     port: "8000");
 
-var subjects = await faceRecognitionClient.SubjectService.GetAllSubject();
+var subjects = await faceRecognitionClient.SubjectService.ListAsync();
 
 foreach (var subject in subjects.Subjects)
 {

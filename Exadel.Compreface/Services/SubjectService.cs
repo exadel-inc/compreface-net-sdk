@@ -20,7 +20,7 @@ public class SubjectService
         _apiClient = apiClient;
     }
 
-    public async Task<GetAllSubjectResponse> GetAllSubject()
+    public async Task<GetAllSubjectResponse> ListAsync()
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects/";
 
@@ -29,7 +29,7 @@ public class SubjectService
         return response;
     }
 
-    public async Task<AddSubjectResponse> AddSubject(AddSubjectRequest request)
+    public async Task<AddSubjectResponse> AddAsync(AddSubjectRequest request)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects";
 
@@ -38,7 +38,7 @@ public class SubjectService
         return response;
     }
 
-    public async Task<RenameSubjectResponse> RenameSubject(RenameSubjectRequest request)
+    public async Task<RenameSubjectResponse> RenameAsync(RenameSubjectRequest request)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects/{request.CurrentSubject}";
 
@@ -48,7 +48,7 @@ public class SubjectService
         return response;
     }
 
-    public async Task<DeleteSubjectResponse> DeleteSubject(DeleteSubjectRequest request)
+    public async Task<DeleteSubjectResponse> DeleteAsync(DeleteSubjectRequest request)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects/{request.ActualSubject}";
 

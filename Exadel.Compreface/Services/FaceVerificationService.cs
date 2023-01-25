@@ -18,7 +18,7 @@ public class FaceVerificationService
         _apiClient = apiClient;
     }
 
-    public async Task<FaceVerificationResponse> VerifyImageAsync(FaceVerificationRequest request)
+    public async Task<FaceVerificationResponse> VerifyAsync(FaceVerificationRequest request)
     {
         var requestUrl = $"{_comprefaceConfiguration.Domain}:{_comprefaceConfiguration.Port}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl
@@ -45,7 +45,7 @@ public class FaceVerificationService
         return response;
     }
     
-    public async Task<FaceVerificationResponse> VerifyBase64ImageAsync(FaceVerificationWithBase64Request request)
+    public async Task<FaceVerificationResponse> VerifyAsync(FaceVerificationWithBase64Request request)
     {
         var requestUrl = $"{_comprefaceConfiguration.Domain}:{_comprefaceConfiguration.Port}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl

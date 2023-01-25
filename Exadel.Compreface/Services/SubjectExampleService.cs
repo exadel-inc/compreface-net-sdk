@@ -24,7 +24,7 @@ public class SubjectExampleService
         _apiClient = apiClient;
     }
 
-    public async Task<AddSubjectExampleResponse> AddSubjectExampleAsync(AddSubjectExampleRequest request)
+    public async Task<AddSubjectExampleResponse> AddAsync(AddSubjectExampleRequest request)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
@@ -42,7 +42,7 @@ public class SubjectExampleService
         return response;
     }
 
-    public async Task<AddBase64SubjectExampleResponse> AddBase64SubjectExampleAsync(AddBase64SubjectExampleRequest request)
+    public async Task<AddBase64SubjectExampleResponse> AddAsync(AddBase64SubjectExampleRequest request)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
@@ -58,7 +58,7 @@ public class SubjectExampleService
         return response;
     }
 
-    public async Task<ListAllSubjectExamplesResponse> GetAllSubjectExamplesAsync(ListAllSubjectExamplesRequest request)
+    public async Task<ListAllSubjectExamplesResponse> ListAsync(ListAllSubjectExamplesRequest request)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
@@ -74,7 +74,7 @@ public class SubjectExampleService
         return response;
     }
 
-    public async Task<DeleteAllExamplesResponse> ClearSubjectAsync(DeleteAllExamplesRequest request)
+    public async Task<DeleteAllExamplesResponse> DeleteAllAsync(DeleteAllExamplesRequest request)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
@@ -86,7 +86,7 @@ public class SubjectExampleService
         return response;
     }
 
-    public async Task<DeleteImageByIdResponse> DeleteImageByIdAsync(DeleteImageByIdRequest request)
+    public async Task<DeleteImageByIdResponse> DeleteAsync(DeleteImageByIdRequest request)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
@@ -98,7 +98,7 @@ public class SubjectExampleService
         return response;
     }
 
-    public async Task<DeleteMultipleExamplesResponse> DeletMultipleExamplesAsync(DeleteMultipleExampleRequest deleteMultipleExamplesRequest)
+    public async Task<DeleteMultipleExamplesResponse> DeleteAsync(DeleteMultipleExampleRequest deleteMultipleExamplesRequest)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
@@ -110,7 +110,7 @@ public class SubjectExampleService
         return new DeleteMultipleExamplesResponse() { Faces = response };
     }
 
-    public async Task<byte[]> DownloadImageByIdAsync(DownloadImageByIdRequest downloadImageByIdRequest)
+    public async Task<byte[]> DownloadAsync(DownloadImageByIdRequest downloadImageByIdRequest)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/static";
         var requestUrlWithQueryParameters = requestUrl
@@ -125,7 +125,7 @@ public class SubjectExampleService
         return response;
     }
 
-    public async Task<byte[]> DownloadImageBySubjectIdAsync(DownloadImageBySubjectIdRequest downloadImageBySubjectIdRequest)
+    public async Task<byte[]> DownloadAsync(DownloadImageBySubjectIdRequest downloadImageBySubjectIdRequest)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl

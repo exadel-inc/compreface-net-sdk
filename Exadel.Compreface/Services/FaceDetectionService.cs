@@ -18,7 +18,7 @@ namespace Exadel.Compreface.Services
             _apiClient = apiClient;
         }
 
-        public async Task<FaceDetectionResponse> FaceDetectionAsync(FaceDetectionRequest faceDetectionRequest)
+        public async Task<FaceDetectionResponse> DetectAsync(FaceDetectionRequest faceDetectionRequest)
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/detection/detect";
             var requestUrlWithQueryParameters = requestUrl
@@ -39,7 +39,7 @@ namespace Exadel.Compreface.Services
             return response;
         }
 
-        public async Task<FaceDetectionResponse> FaceDetectionBase64Async(FaceDetectionBase64Request faceDetectionRequest)
+        public async Task<FaceDetectionResponse> DetectAsync(FaceDetectionBase64Request faceDetectionRequest)
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/detection/detect";
             var requestUrlWithQueryParameters = requestUrl

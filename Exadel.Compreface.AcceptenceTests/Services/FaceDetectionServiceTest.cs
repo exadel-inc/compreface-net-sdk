@@ -55,7 +55,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task FaceDetectionAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
-            var response = await _faceDetectionService.FaceDetectionAsync(_faceDetectionRequest);
+            var response = await _faceDetectionService.DetectAsync(_faceDetectionRequest);
 
             // Assert
             Assert.IsType<FaceDetectionResponse>(response);
@@ -65,7 +65,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task FaceDetectionAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Act
-            var response = await _faceDetectionService.FaceDetectionAsync(_faceDetectionRequest);
+            var response = await _faceDetectionService.DetectAsync(_faceDetectionRequest);
 
             // Assert
             Assert.NotNull(response);
@@ -75,7 +75,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task FaceDetectionAsync_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _faceDetectionService.FaceDetectionAsync(null!);
+            var func = async () => await _faceDetectionService.DetectAsync((FaceDetectionRequest)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -85,7 +85,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task FaceDetectionBase64Async_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
-            var response = await _faceDetectionService.FaceDetectionBase64Async(_faceDetectionBase64Request);
+            var response = await _faceDetectionService.DetectAsync(_faceDetectionBase64Request);
 
             // Assert
             Assert.IsType<FaceDetectionResponse>(response);
@@ -95,7 +95,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task FaceDetectionBase64Async_TakesRequestModel_ReturnsNotNull()
         {
             // Act
-            var response = await _faceDetectionService.FaceDetectionBase64Async(_faceDetectionBase64Request);
+            var response = await _faceDetectionService.DetectAsync(_faceDetectionBase64Request);
 
             // Assert
             Assert.NotNull(response);
@@ -105,7 +105,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task FaceDetectionBase64Async_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _faceDetectionService.FaceDetectionBase64Async(null!);
+            var func = async () => await _faceDetectionService.DetectAsync((FaceDetectionBase64Request)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);

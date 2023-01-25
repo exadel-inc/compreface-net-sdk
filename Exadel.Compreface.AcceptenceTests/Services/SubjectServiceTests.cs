@@ -52,7 +52,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task GetAllSubject_Executes_ReturnsProperResponseModel()
         {
             // Act
-            var response = await _subjectService.GetAllSubject();
+            var response = await _subjectService.ListAsync();
 
             // Assert
             Assert.IsType<GetAllSubjectResponse>(response);
@@ -62,7 +62,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task GetAllSubject_Executes_ReturnsNotNull()
         {
             // Act
-            var response = await _subjectService.GetAllSubject();
+            var response = await _subjectService.ListAsync();
 
             // Assert
             Assert.NotNull(response);
@@ -72,31 +72,31 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task AddSubject_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
-            var response = await _subjectService.AddSubject(_addSubjectRequest);
+            var response = await _subjectService.AddAsync(_addSubjectRequest);
 
             // Assert
             Assert.IsType<AddSubjectResponse>(response);
 
             // Clear
-            await _subjectService.DeleteSubject(new DeleteSubjectRequest { ActualSubject = _addSubjectRequest.Subject });
+            await _subjectService.DeleteAsync(new DeleteSubjectRequest { ActualSubject = _addSubjectRequest.Subject });
         }
 
         [Fact]
         public async Task AddSubject_TakesRequestModel_ReturnsNotNull()
         {
             // Act
-            var response = await _subjectService.AddSubject(_addSubjectRequest);
+            var response = await _subjectService.AddAsync(_addSubjectRequest);
 
             // Assert
             Assert.NotNull(response);
-            await _subjectService.DeleteSubject(new DeleteSubjectRequest { ActualSubject = _addSubjectRequest.Subject });
+            await _subjectService.DeleteAsync(new DeleteSubjectRequest { ActualSubject = _addSubjectRequest.Subject });
         }
 
         [Fact]
         public async Task AddSubject_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Act
-            var func = async () => await _subjectService.AddSubject(null!);
+            var func = async () => await _subjectService.AddAsync(null!);
 
             // Assert
             await Assert.ThrowsAsync<ServiceException>(func);
@@ -106,11 +106,11 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task RenameSubject_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
-            await _subjectService.AddSubject(_addSubjectRequest);
+            await _subjectService.AddAsync(_addSubjectRequest);
 
             // Act
-            var response = await _subjectService.RenameSubject(_renameSubjectRequest);
-            await _subjectService.DeleteSubject(_renamedSubjectDeleteRequest);
+            var response = await _subjectService.RenameAsync(_renameSubjectRequest);
+            await _subjectService.DeleteAsync(_renamedSubjectDeleteRequest);
 
             // Assert
             Assert.IsType<RenameSubjectResponse>(response);
@@ -120,11 +120,11 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task RenameSubject_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
-            await _subjectService.AddSubject(_addSubjectRequest);
+            await _subjectService.AddAsync(_addSubjectRequest);
 
             // Act
-            var response = await _subjectService.RenameSubject(_renameSubjectRequest);
-            await _subjectService.DeleteSubject(_renamedSubjectDeleteRequest);
+            var response = await _subjectService.RenameAsync(_renameSubjectRequest);
+            await _subjectService.DeleteAsync(_renamedSubjectDeleteRequest);
 
             // Assert
             Assert.NotNull(response);
@@ -134,7 +134,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task RenameSubject_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Act
-            var func = async () => await _subjectService.RenameSubject(null!);
+            var func = async () => await _subjectService.RenameAsync(null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -144,10 +144,10 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DeleteSubject_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
-            await _subjectService.AddSubject(_addSubjectRequest);
+            await _subjectService.AddAsync(_addSubjectRequest);
 
             // Act
-            var response = await _subjectService.DeleteSubject(_deleteSubjectRequest);
+            var response = await _subjectService.DeleteAsync(_deleteSubjectRequest);
 
             // Assert
             Assert.IsType<DeleteSubjectResponse>(response);
@@ -157,10 +157,10 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DeleteSubject_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
-            await _subjectService.AddSubject(_addSubjectRequest);
+            await _subjectService.AddAsync(_addSubjectRequest);
 
             // Act
-            var response = await _subjectService.DeleteSubject(_deleteSubjectRequest);
+            var response = await _subjectService.DeleteAsync(_deleteSubjectRequest);
 
             // Assert
             Assert.NotNull(response);
@@ -170,7 +170,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DeleteSubject_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Act
-            var func = async () => await _subjectService.DeleteSubject(null!);
+            var func = async () => await _subjectService.DeleteAsync(null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);

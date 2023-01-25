@@ -20,7 +20,7 @@ public class RecognitionService
         _apiClient = apiClient;
     }
     
-    public async Task<RecognizeFaceFromImageResponse> RecognizeFaceFromImage(RecognizeFaceFromImageRequest request)
+    public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFaceFromImageRequest request)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/recognize";
         var requestUrlWithQueryParameters = requestUrl
@@ -42,7 +42,7 @@ public class RecognitionService
         return response;
     }
 
-    public async Task<RecognizeFaceFromImageResponse> RecognizeFaceFromBase64File(
+    public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(
         RecognizeFacesFromImageWithBase64Request request)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/recognize";
@@ -64,7 +64,7 @@ public class RecognitionService
         return response;
     }
 
-    public async Task<VerifyFacesFromImageResponse> VerifyFacesFromImage(VerifyFacesFromImageRequest request)
+    public async Task<VerifyFacesFromImageResponse> VerifyAsync(VerifyFacesFromImageRequest request)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
         var requestUrlWithQueryParameters = requestUrl
@@ -85,7 +85,7 @@ public class RecognitionService
         return response;
     }
     
-    public async Task<VerifyFacesFromImageResponse> VerifyFacesFromBase64File(VerifyFacesFromImageWithBase64Request request)
+    public async Task<VerifyFacesFromImageResponse> VerifyAsync(VerifyFacesFromImageWithBase64Request request)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
         var requestUrlWithQueryParameters = requestUrl

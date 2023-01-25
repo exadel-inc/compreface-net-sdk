@@ -103,7 +103,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task RecognizeFaceFromImage_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Act
-            var response = await _recognitionService.RecognizeFaceFromImage(_request);
+            var response = await _recognitionService.RecognizeAsync(_request);
 
             // Assert
             Assert.IsType<RecognizeFaceFromImageResponse>(response);
@@ -113,7 +113,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task RecognizeFaceFromImage_TakesRequestModel_ReturnsNotNull()
         {
             // Act
-            var response = await _recognitionService.RecognizeFaceFromImage(_request);
+            var response = await _recognitionService.RecognizeAsync(_request);
 
             // Assert
             Assert.NotNull(response);
@@ -123,7 +123,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task RecognizeFaceFromImage_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _recognitionService.RecognizeFaceFromImage(null!);
+            var func = async () => await _recognitionService.RecognizeAsync((RecognizeFaceFromImageRequest)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -133,7 +133,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task RecognizeFaceFromBase64File_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Act
-            var response = await _recognitionService.RecognizeFaceFromBase64File(_request64);
+            var response = await _recognitionService.RecognizeAsync(_request64);
 
             // Assert
             Assert.IsType<RecognizeFaceFromImageResponse>(response);
@@ -143,7 +143,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task RecognizeFaceFromBase64File_TakesRequestModel_ReturnsNotNull()
         {
             // Act
-            var response = await _recognitionService.RecognizeFaceFromBase64File(_request64);
+            var response = await _recognitionService.RecognizeAsync(_request64);
 
             // Assert
             Assert.NotNull(response);
@@ -153,7 +153,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task RecognizeFaceFromBase64File_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _recognitionService.RecognizeFaceFromBase64File(null!);
+            var func = async () => await _recognitionService.RecognizeAsync((RecognizeFacesFromImageWithBase64Request)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -163,39 +163,39 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task VerifyFacesFromImage_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Assert
-            await _subjectService.AddSubject(_addSubjectRequest);
-            var addExampleResponse = await _subjectExampleService.AddSubjectExampleAsync(_addSubjectExampleRequest);
+            await _subjectService.AddAsync(_addSubjectRequest);
+            var addExampleResponse = await _subjectExampleService.AddAsync(_addSubjectExampleRequest);
             _verifyRequest.ImageId = addExampleResponse.ImageId;
 
             // Act
-            var response = await _recognitionService.VerifyFacesFromImage(_verifyRequest);
+            var response = await _recognitionService.VerifyAsync(_verifyRequest);
 
             // Assert
             Assert.IsType<VerifyFacesFromImageResponse>(response);
-            await _subjectService.DeleteSubject(_deleteSubjectRequest);
+            await _subjectService.DeleteAsync(_deleteSubjectRequest);
         }
 
         [Fact]
         public async Task VerifyFacesFromImage_TakesRequestModel_ReturnsNotNull()
         {
             // Assert
-            await _subjectService.AddSubject(_addSubjectRequest);
-            var addExampleResponse = await _subjectExampleService.AddSubjectExampleAsync(_addSubjectExampleRequest);
+            await _subjectService.AddAsync(_addSubjectRequest);
+            var addExampleResponse = await _subjectExampleService.AddAsync(_addSubjectExampleRequest);
             _verifyRequest.ImageId = addExampleResponse.ImageId;
 
             // Act
-            var response = await _recognitionService.VerifyFacesFromImage(_verifyRequest);
+            var response = await _recognitionService.VerifyAsync(_verifyRequest);
 
             // Assert
             Assert.NotNull(response);
-            await _subjectService.DeleteSubject(_deleteSubjectRequest);
+            await _subjectService.DeleteAsync(_deleteSubjectRequest);
         }
 
         [Fact]
         public async Task VerifyFacesFromImage_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _recognitionService.VerifyFacesFromImage(null!);
+            var func = async () => await _recognitionService.VerifyAsync((VerifyFacesFromImageRequest)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -205,39 +205,39 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task VerifyFacesFromBase64File_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Assert
-            await _subjectService.AddSubject(_addSubjectRequest);
-            var addExampleResponse = await _subjectExampleService.AddSubjectExampleAsync(_addSubjectExampleRequest);
+            await _subjectService.AddAsync(_addSubjectRequest);
+            var addExampleResponse = await _subjectExampleService.AddAsync(_addSubjectExampleRequest);
             _verifyRequest64.ImageId = addExampleResponse.ImageId;
 
             // Act
-            var verifyResponse = await _recognitionService.VerifyFacesFromBase64File(_verifyRequest64);
+            var verifyResponse = await _recognitionService.VerifyAsync(_verifyRequest64);
 
             // Assert
             Assert.IsType<VerifyFacesFromImageResponse>(verifyResponse);
-            await _subjectService.DeleteSubject(_deleteSubjectRequest);
+            await _subjectService.DeleteAsync(_deleteSubjectRequest);
         }
 
         [Fact]
         public async Task VerifyFacesFromBase64File_TakesRequestModel_ReturnsNotNull()
         {
             // Assert
-            await _subjectService.AddSubject(_addSubjectRequest);
-            var addExampleResponse = await _subjectExampleService.AddSubjectExampleAsync(_addSubjectExampleRequest);
+            await _subjectService.AddAsync(_addSubjectRequest);
+            var addExampleResponse = await _subjectExampleService.AddAsync(_addSubjectExampleRequest);
             _verifyRequest64.ImageId = addExampleResponse.ImageId;
 
             // Act
-            var response = await _recognitionService.VerifyFacesFromBase64File(_verifyRequest64);
+            var response = await _recognitionService.VerifyAsync(_verifyRequest64);
 
             // Assert
             Assert.NotNull(response);
-            await _subjectService.DeleteSubject(_deleteSubjectRequest);
+            await _subjectService.DeleteAsync(_deleteSubjectRequest);
         }
 
         [Fact]
         public async Task VerifyFacesFromBase64File_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _recognitionService.VerifyFacesFromBase64File(null!);
+            var func = async () => await _recognitionService.VerifyAsync((VerifyFacesFromImageWithBase64Request)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);

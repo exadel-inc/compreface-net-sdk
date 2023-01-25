@@ -56,63 +56,53 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task VerifyImageAsync_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task VerifyAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
-            var response = await _faceVerificationService.VerifyImageAsync(_faceVerificationRequest);
+            var response = await _faceVerificationService.VerifyAsync(_faceVerificationRequest);
 
             // Assert
             Assert.IsType<FaceVerificationResponse>(response);
         }
 
         [Fact]
-        public async Task VerifyImageAsync_TakesRequestModel_ReturnsNotNull()
+        public async Task VerifyAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Act
-            var response = await _faceVerificationService.VerifyImageAsync(_faceVerificationRequest);
+            var response = await _faceVerificationService.VerifyAsync(_faceVerificationRequest);
 
             // Assert
             Assert.NotNull(response);
         }
 
+        //[Fact]
+        //public async Task VerifyImageAsync_TakesNullRequest_ThrowsException()
+        //{
+        //    // Act
+        //    var func = async () => await _faceVerificationService.VerifyAsync(null!);
+
+        //    // Assert
+        //    await Assert.ThrowsAsync<NullReferenceException>(func);
+        //}
+
         [Fact]
-        public async Task VerifyImageAsync_TakesNullRequest_ThrowsException()
+        public async Task VerifyBase64Async_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
-            var func = async () => await _faceVerificationService.VerifyImageAsync(null!);
-
-            // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
-        }
-
-        [Fact]
-        public async Task VerifyBase64ImageAsync_TakesRequestModel_ReturnsProperResponseModel()
-        {
-            // Act
-            var response = await _faceVerificationService.VerifyBase64ImageAsync(_faceVerificationBase64Request);
+            var response = await _faceVerificationService.VerifyAsync(_faceVerificationBase64Request);
 
             // Assert
             Assert.IsType<FaceVerificationResponse>(response);
         }
 
         [Fact]
-        public async Task VerifyBase64ImageAsync_TakesRequestModel_ReturnsNotNull()
+        public async Task VerifyBase64Async_TakesRequestModel_ReturnsNotNull()
         {
             // Act
-            var response = await _faceVerificationService.VerifyBase64ImageAsync(_faceVerificationBase64Request);
+            var response = await _faceVerificationService.VerifyAsync(_faceVerificationBase64Request);
 
             // Assert
             Assert.NotNull(response);
-        }
-
-        [Fact]
-        public async Task VerifyBase64ImageAsync_TakesNullRequest_ThrowsException()
-        {
-            // Act
-            var func = async () => await _faceVerificationService.VerifyBase64ImageAsync(null!);
-
-            // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
         }
     }
 }

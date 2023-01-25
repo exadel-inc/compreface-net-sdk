@@ -21,15 +21,15 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
         public async override void Before(MethodInfo methodUnderTest)
         {
-            await faceRecognitionClient.SubjectExampleService.ClearSubjectAsync(new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
+            await faceRecognitionClient.SubjectExampleService.DeleteAllAsync(new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
 
-            await faceRecognitionClient.SubjectService.AddSubject(
+            await faceRecognitionClient.SubjectService.AddAsync(
                  new AddSubjectRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
         }
 
         public async override void After(MethodInfo methodUnderTest)
         {
-            await faceRecognitionClient.SubjectService.DeleteSubject(new DeleteSubjectRequest() { ActualSubject = TEST_SUBJECT_EXAMPLE_NAME });
+            await faceRecognitionClient.SubjectService.DeleteAsync(new DeleteSubjectRequest() { ActualSubject = TEST_SUBJECT_EXAMPLE_NAME });
         }
     }
 }
