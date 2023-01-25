@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.Clients.Interfaces;
+﻿using Exadel.Compreface.Clients.Config;
+using Exadel.Compreface.Clients.Interfaces;
 using Exadel.Compreface.Configuration;
 
 namespace Exadel.Compreface.Services
@@ -13,6 +14,8 @@ namespace Exadel.Compreface.Services
         {
             Configuration = configuration;
             ApiClient = apiClient;
+
+            ConfigInitializer.InitializeSnakeCaseJsonConfigs();
         }
     }
 }
