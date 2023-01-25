@@ -8,17 +8,18 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteMultipleExamples;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageById;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageBySubjectId;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
+using Exadel.Compreface.Services;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
 {
     public class SubjectExampleServiceTest
     {
-        private readonly FaceRecognitionClient faceRecognitionClient;
+        private readonly ApiClient _apiClient;
         private readonly AddBase64SubjectExampleRequest addBase64SubjectExampleRequest;
         public SubjectExampleServiceTest()
         {
-            faceRecognitionClient = new FaceRecognitionClient(new ComprefaceConfiguration(API_KEY_RECOGNITION_SERVICE, DOMAIN, PORT));
+            _apiClient = new ApiClient(new ComprefaceConfiguration(API_KEY_RECOGNITION_SERVICE, DOMAIN, PORT));
             addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
             {
                 DetProbThreShold = 0.81m,
@@ -39,10 +40,10 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 FileName = FILE_NAME
             };
 
-            var expectedAddExampleSubjectResponse = await faceRecognitionClient.SubjectExampleService.AddSubjectExampleAsync(subjectExample);
+            var expectedAddExampleSubjectResponse = await _apiClient.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddSubjectExampleAsync(subjectExample);
 
             //Act
-            var resultList = await faceRecognitionClient.SubjectExampleService.GetAllSubjectExamplesAsync(
+            var resultList = await _apiClient.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).GetAllSubjectExamplesAsync(
                 new ListAllSubjectExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
 
             var actualSubjectExample = resultList.Faces
@@ -60,10 +61,10 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
-            var expectedAddBase64SubjectExampleResponse = await faceRecognitionClient.SubjectExampleService.AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
+            var expectedAddBase64SubjectExampleResponse = await _apiClient.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
 
             //Act
-            var resultList = await faceRecognitionClient.SubjectExampleService.GetAllSubjectExamplesAsync(
+            var resultList = await _apiClient.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).GetAllSubjectExamplesAsync(
                 new ListAllSubjectExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
 
             var actualSubjectExample = resultList.Faces
@@ -91,11 +92,11 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             var expectedCount = 3;
             for (int counter = expectedCount; counter > 0; counter--)
             {
-                await faceRecognitionClient.SubjectExampleService.AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
+                await _apiClient.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
             }
 
             //Act
-            var actualAllSubjectExamplesResponse = await faceRecognitionClient.SubjectExampleService.GetAllSubjectExamplesAsync(allSubjectExamples);
+            var actualAllSubjectExamplesResponse = await _apiClient.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).GetAllSubjectExamplesAsync(allSubjectExamples);
             var actualCount = actualAllSubjectExamplesResponse.Faces.Count;
 
             //Assert
@@ -113,11 +114,11 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             for (int counter = expectedCount; counter > 0; counter--)
             {
-                await faceRecognitionClient.SubjectExampleService.AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
+                await _apiClient.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
             }
 
             //Act
-            var actualResponse = await faceRecognitionClient.SubjectExampleService.ClearSubjectAsync(
+            var actualResponse = await _apiClient.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ClearSubjectAsync(
                 new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
 
             //Assert
@@ -130,7 +131,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         {
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
-            var testImage = await faceRecognitionClient.SubjectExampleService.AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
+            var testImage = await _apiClient.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
 
             var deleteImageByIdRequest = new DeleteImageByIdRequest()
             {
@@ -138,7 +139,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             };
 
             //Act
-            var actualDeleteImageByIdResponse = await faceRecognitionClient.SubjectExampleService.DeleteImageByIdAsync(deleteImageByIdRequest);
+            var actualDeleteImageByIdResponse = await _apiClient.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteImageByIdAsync(deleteImageByIdRequest);
 
             //Assert
             Assert.Equal(testImage.Subject, actualDeleteImageByIdResponse.Subject);
@@ -157,7 +158,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             for (int counter = expectedCount; counter > 0; counter--)
             {
-                var response = await faceRecognitionClient.SubjectExampleService.AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
+                var response = await _apiClient.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
 
                 unnecessaryExampleList.Add(response.ImageId);
             }
@@ -165,7 +166,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             var expectedFacesCount = expectedCount;
 
             //Act
-            var actualResponse = await faceRecognitionClient.SubjectExampleService.DeletMultipleExamplesAsync(
+            var actualResponse = await _apiClient.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeletMultipleExamplesAsync(
                 new DeleteMultipleExampleRequest() { ImageIdList = unnecessaryExampleList });
 
             var actualFacesCount = actualResponse.Faces.Count;
@@ -181,12 +182,12 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
-            var testImage = await faceRecognitionClient.SubjectExampleService.AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
+            var testImage = await _apiClient.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
 
             var expectedResult = Convert.FromBase64String(IMAGE_BASE64_STRING);
 
             //Act
-            var actualResult = await faceRecognitionClient.SubjectExampleService.DownloadImageByIdAsync(
+            var actualResult = await _apiClient.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadImageByIdAsync(
                 new DownloadImageByIdRequest() { ImageId = testImage.ImageId, RecognitionApiKey = Guid.Parse(API_KEY_RECOGNITION_SERVICE) });
 
             //Assert
@@ -200,12 +201,12 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
-            var testImage = await faceRecognitionClient.SubjectExampleService.AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
+            var testImage = await _apiClient.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddBase64SubjectExampleAsync(addBase64SubjectExampleRequest);
 
             var expectedResult = Convert.FromBase64String(IMAGE_BASE64_STRING);
 
             //Act
-            var actualResult = await faceRecognitionClient.SubjectExampleService.DownloadImageBySubjectIdAsync(
+            var actualResult = await _apiClient.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadImageBySubjectIdAsync(
                 new DownloadImageBySubjectIdRequest() { ImageId = testImage.ImageId });
 
             //Assert
