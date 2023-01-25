@@ -1,5 +1,7 @@
 ﻿using Exadel.Compreface.Clients.Interfaces;
+using Exadel.Compreface.Configuration;
 using Exadel.Compreface.Exceptions;
+using Exadel.Compreface.Services;
 using Flurl;
 using Flurl.Http;
 using Flurl.Http.Content;
@@ -12,11 +14,37 @@ namespace Exadel.Compreface.Clients;
 public class ApiClient : IApiClient
 {
     private readonly string _apiKey;
-    
-    public ApiClient(string apiKey)
+    private readonly string _domain;
+    private readonly string _port;
+
+    private readonly Dictionary<ServiceDictionaryKey, BaseService> _services = new();
+
+    public ApiClient(IComprefaceConfiguration configuration)
+        : this(configuration.ApiKey, configuration.Domain, configuration.Port) { }
+
+    public ApiClient(string apiKey, string domain, string port)
     {
-        _apiKey = apiKey;    
+        _apiKey = apiKey;
+        _domain = domain;
+        _port = port;
     }
+
+    public T GetService<T>(string apiKey) where T : BaseService
+    {
+        var key = new ServiceDictionaryKey(apiKey, typeof(T));
+        var baseService = _services.GetValueOrDefault(key);
+
+        if (baseService == null)
+        {
+            var config = new ComprefaceConfiguration(key.ApiKey, _domain, _port);
+            baseService = Activator.CreateInstance(typeof(T), config, this) as T;
+
+            _services.Add(key, baseService!);
+        }
+
+        return (baseService as T)!;
+    }
+
     public async Task<TResponse> GetJsonAsync<TResponse>(
         Url requestUrl,
         HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
@@ -249,5 +277,18 @@ public class ApiClient : IApiClient
     {
         var exceptionMessage = await exception.GetResponseStringAsync();
         return new ServiceException(exceptionMessage);
+    }
+
+    private class ServiceDictionaryKey
+    {
+        public string ApiKey { get; set; }
+
+        public Type Type { get; set; }
+
+        public ServiceDictionaryKey(string apiKey, Type type)
+        {
+            ApiKey = apiKey;
+            Type = type;
+        }
     }
 }

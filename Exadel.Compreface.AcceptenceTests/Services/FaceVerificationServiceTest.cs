@@ -18,7 +18,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public FaceVerificationServiceTest()
         {
             var configuration = new ComprefaceConfiguration(API_KEY_VERIFICATION_SERVICE, DOMAIN, PORT);
-            var client = new FaceVerificationClient(configuration);
+            var client = new ApiClient(configuration);
             var detProbThreshold = 0.85m;
             var status = true;
             var limit = 0;
@@ -31,7 +31,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 "calculator"
             };
 
-            _faceVerificationService = client.FaceVerificationService;
+            _faceVerificationService = client.GetService<FaceVerificationService>(API_KEY_DETECTION_SERVICE);
             _faceVerificationRequest = new FaceVerificationRequest
             {
                 SourceImageFileName = FILE_NAME,
