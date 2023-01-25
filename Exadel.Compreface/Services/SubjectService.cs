@@ -26,7 +26,7 @@ public class SubjectService : AbstractBaseService
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/subjects";
 
-        var response = await ApiClient.PostJsonAsync<AddSubjectResponse>(Configuration.ApiKey, requestUrl, request);
+        var response = await ApiClient.PostJsonAsync<AddSubjectResponse>(requestUrl, request);
 
         return response;
     }
@@ -36,7 +36,7 @@ public class SubjectService : AbstractBaseService
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/subjects/{request.CurrentSubject}";
 
         var response = await ApiClient
-            .PutJsonAsync<RenameSubjectResponse>(Configuration.ApiKey, requestUrl, body: request.Subject);
+            .PutJsonAsync<RenameSubjectResponse>(requestUrl, body: request.Subject);
         
         return response;
     }
@@ -45,7 +45,7 @@ public class SubjectService : AbstractBaseService
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/subjects/{request.ActualSubject}";
 
-        var response = await ApiClient.DeleteJsonAsync<DeleteSubjectResponse>(Configuration.ApiKey, requestUrl);
+        var response = await ApiClient.DeleteJsonAsync<DeleteSubjectResponse>(requestUrl);
         
         return response;
     }
@@ -54,7 +54,7 @@ public class SubjectService : AbstractBaseService
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/subjects";
 
-        var response = await ApiClient.DeleteJsonAsync<DeleteAllSubjectsResponse>(Configuration.ApiKey, requestUrl);
+        var response = await ApiClient.DeleteJsonAsync<DeleteAllSubjectsResponse>(requestUrl);
 
         return response;
     }

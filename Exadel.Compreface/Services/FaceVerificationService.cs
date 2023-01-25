@@ -74,7 +74,6 @@ public class FaceVerificationService : AbstractBaseService
 
         var response = await 
             ApiClient.PostJsonAsync<FaceVerificationResponse>(
-                apiKey: Configuration.ApiKey,
                 requestUrl: requestUrlWithQueryParameters,
                 body: new
                 {

@@ -66,7 +66,6 @@ namespace Exadel.Compreface.Services
 
             var response = await 
                 ApiClient.PostJsonAsync<FaceDetectionResponse>(
-                    apiKey: Configuration.ApiKey,
                     requestUrl: requestUrlWithQueryParameters, 
                     body: new { file = faceDetectionRequest.File });
 
