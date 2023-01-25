@@ -7,7 +7,7 @@ using Flurl;
 
 namespace Exadel.Compreface.Services;
 
-public class FaceVerificationService : BaseService
+public class FaceVerificationService : AbstractBaseService
 {
     public FaceVerificationService(IComprefaceConfiguration configuration, IApiClient apiClient)
             : base(configuration, apiClient) { }

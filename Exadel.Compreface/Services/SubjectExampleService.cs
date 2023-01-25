@@ -13,7 +13,7 @@ using Exadel.Compreface.Clients.Interfaces;
 
 namespace Exadel.Compreface.Services;
 
-public class SubjectExampleService : BaseService
+public class SubjectExampleService : AbstractBaseService
 {
     public SubjectExampleService(IComprefaceConfiguration configuration, IApiClient apiClient)
             : base(configuration, apiClient) { }
