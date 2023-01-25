@@ -17,7 +17,7 @@ public class ApiClient : IApiClient
     private readonly string _domain;
     private readonly string _port;
 
-    private readonly Dictionary<ServiceDictionaryKey, BaseService> _services = new();
+    private readonly Dictionary<ServiceDictionaryKey, AbstractBaseService> _services = new();
 
     public ApiClient(IComprefaceConfiguration configuration)
         : this(configuration.ApiKey, configuration.Domain, configuration.Port) { }
@@ -29,7 +29,7 @@ public class ApiClient : IApiClient
         _port = port;
     }
 
-    public T GetService<T>(string apiKey) where T : BaseService
+    public T GetService<T>(string apiKey) where T : AbstractBaseService
     {
         var key = new ServiceDictionaryKey(apiKey, typeof(T));
         var baseService = _services.GetValueOrDefault(key);

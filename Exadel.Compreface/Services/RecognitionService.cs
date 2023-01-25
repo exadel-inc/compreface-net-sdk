@@ -9,7 +9,7 @@ using Flurl.Http;
 
 namespace Exadel.Compreface.Services;
 
-public class RecognitionService : BaseService
+public class RecognitionService : AbstractBaseService
 {
     public RecognitionService(IComprefaceConfiguration configuration, IApiClient apiClient)
             : base(configuration, apiClient) { }

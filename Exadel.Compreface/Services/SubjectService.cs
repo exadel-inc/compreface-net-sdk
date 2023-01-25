@@ -9,7 +9,7 @@ using Flurl;
 
 namespace Exadel.Compreface.Services;
 
-public class SubjectService : BaseService
+public class SubjectService : AbstractBaseService
 {
     public SubjectService(IComprefaceConfiguration configuration, IApiClient apiClient)
             : base(configuration, apiClient) { }
