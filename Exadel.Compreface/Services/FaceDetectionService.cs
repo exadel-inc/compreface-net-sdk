@@ -26,6 +26,7 @@ namespace Exadel.Compreface.Services
             
             var response = await 
                 ApiClient.PostMultipartAsync<FaceDetectionResponse>(
+                    apiKey: Configuration.ApiKey,
                     requestUrl: requestUrlWithQueryParameters,
                     buildContent: mp =>
                         mp.AddFile("file", fileName: faceDetectionRequest.FileName, path: faceDetectionRequest.FilePath));
@@ -47,6 +48,7 @@ namespace Exadel.Compreface.Services
 
             var response = await 
                 ApiClient.PostJsonAsync<FaceDetectionResponse>(
+                    apiKey: Configuration.ApiKey,
                     requestUrl: requestUrlWithQueryParameters, 
                     body: new { file = faceDetectionRequest.File });
 

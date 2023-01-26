@@ -5,7 +5,6 @@ using Exadel.Compreface.DTOs.SubjectDTOs.DeleteAllSubjects;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
 using Exadel.Compreface.DTOs.SubjectDTOs.RenameSubject;
-using Flurl;
 
 namespace Exadel.Compreface.Services;
 
@@ -18,7 +17,7 @@ public class SubjectService : AbstractBaseService
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/subjects/";
 
-        var response = await ApiClient.GetJsonAsync<GetAllSubjectResponse>(requestUrl);
+        var response = await ApiClient.GetJsonAsync<GetAllSubjectResponse>(Configuration.ApiKey, requestUrl);
 
         return response;
     }
@@ -27,7 +26,7 @@ public class SubjectService : AbstractBaseService
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/subjects";
 
-        var response = await ApiClient.PostJsonAsync<AddSubjectResponse>(requestUrl, request);
+        var response = await ApiClient.PostJsonAsync<AddSubjectResponse>(Configuration.ApiKey, requestUrl, request);
 
         return response;
     }
@@ -37,7 +36,7 @@ public class SubjectService : AbstractBaseService
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/subjects/{request.CurrentSubject}";
 
         var response = await ApiClient
-            .PutJsonAsync<RenameSubjectResponse>(requestUrl, body: request.Subject);
+            .PutJsonAsync<RenameSubjectResponse>(Configuration.ApiKey, requestUrl, body: request.Subject);
         
         return response;
     }
@@ -46,7 +45,7 @@ public class SubjectService : AbstractBaseService
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/subjects/{request.ActualSubject}";
 
-        var response = await ApiClient.DeleteJsonAsync<DeleteSubjectResponse>(requestUrl);
+        var response = await ApiClient.DeleteJsonAsync<DeleteSubjectResponse>(Configuration.ApiKey, requestUrl);
         
         return response;
     }
@@ -55,7 +54,7 @@ public class SubjectService : AbstractBaseService
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/subjects";
 
-        var response = await ApiClient.DeleteJsonAsync<DeleteAllSubjectsResponse>(requestUrl);
+        var response = await ApiClient.DeleteJsonAsync<DeleteAllSubjectsResponse>(Configuration.ApiKey, requestUrl);
 
         return response;
     }
