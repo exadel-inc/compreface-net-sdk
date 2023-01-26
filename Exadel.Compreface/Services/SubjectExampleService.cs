@@ -29,6 +29,7 @@ public class SubjectExampleService : AbstractBaseService
             });
 
         var response = await ApiClient.PostMultipartAsync<AddSubjectExampleResponse>(
+            apiKey: Configuration.ApiKey,
             requestUrl: requestUrlWithQueryParameters,
             buildContent: mp =>
                 mp.AddFile("file", fileName: request.FileName, path: request.FilePath)); 
@@ -47,7 +48,7 @@ public class SubjectExampleService : AbstractBaseService
             });
 
         var response = await ApiClient
-            .PostJsonAsync<AddBase64SubjectExampleResponse>(requestUrlWithQueryParameters,new { file = request.File });
+            .PostJsonAsync<AddBase64SubjectExampleResponse>(Configuration.ApiKey, requestUrlWithQueryParameters,new { file = request.File });
 
         return response;
     }
@@ -63,7 +64,7 @@ public class SubjectExampleService : AbstractBaseService
                 subject = request.Subject,
             });
 
-        var response = await ApiClient.GetJsonAsync<ListAllSubjectExamplesResponse>(requestUrlWithQueryParameters);
+        var response = await ApiClient.GetJsonAsync<ListAllSubjectExamplesResponse>(Configuration.ApiKey, requestUrlWithQueryParameters);
 
         return response;
     }
@@ -75,7 +76,7 @@ public class SubjectExampleService : AbstractBaseService
             .SetQueryParam("subject", request.Subject);
 
         var response = 
-            await ApiClient.DeleteJsonAsync<DeleteAllExamplesResponse>(requestUrlWithQueryParameters);
+            await ApiClient.DeleteJsonAsync<DeleteAllExamplesResponse>(Configuration.ApiKey, requestUrlWithQueryParameters);
 
         return response;
     }
@@ -87,7 +88,7 @@ public class SubjectExampleService : AbstractBaseService
             .AppendPathSegment(request.ImageId.ToString());
 
         var response = await 
-            ApiClient.DeleteJsonAsync<DeleteImageByIdResponse>(requestUrlWithQueryParameters);
+            ApiClient.DeleteJsonAsync<DeleteImageByIdResponse>(Configuration.ApiKey, requestUrlWithQueryParameters);
 
         return response;
     }
@@ -99,7 +100,7 @@ public class SubjectExampleService : AbstractBaseService
             .AppendPathSegment("delete");
 
         var response = await 
-            ApiClient.PostJsonAsync<List<Face>>(requestUrlWithQueryParameters, deleteMultipleExamplesRequest.ImageIdList);
+            ApiClient.PostJsonAsync<List<Face>>(Configuration.ApiKey, requestUrlWithQueryParameters, deleteMultipleExamplesRequest.ImageIdList);
 
         return new DeleteMultipleExamplesResponse() { Faces = response };
     }
@@ -114,7 +115,7 @@ public class SubjectExampleService : AbstractBaseService
                 downloadImageByIdRequest.ImageId.ToString());
 
         var response = await 
-            ApiClient.GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
+            ApiClient.GetBytesFromRemoteAsync(Configuration.ApiKey, requestUrlWithQueryParameters);
 
         return response;
     }
@@ -126,7 +127,7 @@ public class SubjectExampleService : AbstractBaseService
             .AppendPathSegments(downloadImageBySubjectIdRequest.ImageId.ToString(), "/img");
 
         var response = await 
-            ApiClient.GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
+            ApiClient.GetBytesFromRemoteAsync(Configuration.ApiKey, requestUrlWithQueryParameters);
 
         return response;
     }
