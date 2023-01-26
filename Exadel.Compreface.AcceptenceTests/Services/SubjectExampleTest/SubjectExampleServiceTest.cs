@@ -81,20 +81,31 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         [SubjectExampleTestBeforeAfter]
         public async Task AddAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
-            //Arrange
-            var subjectExample = new AddSubjectExampleRequest()
-            {
-                DetProbThreShold = 0.81m,
-                FilePath = FILE_PATH,
-                Subject = TEST_SUBJECT_EXAMPLE_NAME,
-                FileName = FILE_NAME
-            };
-
             //Act
             var func = async () => await faceRecognitionClient.SubjectExampleService.AddAsync((AddSubjectExampleRequest)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        [SubjectExampleTestBeforeAfter]
+        public async Task AddAsync_TakesRequestModel_ThrowsServiceException()
+        {
+            //Arrange
+            var subjectExample = new AddSubjectExampleRequest()
+            {
+                DetProbThreShold = 0.81m,
+                FilePath = "WrongTestPath",
+                Subject = TEST_SUBJECT_EXAMPLE_NAME,
+                FileName = FILE_NAME
+            };
+
+            //Act
+            var func = async () => await faceRecognitionClient.SubjectExampleService.AddAsync(subjectExample);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
         }
 
         [Fact]
@@ -141,6 +152,21 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        [SubjectExampleTestBeforeAfter]
+        public async Task AddBase64Async_TakesRequestModel_ThrowsServiceException()
+        {
+            //Arrange
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
+            addBase64SubjectExampleRequest.File = "Base64TestString";
+
+            //Act
+            var func = async () => await faceRecognitionClient.SubjectExampleService.AddAsync(addBase64SubjectExampleRequest);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
         }
 
         [Fact]
@@ -318,6 +344,18 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
         [Fact]
         [SubjectExampleTestBeforeAfter]
+        public async Task DeleteAsync_TakesRequestModel_ThrowsServiceException()
+        {
+            //Act
+            var func = async () => await faceRecognitionClient.SubjectExampleService.DeleteAsync(
+                new DeleteImageByIdRequest() { ImageId = Guid.Parse("e1a7653d-af52-4b0b-a05f-ee3f7b667fba") });
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
+        [SubjectExampleTestBeforeAfter]
         public async Task DeletMultipleAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
@@ -473,6 +511,19 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+
+        [Fact]
+        [SubjectExampleTestBeforeAfter]
+        public async Task DownloadAsync_TakesRequestModel_ThrowsServiceException()
+        {
+            //Act
+            var func = async () => await faceRecognitionClient.SubjectExampleService.DownloadAsync(
+                new DownloadImageBySubjectIdRequest() {ImageId = Guid.NewGuid()});
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
         }
     }
 }
