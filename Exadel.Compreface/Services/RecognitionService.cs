@@ -72,6 +72,7 @@ public class RecognitionService : AbstractBaseService
 
         var response = await 
             ApiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(
+                apiKey: Configuration.ApiKey,
                 requestUrl: requestUrlWithQueryParameters, 
                 body: new { file = request.FileBase64Value });
 
@@ -92,6 +93,7 @@ public class RecognitionService : AbstractBaseService
 
         var response = await 
             ApiClient.PostMultipartAsync<VerifyFacesFromImageResponse>(
+                apiKey: Configuration.ApiKey,
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
                 mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.FilePath), path: request.FilePath));
@@ -113,6 +115,7 @@ public class RecognitionService : AbstractBaseService
 
         var response = await 
             ApiClient.PostJsonAsync<VerifyFacesFromImageResponse>(
+                apiKey: Configuration.ApiKey,
                 requestUrl: requestUrlWithQueryParameters,
                 body: new { file = request.FileBase64Value });
 
