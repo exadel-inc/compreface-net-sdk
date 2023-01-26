@@ -57,7 +57,7 @@ public class SubjectService
         return response;
     }
 
-    public async Task<DeleteAllSubjectsResponse> DeleteAllSubjects()
+    public async Task<DeleteAllSubjectsResponse> DeleteAllAsync()
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects";
 
