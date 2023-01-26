@@ -100,7 +100,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task RecognizeFaceFromImage_TakesRequestModel_ReturnsModelWithProperType()
+        public async Task RecognizeAsync_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Act
             var response = await _recognitionService.RecognizeAsync(_request);
@@ -110,7 +110,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task RecognizeFaceFromImage_TakesRequestModel_ReturnsNotNull()
+        public async Task RecognizeAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Act
             var response = await _recognitionService.RecognizeAsync(_request);
@@ -120,7 +120,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task RecognizeFaceFromImage_TakesNullRequest_ThrowsException()
+        public async Task RecognizeAsync_TakesNullRequest_ThrowsException()
         {
             // Act
             var func = async () => await _recognitionService.RecognizeAsync((RecognizeFaceFromImageRequest)null!);
@@ -130,7 +130,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task RecognizeFaceFromBase64File_TakesRequestModel_ReturnsModelWithProperType()
+        public async Task RecognizeBase64Async_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Act
             var response = await _recognitionService.RecognizeAsync(_request64);
@@ -140,7 +140,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task RecognizeFaceFromBase64File_TakesRequestModel_ReturnsNotNull()
+        public async Task RecognizeBase64Async_TakesRequestModel_ReturnsNotNull()
         {
             // Act
             var response = await _recognitionService.RecognizeAsync(_request64);
@@ -150,7 +150,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task RecognizeFaceFromBase64File_TakesNullRequest_ThrowsException()
+        public async Task RecognizeBase64Async_TakesNullRequest_ThrowsException()
         {
             // Act
             var func = async () => await _recognitionService.RecognizeAsync((RecognizeFacesFromImageWithBase64Request)null!);
@@ -160,7 +160,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task VerifyFacesFromImage_TakesRequestModel_ReturnsModelWithProperType()
+        public async Task VerifyAsync_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Assert
             await _subjectService.AddAsync(_addSubjectRequest);
@@ -176,7 +176,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task VerifyFacesFromImage_TakesRequestModel_ReturnsNotNull()
+        public async Task VerifyAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Assert
             await _subjectService.AddAsync(_addSubjectRequest);
@@ -192,7 +192,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task VerifyFacesFromImage_TakesNullRequest_ThrowsException()
+        public async Task VerifyAsync_TakesNullRequest_ThrowsException()
         {
             // Act
             var func = async () => await _recognitionService.VerifyAsync((VerifyFacesFromImageRequest)null!);
@@ -202,7 +202,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task VerifyFacesFromBase64File_TakesRequestModel_ReturnsModelWithProperType()
+        public async Task VerifyBase64Async_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Assert
             await _subjectService.AddAsync(_addSubjectRequest);
@@ -218,7 +218,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task VerifyFacesFromBase64File_TakesRequestModel_ReturnsNotNull()
+        public async Task VerifyBase64Async_TakesRequestModel_ReturnsNotNull()
         {
             // Assert
             await _subjectService.AddAsync(_addSubjectRequest);
@@ -234,7 +234,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task VerifyFacesFromBase64File_TakesNullRequest_ThrowsException()
+        public async Task VerifyBase64Async_TakesNullRequest_ThrowsException()
         {
             // Act
             var func = async () => await _recognitionService.VerifyAsync((VerifyFacesFromImageWithBase64Request)null!);

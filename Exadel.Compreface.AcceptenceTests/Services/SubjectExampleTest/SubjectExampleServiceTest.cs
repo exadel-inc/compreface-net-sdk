@@ -28,7 +28,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
         [Fact]
         [SubjectExampleTestBeforeAfter]
-        public async Task AddSubjectExampleAsync_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task AddAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
             var subjectExample = new AddSubjectExampleRequest()
@@ -55,7 +55,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
         [Fact]
         [SubjectExampleTestBeforeAfter]
-        public async Task AddBase64SubjectExampleAsync_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task AddBase64Async_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
@@ -76,7 +76,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
         [Fact]
         [SubjectExampleTestBeforeAfter]
-        public async Task GetAllSubjectExamplesAsync_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task GetAllAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
             var allSubjectExamples = new ListAllSubjectExamplesRequest()
@@ -104,7 +104,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
         [Fact]
         [SubjectExampleTestBeforeAfter]
-        public async Task ClearSubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DeleteAllAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
@@ -126,7 +126,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
         [Fact]
         [SubjectExampleTestBeforeAfter]
-        public async Task DeleteImageByIdAsync_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DeleteAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
@@ -147,7 +147,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
         [Fact]
         [SubjectExampleTestBeforeAfter]
-        public async Task DeletMultipleExamplesAsync_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DeletMultipleAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
@@ -176,7 +176,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
         [Fact]
         [SubjectExampleTestBeforeAfter]
-        public async Task DownloadImageByIdAsync_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DownloadAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;

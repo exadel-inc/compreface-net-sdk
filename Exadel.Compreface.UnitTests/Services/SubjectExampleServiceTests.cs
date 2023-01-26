@@ -22,7 +22,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task AddSubjectExampleAsync_TakesRequestModel_ReturnsProperResponseModel()
+    public async Task AddAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
         var request = new AddSubjectExampleRequest();
@@ -40,7 +40,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task AddSubjectExampleAsync_TakesRequestModel_ReturnsNotNull()
+    public async Task AddAsync_TakesRequestModel_ReturnsNotNull()
     {
         // Arrange
         var request = new AddSubjectExampleRequest();
@@ -58,7 +58,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task AddSubjectExampleAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task AddAsync_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
         SetupPostMultipart<AddSubjectExampleResponse>();
@@ -71,7 +71,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task AddBase64SubjectExampleAsync_TakesRequestModel_ReturnsProperResponseModel()
+    public async Task AddBase64Async_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
         var request = new AddBase64SubjectExampleRequest();
@@ -89,7 +89,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task AddBase64SubjectExampleAsync_TakesRequestModel_ReturnsNotNull()
+    public async Task AddBase64Async_TakesRequestModel_ReturnsNotNull()
     {
         // Arrange
         var request = new AddBase64SubjectExampleRequest();
@@ -107,7 +107,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task AddBase64SubjectExampleAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task AddBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
         SetupPostJson<AddBase64SubjectExampleResponse, Url>();
@@ -120,7 +120,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task DeletMultipleExamplesAsync_TakesRequestModel_ReturnsProperResponseModel()
+    public async Task DeletAllAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
         var request = new DeleteMultipleExampleRequest()
@@ -140,7 +140,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task DeletMultipleExamplesAsync_TakesRequestModel_ReturnsNotNull()
+    public async Task DeletAllAsync_TakesRequestModel_ReturnsNotNull()
     {
         // Arrange
         var request = new DeleteMultipleExampleRequest()
@@ -160,7 +160,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task DeletMultipleExamplesAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task DeletAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
         SetupPostJson<List<Face>, Url>();
@@ -173,7 +173,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task DownloadImageByIdAsync_TakesRequestModel_ReturnsProperResponseModel()
+    public async Task DownloadAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
         var request = new DownloadImageByIdRequest()
@@ -194,7 +194,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task DownloadImageByIdAsync_TakesRequestModel_ReturnsNotNull()
+    public async Task DownloadAsync_TakesRequestModel_ReturnsNotNull()
     {
         // Arrange
         var request = new DownloadImageByIdRequest()
@@ -215,7 +215,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task DownloadImageByIdAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task DownloadAsync_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
         SetupGetBytesFromRemote();
@@ -228,7 +228,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task DownloadImageBySubjectIdAsync_TakesRequestModel_ReturnsProperResponseModel()
+    public async Task DownloadImageBySubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
         var request = new DownloadImageBySubjectIdRequest()
@@ -248,7 +248,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task DownloadImageBySubjectIdAsync_TakesRequestModel_ReturnsNotNull()
+    public async Task DownloadImageBySubjectAsync_TakesRequestModel_ReturnsNotNull()
     {
         // Arrange
         var request = new DownloadImageBySubjectIdRequest()
@@ -281,7 +281,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task GetAllSubjectExamplesAsync_TakesRequestModel_ReturnsProperResponseModel()
+    public async Task GetAllAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
         var request = new ListAllSubjectExamplesRequest();
@@ -299,7 +299,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task GetAllSubjectExamplesAsync_TakesRequestModel_ReturnsNotNull()
+    public async Task GetAllAsync_TakesRequestModel_ReturnsNotNull()
     {
         // Arrange
         var request = new ListAllSubjectExamplesRequest();
@@ -316,7 +316,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task GetAllSubjectExamplesAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task GetAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
         SetupGetJson<ListAllSubjectExamplesResponse>();
@@ -329,7 +329,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task ClearSubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
+    public async Task DeleteAllAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
         var request = new DeleteAllExamplesRequest();
@@ -347,7 +347,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task ClearSubjectAsync_TakesRequestModel_ReturnsNotNull()
+    public async Task DeleteAllAsync_TakesRequestModel_ReturnsNotNull()
     {
         // Arrange
         var request = new DeleteAllExamplesRequest();
@@ -364,7 +364,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task ClearSubjectAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task DeleteAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
         SetupDeleteJson<DeleteAllExamplesResponse, Url>();
@@ -377,7 +377,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task DeleteImageByIdAsync_TakesRequestModel_ReturnsProperResponseModel()
+    public async Task DeleteAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
         var request = new DeleteImageByIdRequest();
@@ -395,7 +395,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task DeleteImageByIdAsync_TakesRequestModel_ReturnsNotNull()
+    public async Task DeleteAsync_TakesRequestModel_ReturnsNotNull()
     {
         // Arrange
         var request = new DeleteImageByIdRequest();
@@ -412,7 +412,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task DeleteImageByIdAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task DeleteAsync_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
         SetupDeleteJson<DeleteImageByIdResponse, Url>();

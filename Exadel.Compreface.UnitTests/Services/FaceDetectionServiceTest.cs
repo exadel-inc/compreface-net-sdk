@@ -15,7 +15,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionAsync_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DetectAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new FaceDetectionRequest()
@@ -36,7 +36,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionAsync_TakesRequestModel_ReturnsNotNull()
+        public async Task DetectAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             var request = new FaceDetectionRequest()
@@ -57,7 +57,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DetectAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
             SetupPostMultipart<FaceDetectionResponse>();
@@ -70,7 +70,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionBase64Async_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DetectBase64Async_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new FaceDetectionBase64Request()
@@ -91,7 +91,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionBase64Async_TakesRequestModel_ReturnsNotNull()
+        public async Task DetectBase64Async_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             var request = new FaceDetectionBase64Request()
@@ -112,7 +112,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DetectBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
             SetupPostJson<FaceDetectionResponse, Url>();

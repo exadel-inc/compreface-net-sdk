@@ -17,7 +17,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task RecognizeFaceFromImage_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task RecognizeAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new RecognizeFaceFromImageRequest()
@@ -38,7 +38,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task RecognizeFaceFromImage_TakesRequestModel_ReturnsNotNull()
+        public async Task RecognizeAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             var request = new RecognizeFaceFromImageRequest()
@@ -59,7 +59,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task RecognizeFaceFromImage_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task RecognizeAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
             SetupPostMultipart<RecognizeFaceFromImageResponse>();
@@ -72,7 +72,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task RecognizeFaceFromBase64File_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task RecognizeBase64Async_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new RecognizeFacesFromImageWithBase64Request()
@@ -93,7 +93,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task RecognizeFaceFromBase64File_TakesRequestModel_ReturnsNotNull()
+        public async Task RecognizeBase64Async_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             var request = new RecognizeFacesFromImageWithBase64Request()
@@ -114,7 +114,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task RecognizeFaceFromBase64File_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task RecognizeBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
             SetupPostJson<RecognizeFaceFromImageResponse, Url>();
@@ -127,7 +127,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task VerifyFacesFromImage_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task VerifyAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new VerifyFacesFromImageRequest()
@@ -148,7 +148,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task VerifyFacesFromImage_TakesRequestModel_ReturnsNotNull()
+        public async Task VerifyAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             var request = new VerifyFacesFromImageRequest()
@@ -169,7 +169,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task VerifyFacesFromImage_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task VerifyAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
             SetupPostMultipart<VerifyFacesFromImageResponse>();
@@ -182,7 +182,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task VerifyFacesFromBase64File_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task VerifyBase64Async_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new VerifyFacesFromImageWithBase64Request()
@@ -203,7 +203,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task VerifyFacesFromBase64File_TakesRequestModel_ReturnsNotNull()
+        public async Task VerifyBase64Async_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             var request = new VerifyFacesFromImageWithBase64Request()
@@ -224,7 +224,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task VerifyFacesFromBase64File_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task VerifyBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
             SetupPostJson<VerifyFacesFromImageResponse, Url>();

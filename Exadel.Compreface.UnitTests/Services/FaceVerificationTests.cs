@@ -16,7 +16,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests
     }
 
     [Fact]
-    public async Task VerifyImageAsync_TakesRequestModel_ReturnsProperResponseModel()
+    public async Task VerifyAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
         var request = new FaceVerificationRequest()
@@ -27,29 +27,29 @@ public class FaceVerificationTests : AbstractBaseServiceTests
         SetupPostMultipart<FaceVerificationResponse>();
 
         // Act
-        var response = await _faceVerificationService.VerifyImageAsync(request);
+        var response = await _faceVerificationService.VerifyAsync(request);
 
         // Assert
         Assert.IsType<FaceVerificationResponse>(response);
         VerifyPostMultipart<FaceVerificationResponse>();
         ApiClientMock.VerifyNoOtherCalls();
     }
-    
+
     [Fact]
-    public async Task VerifyImageAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task VerifyAsync_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
         SetupPostMultipart<FaceVerificationResponse>();
 
         // Act
-        var responseCall = async () => await _faceVerificationService.VerifyImageAsync(null!);
+        var responseCall = async () => await _faceVerificationService.VerifyAsync((FaceVerificationRequest)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(responseCall);
     }
-    
+
     [Fact]
-    public async Task VerifyBase64ImageAsync_TakesRequestModel_ReturnsProperResponseModel()
+    public async Task VerifyBase64Async_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
         var request = new FaceVerificationWithBase64Request()
@@ -60,7 +60,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests
         SetupPostJson<FaceVerificationResponse, Url>();
 
         // Act
-        var response = await _faceVerificationService.VerifyBase64ImageAsync(request);
+        var response = await _faceVerificationService.VerifyAsync(request);
 
         // Assert
         Assert.IsType<FaceVerificationResponse>(response);
@@ -69,15 +69,15 @@ public class FaceVerificationTests : AbstractBaseServiceTests
         VerifyPostJson<FaceVerificationResponse, Url>();
         ApiClientMock.VerifyNoOtherCalls();
     }
-    
+
     [Fact]
-    public async Task VerifyBase64ImageAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task VerifyBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
         SetupPostJson<FaceVerificationResponse, Url>();
-        
+
         // Act
-        var responseCall = async () => await _faceVerificationService.VerifyBase64ImageAsync(null!);
+        var responseCall = async () => await _faceVerificationService.VerifyAsync((FaceVerificationWithBase64Request)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(responseCall);

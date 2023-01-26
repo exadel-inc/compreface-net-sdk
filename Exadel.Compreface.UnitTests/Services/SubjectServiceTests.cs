@@ -17,7 +17,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task GetAllSubject_Executes_ReturnsProperResponseModel()
+        public async Task GetAllAsync_Executes_ReturnsProperResponseModel()
         {
             // Arrange
             SetupGetJson<GetAllSubjectResponse>();
@@ -33,7 +33,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task GetAllSubject_Executes_ReturnsNotNull()
+        public async Task GetAllAsync_Executes_ReturnsNotNull()
         {
             // Arrange
             SetupGetJson<GetAllSubjectResponse>();
@@ -49,7 +49,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task AddSubject_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task AddAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new AddSubjectRequest();
@@ -67,7 +67,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task AddSubject_TakesRequestModel_ReturnsNotNull()
+        public async Task AddAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             var request = new AddSubjectRequest();
@@ -85,7 +85,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task RenameSubject_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task RenameAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new RenameSubjectRequest();
@@ -103,7 +103,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task RenameSubject_TakesRequestModel_ReturnsNotNull()
+        public async Task RenameAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             var request = new RenameSubjectRequest();
@@ -121,7 +121,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task RenameSubject_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task RenameAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
             SetupPutJson<RenameSubjectRequest>();
@@ -134,7 +134,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task DeleteSubject_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DeleteAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new DeleteSubjectRequest();
@@ -152,7 +152,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task DeleteSubject_TakesRequestModel_ReturnsNotNull()
+        public async Task DeleteAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             var request = new DeleteSubjectRequest();
@@ -170,7 +170,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task DeleteSubject_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DeleteAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
             SetupDeleteJson<DeleteSubjectRequest>();
@@ -183,7 +183,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task DeleteAllSubjects_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DeleteAllAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             SetupDeleteJson<DeleteAllSubjectsResponse>();
@@ -199,7 +199,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task DeleteAllSubjects_TakesRequestModel_ReturnsNotNull()
+        public async Task DeleteAllAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             SetupDeleteJson<DeleteAllSubjectsResponse>();

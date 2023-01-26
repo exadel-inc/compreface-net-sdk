@@ -52,7 +52,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionAsync_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DetectAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
             var response = await _faceDetectionService.DetectAsync(_faceDetectionRequest);
@@ -62,7 +62,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionAsync_TakesRequestModel_ReturnsNotNull()
+        public async Task DetectAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Act
             var response = await _faceDetectionService.DetectAsync(_faceDetectionRequest);
@@ -72,7 +72,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionAsync_TakesNullRequest_ThrowsException()
+        public async Task DetectAsync_TakesNullRequest_ThrowsException()
         {
             // Act
             var func = async () => await _faceDetectionService.DetectAsync((FaceDetectionRequest)null!);
@@ -82,7 +82,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionBase64Async_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DetectBase64Async_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
             var response = await _faceDetectionService.DetectAsync(_faceDetectionBase64Request);
@@ -92,7 +92,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionBase64Async_TakesRequestModel_ReturnsNotNull()
+        public async Task DetectBase64Async_TakesRequestModel_ReturnsNotNull()
         {
             // Act
             var response = await _faceDetectionService.DetectAsync(_faceDetectionBase64Request);
@@ -102,7 +102,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionBase64Async_TakesNullRequest_ThrowsException()
+        public async Task DetectBase64Async_TakesNullRequest_ThrowsException()
         {
             // Act
             var func = async () => await _faceDetectionService.DetectAsync((FaceDetectionBase64Request)null!);
