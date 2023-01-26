@@ -5,6 +5,7 @@ using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
 using Exadel.Compreface.Helpers;
 using Flurl;
+using Flurl.Http;
 
 namespace Exadel.Compreface.Services;
 
@@ -18,8 +19,7 @@ public class FaceVerificationService
         _comprefaceConfiguration = configuration;
         _apiClient = apiClient;
     }
-
-    public async Task<FaceVerificationResponse> VerifyImageAsync(FaceVerificationRequest request)
+    public async Task<FaceVerificationResponse> VerifyImageAsync(FaceVerificationRequest request, bool isFileInTheRemoteServer = false)
     {
         var requestUrl = $"{_comprefaceConfiguration.Domain}:{_comprefaceConfiguration.Port}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl
@@ -31,7 +31,26 @@ public class FaceVerificationService
                 status = request.Status,
             });
 
-        var response = await 
+        FaceVerificationResponse? response = null;
+
+        if (isFileInTheRemoteServer)
+        {
+            var fileSourceImageStream = await request.SourceImageFilePath.GetBytesAsync();
+            var fileSourceImagInBase64String = Convert.ToBase64String(fileSourceImageStream);
+
+            var fileTargetImageStream = await request.TargetImageFilePath.GetBytesAsync();
+            var fileTargetImagegInBase64Strin = Convert.ToBase64String(fileTargetImageStream);
+           
+            response = await _apiClient.PostJsonAsync<FaceVerificationResponse>(requestUrlWithQueryParameters, body: new
+            {
+                source_image = fileSourceImagInBase64String,
+                target_image = fileTargetImagegInBase64Strin
+            });
+
+            return response;
+        }
+
+        response = await
             _apiClient.PostMultipartAsync<FaceVerificationResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
@@ -45,7 +64,7 @@ public class FaceVerificationService
 
         return response;
     }
-    
+
     public async Task<FaceVerificationResponse> VerifyBase64ImageAsync(FaceVerificationWithBase64Request request)
     {
         var requestUrl = $"{_comprefaceConfiguration.Domain}:{_comprefaceConfiguration.Port}/api/v1/verification/verify";

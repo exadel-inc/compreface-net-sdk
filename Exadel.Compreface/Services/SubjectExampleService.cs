@@ -11,6 +11,9 @@ using Exadel.Compreface.DTOs.HelperDTOs;
 using Flurl;
 using Exadel.Compreface.Clients.Interfaces;
 using Exadel.Compreface.Helpers;
+using System;
+using System.Text;
+using Flurl.Http;
 
 namespace Exadel.Compreface.Services;
 
@@ -24,8 +27,7 @@ public class SubjectExampleService
         _configuration = configuration;
         _apiClient = apiClient;
     }
-
-    public async Task<AddSubjectExampleResponse> AddSubjectExampleAsync(AddSubjectExampleRequest request, bool isFileInTheRemoteServer=false)
+    public async Task<AddSubjectExampleResponse> AddSubjectExampleAsync(AddSubjectExampleRequest request, bool isFileInTheRemoteServer = false)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
@@ -35,15 +37,12 @@ public class SubjectExampleService
                 det_prob_threshold = request.DetProbThreShold,
             });
         AddSubjectExampleResponse? response = null;
-        
+
         if (isFileInTheRemoteServer)
         {
-            var fileByte = await _apiClient.GetBytesFromRemoteAsync(
-                requestUrl: requestUrlWithQueryParameters);
+            var fileStream = await request.File.GetBytesAsync();
+            var fileInBase64String = Convert.ToBase64String(fileStream);
 
-            var fileInBase64String = Convert.ToBase64String(fileByte);
-            
-            // TODO: add standard mapper logic here instead of mapping manually!!!
             var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
             {
                 DetProbThreShold = request.DetProbThreShold,
@@ -51,21 +50,87 @@ public class SubjectExampleService
                 Subject = request.Subject,
             };
 
-            response =
-                await _apiClient.PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+            response = await _apiClient.PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
 
             return response;
         }
-        
+
         response = await _apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
             requestUrl: requestUrlWithQueryParameters,
             buildContent: mp =>
-                mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.File), path: request.File)); 
+                mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.File), path: request.File));
 
         return response;
     }
-    
-    // public async Task<AddSubjectExampleResponse> AddSubjectExampleAsync()
+
+    //public async Task<AddSubjectExampleResponse> AddSubjectExampleAsync(AddSubjectExampleRequest request)
+    //{
+    //    var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
+    //    var requestUrlWithQueryParameters = requestUrl
+    //        .SetQueryParams(new
+    //        {
+    //            subject = request.Subject,
+    //            det_prob_threshold = request.DetProbThreShold,
+    //        });
+    //    AddSubjectExampleResponse? response = null;
+
+    //    string fullpath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+    //    var path = await request.File
+    //        .DownloadFileAsync(fullpath);
+
+    //    response = await _apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
+    //        requestUrl: requestUrlWithQueryParameters,
+    //        buildContent: mp =>
+    //            mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.File), path: path));
+
+    //    return response;
+    //}
+
+
+
+    //public async Task<AddSubjectExampleResponse> AddSubjectExampleAsync(AddSubjectExampleRequest request, bool isFileInTheRemoteServer = false)
+    //{
+    //    var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
+    //    var requestUrlWithQueryParameters = requestUrl
+    //        .SetQueryParams(new
+    //        {
+    //            subject = request.Subject,
+    //            det_prob_threshold = request.DetProbThreShold,
+    //        });
+    //    AddSubjectExampleResponse? response = null;
+
+    //    if (isFileInTheRemoteServer)
+    //    {
+    //        var fileByte = await _apiClient.GetBytesFromRemoteAsync(
+    //            requestUrl: requestUrlWithQueryParameters);
+
+    //        byte[] imageData = null;
+
+    //        using (var wc = new System.Net.WebClient())
+    //            imageData = wc.DownloadData(request.File);
+
+    //        var fileInBase64String = Convert.ToBase64String(imageData);
+
+
+    //        var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
+    //        {
+    //            DetProbThreShold = request.DetProbThreShold,
+    //            File = fileInBase64String,
+    //            Subject = request.Subject,
+    //        };
+    //        response = await _apiClient.PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+
+    //        return response;
+    //    }
+
+    //    response = await _apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
+    //        requestUrl: requestUrlWithQueryParameters,
+    //        buildContent: mp =>
+    //            mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.File), path: request.File));
+
+    //    return response;
+    //}
 
     public async Task<AddBase64SubjectExampleResponse> AddBase64SubjectExampleAsync(AddBase64SubjectExampleRequest request)
     {
