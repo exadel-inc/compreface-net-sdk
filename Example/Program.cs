@@ -46,7 +46,7 @@ public class Program
             $"{Compreface}:{VerificationService}:{nameof(ComprefaceConfiguration.Domain)}",
             $"{Compreface}:{VerificationService}:{nameof(ComprefaceConfiguration.Port)}");
 
-        var apiClient = new ApiClient("api key here...", "domain here...", "port here...");
+        var apiClient = new ApiClient("domain here...", "port here...");
         var recognitionService = apiClient.GetService<RecognitionService>(recognitionConfiguration.ApiKey);
         var detectionService = apiClient.GetService<FaceDetectionService>(detectionConfiguration.ApiKey);
         var verificationService = apiClient.GetService<FaceVerificationService>(verificationConfiguration.ApiKey);
