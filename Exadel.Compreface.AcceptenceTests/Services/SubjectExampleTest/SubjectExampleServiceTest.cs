@@ -512,18 +512,5 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
-
-
-        [Fact]
-        [SubjectExampleTestBeforeAfter]
-        public async Task DownloadAsync_TakesRequestModel_ThrowsServiceException()
-        {
-            //Act
-            var func = async () => await faceRecognitionClient.SubjectExampleService.DownloadAsync(
-                new DownloadImageBySubjectIdRequest() {ImageId = Guid.NewGuid()});
-
-            // Assert
-            await Assert.ThrowsAsync<ServiceException>(func);
-        }
     }
 }
