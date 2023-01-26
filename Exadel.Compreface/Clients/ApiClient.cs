@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.Clients.Interfaces;
+﻿using Exadel.Compreface.Clients.Config;
+using Exadel.Compreface.Clients.Interfaces;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services;
@@ -25,6 +26,8 @@ public class ApiClient : IApiClient
     {
         _domain = domain;
         _port = port;
+
+        ConfigInitializer.InitializeSnakeCaseJsonConfigs();
     }
 
     public T GetService<T>(string apiKey) where T : AbstractBaseService
