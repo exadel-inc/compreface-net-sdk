@@ -1,8 +1,6 @@
 ﻿using Exadel.Compreface.Clients.Config;
 using Exadel.Compreface.Configuration;
-using Exadel.Compreface.Helpers;
 using Exadel.Compreface.Services;
-using Flurl.Http;
 using Microsoft.Extensions.Configuration;
 
 namespace Exadel.Compreface.Clients
