@@ -12,13 +12,13 @@ using Flurl;
 
 namespace Exadel.Compreface.UnitTests.Services;
 
-public class SubjectExampleServiceTests : AbstractBaseServiceTests
+public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampleService>
 {
-    private readonly SubjectExampleService _exampleSubjectService;
+    private readonly SubjectExampleService _service;
 
     public SubjectExampleServiceTests()
     {
-        _exampleSubjectService = new SubjectExampleService(Configuration, ApiClientMock.Object);
+        _service = ServiceMock.Object;
     }
 
     [Fact]
@@ -30,13 +30,13 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupPostMultipart<AddSubjectExampleResponse>();
         
         // Act
-        var response = await _exampleSubjectService.AddSubjectExampleAsync(request);
+        var response = await _service.AddSubjectExampleAsync(request);
         
         // Assert
         Assert.IsType<AddSubjectExampleResponse>(response);
 
         VerifyPostMultipart<AddSubjectExampleResponse>();
-        ApiClientMock.VerifyNoOtherCalls();
+        ServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -48,13 +48,13 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupPostMultipart<AddSubjectExampleResponse>();
 
         // Act
-        var response = await _exampleSubjectService.AddSubjectExampleAsync(request);
+        var response = await _service.AddSubjectExampleAsync(request);
 
         // Assert
         Assert.NotNull(response);
 
         VerifyPostMultipart<AddSubjectExampleResponse>();
-        ApiClientMock.VerifyNoOtherCalls();
+        ServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -64,7 +64,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupPostMultipart<AddSubjectExampleResponse>();
 
         // Act
-        var func = async () => await _exampleSubjectService.AddSubjectExampleAsync(null!);
+        var func = async () => await _service.AddSubjectExampleAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -79,13 +79,13 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupPostJson<AddBase64SubjectExampleResponse, Url>();
         
         //Act
-        var response = await _exampleSubjectService.AddBase64SubjectExampleAsync(request);
+        var response = await _service.AddBase64SubjectExampleAsync(request);
         
         // Assert
         Assert.IsType<AddBase64SubjectExampleResponse>(response);
 
         VerifyPostJson<AddBase64SubjectExampleResponse, Url>();
-        ApiClientMock.VerifyNoOtherCalls();
+        ServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -97,13 +97,13 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupPostJson<AddBase64SubjectExampleResponse, Url>();
 
         // Act
-        var response = await _exampleSubjectService.AddBase64SubjectExampleAsync(request);
+        var response = await _service.AddBase64SubjectExampleAsync(request);
 
         // Assert
         Assert.NotNull(response);
 
         VerifyPostJson<AddBase64SubjectExampleResponse, Url>();
-        ApiClientMock.VerifyNoOtherCalls();
+        ServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -113,7 +113,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupPostJson<AddBase64SubjectExampleResponse, Url>();
 
         // Act
-        var func = async () => await _exampleSubjectService.AddBase64SubjectExampleAsync(null!);
+        var func = async () => await _service.AddBase64SubjectExampleAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -128,12 +128,12 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupPostJson<List<Face>, Url>();
 
         // Act
-        var response = await _exampleSubjectService.DeletMultipleExamplesAsync(request);
+        var response = await _service.DeletMultipleExamplesAsync(request);
 
         // Assert
         Assert.IsType<DeleteMultipleExamplesResponse>(response);
         VerifyPostJson<List<Face>, Url>();
-        ApiClientMock.VerifyNoOtherCalls();
+        ServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -145,12 +145,12 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupPostJson<List<Face>, Url>();
 
         // Act
-        var response = await _exampleSubjectService.DeletMultipleExamplesAsync(request);
+        var response = await _service.DeletMultipleExamplesAsync(request);
 
         // Assert
         Assert.NotNull(response);
         VerifyPostJson<List<Face>, Url>();
-        ApiClientMock.VerifyNoOtherCalls();
+        ServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -160,7 +160,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupPostJson<List<Face>, Url>();
 
         // Act
-        var func = async () => await _exampleSubjectService.DeletMultipleExamplesAsync(null!);
+        var func = async () => await _service.DeletMultipleExamplesAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -175,12 +175,12 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupGetBytesFromRemote();
 
         // Act
-        var response = await _exampleSubjectService.DownloadImageByIdAsync(request);
+        var response = await _service.DownloadImageByIdAsync(request);
 
         // Assert
         Assert.IsType<byte[]>(response);
         VerifyGetBytesFromRemote();
-        ApiClientMock.VerifyNoOtherCalls();
+        ServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -192,12 +192,12 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupGetBytesFromRemote();
 
         // Act
-        var response = await _exampleSubjectService.DownloadImageByIdAsync(request);
+        var response = await _service.DownloadImageByIdAsync(request);
 
         // Assert
         Assert.NotNull(response);
         VerifyGetBytesFromRemote();
-        ApiClientMock.VerifyNoOtherCalls();
+        ServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -207,7 +207,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupGetBytesFromRemote();
 
         // Act
-        var func = async () => await _exampleSubjectService.DownloadImageByIdAsync(null!);
+        var func = async () => await _service.DownloadImageByIdAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -222,12 +222,12 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupGetBytesFromRemote();
 
         // Act
-        var response = await _exampleSubjectService.DownloadImageBySubjectIdAsync(request);
+        var response = await _service.DownloadImageBySubjectIdAsync(request);
 
         // Assert
         Assert.IsType<byte[]>(response);
         VerifyGetBytesFromRemote();
-        ApiClientMock.VerifyNoOtherCalls();
+        ServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -239,12 +239,12 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupGetBytesFromRemote();
 
         // Act
-        var response = await _exampleSubjectService.DownloadImageBySubjectIdAsync(request);
+        var response = await _service.DownloadImageBySubjectIdAsync(request);
 
         // Assert
         Assert.NotNull(response);
         VerifyGetBytesFromRemote();
-        ApiClientMock.VerifyNoOtherCalls();
+        ServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -254,7 +254,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupGetBytesFromRemote();
 
         // Act
-        var func = async () => await _exampleSubjectService.DownloadImageBySubjectIdAsync(null!);
+        var func = async () => await _service.DownloadImageBySubjectIdAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -269,13 +269,13 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupGetJson<ListAllSubjectExamplesResponse, Url>();
 
         // Act
-        var response = await _exampleSubjectService.GetAllSubjectExamplesAsync(request);
+        var response = await _service.GetAllSubjectExamplesAsync(request);
 
         // Assert
         Assert.IsType<ListAllSubjectExamplesResponse>(response);
 
         VerifyGetJson<ListAllSubjectExamplesResponse, Url>();
-        ApiClientMock.VerifyNoOtherCalls();
+        ServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -287,12 +287,12 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupGetJson<ListAllSubjectExamplesResponse, Url>();
 
         // Act
-        var response = await _exampleSubjectService.GetAllSubjectExamplesAsync(request);
+        var response = await _service.GetAllSubjectExamplesAsync(request);
 
         // Assert
         Assert.NotNull(response);
         VerifyGetJson<ListAllSubjectExamplesResponse, Url>();
-        ApiClientMock.VerifyNoOtherCalls();
+        ServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -302,7 +302,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupGetJson<ListAllSubjectExamplesResponse>();
 
         // Act
-        var func = async () => await _exampleSubjectService.GetAllSubjectExamplesAsync(null!);
+        var func = async () => await _service.GetAllSubjectExamplesAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -317,13 +317,13 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupDeleteJson<DeleteAllExamplesResponse, Url>();
 
         // Act
-        var response = await _exampleSubjectService.ClearSubjectAsync(request);
+        var response = await _service.ClearSubjectAsync(request);
 
         // Assert
         Assert.IsType<DeleteAllExamplesResponse>(response);
 
         VerifyDeleteJson<DeleteAllExamplesResponse, Url>();
-        ApiClientMock.VerifyNoOtherCalls();
+        ServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -335,12 +335,12 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupDeleteJson<DeleteAllExamplesResponse, Url>();
 
         // Act
-        var response = await _exampleSubjectService.ClearSubjectAsync(request);
+        var response = await _service.ClearSubjectAsync(request);
 
         // Assert
         Assert.NotNull(response);
         VerifyDeleteJson<DeleteAllExamplesResponse, Url>();
-        ApiClientMock.VerifyNoOtherCalls();
+        ServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -350,7 +350,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupDeleteJson<DeleteAllExamplesResponse, Url>();
 
         // Act
-        var func = async () => await _exampleSubjectService.ClearSubjectAsync(null!);
+        var func = async () => await _service.ClearSubjectAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -365,13 +365,13 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupDeleteJson<DeleteImageByIdResponse, Url>();
 
         // Act
-        var response = await _exampleSubjectService.DeleteImageByIdAsync(request);
+        var response = await _service.DeleteImageByIdAsync(request);
 
         // Assert
         Assert.IsType<DeleteImageByIdResponse>(response);
 
         VerifyDeleteJson<DeleteImageByIdResponse, Url>();
-        ApiClientMock.VerifyNoOtherCalls();
+        ServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -383,12 +383,12 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupDeleteJson<DeleteImageByIdResponse, Url>();
 
         // Act
-        var response = await _exampleSubjectService.DeleteImageByIdAsync(request);
+        var response = await _service.DeleteImageByIdAsync(request);
 
         // Assert
         Assert.NotNull(response);
         VerifyDeleteJson<DeleteImageByIdResponse, Url>();
-        ApiClientMock.VerifyNoOtherCalls();
+        ServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -398,7 +398,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
         SetupDeleteJson<DeleteImageByIdResponse, Url>();
 
         // Act
-        var func = async () => await _exampleSubjectService.DeleteImageByIdAsync(null!);
+        var func = async () => await _service.DeleteImageByIdAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
