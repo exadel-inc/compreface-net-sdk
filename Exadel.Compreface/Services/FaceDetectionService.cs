@@ -1,5 +1,4 @@
-﻿using Exadel.Compreface.Clients.Interfaces;
-using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Flurl;
@@ -9,8 +8,8 @@ namespace Exadel.Compreface.Services
 {
     public class FaceDetectionService : AbstractBaseService
     {
-        public FaceDetectionService(IComprefaceConfiguration configuration, IApiClient apiClient)
-            : base(configuration, apiClient) { }
+        public FaceDetectionService(IComprefaceConfiguration configuration)
+            : base(configuration) { }
 
         public async Task<FaceDetectionResponse> FaceDetectionAsync(FaceDetectionRequest faceDetectionRequest)
         {
@@ -25,8 +24,7 @@ namespace Exadel.Compreface.Services
                 });
             
             var response = await 
-                ApiClient.PostMultipartAsync<FaceDetectionResponse>(
-                    apiKey: Configuration.ApiKey,
+                PostMultipartAsync<FaceDetectionResponse>(
                     requestUrl: requestUrlWithQueryParameters,
                     buildContent: mp =>
                         mp.AddFile("file", fileName: faceDetectionRequest.FileName, path: faceDetectionRequest.FilePath));
@@ -47,8 +45,7 @@ namespace Exadel.Compreface.Services
                 });
 
             var response = await 
-                ApiClient.PostJsonAsync<FaceDetectionResponse>(
-                    apiKey: Configuration.ApiKey,
+                PostJsonAsync<FaceDetectionResponse>(
                     requestUrl: requestUrlWithQueryParameters, 
                     body: new { file = faceDetectionRequest.File });
 

@@ -1,3 +1,5 @@
+using Exadel.Compreface.Configuration;
+using Exadel.Compreface.Services;
 using Flurl.Http.Testing;
 using Tynamix.ObjectFiller;
 
@@ -6,10 +8,17 @@ namespace Exadel.Compreface.UnitTests.ApiClient;
 public partial class ApiClientTests : IDisposable
 {
     private readonly HttpTest _httpTest;
+    private readonly FaceDetectionService _service;
 
     public ApiClientTests()
     {
         _httpTest = new HttpTest();
+        _service = new(new ComprefaceConfiguration
+        {
+            ApiKey = GetRandomString(),
+            Domain = GetRandomString(),
+            Port = GetRandomString(),
+        });
     }
 
     private const string RequestUrl = "http://site.com";

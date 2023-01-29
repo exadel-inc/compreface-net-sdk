@@ -9,14 +9,13 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageBySubjectId;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
 using Exadel.Compreface.DTOs.HelperDTOs;
 using Flurl;
-using Exadel.Compreface.Clients.Interfaces;
 
 namespace Exadel.Compreface.Services;
 
 public class SubjectExampleService : AbstractBaseService
 {
-    public SubjectExampleService(IComprefaceConfiguration configuration, IApiClient apiClient)
-            : base(configuration, apiClient) { }
+    public SubjectExampleService(IComprefaceConfiguration configuration)
+            : base(configuration) { }
 
     public async Task<AddSubjectExampleResponse> AddSubjectExampleAsync(AddSubjectExampleRequest request)
     {
@@ -28,8 +27,7 @@ public class SubjectExampleService : AbstractBaseService
                 det_prob_threshold = request.DetProbThreShold,
             });
 
-        var response = await ApiClient.PostMultipartAsync<AddSubjectExampleResponse>(
-            apiKey: Configuration.ApiKey,
+        var response = await PostMultipartAsync<AddSubjectExampleResponse>(
             requestUrl: requestUrlWithQueryParameters,
             buildContent: mp =>
                 mp.AddFile("file", fileName: request.FileName, path: request.FilePath)); 
@@ -47,8 +45,7 @@ public class SubjectExampleService : AbstractBaseService
                 det_prob_threshold = request.DetProbThreShold,
             });
 
-        var response = await ApiClient
-            .PostJsonAsync<AddBase64SubjectExampleResponse>(Configuration.ApiKey, requestUrlWithQueryParameters,new { file = request.File });
+        var response = await PostJsonAsync<AddBase64SubjectExampleResponse>(requestUrlWithQueryParameters, new { file = request.File });
 
         return response;
     }
@@ -64,7 +61,7 @@ public class SubjectExampleService : AbstractBaseService
                 subject = request.Subject,
             });
 
-        var response = await ApiClient.GetJsonAsync<ListAllSubjectExamplesResponse>(Configuration.ApiKey, requestUrlWithQueryParameters);
+        var response = await GetJsonAsync<ListAllSubjectExamplesResponse>(requestUrlWithQueryParameters);
 
         return response;
     }
@@ -76,7 +73,7 @@ public class SubjectExampleService : AbstractBaseService
             .SetQueryParam("subject", request.Subject);
 
         var response = 
-            await ApiClient.DeleteJsonAsync<DeleteAllExamplesResponse>(Configuration.ApiKey, requestUrlWithQueryParameters);
+            await DeleteJsonAsync<DeleteAllExamplesResponse>(requestUrlWithQueryParameters);
 
         return response;
     }
@@ -88,7 +85,7 @@ public class SubjectExampleService : AbstractBaseService
             .AppendPathSegment(request.ImageId.ToString());
 
         var response = await 
-            ApiClient.DeleteJsonAsync<DeleteImageByIdResponse>(Configuration.ApiKey, requestUrlWithQueryParameters);
+            DeleteJsonAsync<DeleteImageByIdResponse>(requestUrlWithQueryParameters);
 
         return response;
     }
@@ -99,8 +96,7 @@ public class SubjectExampleService : AbstractBaseService
         var requestUrlWithQueryParameters = requestUrl
             .AppendPathSegment("delete");
 
-        var response = await 
-            ApiClient.PostJsonAsync<List<Face>>(Configuration.ApiKey, requestUrlWithQueryParameters, deleteMultipleExamplesRequest.ImageIdList);
+        var response = await PostJsonAsync<List<Face>>(requestUrlWithQueryParameters, deleteMultipleExamplesRequest.ImageIdList);
 
         return new DeleteMultipleExamplesResponse() { Faces = response };
     }
@@ -114,8 +110,7 @@ public class SubjectExampleService : AbstractBaseService
                 "/images/",
                 downloadImageByIdRequest.ImageId.ToString());
 
-        var response = await 
-            ApiClient.GetBytesFromRemoteAsync(Configuration.ApiKey, requestUrlWithQueryParameters);
+        var response = await GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
 
         return response;
     }
@@ -126,8 +121,7 @@ public class SubjectExampleService : AbstractBaseService
         var requestUrlWithQueryParameters = requestUrl
             .AppendPathSegments(downloadImageBySubjectIdRequest.ImageId.ToString(), "/img");
 
-        var response = await 
-            ApiClient.GetBytesFromRemoteAsync(Configuration.ApiKey, requestUrlWithQueryParameters);
+        var response = await GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
 
         return response;
     }

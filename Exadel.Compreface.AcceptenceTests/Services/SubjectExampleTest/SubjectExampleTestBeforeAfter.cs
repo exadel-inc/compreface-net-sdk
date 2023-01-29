@@ -13,24 +13,24 @@ namespace Exadel.Compreface.AcceptenceTests.Services
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class SubjectExampleTestBeforeAfter : BeforeAfterTestAttribute
     {
-        private readonly ApiClient apiClient;
+        private readonly CompreFaceClient _client;
 
         public SubjectExampleTestBeforeAfter()
         {
-            apiClient = new ApiClient(new ComprefaceConfiguration(API_KEY_RECOGNITION_SERVICE, DOMAIN, PORT));
+            _client = new CompreFaceClient(new ComprefaceConfiguration(API_KEY_RECOGNITION_SERVICE, DOMAIN, PORT));
         }
 
         public async override void Before(MethodInfo methodUnderTest)
         {
-            await apiClient.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ClearSubjectAsync(new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
+            await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ClearSubjectAsync(new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
 
-            await apiClient.GetService<SubjectService>(API_KEY_RECOGNITION_SERVICE).AddSubject(
+            await _client.GetService<SubjectService>(API_KEY_RECOGNITION_SERVICE).AddSubject(
                  new AddSubjectRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
         }
 
         public async override void After(MethodInfo methodUnderTest)
         {
-            await apiClient.GetService<SubjectService>(API_KEY_RECOGNITION_SERVICE).DeleteSubject(new DeleteSubjectRequest() { ActualSubject = TEST_SUBJECT_EXAMPLE_NAME });
+            await _client.GetService<SubjectService>(API_KEY_RECOGNITION_SERVICE).DeleteSubject(new DeleteSubjectRequest() { ActualSubject = TEST_SUBJECT_EXAMPLE_NAME });
         }
     }
 }

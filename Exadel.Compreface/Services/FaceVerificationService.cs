@@ -1,4 +1,3 @@
-using Exadel.Compreface.Clients.Interfaces;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
@@ -9,8 +8,8 @@ namespace Exadel.Compreface.Services;
 
 public class FaceVerificationService : AbstractBaseService
 {
-    public FaceVerificationService(IComprefaceConfiguration configuration, IApiClient apiClient)
-            : base(configuration, apiClient) { }
+    public FaceVerificationService(IComprefaceConfiguration configuration)
+            : base(configuration) { }
 
     public async Task<FaceVerificationResponse> VerifyImageAsync(FaceVerificationRequest request)
     {
@@ -25,8 +24,7 @@ public class FaceVerificationService : AbstractBaseService
             });
 
         var response = await 
-            ApiClient.PostMultipartAsync<FaceVerificationResponse>(
-                apiKey: Configuration.ApiKey,
+            PostMultipartAsync<FaceVerificationResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
                 {
@@ -53,8 +51,7 @@ public class FaceVerificationService : AbstractBaseService
             });
 
         var response = await 
-            ApiClient.PostJsonAsync<FaceVerificationResponse>(
-                apiKey: Configuration.ApiKey,
+            PostJsonAsync<FaceVerificationResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 body: new
                 {

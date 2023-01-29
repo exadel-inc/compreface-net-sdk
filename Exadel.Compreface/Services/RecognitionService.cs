@@ -1,5 +1,4 @@
-﻿using Exadel.Compreface.Clients.Interfaces;
-using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
@@ -11,8 +10,8 @@ namespace Exadel.Compreface.Services;
 
 public class RecognitionService : AbstractBaseService
 {
-    public RecognitionService(IComprefaceConfiguration configuration, IApiClient apiClient)
-            : base(configuration, apiClient) { }
+    public RecognitionService(IComprefaceConfiguration configuration)
+            : base(configuration) { }
 
     public async Task<RecognizeFaceFromImageResponse> RecognizeFaceFromImage(RecognizeFaceFromImageRequest request)
     {
@@ -28,8 +27,7 @@ public class RecognitionService : AbstractBaseService
             });
 
         var response = await 
-            ApiClient.PostMultipartAsync<RecognizeFaceFromImageResponse>(
-                apiKey: Configuration.ApiKey,
+            PostMultipartAsync<RecognizeFaceFromImageResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
                 mp.AddFile("file", fileName: request.FileName, path: request.FilePath));
@@ -52,8 +50,7 @@ public class RecognitionService : AbstractBaseService
             });
 
         var response = await 
-            ApiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(
-                apiKey: Configuration.ApiKey,
+            PostJsonAsync<RecognizeFaceFromImageResponse>(
                 requestUrl: requestUrlWithQueryParameters, 
                 body: new { file = request.FileBase64Value });
 
@@ -73,8 +70,7 @@ public class RecognitionService : AbstractBaseService
             });
 
         var response = await 
-            ApiClient.PostMultipartAsync<VerifyFacesFromImageResponse>(
-                apiKey: Configuration.ApiKey,
+            PostMultipartAsync<VerifyFacesFromImageResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
                 mp.AddFile("file", fileName: request.FileName, path: request.FilePath));
@@ -95,8 +91,7 @@ public class RecognitionService : AbstractBaseService
             });
 
         var response = await 
-            ApiClient.PostJsonAsync<VerifyFacesFromImageResponse>(
-                apiKey: Configuration.ApiKey,
+            PostJsonAsync<VerifyFacesFromImageResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 body: new { file = request.FileBase64Value });
 
