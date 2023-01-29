@@ -1,49 +1,23 @@
 ﻿using Exadel.Compreface.Clients.Config;
 using Exadel.Compreface.Clients.Interfaces;
-using Exadel.Compreface.Configuration;
 using Exadel.Compreface.Exceptions;
-using Exadel.Compreface.Services;
 using Flurl;
 using Flurl.Http;
 using Flurl.Http.Content;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Exadel.Compreface.UnitTests")]
+[assembly: InternalsVisibleTo("Exadel.Compreface.AcceptenceTests")]
 namespace Exadel.Compreface.Clients;
 
 /// <summary>
 /// Wrapper on top of Flurl.Http package's extension methods
 /// </summary>
-public class ApiClient : IApiClient
+internal class ApiClient : IApiClient
 {
-    private readonly string _domain;
-    private readonly string _port;
-
-    private readonly Dictionary<ServiceDictionaryKey, AbstractBaseService> _services = new();
-
-    public ApiClient(IComprefaceConfiguration configuration)
-        : this(configuration.Domain, configuration.Port) { }
-
-    public ApiClient(string domain, string port)
+    public ApiClient()
     {
-        _domain = domain;
-        _port = port;
-
         ConfigInitializer.InitializeSnakeCaseJsonConfigs();
-    }
-
-    public T GetService<T>(string apiKey) where T : AbstractBaseService
-    {
-        var key = new ServiceDictionaryKey(apiKey, typeof(T));
-        var baseService = _services.GetValueOrDefault(key);
-
-        if (baseService == null)
-        {
-            var config = new ComprefaceConfiguration(key.ApiKey, _domain, _port);
-            baseService = Activator.CreateInstance(typeof(T), config, this) as T;
-
-            _services.Add(key, baseService!);
-        }
-
-        return (baseService as T)!;
     }
 
     public async Task<TResponse> GetJsonAsync<TResponse>(
@@ -290,18 +264,5 @@ public class ApiClient : IApiClient
     {
         var exceptionMessage = await exception.GetResponseStringAsync();
         return new ServiceException(exceptionMessage);
-    }
-
-    private class ServiceDictionaryKey
-    {
-        public string ApiKey { get; set; }
-
-        public Type Type { get; set; }
-
-        public ServiceDictionaryKey(string apiKey, Type type)
-        {
-            ApiKey = apiKey;
-            Type = type;
-        }
     }
 }

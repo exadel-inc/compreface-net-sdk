@@ -18,7 +18,7 @@ public partial class ApiClientTests
 
         var randomstring = GetRandomString();
 
-        var apiClient = new Clients.ApiClient(domain: randomstring, port: randomstring);
+        var apiClient = new Clients.ApiClient();
         
         var responseCall = apiClient.GetJsonAsync<GetAllSubjectResponse>(
             apiKey: randomstring,
@@ -37,7 +37,7 @@ public partial class ApiClientTests
 
         var randomstring = GetRandomString();
         
-        var apiClient = new Clients.ApiClient(domain: randomstring, port: randomstring);
+        var apiClient = new Clients.ApiClient();
         
         var responseCall = apiClient.PostJsonAsync<AddSubjectExampleResponse>(
             apiKey: randomstring,
@@ -57,7 +57,7 @@ public partial class ApiClientTests
         
         var randomstring = GetRandomString();
 
-        var apiClient = new Clients.ApiClient(domain: randomstring, port: randomstring);
+        var apiClient = new Clients.ApiClient();
         
         var responseCall = apiClient.PutJsonAsync<AddSubjectExampleResponse>(
             apiKey: randomstring,
@@ -77,7 +77,7 @@ public partial class ApiClientTests
 
         var randomstring = GetRandomString();
 
-        var apiClient = new Clients.ApiClient(domain: randomstring, port: randomstring);
+        var apiClient = new Clients.ApiClient();
         
         var responseCall = apiClient.DeleteJsonAsync<AddSubjectExampleResponse>(
             apiKey: randomstring,
@@ -96,7 +96,7 @@ public partial class ApiClientTests
         
         var randomstring = GetRandomString();
         
-        var apiClient = new Clients.ApiClient(domain: randomstring, port: randomstring);
+        var apiClient = new Clients.ApiClient();
         
         var responseCall = apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
             apiKey: randomstring,
@@ -117,7 +117,7 @@ public partial class ApiClientTests
         
         var randomstring = GetRandomString();
 
-        var apiClient = new Clients.ApiClient(domain: randomstring, port: randomstring);
+        var apiClient = new Clients.ApiClient();
         
         var responseCall = apiClient.GetBytesFromRemoteAsync(
             apiKey: randomstring,
