@@ -34,9 +34,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             _faceVerificationService = client.FaceVerificationService;
             _faceVerificationRequest = new FaceVerificationRequest
             {
-                SourceImageFileName = FILE_NAME,
                 SourceImageFilePath = FILE_PATH,
-                TargetImageFileName = FILE_NAME,
                 TargetImageFilePath = FILE_PATH,
                 DetProbThreshold = detProbThreshold,
                 FacePlugins = facePlugins,

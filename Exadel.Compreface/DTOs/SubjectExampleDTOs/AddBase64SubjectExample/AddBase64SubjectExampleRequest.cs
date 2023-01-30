@@ -7,5 +7,9 @@
         public decimal? DetProbThreShold { get; set; }
 
         public string File { get; set; }
+
+        public string SourceImageFilePath { get; set; }
+
+        public string TargetImageFilePath { get; set; }
     }
 }
