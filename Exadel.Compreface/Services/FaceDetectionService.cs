@@ -14,7 +14,7 @@ namespace Exadel.Compreface.Services
         public FaceDetectionService(IComprefaceConfiguration configuration, IApiClient apiClient)
             : base(configuration, apiClient) { }
 
-        public async Task<FaceDetectionResponse> FaceDetectionAsync(FaceDetectionRequest faceDetectionRequest)
+        public async Task<FaceDetectionResponse> FaceDetectionAsync(FaceDetectionRequest faceDetectionRequest, bool isFileInTheRemoteServer = false)
         {
             var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/detection/detect";
             var requestUrlWithQueryParameters = requestUrl
@@ -38,13 +38,14 @@ namespace Exadel.Compreface.Services
                     File = fileInBase64String,
                 };
 
-                response = await _apiClient.PostJsonAsync<FaceDetectionResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+                response = await ApiClient.PostJsonAsync<FaceDetectionResponse>(Configuration.ApiKey, requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
 
                 return response;
             }
 
             response = await
-                _apiClient.PostMultipartAsync<FaceDetectionResponse>(
+                ApiClient.PostMultipartAsync<FaceDetectionResponse>(
+                    apiKey: Configuration.ApiKey,
                     requestUrl: requestUrlWithQueryParameters,
                     buildContent: mp =>
                         mp.AddFile("file", fileName: FileHelpers.GenerateFileName(faceDetectionRequest.FilePath), path: faceDetectionRequest.FilePath));

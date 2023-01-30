@@ -16,7 +16,7 @@ public class RecognitionService : AbstractBaseService
     public RecognitionService(IComprefaceConfiguration configuration, IApiClient apiClient)
             : base(configuration, apiClient) { }
 
-    public async Task<RecognizeFaceFromImageResponse> RecognizeFaceFromImage(RecognizeFaceFromImageRequest request)
+    public async Task<RecognizeFaceFromImageResponse> RecognizeFaceFromImage(RecognizeFaceFromImageRequest request, bool isFileInTheRemoteServer = false)
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/recognize";
         var requestUrlWithQueryParameters = requestUrl
@@ -42,13 +42,14 @@ public class RecognitionService : AbstractBaseService
                 File = fileInBase64String,
             };
 
-            response = await _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+            response = await ApiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(Configuration.ApiKey, requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
 
             return response;
         }
 
         response = await
-            _apiClient.PostMultipartAsync<RecognizeFaceFromImageResponse>(
+            ApiClient.PostMultipartAsync<RecognizeFaceFromImageResponse>(
+                apiKey: Configuration.ApiKey,
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
                 mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.FilePath), path: request.FilePath));

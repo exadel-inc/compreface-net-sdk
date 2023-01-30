@@ -14,7 +14,7 @@ public class FaceVerificationService : AbstractBaseService
     public FaceVerificationService(IComprefaceConfiguration configuration, IApiClient apiClient)
             : base(configuration, apiClient) { }
 
-    public async Task<FaceVerificationResponse> VerifyImageAsync(FaceVerificationRequest request)
+    public async Task<FaceVerificationResponse> VerifyImageAsync(FaceVerificationRequest request, bool isFileInTheRemoteServer = false)
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl
@@ -36,7 +36,7 @@ public class FaceVerificationService : AbstractBaseService
             var fileTargetImageStream = await request.TargetImageFilePath.GetBytesAsync();
             var fileTargetImagegInBase64Strin = Convert.ToBase64String(fileTargetImageStream);
            
-            response = await _apiClient.PostJsonAsync<FaceVerificationResponse>(requestUrlWithQueryParameters, body: new
+            response = await ApiClient.PostJsonAsync<FaceVerificationResponse>(Configuration.ApiKey, requestUrlWithQueryParameters, body: new
             {
                 source_image = fileSourceImagInBase64String,
                 target_image = fileTargetImagegInBase64Strin
@@ -46,7 +46,8 @@ public class FaceVerificationService : AbstractBaseService
         }
 
         response = await
-            _apiClient.PostMultipartAsync<FaceVerificationResponse>(
+            ApiClient.PostMultipartAsync<FaceVerificationResponse>(
+                apiKey: Configuration.ApiKey,
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
                 {

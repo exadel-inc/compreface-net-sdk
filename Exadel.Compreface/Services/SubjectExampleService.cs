@@ -11,8 +11,6 @@ using Exadel.Compreface.DTOs.HelperDTOs;
 using Flurl;
 using Exadel.Compreface.Clients.Interfaces;
 using Exadel.Compreface.Helpers;
-using System;
-using System.Text;
 using Flurl.Http;
 
 namespace Exadel.Compreface.Services;
@@ -22,7 +20,7 @@ public class SubjectExampleService : AbstractBaseService
     public SubjectExampleService(IComprefaceConfiguration configuration, IApiClient apiClient)
             : base(configuration, apiClient) { }
 
-    public async Task<AddSubjectExampleResponse> AddSubjectExampleAsync(AddSubjectExampleRequest request)
+    public async Task<AddSubjectExampleResponse> AddSubjectExampleAsync(AddSubjectExampleRequest request, bool isFileInTheRemoteServer = false)
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
@@ -45,9 +43,11 @@ public class SubjectExampleService : AbstractBaseService
                 Subject = request.Subject,
             };
 
-            response = await _apiClient.PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+            response = await ApiClient.PostJsonAsync<AddSubjectExampleResponse>(Configuration.ApiKey, requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+            return response;
+        }
 
-        var response = await ApiClient.PostMultipartAsync<AddSubjectExampleResponse>(
+        response = await ApiClient.PostMultipartAsync<AddSubjectExampleResponse>(
             apiKey: Configuration.ApiKey,
             requestUrl: requestUrlWithQueryParameters,
             buildContent: mp =>
