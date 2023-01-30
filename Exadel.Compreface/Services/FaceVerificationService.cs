@@ -20,7 +20,7 @@ public class FaceVerificationService
         _apiClient = apiClient;
     }
 
-    public async Task<FaceVerificationResponse> VerifyAsync(FaceVerificationRequest request)
+    public async Task<FaceVerificationResponse> VerifyAsync(FaceVerificationRequest request, bool isFileInTheRemoteServer = false)
     {
         var requestUrl = $"{_comprefaceConfiguration.Domain}:{_comprefaceConfiguration.Port}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl

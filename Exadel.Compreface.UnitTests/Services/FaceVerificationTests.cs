@@ -92,7 +92,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests
         SetupPostJson<FaceVerificationResponse, Url>();
 
         // Act
-        var responseCall = async () => await _faceVerificationService.VerifyBase64ImageAsync(request);
+        var responseCall = async () => await _faceVerificationService.VerifyAsync(request);
 
         // Assert
         await Assert.ThrowsAsync<ArgumentNullException>(responseCall);

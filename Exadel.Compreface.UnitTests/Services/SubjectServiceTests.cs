@@ -189,7 +189,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupDeleteJson<DeleteAllSubjectsResponse>();
 
             // Act
-            var response = await _subjectService.DeleteAllSubjects();
+            var response = await _subjectService.DeleteAllAsync();
 
             // Assert
             Assert.IsType<DeleteAllSubjectsResponse>(response);
@@ -205,7 +205,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupDeleteJson<DeleteAllSubjectsResponse>();
 
             // Act
-            var response = await _subjectService.DeleteAllSubjects();
+            var response = await _subjectService.DeleteAllAsync();
 
             // Assert
             Assert.NotNull(response);

@@ -28,7 +28,7 @@ public class SubjectExampleService
         _apiClient = apiClient;
     }
 
-    public async Task<AddSubjectExampleResponse> AddAsync(AddSubjectExampleRequest request)
+    public async Task<AddSubjectExampleResponse> AddAsync(AddSubjectExampleRequest request, bool isFileInTheRemoteServer = false)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
