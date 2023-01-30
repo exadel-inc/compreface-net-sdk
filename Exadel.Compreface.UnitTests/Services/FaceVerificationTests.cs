@@ -47,7 +47,22 @@ public class FaceVerificationTests : AbstractBaseServiceTests
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(responseCall);
     }
-    
+
+    [Fact]
+    public async Task VerifyImageAsync_TakesIncorrectRequestModel_ThrowsArgumentNullException()
+    {
+        // Arrange
+        var request = new FaceVerificationRequest();
+
+        SetupPostMultipart<FaceVerificationResponse>();
+
+        // Act
+        var responseCall = async () => await _faceVerificationService.VerifyImageAsync(request);
+
+        // Assert
+        await Assert.ThrowsAsync<ArgumentNullException>(responseCall);
+    }
+
     [Fact]
     public async Task VerifyBase64ImageAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
@@ -81,5 +96,20 @@ public class FaceVerificationTests : AbstractBaseServiceTests
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(responseCall);
+    }
+
+    [Fact]
+    public async Task VerifyBase64ImageAsync_TakesIncorrectRequestModel_ThrowsArgumentArgumentNullException()
+    {
+        // Arrange
+        var request = new FaceVerificationWithBase64Request();
+
+        SetupPostJson<FaceVerificationResponse, Url>();
+
+        // Act
+        var responseCall = async () => await _faceVerificationService.VerifyBase64ImageAsync(request);
+
+        // Assert
+        await Assert.ThrowsAsync<ArgumentNullException>(responseCall);
     }
 }
