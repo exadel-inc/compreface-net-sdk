@@ -35,4 +35,25 @@
       </Resource>
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Services\FaceDetectionServiceTest.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="Services\FaceVerificationServiceTest.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="Services\RecognitionServiceTests.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="Services\SubjectExampleTest\SubjectExampleServiceTest.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="Services\SubjectExampleTest\SubjectExampleTestBeforeAfter.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+      <Compile Update="Services\SubjectServiceTests.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Compile>
+    </ItemGroup>
+
 </Project>
