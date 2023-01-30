@@ -30,7 +30,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Resource Include="Resources\Images\brad-pitt_24.jpg" />
+      <Resource Include="Resources\Images\brad-pitt_24.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
     </ItemGroup>
 
 </Project>
