@@ -6,7 +6,5 @@ public class AddSubjectExampleRequest
 
     public decimal? DetProbThreShold { get; set; }
 
-    public string FilePath { get; set; }
-
-    public string FileName { get; set; }
+    public string File { get; set; }
 }

@@ -1,9 +1,11 @@
 ﻿using Exadel.Compreface.Clients.Interfaces;
 using Exadel.Compreface.Configuration;
+using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
+using Exadel.Compreface.Helpers;
 using Flurl;
 using Flurl.Http;
 
@@ -33,11 +35,29 @@ public class RecognitionService
                 status = request.Status,
             });
 
-        var response = await 
+        RecognizeFaceFromImageResponse? response = null;
+
+        if (isFileInTheRemoteServer)
+        {
+            var fileStream = await request.FilePath.GetBytesAsync();
+            var fileInBase64String = Convert.ToBase64String(fileStream);
+
+            var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
+            {
+                DetProbThreShold = request.DetProbThreshold,
+                File = fileInBase64String,
+            };
+
+            response = await _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+
+            return response;
+        }
+
+        response = await
             _apiClient.PostMultipartAsync<RecognizeFaceFromImageResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
-                mp.AddFile("file", fileName: request.FileName, path: request.FilePath));
+                mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.FilePath), path: request.FilePath));
 
         return response;
     }
@@ -80,7 +100,7 @@ public class RecognitionService
             _apiClient.PostMultipartAsync<VerifyFacesFromImageResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
-                mp.AddFile("file", fileName: request.FileName, path: request.FilePath));
+                mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.FilePath), path: request.FilePath));
 
         return response;
     }

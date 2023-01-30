@@ -11,4 +11,4 @@ var subjects = await faceRecognitionClient.SubjectService.ListAsync();
 foreach (var subject in subjects.Subjects)
 {
     Console.WriteLine(subject);
-}    
+}

@@ -33,7 +33,6 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             _faceDetectionService = client.FaceDetectionService;
             _faceDetectionRequest = new FaceDetectionRequest
             {
-                FileName = FILE_NAME,
                 FilePath = FILE_PATH,
                 DetProbThreshold = detProbThreshold,
                 FacePlugins = facePlugins,

@@ -123,10 +123,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     public async Task DeletAllAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
-        var request = new DeleteMultipleExampleRequest()
-        {
-            ImageIdList = new List<Guid>()
-        };
+        var request = new DeleteMultipleExampleRequest();
 
         SetupPostJson<List<Face>, Url>();
 
@@ -143,10 +140,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     public async Task DeletAllAsync_TakesRequestModel_ReturnsNotNull()
     {
         // Arrange
-        var request = new DeleteMultipleExampleRequest()
-        {
-            ImageIdList = new List<Guid>()
-        };
+        var request = new DeleteMultipleExampleRequest();
 
         SetupPostJson<List<Face>, Url>();
 
@@ -176,11 +170,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     public async Task DownloadAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
-        var request = new DownloadImageByIdRequest()
-        {
-            ImageId = Guid.NewGuid(),
-            RecognitionApiKey = Guid.NewGuid()
-        };
+        var request = new DownloadImageByIdRequest();
 
         SetupGetBytesFromRemote();
 
@@ -197,11 +187,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     public async Task DownloadAsync_TakesRequestModel_ReturnsNotNull()
     {
         // Arrange
-        var request = new DownloadImageByIdRequest()
-        {
-            ImageId = Guid.NewGuid(),
-            RecognitionApiKey = Guid.NewGuid()
-        };
+        var request = new DownloadImageByIdRequest();
 
         SetupGetBytesFromRemote();
 
@@ -231,10 +217,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     public async Task DownloadImageBySubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
-        var request = new DownloadImageBySubjectIdRequest()
-        {
-            ImageId = Guid.NewGuid()
-        };
+        var request = new DownloadImageBySubjectIdRequest();
 
         SetupGetBytesFromRemote();
 
@@ -251,10 +234,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests
     public async Task DownloadImageBySubjectAsync_TakesRequestModel_ReturnsNotNull()
     {
         // Arrange
-        var request = new DownloadImageBySubjectIdRequest()
-        {
-            ImageId = Guid.NewGuid()
-        };
+        var request = new DownloadImageBySubjectIdRequest();
 
         SetupGetBytesFromRemote();
 
