@@ -22,7 +22,7 @@ public class RecognitionService
         _apiClient = apiClient;
     }
     
-    public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFaceFromImageRequest request)
+    public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFaceFromImageRequest request, bool isFileInTheRemoteServer = false)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/recognize";
         var requestUrlWithQueryParameters = requestUrl

@@ -20,7 +20,7 @@ namespace Exadel.Compreface.Services
             _apiClient = apiClient;
         }
 
-        public async Task<FaceDetectionResponse> DetectAsync(FaceDetectionRequest faceDetectionRequest)
+        public async Task<FaceDetectionResponse> DetectAsync(FaceDetectionRequest faceDetectionRequest, bool isFileInTheRemoteServer = false)
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/detection/detect";
             var requestUrlWithQueryParameters = requestUrl

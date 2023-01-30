@@ -180,7 +180,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DeleteAllAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
-            var response = await _subjectService.DeleteAllSubjects();
+            var response = await _subjectService.DeleteAllAsync();
 
             // Assert
             Assert.IsType<DeleteAllSubjectsResponse>(response);
@@ -190,7 +190,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DeleteAllAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Act
-            var response = await _subjectService.DeleteAllSubjects();
+            var response = await _subjectService.DeleteAllAsync();
 
             // Assert
             Assert.NotNull(response);

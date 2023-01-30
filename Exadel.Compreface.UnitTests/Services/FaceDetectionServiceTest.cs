@@ -133,7 +133,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<FaceDetectionResponse, Url>();
 
             // Act
-            var func = async () => await _faceDetectionService.FaceDetectionBase64Async(request);
+            var func = async () => await _faceDetectionService.DetectAsync(request);
 
             // Assert
             await Assert.ThrowsAsync<ArgumentNullException>(func);

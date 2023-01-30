@@ -245,7 +245,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<VerifyFacesFromImageResponse, Url>();
 
             // Act
-            var func = async () => await _recognitionService.VerifyFacesFromBase64File(request);
+            var func = async () => await _recognitionService.VerifyAsync(request);
 
             // Assert
             await Assert.ThrowsAsync<ArgumentNullException>(func);
