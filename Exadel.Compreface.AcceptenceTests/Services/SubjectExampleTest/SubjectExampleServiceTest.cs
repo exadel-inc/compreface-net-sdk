@@ -94,7 +94,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             var subjectExample = new AddSubjectExampleRequest()
             {
                 DetProbThreShold = 0.81m,
-                File = "WrongTestPath",
+                File = PATH_OF_WRONG_FILE,
                 Subject = TEST_SUBJECT_EXAMPLE_NAME,
             };
 
