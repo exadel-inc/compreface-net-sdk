@@ -33,15 +33,18 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             {
                 Subject = subjectName
             };
+
             _renameSubjectRequest = new RenameSubjectRequest
             {
                 CurrentSubject = subjectName,
                 Subject = renamedSubjectName
             };
+
             _deleteSubjectRequest = new DeleteSubjectRequest
             {
                 ActualSubject = subjectName
             };
+
             _renamedSubjectDeleteRequest = new DeleteSubjectRequest
             {
                 ActualSubject = renamedSubjectName
@@ -103,6 +106,26 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
+        public async Task AddAsync_TakesNullRequestModel_ThrowsServiceException()
+        {
+            //Arrange 
+            var addSubjectRequest = new AddSubjectRequest
+            {
+                Subject = TEST_SUBJECT_NAME
+            };
+            await _subjectService.AddAsync(addSubjectRequest);
+
+            // Act
+            var func = async () => await _subjectService.AddAsync(null!);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+
+            // Clear
+            await _subjectService.DeleteAsync(new DeleteSubjectRequest { ActualSubject = addSubjectRequest.Subject });
+        }
+
+        [Fact]
         public async Task RenameAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
@@ -138,6 +161,32 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task RenameAsync_TakesNullRequestModel_ThrowsServiceException()
+        {
+            //Arrange 
+            var addSubjectRequest = new AddSubjectRequest
+            {
+                Subject = TEST_SUBJECT_NAME
+            };
+            await _subjectService.AddAsync(addSubjectRequest);
+
+            var renameSubjectRequest = new RenameSubjectRequest
+            {
+                CurrentSubject = addSubjectRequest.Subject,
+                Subject = ""
+            };
+
+            // Act
+            var func = async () => await _subjectService.RenameAsync(renameSubjectRequest);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+
+            // Clear
+            await _subjectService.DeleteAsync(new DeleteSubjectRequest { ActualSubject = addSubjectRequest.Subject });
         }
 
         [Fact]
@@ -177,6 +226,16 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
+        public async Task DeleteAsync_TakesNullRequestModel_ThrowsServiceException()
+        {
+            // Act
+            var func = async () => await _subjectService.DeleteAsync(_deleteSubjectRequest);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
         public async Task DeleteAllAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
@@ -194,6 +253,22 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             // Assert
             Assert.NotNull(response);
+        }
+
+        [Fact]
+        public async Task DeleteAllAsync_TakesNullRequestModel_ThrowsServiceException()
+        {
+            //Arrange
+            var configuration = new ComprefaceConfiguration(API_KEY_DETECTION_SERVICE, DOMAIN, PORT);
+            var client = new FaceRecognitionClient(configuration);
+
+            var subjectService = client.SubjectService;
+
+            // Act
+            var func = async () => await subjectService.DeleteAllAsync();
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
         }
     }
 }

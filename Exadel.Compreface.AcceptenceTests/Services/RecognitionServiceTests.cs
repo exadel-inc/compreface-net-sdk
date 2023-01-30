@@ -7,6 +7,7 @@ using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
+using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
@@ -72,6 +73,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 FacePlugins = facePlugins,
                 Status = status,
             };
+
             _request64 = new RecognizeFacesFromImageWithBase64Request()
             {
                 FileBase64Value = Convert.ToBase64String(File.ReadAllBytes(FILE_PATH)),
@@ -127,6 +129,32 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
+        public async Task RecognizeAsync_TakesNullRequest_ThrowsServiceException()
+        {
+            //Arrange
+            var request = new RecognizeFaceFromImageRequest
+            {
+                FilePath = PATH_OF_WRONG_FILE,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+            };
+
+            // Act
+            var func = async () => await _recognitionService.RecognizeAsync(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
         public async Task RecognizeBase64Async_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Act
@@ -154,6 +182,32 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task RecognizeBase64Async_TakesNullRequest_ThrowsServiceException()
+        {
+            //Arrange
+            var request = new RecognizeFacesFromImageWithBase64Request
+            {
+                FileBase64Value = WRONG_BASE64_IMAGE,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+            };
+
+            // Act
+            var func = async () => await _recognitionService.RecognizeAsync(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
         }
 
         [Fact]
@@ -199,6 +253,32 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
+        public async Task VerifyAsync_TakesNullRequest_ThrowsServiceException()
+        {
+            //Arrange
+            var verifyRequest = new VerifyFacesFromImageRequest()
+            {
+                FilePath = TWO_FACES_IMAGE_PATH,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+            };
+
+            // Act
+            var func = async () => await _recognitionService.VerifyAsync(verifyRequest);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
         public async Task VerifyBase64Async_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Assert
@@ -238,6 +318,32 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task VerifyBase64Async_TakesNullRequest_ThrowsServiceException()
+        {
+            //Arrange
+            var verifyRequest = new VerifyFacesFromImageWithBase64Request()
+            {
+                FileBase64Value = TWO_FACES_IMAGE_BASE64,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+            };
+
+            // Act
+            var func = async () => await _recognitionService.VerifyAsync(verifyRequest);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
         }
     }
 }

@@ -2,6 +2,7 @@
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
+using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
@@ -81,6 +82,33 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
+        public async Task DetectAsync_TakesNullRequest_ThrowsServiceException()
+        {
+            // Act
+            var detectRequest = new FaceDetectionRequest()
+            {
+                FilePath = PATH_OF_WRONG_FILE,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+                Limit = 0
+            };
+
+            // Act
+            var func = async () => await _faceDetectionService.DetectAsync(detectRequest);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
         public async Task DetectBase64Async_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
@@ -108,6 +136,33 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task DetectBase64Async_TakesNullRequest_ThrowsServiceException()
+        {
+            // Act
+            var detectRequest = new FaceDetectionBase64Request()
+            {
+                File = WRONG_BASE64_IMAGE,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+                Limit = 0
+            };
+
+            // Act
+            var func = async () => await _faceDetectionService.DetectAsync(detectRequest);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
         }
     }
 }

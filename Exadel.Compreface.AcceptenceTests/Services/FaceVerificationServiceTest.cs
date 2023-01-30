@@ -3,6 +3,7 @@ using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
+using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
@@ -84,6 +85,34 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
+        public async Task VerifyAsync_TakesNullRequest_ThrowsServiceException()
+        {
+            //Arrange
+            var request = new FaceVerificationRequest
+            {
+                SourceImageFilePath = TWO_FACES_IMAGE_PATH,
+                TargetImageFilePath = FILE_PATH,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+                Limit = 0
+            };
+
+            // Act
+            var func = async () => await _faceVerificationService.VerifyAsync(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
         public async Task VerifyBase64Async_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
@@ -111,6 +140,34 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task VerifyBase64Async_TakesNullRequest_ThrowsServiceException()
+        {
+            //Arrange
+            var request = new FaceVerificationWithBase64Request()
+            {
+                SourceImageWithBase64 = TWO_FACES_IMAGE_BASE64,
+                TargetImageWithBase64 = IMAGE_BASE64_STRING,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+                Limit = 0
+            };
+
+            // Act
+            var func = async () => await _faceVerificationService.VerifyAsync(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
         }
     }
 }

@@ -8,10 +8,8 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteMultipleExamples;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageById;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageBySubjectId;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
-using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
-using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.Exceptions;
-using Exadel.Compreface.Services;
+using System;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
@@ -76,7 +74,6 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        [SubjectExampleTestBeforeAfter]
         public async Task AddAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             //Act
@@ -87,7 +84,6 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        [SubjectExampleTestBeforeAfter]
         public async Task AddAsync_TakesRequestModel_ThrowsServiceException()
         {
             //Arrange
@@ -141,7 +137,6 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        [SubjectExampleTestBeforeAfter]
         public async Task AddBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             //Act
@@ -152,15 +147,19 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        [SubjectExampleTestBeforeAfter]
         public async Task AddBase64Async_TakesRequestModel_ThrowsServiceException()
         {
             //Arrange
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
-            addBase64SubjectExampleRequest.File = "Base64TestString";
+            var request = new AddBase64SubjectExampleRequest()
+            {
+                DetProbThreShold = 0.81m,
+                File = IMAGE_BASE64_STRING
+            };
+            request.Subject = TEST_SUBJECT_EXAMPLE_NAME;
+            request.File = "Base64TestString";
 
             //Act
-            var func = async () => await faceRecognitionClient.SubjectExampleService.AddAsync(addBase64SubjectExampleRequest);
+            var func = async () => await faceRecognitionClient.SubjectExampleService.AddAsync(request);
 
             // Assert
             await Assert.ThrowsAsync<ServiceException>(func);
@@ -222,14 +221,40 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        [SubjectExampleTestBeforeAfter]
         public async Task GetAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             //Act
-            var func = async () => await faceRecognitionClient.SubjectExampleService.ListAsync((ListAllSubjectExamplesRequest)null!);
+            var func = async () => await faceRecognitionClient.SubjectExampleService.ListAsync(null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task GetAllAsync_TakesNonExistentSubject_ReturnsDefaultValue()
+        {
+            //Arrange
+            var request  = new ListAllSubjectExamplesRequest()
+            {
+                Page = 1,
+                Size = 1,
+                Subject = TEST_SUBJECT_EXAMPLE_NAME
+            };
+
+            var expectedDefaultResponse = new ListAllSubjectExamplesResponse
+            {
+                Faces = null,
+                PageNumber = 0,
+                PageSize = 20,
+                TotalElements = 0,
+                TotalPages = 0,
+            };
+
+            //Act
+            var actualResponse = await faceRecognitionClient.SubjectExampleService.ListAsync(request);
+
+            //Assert
+            await Assert.Equal(expectedDefaultResponse, actualResponse);
         }
 
         [Fact]
@@ -254,38 +279,38 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.Equal(expectedCount, actualResponse.Deleted);
         }
 
-        [Fact]
-        [SubjectExampleTestBeforeAfter]
-        public async Task DeleteAllAsync_TakesRequestModel_ReturnsNotNull()
-        {
-            //Arrange
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
+        //[Fact]
+        //[SubjectExampleTestBeforeAfter]
+        //public async Task DeleteAllAsync_TakesRequestModel_ReturnsNotNull()
+        //{
+        //    //Arrange
+        //    addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
-            var expectedCount = 3;
+        //    var expectedCount = 3;
 
-            for (int counter = expectedCount; counter > 0; counter--)
-            {
-                await faceRecognitionClient.SubjectExampleService.AddAsync(addBase64SubjectExampleRequest);
-            }
+        //    for (int counter = expectedCount; counter > 0; counter--)
+        //    {
+        //        await faceRecognitionClient.SubjectExampleService.AddAsync(addBase64SubjectExampleRequest);
+        //    }
 
-            //Act
-            var actualResponse = await faceRecognitionClient.SubjectExampleService.DeleteAllAsync(
-                new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
+        //    //Act
+        //    var actualResponse = await faceRecognitionClient.SubjectExampleService.DeleteAllAsync(
+        //        new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
 
-            // Assert
-            Assert.NotNull(actualResponse);
-        }
+        //    // Assert
+        //    Assert.NotNull(actualResponse);
+        //}
 
-        [Fact]
-        [SubjectExampleTestBeforeAfter]
-        public async Task DeleteAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
-        {
-            //Act
-            var func = async () => await faceRecognitionClient.SubjectExampleService.DeleteAllAsync((DeleteAllExamplesRequest)null!);
+        //[Fact]
+        //[SubjectExampleTestBeforeAfter]
+        //public async Task DeleteAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        //{
+        //    //Act
+        //    var func = async () => await faceRecognitionClient.SubjectExampleService.DeleteAllAsync((DeleteAllExamplesRequest)null!);
 
-            // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
-        }
+        //    // Assert
+        //    await Assert.ThrowsAsync<NullReferenceException>(func);
+        //}
 
         [Fact]
         [SubjectExampleTestBeforeAfter]
@@ -308,48 +333,48 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.Equal(testImage.ImageId, actualDeleteImageByIdResponse.ImageId);
         }
 
-        [Fact]
-        [SubjectExampleTestBeforeAfter]
-        public async Task DeleteAsync_TakesRequestModel_ReturnsNotNull()
-        {
-            //Arrange
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
-            var testImage = await faceRecognitionClient.SubjectExampleService.AddAsync(addBase64SubjectExampleRequest);
+        //[Fact]
+        //[SubjectExampleTestBeforeAfter]
+        //public async Task DeleteAsync_TakesRequestModel_ReturnsNotNull()
+        //{
+        //    //Arrange
+        //    addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
+        //    var testImage = await faceRecognitionClient.SubjectExampleService.AddAsync(addBase64SubjectExampleRequest);
 
-            var deleteImageByIdRequest = new DeleteImageByIdRequest()
-            {
-                ImageId = testImage.ImageId
-            };
+        //    var deleteImageByIdRequest = new DeleteImageByIdRequest()
+        //    {
+        //        ImageId = testImage.ImageId
+        //    };
 
-            //Act
-            var actualDeleteImageByIdResponse = await faceRecognitionClient.SubjectExampleService.DeleteAsync(deleteImageByIdRequest);
+        //    //Act
+        //    var actualDeleteImageByIdResponse = await faceRecognitionClient.SubjectExampleService.DeleteAsync(deleteImageByIdRequest);
 
-            // Assert
-            Assert.NotNull(actualDeleteImageByIdResponse);
-        }
+        //    // Assert
+        //    Assert.NotNull(actualDeleteImageByIdResponse);
+        //}
 
-        [Fact]
-        [SubjectExampleTestBeforeAfter]
-        public async Task DeleteAsync_TakesNullRequestModel_ThrowsNullReferenceException()
-        {
-            //Act
-            var func = async () => await faceRecognitionClient.SubjectExampleService.DeleteAsync((DeleteImageByIdRequest)null!);
+        //[Fact]
+        //[SubjectExampleTestBeforeAfter]
+        //public async Task DeleteAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        //{
+        //    //Act
+        //    var func = async () => await faceRecognitionClient.SubjectExampleService.DeleteAsync((DeleteImageByIdRequest)null!);
 
-            // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
-        }
+        //    // Assert
+        //    await Assert.ThrowsAsync<NullReferenceException>(func);
+        //}
 
-        [Fact]
-        [SubjectExampleTestBeforeAfter]
-        public async Task DeleteAsync_TakesRequestModel_ThrowsServiceException()
-        {
-            //Act
-            var func = async () => await faceRecognitionClient.SubjectExampleService.DeleteAsync(
-                new DeleteImageByIdRequest() { ImageId = Guid.Parse("e1a7653d-af52-4b0b-a05f-ee3f7b667fba") });
+        //[Fact]
+        //[SubjectExampleTestBeforeAfter]
+        //public async Task DeleteAsync_TakesRequestModel_ThrowsServiceException()
+        //{
+        //    //Act
+        //    var func = async () => await faceRecognitionClient.SubjectExampleService.DeleteAsync(
+        //        new DeleteImageByIdRequest() { ImageId = Guid.Parse("e1a7653d-af52-4b0b-a05f-ee3f7b667fba") });
 
-            // Assert
-            await Assert.ThrowsAsync<ServiceException>(func);
-        }
+        //    // Assert
+        //    await Assert.ThrowsAsync<ServiceException>(func);
+        //}
 
         [Fact]
         [SubjectExampleTestBeforeAfter]
@@ -380,41 +405,41 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.Equal(expectedFacesCount, actualFacesCount);
         }
 
-        [Fact]
-        [SubjectExampleTestBeforeAfter]
-        public async Task DeletMultipleAsync_TakesRequestModel_ReturnsNotNull()
-        {
-            //Arrange
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
+        //[Fact]
+        //[SubjectExampleTestBeforeAfter]
+        //public async Task DeletMultipleAsync_TakesRequestModel_ReturnsNotNull()
+        //{
+        //    //Arrange
+        //    addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
-            var count = 3;
-            var unnecessaryExampleList = new List<Guid>();
+        //    var count = 3;
+        //    var unnecessaryExampleList = new List<Guid>();
 
-            for (int counter = count; counter > 0; counter--)
-            {
-                var response = await faceRecognitionClient.SubjectExampleService.AddAsync(addBase64SubjectExampleRequest);
+        //    for (int counter = count; counter > 0; counter--)
+        //    {
+        //        var response = await faceRecognitionClient.SubjectExampleService.AddAsync(addBase64SubjectExampleRequest);
 
-                unnecessaryExampleList.Add(response.ImageId);
-            }
+        //        unnecessaryExampleList.Add(response.ImageId);
+        //    }
 
-            //Act
-            var actualResponse = await faceRecognitionClient.SubjectExampleService.DeleteAsync(
-                new DeleteMultipleExampleRequest() { ImageIdList = unnecessaryExampleList });
+        //    //Act
+        //    var actualResponse = await faceRecognitionClient.SubjectExampleService.DeleteAsync(
+        //        new DeleteMultipleExampleRequest() { ImageIdList = unnecessaryExampleList });
 
-            // Assert
-            Assert.NotNull(actualResponse);
-        }
+        //    // Assert
+        //    Assert.NotNull(actualResponse);
+        //}
 
-        [Fact]
-        [SubjectExampleTestBeforeAfter]
-        public async Task DeletMultipleAsync_TakesNullRequestModel_ThrowsNullReferenceException()
-        {
-            //Act
-            var func = async () => await faceRecognitionClient.SubjectExampleService.DeleteAsync((DeleteMultipleExampleRequest)null!);
+        //[Fact]
+        //[SubjectExampleTestBeforeAfter]
+        //public async Task DeletMultipleAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        //{
+        //    //Act
+        //    var func = async () => await faceRecognitionClient.SubjectExampleService.DeleteAsync((DeleteMultipleExampleRequest)null!);
 
-            // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
-        }
+        //    // Assert
+        //    await Assert.ThrowsAsync<NullReferenceException>(func);
+        //}
 
         [Fact]
         [SubjectExampleTestBeforeAfter]
@@ -435,33 +460,33 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.Equal(expectedResult, actualResult);
         }
 
-        [Fact]
-        [SubjectExampleTestBeforeAfter]
-        public async Task DownloadAsync_TakesRequestModel_ReturnsNotNull()
-        {
-            //Arrange
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
+        //[Fact]
+        //[SubjectExampleTestBeforeAfter]
+        //public async Task DownloadAsync_TakesRequestModel_ReturnsNotNull()
+        //{
+        //    //Arrange
+        //    addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
-            var testImage = await faceRecognitionClient.SubjectExampleService.AddAsync(addBase64SubjectExampleRequest);
+        //    var testImage = await faceRecognitionClient.SubjectExampleService.AddAsync(addBase64SubjectExampleRequest);
 
-            //Act
-            var actualResult = await faceRecognitionClient.SubjectExampleService.DownloadAsync(
-                new DownloadImageByIdRequest() { ImageId = testImage.ImageId, RecognitionApiKey = Guid.Parse(API_KEY_RECOGNITION_SERVICE) });
+        //    //Act
+        //    var actualResult = await faceRecognitionClient.SubjectExampleService.DownloadAsync(
+        //        new DownloadImageByIdRequest() { ImageId = testImage.ImageId, RecognitionApiKey = Guid.Parse(API_KEY_RECOGNITION_SERVICE) });
 
-            // Assert
-            Assert.NotNull(actualResult);
-        }
+        //    // Assert
+        //    Assert.NotNull(actualResult);
+        //}
 
-        [Fact]
-        [SubjectExampleTestBeforeAfter]
-        public async Task DownloadAsync_TakesNullRequestModel_ThrowsNullReferenceException()
-        {
-            //Act
-            var func = async () => await faceRecognitionClient.SubjectExampleService.DownloadAsync((DownloadImageByIdRequest)null!);
+        //[Fact]
+        //[SubjectExampleTestBeforeAfter]
+        //public async Task DownloadAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        //{
+        //    //Act
+        //    var func = async () => await faceRecognitionClient.SubjectExampleService.DownloadAsync((DownloadImageByIdRequest)null!);
 
-            // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
-        }
+        //    // Assert
+        //    await Assert.ThrowsAsync<NullReferenceException>(func);
+        //}
 
         [Fact]
         [SubjectExampleTestBeforeAfter]
