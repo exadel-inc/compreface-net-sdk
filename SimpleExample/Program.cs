@@ -1,12 +1,12 @@
 ﻿using Exadel.Compreface.Clients;
+using Exadel.Compreface.Services;
 
 // the rest of the other services will be configured like this
-var faceRecognitionClient = new FaceRecognitionClient(
-    apiKey: "recognition api key here...",
+var faceRecognitionClient = new ApiClient(
     domain: "http://localhost",
     port: "8000");
 
-var subjects = await faceRecognitionClient.SubjectService.GetAllSubject();
+var subjects = await faceRecognitionClient.GetService<SubjectService>("recognition api key here...").GetAllSubject();
 
 foreach (var subject in subjects.Subjects)
 {

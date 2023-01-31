@@ -1,5 +1,6 @@
 ﻿using Exadel.Compreface.Clients;
 using Exadel.Compreface.Configuration;
+using Exadel.Compreface.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -45,11 +46,11 @@ public class Program
             $"{Compreface}:{VerificationService}:{nameof(ComprefaceConfiguration.Domain)}",
             $"{Compreface}:{VerificationService}:{nameof(ComprefaceConfiguration.Port)}");
 
-        
-        var faceRecognitionClient = new FaceRecognitionClient(recognitionConfiguration);
-        var faceDetectionClient = new FaceDetectionClient(detectionConfiguration);
-        var faceVerificationClient = new FaceVerificationClient(verificationConfiguration);
-        
+        var apiClient = new ApiClient("domain here...", "port here...");
+        var recognitionService = apiClient.GetService<RecognitionService>(recognitionConfiguration.ApiKey);
+        var detectionService = apiClient.GetService<FaceDetectionService>(detectionConfiguration.ApiKey);
+        var verificationService = apiClient.GetService<FaceVerificationService>(verificationConfiguration.ApiKey);
+
         // use client methods here.....
     }
 }

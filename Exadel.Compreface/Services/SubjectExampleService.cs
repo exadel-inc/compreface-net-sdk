@@ -11,25 +11,18 @@ using Exadel.Compreface.DTOs.HelperDTOs;
 using Flurl;
 using Exadel.Compreface.Clients.Interfaces;
 using Exadel.Compreface.Helpers;
-using System;
-using System.Text;
 using Flurl.Http;
 
 namespace Exadel.Compreface.Services;
 
-public class SubjectExampleService
+public class SubjectExampleService : AbstractBaseService
 {
-    private readonly IComprefaceConfiguration _configuration;
-    private readonly IApiClient _apiClient;
+    public SubjectExampleService(IComprefaceConfiguration configuration, IApiClient apiClient)
+            : base(configuration, apiClient) { }
 
-    public SubjectExampleService(ComprefaceConfiguration configuration, IApiClient apiClient)
-    {
-        _configuration = configuration;
-        _apiClient = apiClient;
-    }
     public async Task<AddSubjectExampleResponse> AddSubjectExampleAsync(AddSubjectExampleRequest request, bool isFileInTheRemoteServer = false)
     {
-        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
+        var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -50,12 +43,12 @@ public class SubjectExampleService
                 Subject = request.Subject,
             };
 
-            response = await _apiClient.PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
-
+            response = await ApiClient.PostJsonAsync<AddSubjectExampleResponse>(Configuration.ApiKey, requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
             return response;
         }
 
-        response = await _apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
+        response = await ApiClient.PostMultipartAsync<AddSubjectExampleResponse>(
+            apiKey: Configuration.ApiKey,
             requestUrl: requestUrlWithQueryParameters,
             buildContent: mp =>
                 mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.File), path: request.File));
@@ -65,7 +58,7 @@ public class SubjectExampleService
 
     public async Task<AddBase64SubjectExampleResponse> AddBase64SubjectExampleAsync(AddBase64SubjectExampleRequest request)
     {
-        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
+        var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -73,15 +66,15 @@ public class SubjectExampleService
                 det_prob_threshold = request.DetProbThreShold,
             });
 
-        var response = await _apiClient
-            .PostJsonAsync<AddBase64SubjectExampleResponse>(requestUrlWithQueryParameters,new { file = request.File });
+        var response = await ApiClient
+            .PostJsonAsync<AddBase64SubjectExampleResponse>(Configuration.ApiKey, requestUrlWithQueryParameters,new { file = request.File });
 
         return response;
     }
 
     public async Task<ListAllSubjectExamplesResponse> GetAllSubjectExamplesAsync(ListAllSubjectExamplesRequest request)
     {
-        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
+        var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -90,50 +83,50 @@ public class SubjectExampleService
                 subject = request.Subject,
             });
 
-        var response = await _apiClient.GetJsonAsync<ListAllSubjectExamplesResponse>(requestUrlWithQueryParameters);
+        var response = await ApiClient.GetJsonAsync<ListAllSubjectExamplesResponse>(Configuration.ApiKey, requestUrlWithQueryParameters);
 
         return response;
     }
 
     public async Task<DeleteAllExamplesResponse> ClearSubjectAsync(DeleteAllExamplesRequest request)
     {
-        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
+        var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParam("subject", request.Subject);
 
         var response = 
-            await _apiClient.DeleteJsonAsync<DeleteAllExamplesResponse>(requestUrlWithQueryParameters);
+            await ApiClient.DeleteJsonAsync<DeleteAllExamplesResponse>(Configuration.ApiKey, requestUrlWithQueryParameters);
 
         return response;
     }
 
     public async Task<DeleteImageByIdResponse> DeleteImageByIdAsync(DeleteImageByIdRequest request)
     {
-        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
+        var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .AppendPathSegment(request.ImageId.ToString());
 
         var response = await 
-            _apiClient.DeleteJsonAsync<DeleteImageByIdResponse>(requestUrlWithQueryParameters);
+            ApiClient.DeleteJsonAsync<DeleteImageByIdResponse>(Configuration.ApiKey, requestUrlWithQueryParameters);
 
         return response;
     }
 
     public async Task<DeleteMultipleExamplesResponse> DeletMultipleExamplesAsync(DeleteMultipleExampleRequest deleteMultipleExamplesRequest)
     {
-        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
+        var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .AppendPathSegment("delete");
 
         var response = await 
-            _apiClient.PostJsonAsync<List<Face>>(requestUrlWithQueryParameters, deleteMultipleExamplesRequest.ImageIdList);
+            ApiClient.PostJsonAsync<List<Face>>(Configuration.ApiKey, requestUrlWithQueryParameters, deleteMultipleExamplesRequest.ImageIdList);
 
         return new DeleteMultipleExamplesResponse() { Faces = response };
     }
 
     public async Task<byte[]> DownloadImageByIdAsync(DownloadImageByIdRequest downloadImageByIdRequest)
     {
-        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/static";
+        var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/static";
         var requestUrlWithQueryParameters = requestUrl
             .AppendPathSegments(
                 downloadImageByIdRequest.RecognitionApiKey.ToString(),
@@ -141,19 +134,19 @@ public class SubjectExampleService
                 downloadImageByIdRequest.ImageId.ToString());
 
         var response = await 
-            _apiClient.GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
+            ApiClient.GetBytesFromRemoteAsync(Configuration.ApiKey, requestUrlWithQueryParameters);
 
         return response;
     }
 
     public async Task<byte[]> DownloadImageBySubjectIdAsync(DownloadImageBySubjectIdRequest downloadImageBySubjectIdRequest)
     {
-        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
+        var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .AppendPathSegments(downloadImageBySubjectIdRequest.ImageId.ToString(), "/img");
 
         var response = await 
-            _apiClient.GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
+            ApiClient.GetBytesFromRemoteAsync(Configuration.ApiKey, requestUrlWithQueryParameters);
 
         return response;
     }

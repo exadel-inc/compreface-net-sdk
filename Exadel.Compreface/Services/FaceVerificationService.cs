@@ -9,19 +9,14 @@ using Flurl.Http;
 
 namespace Exadel.Compreface.Services;
 
-public class FaceVerificationService
+public class FaceVerificationService : AbstractBaseService
 {
-    private readonly IComprefaceConfiguration _comprefaceConfiguration;
-    private readonly IApiClient _apiClient;
-
     public FaceVerificationService(IComprefaceConfiguration configuration, IApiClient apiClient)
-    {
-        _comprefaceConfiguration = configuration;
-        _apiClient = apiClient;
-    }
+            : base(configuration, apiClient) { }
+
     public async Task<FaceVerificationResponse> VerifyImageAsync(FaceVerificationRequest request, bool isFileInTheRemoteServer = false)
     {
-        var requestUrl = $"{_comprefaceConfiguration.Domain}:{_comprefaceConfiguration.Port}/api/v1/verification/verify";
+        var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -41,7 +36,7 @@ public class FaceVerificationService
             var fileTargetImageStream = await request.TargetImageFilePath.GetBytesAsync();
             var fileTargetImagegInBase64Strin = Convert.ToBase64String(fileTargetImageStream);
            
-            response = await _apiClient.PostJsonAsync<FaceVerificationResponse>(requestUrlWithQueryParameters, body: new
+            response = await ApiClient.PostJsonAsync<FaceVerificationResponse>(Configuration.ApiKey, requestUrlWithQueryParameters, body: new
             {
                 source_image = fileSourceImagInBase64String,
                 target_image = fileTargetImagegInBase64Strin
@@ -51,7 +46,8 @@ public class FaceVerificationService
         }
 
         response = await
-            _apiClient.PostMultipartAsync<FaceVerificationResponse>(
+            ApiClient.PostMultipartAsync<FaceVerificationResponse>(
+                apiKey: Configuration.ApiKey,
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
                 {
@@ -67,7 +63,7 @@ public class FaceVerificationService
 
     public async Task<FaceVerificationResponse> VerifyBase64ImageAsync(FaceVerificationWithBase64Request request)
     {
-        var requestUrl = $"{_comprefaceConfiguration.Domain}:{_comprefaceConfiguration.Port}/api/v1/verification/verify";
+        var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -78,7 +74,8 @@ public class FaceVerificationService
             });
 
         var response = await 
-            _apiClient.PostJsonAsync<FaceVerificationResponse>(
+            ApiClient.PostJsonAsync<FaceVerificationResponse>(
+                apiKey: Configuration.ApiKey,
                 requestUrl: requestUrlWithQueryParameters,
                 body: new
                 {
