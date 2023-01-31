@@ -31,9 +31,10 @@ jobs:
       run: dotnet build --configuration Release --no-restore
 
     - name: Show contents
-        run: |
-          pwd
-          ls 
-          ls Exadel.Compreface.AcceptenceTests/Resources/Images/
+      run: pwd
+      
+    - name: Show pictures
+      run: ls Exadel.Compreface.AcceptenceTests/Resources/Images/
+
     - name: Test
       run: dotnet test --no-restore --verbosity normal
