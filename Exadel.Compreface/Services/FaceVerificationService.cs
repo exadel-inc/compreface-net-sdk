@@ -35,7 +35,7 @@ public class FaceVerificationService : AbstractBaseService
             var fileTargetImageStream = await request.TargetImageFilePath.GetBytesAsync();
             var fileTargetImagegInBase64Strin = Convert.ToBase64String(fileTargetImageStream);
            
-            response = await ApiClient.PostJsonAsync<FaceVerificationResponse>(Configuration.ApiKey, requestUrlWithQueryParameters, body: new
+            response = await PostJsonAsync<FaceVerificationResponse>(requestUrlWithQueryParameters, body: new
             {
                 source_image = fileSourceImagInBase64String,
                 target_image = fileTargetImagegInBase64Strin
@@ -45,8 +45,7 @@ public class FaceVerificationService : AbstractBaseService
         }
 
         response = await
-            ApiClient.PostMultipartAsync<FaceVerificationResponse>(
-                apiKey: Configuration.ApiKey,
+            PostMultipartAsync<FaceVerificationResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
                 {

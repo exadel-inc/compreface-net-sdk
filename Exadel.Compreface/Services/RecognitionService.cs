@@ -41,14 +41,13 @@ public class RecognitionService : AbstractBaseService
                 File = fileInBase64String,
             };
 
-            response = await ApiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(Configuration.ApiKey, requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+            response = await PostJsonAsync<RecognizeFaceFromImageResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
 
             return response;
         }
 
         response = await
-            ApiClient.PostMultipartAsync<RecognizeFaceFromImageResponse>(
-                apiKey: Configuration.ApiKey,
+            PostMultipartAsync<RecognizeFaceFromImageResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
                 mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.FilePath), path: request.FilePath));

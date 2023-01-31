@@ -9,7 +9,6 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageBySubjectId;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
 using Exadel.Compreface.DTOs.HelperDTOs;
 using Flurl;
-using Exadel.Compreface.Clients.Interfaces;
 using Exadel.Compreface.Helpers;
 using Flurl.Http;
 
@@ -43,12 +42,11 @@ public class SubjectExampleService : AbstractBaseService
                 Subject = request.Subject,
             };
 
-            response = await ApiClient.PostJsonAsync<AddSubjectExampleResponse>(Configuration.ApiKey, requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+            response = await PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
             return response;
         }
 
-        response = await ApiClient.PostMultipartAsync<AddSubjectExampleResponse>(
-            apiKey: Configuration.ApiKey,
+        response = await PostMultipartAsync<AddSubjectExampleResponse>(
             requestUrl: requestUrlWithQueryParameters,
             buildContent: mp =>
                 mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.File), path: request.File));

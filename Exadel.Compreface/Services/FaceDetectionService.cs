@@ -37,14 +37,13 @@ namespace Exadel.Compreface.Services
                     File = fileInBase64String,
                 };
 
-                response = await ApiClient.PostJsonAsync<FaceDetectionResponse>(Configuration.ApiKey, requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+                response = await PostJsonAsync<FaceDetectionResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
 
                 return response;
             }
 
             response = await
-                ApiClient.PostMultipartAsync<FaceDetectionResponse>(
-                    apiKey: Configuration.ApiKey,
+                PostMultipartAsync<FaceDetectionResponse>(
                     requestUrl: requestUrlWithQueryParameters,
                     buildContent: mp =>
                         mp.AddFile("file", fileName: FileHelpers.GenerateFileName(faceDetectionRequest.FilePath), path: faceDetectionRequest.FilePath));
