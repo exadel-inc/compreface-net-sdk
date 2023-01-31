@@ -18,9 +18,10 @@ public partial class ApiClientTests
 
         var randomstring = GetRandomString();
 
-        var apiClient = new Clients.ApiClient(apiKey: randomstring);
+        var apiClient = new Clients.ApiClient(domain: randomstring, port: randomstring);
         
         var responseCall = apiClient.GetJsonAsync<GetAllSubjectResponse>(
+            apiKey: randomstring,
             requestUrl: RequestUrl);
         
         await Assert.ThrowsAsync<ServiceException>(async () => await responseCall);
@@ -36,9 +37,10 @@ public partial class ApiClientTests
 
         var randomstring = GetRandomString();
         
-        var apiClient = new Clients.ApiClient(apiKey: randomstring);
+        var apiClient = new Clients.ApiClient(domain: randomstring, port: randomstring);
         
         var responseCall = apiClient.PostJsonAsync<AddSubjectExampleResponse>(
+            apiKey: randomstring,
             requestUrl: RequestUrl,
             body: It.IsAny<object>());
         
@@ -55,9 +57,10 @@ public partial class ApiClientTests
         
         var randomstring = GetRandomString();
 
-        var apiClient = new Clients.ApiClient(apiKey: randomstring);
+        var apiClient = new Clients.ApiClient(domain: randomstring, port: randomstring);
         
         var responseCall = apiClient.PutJsonAsync<AddSubjectExampleResponse>(
+            apiKey: randomstring,
             requestUrl: RequestUrl,
             body: It.IsAny<object>());
 
@@ -74,9 +77,10 @@ public partial class ApiClientTests
 
         var randomstring = GetRandomString();
 
-        var apiClient = new Clients.ApiClient(apiKey: randomstring);
+        var apiClient = new Clients.ApiClient(domain: randomstring, port: randomstring);
         
         var responseCall = apiClient.DeleteJsonAsync<AddSubjectExampleResponse>(
+            apiKey: randomstring,
             requestUrl: RequestUrl);
 
         await Assert.ThrowsAsync<ServiceException>(async () => await responseCall);
@@ -92,9 +96,10 @@ public partial class ApiClientTests
         
         var randomstring = GetRandomString();
         
-        var apiClient = new Clients.ApiClient(apiKey: randomstring);
+        var apiClient = new Clients.ApiClient(domain: randomstring, port: randomstring);
         
         var responseCall = apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
+            apiKey: randomstring,
             requestUrl: RequestUrl,
             mp =>
                 mp.AddFile(randomstring, fileName: randomstring, path: randomstring));
@@ -112,9 +117,10 @@ public partial class ApiClientTests
         
         var randomstring = GetRandomString();
 
-        var apiClient = new Clients.ApiClient(apiKey: randomstring);
+        var apiClient = new Clients.ApiClient(domain: randomstring, port: randomstring);
         
         var responseCall = apiClient.GetBytesFromRemoteAsync(
+            apiKey: randomstring,
             requestUrl: RequestUrl);
 
         await Assert.ThrowsAsync<ServiceException>(async () => await responseCall);
