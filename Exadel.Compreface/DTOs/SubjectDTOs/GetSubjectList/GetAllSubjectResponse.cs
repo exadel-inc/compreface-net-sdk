@@ -2,5 +2,5 @@
 
 public class GetAllSubjectResponse
 {
-    public IList<string> Subjects { get; set; }
+    public IList<string>? Subjects { get; set; }
 }

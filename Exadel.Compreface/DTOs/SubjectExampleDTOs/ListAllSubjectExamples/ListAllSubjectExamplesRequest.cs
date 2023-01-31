@@ -6,5 +6,5 @@ public class ListAllSubjectExamplesRequest
     
     public int? Size { get; set; }
     
-    public string Subject { get; set; }
+    public string? Subject { get; set; }
 }

@@ -2,6 +2,6 @@
 {
     public class DeleteMultipleExampleRequest
     {
-        public IList<Guid> ImageIdList { get; set; }
+        public IList<Guid>? ImageIdList { get; set; }
     }
 }

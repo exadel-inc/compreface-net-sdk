@@ -2,5 +2,5 @@
 
 public class AddSubjectResponse
 {
-    public string Subject { get; set; }
+    public string? Subject { get; set; }
 }

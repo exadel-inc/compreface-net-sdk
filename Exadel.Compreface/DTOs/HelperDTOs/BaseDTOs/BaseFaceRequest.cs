@@ -6,7 +6,7 @@ public class BaseFaceRequest
 
     public decimal DetProbThreshold { get; set; }
 
-    public IList<string> FacePlugins { get; set; }
+    public IList<string>? FacePlugins { get; set; }
 
     public bool Status { get; set; }
 }
