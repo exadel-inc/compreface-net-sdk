@@ -2,7 +2,7 @@
 {
     public class AddBase64SubjectExampleRequest
     {
-        public string Subject { get; set; }
+        public string? Subject { get; set; }
 
         public decimal? DetProbThreShold { get; set; }
 

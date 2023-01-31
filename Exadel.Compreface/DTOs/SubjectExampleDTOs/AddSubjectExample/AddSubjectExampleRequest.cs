@@ -2,9 +2,9 @@
 
 public class AddSubjectExampleRequest
 {
-    public string Subject { get; set; }
+    public string? Subject { get; set; }
 
     public decimal? DetProbThreShold { get; set; }
 
-    public string File { get; set; }
+    public string? File { get; set; }
 }
