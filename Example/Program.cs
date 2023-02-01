@@ -27,24 +27,29 @@ public class Program
         var serviceProvider = host.Services;
 
         var configuration = serviceProvider.GetService<IConfiguration>();
+        var domain = configuration?.GetSection(nameof(ComprefaceConfiguration.Domain)).Value ?? throw new ArgumentNullException($"Cannot read section: {nameof(ComprefaceConfiguration.Domain)} from the given configuration appsettings.json file");
+        var port = configuration?.GetSection(nameof(ComprefaceConfiguration.Port)).Value ?? throw new ArgumentNullException($"Cannot read section: {nameof(ComprefaceConfiguration.Port)} from the given configuration appsettings.json file");
+        var recognitionApiKey = configuration?.GetSection(RecognitionService) ?? throw new ArgumentNullException($"Cannot read section: {RecognitionService} from the given configuration appsettings.json file");
+        var detectionApiKey = configuration?.GetSection(DetectionService) ?? throw new ArgumentNullException($"Cannot read section: {DetectionService} from the given configuration appsettings.json file");
+        var verificationApiKey = configuration?.GetSection(VerificationService) ?? throw new ArgumentNullException($"Cannot read section: {VerificationService} from the given configuration appsettings.json file");
         
         var recognitionConfiguration = new ComprefaceConfiguration(
             configuration!, 
-            $"{Compreface}:{RecognitionService}:{nameof(ComprefaceConfiguration.ApiKey)}",
-            $"{Compreface}:{RecognitionService}:{nameof(ComprefaceConfiguration.Domain)}",
-            $"{Compreface}:{RecognitionService}:{nameof(ComprefaceConfiguration.Port)}");
+            RecognitionService,
+            $"{nameof(ComprefaceConfiguration.Domain)}",
+            $"{nameof(ComprefaceConfiguration.Port)}");
 
         var detectionConfiguration = new ComprefaceConfiguration(
             configuration!, 
-            $"{Compreface}:{DetectionService}:{nameof(ComprefaceConfiguration.ApiKey)}",
-            $"{Compreface}:{DetectionService}:{nameof(ComprefaceConfiguration.Domain)}",
-            $"{Compreface}:{DetectionService}:{nameof(ComprefaceConfiguration.Port)}");
+            DetectionService,
+            $"{nameof(ComprefaceConfiguration.Domain)}",
+            $"{nameof(ComprefaceConfiguration.Port)}");
 
         var verificationConfiguration = new ComprefaceConfiguration(
             configuration!, 
-            $"{Compreface}:{VerificationService}:{nameof(ComprefaceConfiguration.ApiKey)}",
-            $"{Compreface}:{VerificationService}:{nameof(ComprefaceConfiguration.Domain)}",
-            $"{Compreface}:{VerificationService}:{nameof(ComprefaceConfiguration.Port)}");
+            VerificationService,
+            $"{nameof(ComprefaceConfiguration.Domain)}",
+            $"{nameof(ComprefaceConfiguration.Port)}");
 
         var client = new CompreFaceClient("domain here...", "port here...");
         var recognitionService = client.GetService<RecognitionService>(recognitionConfiguration.ApiKey);
