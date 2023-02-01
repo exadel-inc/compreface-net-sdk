@@ -13,7 +13,7 @@ namespace Exadel.Compreface.Services
         public FaceDetectionService(IComprefaceConfiguration configuration)
             : base(configuration) { }
 
-        public async Task<FaceDetectionResponse> FaceDetectionAsync(FaceDetectionRequest faceDetectionRequest, bool isFileInTheRemoteServer = false)
+        public async Task<FaceDetectionResponse> DetectAsync(FaceDetectionRequest faceDetectionRequest, bool isFileInTheRemoteServer = false)
         {
             var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/detection/detect";
             var requestUrlWithQueryParameters = requestUrl
@@ -51,7 +51,7 @@ namespace Exadel.Compreface.Services
             return response;
         }
 
-        public async Task<FaceDetectionResponse> FaceDetectionBase64Async(FaceDetectionBase64Request faceDetectionRequest)
+        public async Task<FaceDetectionResponse> DetectAsync(FaceDetectionBase64Request faceDetectionRequest)
         {
             var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/detection/detect";
             var requestUrlWithQueryParameters = requestUrl

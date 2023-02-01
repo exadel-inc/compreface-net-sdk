@@ -7,6 +7,7 @@ using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
+using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
@@ -72,6 +73,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 FacePlugins = facePlugins,
                 Status = status,
             };
+
             _request64 = new RecognizeFacesFromImageWithBase64Request()
             {
                 FileBase64Value = Convert.ToBase64String(File.ReadAllBytes(FILE_PATH)),
@@ -97,147 +99,251 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task RecognizeFaceFromImage_TakesRequestModel_ReturnsModelWithProperType()
+        public async Task RecognizeAsync_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Act
-            var response = await _recognitionService.RecognizeFaceFromImage(_request);
+            var response = await _recognitionService.RecognizeAsync(_request);
 
             // Assert
             Assert.IsType<RecognizeFaceFromImageResponse>(response);
         }
 
         [Fact]
-        public async Task RecognizeFaceFromImage_TakesRequestModel_ReturnsNotNull()
+        public async Task RecognizeAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Act
-            var response = await _recognitionService.RecognizeFaceFromImage(_request);
+            var response = await _recognitionService.RecognizeAsync(_request);
 
             // Assert
             Assert.NotNull(response);
         }
 
         [Fact]
-        public async Task RecognizeFaceFromImage_TakesNullRequest_ThrowsException()
+        public async Task RecognizeAsync_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _recognitionService.RecognizeFaceFromImage(null!);
+            var func = async () => await _recognitionService.RecognizeAsync((RecognizeFaceFromImageRequest)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
         [Fact]
-        public async Task RecognizeFaceFromBase64File_TakesRequestModel_ReturnsModelWithProperType()
+        public async Task RecognizeAsync_TakesNullRequest_ThrowsServiceException()
+        {
+            //Arrange
+            var request = new RecognizeFaceFromImageRequest
+            {
+                FilePath = PATH_OF_WRONG_FILE,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+            };
+
+            // Act
+            var func = async () => await _recognitionService.RecognizeAsync(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
+        public async Task RecognizeBase64Async_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Act
-            var response = await _recognitionService.RecognizeFaceFromBase64File(_request64);
+            var response = await _recognitionService.RecognizeAsync(_request64);
 
             // Assert
             Assert.IsType<RecognizeFaceFromImageResponse>(response);
         }
 
         [Fact]
-        public async Task RecognizeFaceFromBase64File_TakesRequestModel_ReturnsNotNull()
+        public async Task RecognizeBase64Async_TakesRequestModel_ReturnsNotNull()
         {
             // Act
-            var response = await _recognitionService.RecognizeFaceFromBase64File(_request64);
+            var response = await _recognitionService.RecognizeAsync(_request64);
 
             // Assert
             Assert.NotNull(response);
         }
 
         [Fact]
-        public async Task RecognizeFaceFromBase64File_TakesNullRequest_ThrowsException()
+        public async Task RecognizeBase64Async_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _recognitionService.RecognizeFaceFromBase64File(null!);
+            var func = async () => await _recognitionService.RecognizeAsync((RecognizeFacesFromImageWithBase64Request)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
         [Fact]
-        public async Task VerifyFacesFromImage_TakesRequestModel_ReturnsModelWithProperType()
+        public async Task RecognizeBase64Async_TakesNullRequest_ThrowsServiceException()
+        {
+            //Arrange
+            var request = new RecognizeFacesFromImageWithBase64Request
+            {
+                FileBase64Value = WRONG_BASE64_IMAGE,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+            };
+
+            // Act
+            var func = async () => await _recognitionService.RecognizeAsync(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
+        public async Task VerifyAsync_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Assert
-            await _subjectService.AddSubject(_addSubjectRequest);
-            var addExampleResponse = await _subjectExampleService.AddSubjectExampleAsync(_addSubjectExampleRequest);
+            await _subjectService.AddAsync(_addSubjectRequest);
+            var addExampleResponse = await _subjectExampleService.AddAsync(_addSubjectExampleRequest);
             _verifyRequest.ImageId = addExampleResponse.ImageId;
 
             // Act
-            var response = await _recognitionService.VerifyFacesFromImage(_verifyRequest);
+            var response = await _recognitionService.VerifyAsync(_verifyRequest);
 
             // Assert
             Assert.IsType<VerifyFacesFromImageResponse>(response);
-            await _subjectService.DeleteSubject(_deleteSubjectRequest);
+            await _subjectService.DeleteAsync(_deleteSubjectRequest);
         }
 
         [Fact]
-        public async Task VerifyFacesFromImage_TakesRequestModel_ReturnsNotNull()
+        public async Task VerifyAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Assert
-            await _subjectService.AddSubject(_addSubjectRequest);
-            var addExampleResponse = await _subjectExampleService.AddSubjectExampleAsync(_addSubjectExampleRequest);
+            await _subjectService.AddAsync(_addSubjectRequest);
+            var addExampleResponse = await _subjectExampleService.AddAsync(_addSubjectExampleRequest);
             _verifyRequest.ImageId = addExampleResponse.ImageId;
 
             // Act
-            var response = await _recognitionService.VerifyFacesFromImage(_verifyRequest);
+            var response = await _recognitionService.VerifyAsync(_verifyRequest);
 
             // Assert
             Assert.NotNull(response);
-            await _subjectService.DeleteSubject(_deleteSubjectRequest);
+            await _subjectService.DeleteAsync(_deleteSubjectRequest);
         }
 
         [Fact]
-        public async Task VerifyFacesFromImage_TakesNullRequest_ThrowsException()
+        public async Task VerifyAsync_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _recognitionService.VerifyFacesFromImage(null!);
+            var func = async () => await _recognitionService.VerifyAsync((VerifyFacesFromImageRequest)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
         [Fact]
-        public async Task VerifyFacesFromBase64File_TakesRequestModel_ReturnsModelWithProperType()
+        public async Task VerifyAsync_TakesNullRequest_ThrowsServiceException()
+        {
+            //Arrange
+            var verifyRequest = new VerifyFacesFromImageRequest()
+            {
+                FilePath = TWO_FACES_IMAGE_PATH,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+            };
+
+            // Act
+            var func = async () => await _recognitionService.VerifyAsync(verifyRequest);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
+        public async Task VerifyBase64Async_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Assert
-            await _subjectService.AddSubject(_addSubjectRequest);
-            var addExampleResponse = await _subjectExampleService.AddSubjectExampleAsync(_addSubjectExampleRequest);
+            await _subjectService.AddAsync(_addSubjectRequest);
+            var addExampleResponse = await _subjectExampleService.AddAsync(_addSubjectExampleRequest);
             _verifyRequest64.ImageId = addExampleResponse.ImageId;
 
             // Act
-            var verifyResponse = await _recognitionService.VerifyFacesFromBase64File(_verifyRequest64);
+            var verifyResponse = await _recognitionService.VerifyAsync(_verifyRequest64);
 
             // Assert
             Assert.IsType<VerifyFacesFromImageResponse>(verifyResponse);
-            await _subjectService.DeleteSubject(_deleteSubjectRequest);
+            await _subjectService.DeleteAsync(_deleteSubjectRequest);
         }
 
         [Fact]
-        public async Task VerifyFacesFromBase64File_TakesRequestModel_ReturnsNotNull()
+        public async Task VerifyBase64Async_TakesRequestModel_ReturnsNotNull()
         {
             // Assert
-            await _subjectService.AddSubject(_addSubjectRequest);
-            var addExampleResponse = await _subjectExampleService.AddSubjectExampleAsync(_addSubjectExampleRequest);
+            await _subjectService.AddAsync(_addSubjectRequest);
+            var addExampleResponse = await _subjectExampleService.AddAsync(_addSubjectExampleRequest);
             _verifyRequest64.ImageId = addExampleResponse.ImageId;
 
             // Act
-            var response = await _recognitionService.VerifyFacesFromBase64File(_verifyRequest64);
+            var response = await _recognitionService.VerifyAsync(_verifyRequest64);
 
             // Assert
             Assert.NotNull(response);
-            await _subjectService.DeleteSubject(_deleteSubjectRequest);
+            await _subjectService.DeleteAsync(_deleteSubjectRequest);
         }
 
         [Fact]
-        public async Task VerifyFacesFromBase64File_TakesNullRequest_ThrowsException()
+        public async Task VerifyBase64Async_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _recognitionService.VerifyFacesFromBase64File(null!);
+            var func = async () => await _recognitionService.VerifyAsync((VerifyFacesFromImageWithBase64Request)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task VerifyBase64Async_TakesNullRequest_ThrowsServiceException()
+        {
+            //Arrange
+            var verifyRequest = new VerifyFacesFromImageWithBase64Request()
+            {
+                FileBase64Value = TWO_FACES_IMAGE_BASE64,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+            };
+
+            // Act
+            var func = async () => await _recognitionService.VerifyAsync(verifyRequest);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
         }
     }
 }

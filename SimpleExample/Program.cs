@@ -6,7 +6,7 @@ var client = new CompreFaceClient(
     domain: "http://localhost",
     port: "8000");
 
-var subjects = await client.GetService<SubjectService>("recognition api key here...").GetAllSubject();
+var subjects = await client.GetService<SubjectService>("recognition api key...").ListAsync();
 
 foreach (var subject in subjects.Subjects)
 {

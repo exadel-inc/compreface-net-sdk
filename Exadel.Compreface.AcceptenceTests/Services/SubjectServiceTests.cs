@@ -33,15 +33,18 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             {
                 Subject = subjectName
             };
+
             _renameSubjectRequest = new RenameSubjectRequest
             {
                 CurrentSubject = subjectName,
                 Subject = renamedSubjectName
             };
+
             _deleteSubjectRequest = new DeleteSubjectRequest
             {
                 ActualSubject = subjectName
             };
+
             _renamedSubjectDeleteRequest = new DeleteSubjectRequest
             {
                 ActualSubject = renamedSubjectName
@@ -49,151 +52,223 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task GetAllSubject_Executes_ReturnsProperResponseModel()
+        public async Task GetAllAsync_Executes_ReturnsProperResponseModel()
         {
             // Act
-            var response = await _subjectService.GetAllSubject();
+            var response = await _subjectService.ListAsync();
 
             // Assert
             Assert.IsType<GetAllSubjectResponse>(response);
         }
 
         [Fact]
-        public async Task GetAllSubject_Executes_ReturnsNotNull()
+        public async Task GetAllAsync_Executes_ReturnsNotNull()
         {
             // Act
-            var response = await _subjectService.GetAllSubject();
+            var response = await _subjectService.ListAsync();
 
             // Assert
             Assert.NotNull(response);
         }
 
         [Fact]
-        public async Task AddSubject_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task AddAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
-            var response = await _subjectService.AddSubject(_addSubjectRequest);
+            var response = await _subjectService.AddAsync(_addSubjectRequest);
 
             // Assert
             Assert.IsType<AddSubjectResponse>(response);
 
             // Clear
-            await _subjectService.DeleteSubject(new DeleteSubjectRequest { ActualSubject = _addSubjectRequest.Subject });
+            await _subjectService.DeleteAsync(new DeleteSubjectRequest { ActualSubject = _addSubjectRequest.Subject });
         }
 
         [Fact]
-        public async Task AddSubject_TakesRequestModel_ReturnsNotNull()
+        public async Task AddAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Act
-            var response = await _subjectService.AddSubject(_addSubjectRequest);
+            var response = await _subjectService.AddAsync(_addSubjectRequest);
 
             // Assert
             Assert.NotNull(response);
-            await _subjectService.DeleteSubject(new DeleteSubjectRequest { ActualSubject = _addSubjectRequest.Subject });
+            await _subjectService.DeleteAsync(new DeleteSubjectRequest { ActualSubject = _addSubjectRequest.Subject });
         }
 
         [Fact]
-        public async Task AddSubject_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task AddAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Act
-            var func = async () => await _subjectService.AddSubject(null!);
+            var func = async () => await _subjectService.AddAsync(null!);
 
             // Assert
             await Assert.ThrowsAsync<ServiceException>(func);
         }
 
         [Fact]
-        public async Task RenameSubject_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task AddAsync_TakesNullRequestModel_ThrowsServiceException()
         {
-            // Arrange
-            await _subjectService.AddSubject(_addSubjectRequest);
+            //Arrange 
+            var addSubjectRequest = new AddSubjectRequest
+            {
+                Subject = TEST_SUBJECT_NAME
+            };
+            await _subjectService.AddAsync(addSubjectRequest);
 
             // Act
-            var response = await _subjectService.RenameSubject(_renameSubjectRequest);
-            await _subjectService.DeleteSubject(_renamedSubjectDeleteRequest);
+            var func = async () => await _subjectService.AddAsync(null!);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+
+            // Clear
+            await _subjectService.DeleteAsync(new DeleteSubjectRequest { ActualSubject = addSubjectRequest.Subject });
+        }
+
+        [Fact]
+        public async Task RenameAsync_TakesRequestModel_ReturnsProperResponseModel()
+        {
+            // Arrange
+            await _subjectService.AddAsync(_addSubjectRequest);
+
+            // Act
+            var response = await _subjectService.RenameAsync(_renameSubjectRequest);
+            await _subjectService.DeleteAsync(_renamedSubjectDeleteRequest);
 
             // Assert
             Assert.IsType<RenameSubjectResponse>(response);
         }
 
         [Fact]
-        public async Task RenameSubject_TakesRequestModel_ReturnsNotNull()
+        public async Task RenameAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
-            await _subjectService.AddSubject(_addSubjectRequest);
+            await _subjectService.AddAsync(_addSubjectRequest);
 
             // Act
-            var response = await _subjectService.RenameSubject(_renameSubjectRequest);
-            await _subjectService.DeleteSubject(_renamedSubjectDeleteRequest);
+            var response = await _subjectService.RenameAsync(_renameSubjectRequest);
+            await _subjectService.DeleteAsync(_renamedSubjectDeleteRequest);
 
             // Assert
             Assert.NotNull(response);
         }
 
         [Fact]
-        public async Task RenameSubject_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task RenameAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Act
-            var func = async () => await _subjectService.RenameSubject(null!);
+            var func = async () => await _subjectService.RenameAsync(null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
         [Fact]
-        public async Task DeleteSubject_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task RenameAsync_TakesNullRequestModel_ThrowsServiceException()
         {
-            // Arrange
-            await _subjectService.AddSubject(_addSubjectRequest);
+            //Arrange 
+            var addSubjectRequest = new AddSubjectRequest
+            {
+                Subject = TEST_SUBJECT_NAME
+            };
+            await _subjectService.AddAsync(addSubjectRequest);
+
+            var renameSubjectRequest = new RenameSubjectRequest
+            {
+                CurrentSubject = addSubjectRequest.Subject,
+                Subject = ""
+            };
 
             // Act
-            var response = await _subjectService.DeleteSubject(_deleteSubjectRequest);
+            var func = async () => await _subjectService.RenameAsync(renameSubjectRequest);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+
+            // Clear
+            await _subjectService.DeleteAsync(new DeleteSubjectRequest { ActualSubject = addSubjectRequest.Subject });
+        }
+
+        [Fact]
+        public async Task DeleteAsync_TakesRequestModel_ReturnsProperResponseModel()
+        {
+            // Arrange
+            await _subjectService.AddAsync(_addSubjectRequest);
+
+            // Act
+            var response = await _subjectService.DeleteAsync(_deleteSubjectRequest);
 
             // Assert
             Assert.IsType<DeleteSubjectResponse>(response);
         }
 
         [Fact]
-        public async Task DeleteSubject_TakesRequestModel_ReturnsNotNull()
+        public async Task DeleteAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
-            await _subjectService.AddSubject(_addSubjectRequest);
+            await _subjectService.AddAsync(_addSubjectRequest);
 
             // Act
-            var response = await _subjectService.DeleteSubject(_deleteSubjectRequest);
+            var response = await _subjectService.DeleteAsync(_deleteSubjectRequest);
 
             // Assert
             Assert.NotNull(response);
         }
 
         [Fact]
-        public async Task DeleteSubject_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DeleteAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Act
-            var func = async () => await _subjectService.DeleteSubject(null!);
+            var func = async () => await _subjectService.DeleteAsync(null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
         [Fact]
-        public async Task DeleteAllSubjects_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DeleteAsync_TakesNullRequestModel_ThrowsServiceException()
         {
             // Act
-            var response = await _subjectService.DeleteAllSubjects();
+            var func = async () => await _subjectService.DeleteAsync(_deleteSubjectRequest);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
+        public async Task DeleteAllAsync_TakesRequestModel_ReturnsProperResponseModel()
+        {
+            // Act
+            var response = await _subjectService.DeleteAllAsync();
 
             // Assert
             Assert.IsType<DeleteAllSubjectsResponse>(response);
         }
 
         [Fact]
-        public async Task DeleteAllSubjects_TakesRequestModel_ReturnsNotNull()
+        public async Task DeleteAllAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Act
-            var response = await _subjectService.DeleteAllSubjects();
+            var response = await _subjectService.DeleteAllAsync();
 
             // Assert
             Assert.NotNull(response);
+        }
+
+        [Fact]
+        public async Task DeleteAllAsync_TakesNullRequestModel_ThrowsServiceException()
+        {
+            //Arrange
+            var configuration = new ComprefaceConfiguration(API_KEY_DETECTION_SERVICE, DOMAIN, PORT);
+            var client = new CompreFaceClient(configuration);
+
+            var subjectService = client.GetService<SubjectService>(API_KEY_DETECTION_SERVICE);
+
+            // Act
+            var func = async () => await subjectService.DeleteAllAsync();
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
         }
     }
 }

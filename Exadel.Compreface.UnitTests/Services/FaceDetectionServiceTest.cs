@@ -15,7 +15,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionAsync_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DetectAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new FaceDetectionRequest()
@@ -26,7 +26,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostMultipart<FaceDetectionResponse>();
 
             // Act
-            var response = await _service.FaceDetectionAsync(request);
+            var response = await _service.DetectAsync(request);
 
             // Assert
             Assert.IsType<FaceDetectionResponse>(response);
@@ -36,7 +36,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionAsync_TakesRequestModel_ReturnsNotNull()
+        public async Task DetectAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             var request = new FaceDetectionRequest()
@@ -47,7 +47,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostMultipart<FaceDetectionResponse>();
 
             // Act
-            var response = await _service.FaceDetectionAsync(request);
+            var response = await _service.DetectAsync(request);
 
             // Assert
             Assert.NotNull(response);
@@ -57,20 +57,20 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DetectAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
             SetupPostMultipart<FaceDetectionResponse>();
 
             // Act
-            var func = async () => await _service.FaceDetectionAsync(null!);
+            var func = async () => await _service.DetectAsync(null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
         [Fact]
-        public async Task FaceDetectionAsync_TakesIncorrectRequestModel_ThrowsArgumentNullException()
+        public async Task DetectBase64Async_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new FaceDetectionRequest();
@@ -78,7 +78,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostMultipart<FaceDetectionResponse>();
 
             // Act
-            var func = async () => await _service.FaceDetectionAsync(request);
+            var func = async () => await _service.DetectAsync(request);
 
             // Assert
             await Assert.ThrowsAsync<ArgumentNullException>(func);
@@ -96,7 +96,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<FaceDetectionResponse, Url>();
 
             // Act
-            var response = await _service.FaceDetectionBase64Async(request);
+            var response = await _service.DetectAsync(request);
 
             // Assert
             Assert.IsType<FaceDetectionResponse>(response);
@@ -106,7 +106,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionBase64Async_TakesRequestModel_ReturnsNotNull()
+        public async Task DetectBase64Async_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             var request = new FaceDetectionBase64Request()
@@ -117,7 +117,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<FaceDetectionResponse, Url>();
 
             // Act
-            var response = await _service.FaceDetectionBase64Async(request);
+            var response = await _service.DetectAsync(request);
 
             // Assert
             Assert.NotNull(response);
@@ -127,13 +127,13 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DetectBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
             SetupPostJson<FaceDetectionResponse, Url>();
 
             // Act
-            var func = async () => await _service.FaceDetectionBase64Async(null!);
+            var func = async () => await _service.DetectAsync(null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -148,7 +148,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<FaceDetectionResponse, Url>();
 
             // Act
-            var func = async () => await _service.FaceDetectionBase64Async(request);
+            var func = async () => await _service.DetectAsync(request);
 
             // Assert
             await Assert.ThrowsAsync<ArgumentNullException>(func);

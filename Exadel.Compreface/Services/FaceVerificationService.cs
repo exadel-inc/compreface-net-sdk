@@ -13,7 +13,7 @@ public class FaceVerificationService : AbstractBaseService
     public FaceVerificationService(IComprefaceConfiguration configuration)
             : base(configuration) { }
 
-    public async Task<FaceVerificationResponse> VerifyImageAsync(FaceVerificationRequest request, bool isFileInTheRemoteServer = false)
+    public async Task<FaceVerificationResponse> VerifyAsync(FaceVerificationRequest request, bool isFileInTheRemoteServer = false)
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl
@@ -58,8 +58,8 @@ public class FaceVerificationService : AbstractBaseService
 
         return response;
     }
-
-    public async Task<FaceVerificationResponse> VerifyBase64ImageAsync(FaceVerificationWithBase64Request request)
+    
+    public async Task<FaceVerificationResponse> VerifyAsync(FaceVerificationWithBase64Request request)
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl

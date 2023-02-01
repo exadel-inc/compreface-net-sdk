@@ -22,15 +22,15 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
         public async override void Before(MethodInfo methodUnderTest)
         {
-            await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ClearSubjectAsync(new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
+            await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAllAsync(new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
 
-            await _client.GetService<SubjectService>(API_KEY_RECOGNITION_SERVICE).AddSubject(
+            await _client.GetService<SubjectService>(API_KEY_RECOGNITION_SERVICE).AddAsync(
                  new AddSubjectRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
         }
 
         public async override void After(MethodInfo methodUnderTest)
         {
-            await _client.GetService<SubjectService>(API_KEY_RECOGNITION_SERVICE).DeleteSubject(new DeleteSubjectRequest() { ActualSubject = TEST_SUBJECT_EXAMPLE_NAME });
+            await _client.GetService<SubjectService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync(new DeleteSubjectRequest() { ActualSubject = TEST_SUBJECT_EXAMPLE_NAME });
         }
     }
 }

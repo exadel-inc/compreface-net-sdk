@@ -15,7 +15,7 @@ public class RecognitionService : AbstractBaseService
     public RecognitionService(IComprefaceConfiguration configuration)
             : base(configuration) { }
 
-    public async Task<RecognizeFaceFromImageResponse> RecognizeFaceFromImage(RecognizeFaceFromImageRequest request, bool isFileInTheRemoteServer = false)
+    public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFaceFromImageRequest request, bool isFileInTheRemoteServer = false)
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/recognize";
         var requestUrlWithQueryParameters = requestUrl
@@ -55,7 +55,7 @@ public class RecognitionService : AbstractBaseService
         return response;
     }
 
-    public async Task<RecognizeFaceFromImageResponse> RecognizeFaceFromBase64File(
+    public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(
         RecognizeFacesFromImageWithBase64Request request)
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/recognize";
@@ -77,7 +77,7 @@ public class RecognitionService : AbstractBaseService
         return response;
     }
 
-    public async Task<VerifyFacesFromImageResponse> VerifyFacesFromImage(VerifyFacesFromImageRequest request)
+    public async Task<VerifyFacesFromImageResponse> VerifyAsync(VerifyFacesFromImageRequest request)
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
         var requestUrlWithQueryParameters = requestUrl
@@ -98,7 +98,7 @@ public class RecognitionService : AbstractBaseService
         return response;
     }
     
-    public async Task<VerifyFacesFromImageResponse> VerifyFacesFromBase64File(VerifyFacesFromImageWithBase64Request request)
+    public async Task<VerifyFacesFromImageResponse> VerifyAsync(VerifyFacesFromImageWithBase64Request request)
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
         var requestUrlWithQueryParameters = requestUrl
