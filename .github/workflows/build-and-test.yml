@@ -24,9 +24,17 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
-    - name: Install dependencies
-        run: dotnet restore
+
+    - name: Restore dependencies
+      run: dotnet restore
     - name: Build
-        run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Show contents
+      run: pwd
+      
+    - name: Show pictures
+      run: ls Exadel.Compreface.AcceptenceTests/Resources/Images/
+
     - name: Test
-        run: dotnet test --no-restore --verbosity normal
+      run: dotnet test --no-restore --verbosity normal
