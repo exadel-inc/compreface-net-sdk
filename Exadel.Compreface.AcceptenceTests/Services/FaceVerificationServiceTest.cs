@@ -18,7 +18,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public FaceVerificationServiceTest()
         {
             var configuration = new ComprefaceConfiguration(API_KEY_VERIFICATION_SERVICE, DOMAIN, PORT);
-            var client = new ApiClient(configuration);
+            var client = new CompreFaceClient(configuration);
             var detProbThreshold = 0.85m;
             var status = true;
             var limit = 0;

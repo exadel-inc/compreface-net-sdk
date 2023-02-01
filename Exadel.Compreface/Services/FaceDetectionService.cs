@@ -1,5 +1,4 @@
-﻿using Exadel.Compreface.Clients.Interfaces;
-using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
@@ -11,8 +10,8 @@ namespace Exadel.Compreface.Services
 {
     public class FaceDetectionService : AbstractBaseService
     {
-        public FaceDetectionService(IComprefaceConfiguration configuration, IApiClient apiClient)
-            : base(configuration, apiClient) { }
+        public FaceDetectionService(IComprefaceConfiguration configuration)
+            : base(configuration) { }
 
         public async Task<FaceDetectionResponse> FaceDetectionAsync(FaceDetectionRequest faceDetectionRequest, bool isFileInTheRemoteServer = false)
         {
@@ -38,14 +37,13 @@ namespace Exadel.Compreface.Services
                     File = fileInBase64String,
                 };
 
-                response = await ApiClient.PostJsonAsync<FaceDetectionResponse>(Configuration.ApiKey, requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+                response = await PostJsonAsync<FaceDetectionResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
 
                 return response;
             }
 
             response = await
-                ApiClient.PostMultipartAsync<FaceDetectionResponse>(
-                    apiKey: Configuration.ApiKey,
+                PostMultipartAsync<FaceDetectionResponse>(
                     requestUrl: requestUrlWithQueryParameters,
                     buildContent: mp =>
                         mp.AddFile("file", fileName: FileHelpers.GenerateFileName(faceDetectionRequest.FilePath), path: faceDetectionRequest.FilePath));
@@ -66,8 +64,7 @@ namespace Exadel.Compreface.Services
                 });
 
             var response = await 
-                ApiClient.PostJsonAsync<FaceDetectionResponse>(
-                    apiKey: Configuration.ApiKey,
+                PostJsonAsync<FaceDetectionResponse>(
                     requestUrl: requestUrlWithQueryParameters, 
                     body: new { file = faceDetectionRequest.File });
 
