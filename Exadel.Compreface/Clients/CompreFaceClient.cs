@@ -11,7 +11,7 @@ public class CompreFaceClient
     private readonly string _domain;
     private readonly string _port;
 
-    private readonly Dictionary<ServiceDictionaryKey, AbstractBaseService> _services = new();
+    private readonly Dictionary<ServiceDictionaryKey, IService> _services = new();
 
     public CompreFaceClient(IComprefaceConfiguration configuration)
         : this(configuration.Domain, configuration.Port) { }
@@ -22,7 +22,7 @@ public class CompreFaceClient
         _port = port;
     }
 
-    public T GetService<T>(string apiKey) where T : AbstractBaseService
+    public T GetService<T>(string apiKey) where T : class, IService
     {
         var key = new ServiceDictionaryKey(apiKey, typeof(T));
         var baseService = _services.GetValueOrDefault(key);

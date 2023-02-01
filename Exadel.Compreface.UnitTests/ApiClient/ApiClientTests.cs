@@ -8,12 +8,12 @@ namespace Exadel.Compreface.UnitTests.ApiClient;
 public partial class ApiClientTests : IDisposable
 {
     private readonly HttpTest _httpTest;
-    private readonly FaceDetectionService _service;
+    private readonly IService _service;
 
     public ApiClientTests()
     {
         _httpTest = new HttpTest();
-        _service = new(new ComprefaceConfiguration
+        _service = new RecognitionService(new ComprefaceConfiguration
         {
             ApiKey = GetRandomString(),
             Domain = GetRandomString(),

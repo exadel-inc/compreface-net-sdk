@@ -1,3 +1,4 @@
+using Exadel.Compreface.Clients.Config;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
@@ -8,10 +9,20 @@ using Flurl.Http;
 
 namespace Exadel.Compreface.Services;
 
-public class FaceVerificationService : AbstractBaseService
+public class FaceVerificationService : IService
 {
+    private readonly IService _iService;
+
+    public IComprefaceConfiguration Configuration { get; }
+
     public FaceVerificationService(IComprefaceConfiguration configuration)
-            : base(configuration) { }
+    {
+        _iService = this;
+
+        Configuration = configuration;
+
+        ConfigInitializer.InitializeSnakeCaseJsonConfigs();
+    }
 
     public async Task<FaceVerificationResponse> VerifyImageAsync(FaceVerificationRequest request, bool isFileInTheRemoteServer = false)
     {
@@ -35,7 +46,7 @@ public class FaceVerificationService : AbstractBaseService
             var fileTargetImageStream = await request.TargetImageFilePath.GetBytesAsync();
             var fileTargetImagegInBase64Strin = Convert.ToBase64String(fileTargetImageStream);
            
-            response = await PostJsonAsync<FaceVerificationResponse>(requestUrlWithQueryParameters, body: new
+            response = await _iService.PostJsonAsync<FaceVerificationResponse>(requestUrlWithQueryParameters, body: new
             {
                 source_image = fileSourceImagInBase64String,
                 target_image = fileTargetImagegInBase64Strin
@@ -45,7 +56,7 @@ public class FaceVerificationService : AbstractBaseService
         }
 
         response = await
-            PostMultipartAsync<FaceVerificationResponse>(
+            _iService.PostMultipartAsync<FaceVerificationResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
                 {
@@ -72,7 +83,7 @@ public class FaceVerificationService : AbstractBaseService
             });
 
         var response = await 
-            PostJsonAsync<FaceVerificationResponse>(
+            _iService.PostJsonAsync<FaceVerificationResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 body: new
                 {

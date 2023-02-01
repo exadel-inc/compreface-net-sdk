@@ -11,13 +11,24 @@ using Exadel.Compreface.DTOs.HelperDTOs;
 using Flurl;
 using Exadel.Compreface.Helpers;
 using Flurl.Http;
+using Exadel.Compreface.Clients.Config;
 
 namespace Exadel.Compreface.Services;
 
-public class SubjectExampleService : AbstractBaseService
+public class SubjectExampleService : IService
 {
+    private readonly IService _iService;
+
+    public IComprefaceConfiguration Configuration { get; }
+
     public SubjectExampleService(IComprefaceConfiguration configuration)
-            : base(configuration) { }
+    {
+        _iService = this;
+
+        Configuration = configuration;
+
+        ConfigInitializer.InitializeSnakeCaseJsonConfigs();
+    }
 
     public async Task<AddSubjectExampleResponse> AddSubjectExampleAsync(AddSubjectExampleRequest request, bool isFileInTheRemoteServer = false)
     {
@@ -42,11 +53,11 @@ public class SubjectExampleService : AbstractBaseService
                 Subject = request.Subject,
             };
 
-            response = await PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+            response = await _iService.PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
             return response;
         }
 
-        response = await PostMultipartAsync<AddSubjectExampleResponse>(
+        response = await _iService.PostMultipartAsync<AddSubjectExampleResponse>(
             requestUrl: requestUrlWithQueryParameters,
             buildContent: mp =>
                 mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.File), path: request.File));
@@ -64,7 +75,7 @@ public class SubjectExampleService : AbstractBaseService
                 det_prob_threshold = request.DetProbThreShold,
             });
 
-        var response = await PostJsonAsync<AddBase64SubjectExampleResponse>(requestUrlWithQueryParameters, new { file = request.File });
+        var response = await _iService.PostJsonAsync<AddBase64SubjectExampleResponse>(requestUrlWithQueryParameters, new { file = request.File });
 
         return response;
     }
@@ -80,7 +91,7 @@ public class SubjectExampleService : AbstractBaseService
                 subject = request.Subject,
             });
 
-        var response = await GetJsonAsync<ListAllSubjectExamplesResponse>(requestUrlWithQueryParameters);
+        var response = await _iService.GetJsonAsync<ListAllSubjectExamplesResponse>(requestUrlWithQueryParameters);
 
         return response;
     }
@@ -92,7 +103,7 @@ public class SubjectExampleService : AbstractBaseService
             .SetQueryParam("subject", request.Subject);
 
         var response = 
-            await DeleteJsonAsync<DeleteAllExamplesResponse>(requestUrlWithQueryParameters);
+            await _iService.DeleteJsonAsync<DeleteAllExamplesResponse>(requestUrlWithQueryParameters);
 
         return response;
     }
@@ -104,7 +115,7 @@ public class SubjectExampleService : AbstractBaseService
             .AppendPathSegment(request.ImageId.ToString());
 
         var response = await 
-            DeleteJsonAsync<DeleteImageByIdResponse>(requestUrlWithQueryParameters);
+            _iService.DeleteJsonAsync<DeleteImageByIdResponse>(requestUrlWithQueryParameters);
 
         return response;
     }
@@ -115,7 +126,7 @@ public class SubjectExampleService : AbstractBaseService
         var requestUrlWithQueryParameters = requestUrl
             .AppendPathSegment("delete");
 
-        var response = await PostJsonAsync<List<Face>>(requestUrlWithQueryParameters, deleteMultipleExamplesRequest.ImageIdList);
+        var response = await _iService.PostJsonAsync<List<Face>>(requestUrlWithQueryParameters, deleteMultipleExamplesRequest.ImageIdList);
 
         return new DeleteMultipleExamplesResponse() { Faces = response };
     }
@@ -129,7 +140,7 @@ public class SubjectExampleService : AbstractBaseService
                 "/images/",
                 downloadImageByIdRequest.ImageId.ToString());
 
-        var response = await GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
+        var response = await _iService.GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
 
         return response;
     }
@@ -140,7 +151,7 @@ public class SubjectExampleService : AbstractBaseService
         var requestUrlWithQueryParameters = requestUrl
             .AppendPathSegments(downloadImageBySubjectIdRequest.ImageId.ToString(), "/img");
 
-        var response = await GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
+        var response = await _iService.GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
 
         return response;
     }

@@ -1,9 +1,8 @@
-﻿using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Exceptions;
 using Flurl.Http.Content;
 using Flurl.Http;
 using Flurl;
-using Exadel.Compreface.Exceptions;
-using Exadel.Compreface.Clients.Config;
+using Exadel.Compreface.Configuration;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
@@ -11,15 +10,20 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Exadel.Compreface.AcceptenceTests")]
 namespace Exadel.Compreface.Services
 {
-    public abstract class AbstractBaseService
+    public interface IService
     {
-        protected IComprefaceConfiguration Configuration { get; private set; }
+        public IComprefaceConfiguration Configuration { get; }
 
-        public AbstractBaseService(IComprefaceConfiguration configuration)
+        protected static async Task<ServiceTimeoutException> ThrowServiceTimeoutExceptionAsync(FlurlHttpTimeoutException exception)
         {
-            Configuration = configuration;
+            var exceptionMessage = await exception.GetResponseStringAsync();
+            return new ServiceTimeoutException(exceptionMessage);
+        }
 
-            ConfigInitializer.InitializeSnakeCaseJsonConfigs();
+        protected static async Task<ServiceException> ThrowServiceExceptionAsync(FlurlHttpException exception)
+        {
+            var exceptionMessage = await exception.GetResponseStringAsync();
+            return new ServiceException(exceptionMessage);
         }
 
         internal virtual async Task<TResponse> GetJsonAsync<TResponse>(
@@ -242,18 +246,6 @@ namespace Exadel.Compreface.Services
             var response = await GetBytesFromRemoteAsync(url, completionOption, cancellationToken);
 
             return response;
-        }
-
-        private static async Task<ServiceTimeoutException> ThrowServiceTimeoutExceptionAsync(FlurlHttpTimeoutException exception)
-        {
-            var exceptionMessage = await exception.GetResponseStringAsync();
-            return new ServiceTimeoutException(exceptionMessage);
-        }
-
-        private static async Task<ServiceException> ThrowServiceExceptionAsync(FlurlHttpException exception)
-        {
-            var exceptionMessage = await exception.GetResponseStringAsync();
-            return new ServiceException(exceptionMessage);
         }
     }
 }
