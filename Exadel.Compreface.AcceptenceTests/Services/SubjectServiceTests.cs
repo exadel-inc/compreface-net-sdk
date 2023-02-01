@@ -260,9 +260,9 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         {
             //Arrange
             var configuration = new ComprefaceConfiguration(API_KEY_DETECTION_SERVICE, DOMAIN, PORT);
-            var client = new FaceRecognitionClient(configuration);
+            var client = new CompreFaceClient(configuration);
 
-            var subjectService = client.SubjectService;
+            var subjectService = client.GetService<SubjectService>(API_KEY_DETECTION_SERVICE);
 
             // Act
             var func = async () => await subjectService.DeleteAllAsync();

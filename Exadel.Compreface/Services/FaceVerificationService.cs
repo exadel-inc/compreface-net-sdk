@@ -13,12 +13,7 @@ public class FaceVerificationService : AbstractBaseService
     public FaceVerificationService(IComprefaceConfiguration configuration)
             : base(configuration) { }
 
-    public FaceVerificationService(IComprefaceConfiguration configuration, IApiClient apiClient)
-    {
-        _comprefaceConfiguration = configuration;
-        _apiClient = apiClient;
-    }
-    public async Task<FaceVerificationResponse> VerifyImageAsync(FaceVerificationRequest request, bool isFileInTheRemoteServer = false)
+    public async Task<FaceVerificationResponse> VerifyAsync(FaceVerificationRequest request, bool isFileInTheRemoteServer = false)
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl

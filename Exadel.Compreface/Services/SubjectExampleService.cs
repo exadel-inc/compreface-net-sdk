@@ -19,12 +19,7 @@ public class SubjectExampleService : AbstractBaseService
     public SubjectExampleService(IComprefaceConfiguration configuration)
             : base(configuration) { }
 
-    public SubjectExampleService(ComprefaceConfiguration configuration, IApiClient apiClient)
-    {
-        _configuration = configuration;
-        _apiClient = apiClient;
-    }
-    public async Task<AddSubjectExampleResponse> AddSubjectExampleAsync(AddSubjectExampleRequest request, bool isFileInTheRemoteServer = false)
+    public async Task<AddSubjectExampleResponse> AddAsync(AddSubjectExampleRequest request, bool isFileInTheRemoteServer = false)
     {
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl

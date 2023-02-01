@@ -27,7 +27,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
         SetupPostMultipart<FaceVerificationResponse>();
 
         // Act
-        var response = await _faceVerificationService.VerifyImageAsync(request);
+        var response = await _service.VerifyAsync(request);
 
         // Assert
         Assert.IsType<FaceVerificationResponse>(response);
@@ -42,7 +42,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
         SetupPostMultipart<FaceVerificationResponse>();
 
         // Act
-        var responseCall = async () => await _faceVerificationService.VerifyImageAsync(null!);
+        var responseCall = async () => await _service.VerifyAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(responseCall);
@@ -57,7 +57,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
         SetupPostMultipart<FaceVerificationResponse>();
 
         // Act
-        var responseCall = async () => await _faceVerificationService.VerifyImageAsync(request);
+        var responseCall = async () => await _service.VerifyAsync(request);
 
         // Assert
         await Assert.ThrowsAsync<ArgumentNullException>(responseCall);
@@ -75,7 +75,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
         SetupPostJson<FaceVerificationResponse, Url>();
 
         // Act
-        var response = await _faceVerificationService.VerifyBase64ImageAsync(request);
+        var response = await _service.VerifyAsync(request);
 
         // Assert
         Assert.IsType<FaceVerificationResponse>(response);
@@ -92,7 +92,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
         SetupPostJson<FaceVerificationResponse, Url>();
 
         // Act
-        var responseCall = async () => await _faceVerificationService.VerifyBase64ImageAsync(null!);
+        var responseCall = async () => await _service.VerifyAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(responseCall);
@@ -107,7 +107,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
         SetupPostJson<FaceVerificationResponse, Url>();
 
         // Act
-        var responseCall = async () => await _faceVerificationService.VerifyBase64ImageAsync(request);
+        var responseCall = async () => await _service.VerifyAsync(request);
 
         // Assert
         await Assert.ThrowsAsync<ArgumentNullException>(responseCall);

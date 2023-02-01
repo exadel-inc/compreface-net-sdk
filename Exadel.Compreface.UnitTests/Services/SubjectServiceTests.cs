@@ -23,7 +23,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupGetJson<GetAllSubjectResponse>();
 
             // Act
-            var response = await _subjectService.GetAllSubject();
+            var response = await _service.ListAsync();
 
             // Assert
             Assert.IsType<GetAllSubjectResponse>(response);
@@ -39,7 +39,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupGetJson<GetAllSubjectResponse>();
 
             // Act
-            var response = await _subjectService.GetAllSubject();
+            var response = await _service.ListAsync();
 
             // Assert
             Assert.NotNull(response);
@@ -57,7 +57,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<AddSubjectResponse, string>();
 
             // Act
-            var response = await _subjectService.AddSubject(request);
+            var response = await _service.AddAsync(request);
 
             // Assert
             Assert.IsType<AddSubjectResponse>(response);
@@ -75,7 +75,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<AddSubjectResponse, string>();
 
             // Act
-            var response = await _subjectService.AddSubject(request);
+            var response = await _service.AddAsync(request);
 
             // Assert
             Assert.NotNull(response);
@@ -93,7 +93,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPutJson<RenameSubjectResponse>();
 
             // Act
-            var response = await _subjectService.RenameSubject(request);
+            var response = await _service.RenameAsync(request);
 
             // Assert
             Assert.IsType<RenameSubjectResponse>(response);
@@ -111,7 +111,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPutJson<RenameSubjectResponse>();
 
             // Act
-            var response = await _subjectService.RenameSubject(request);
+            var response = await _service.RenameAsync(request);
 
             // Assert
             Assert.NotNull(response);
@@ -127,7 +127,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPutJson<RenameSubjectRequest>();
 
             // Act
-            var func = async () => await _subjectService.RenameSubject(null!);
+            var func = async () => await _service.RenameAsync(null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -142,7 +142,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupDeleteJson<DeleteSubjectResponse>();
 
             // Act
-            var response = await _subjectService.DeleteSubject(request);
+            var response = await _service.DeleteAsync(request);
 
             // Assert
             Assert.IsType<DeleteSubjectResponse>(response);
@@ -160,7 +160,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupDeleteJson<DeleteSubjectResponse>();
 
             // Act
-            var response = await _subjectService.DeleteSubject(request);
+            var response = await _service.DeleteAsync(request);
 
             // Assert
             Assert.NotNull(response);
@@ -176,7 +176,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupDeleteJson<DeleteSubjectRequest>();
 
             // Act
-            var func = async () => await _subjectService.DeleteSubject(null!);
+            var func = async () => await _service.DeleteAsync(null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -189,7 +189,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupDeleteJson<DeleteAllSubjectsResponse>();
 
             // Act
-            var response = await _subjectService.DeleteAllSubjects();
+            var response = await _service.DeleteAllAsync();
 
             // Assert
             Assert.IsType<DeleteAllSubjectsResponse>(response);
@@ -205,7 +205,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupDeleteJson<DeleteAllSubjectsResponse>();
 
             // Act
-            var response = await _subjectService.DeleteAllSubjects();
+            var response = await _service.DeleteAllAsync();
 
             // Assert
             Assert.NotNull(response);

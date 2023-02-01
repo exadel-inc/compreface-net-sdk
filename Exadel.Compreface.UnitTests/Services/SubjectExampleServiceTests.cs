@@ -30,7 +30,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupPostMultipart<AddSubjectExampleResponse>();
         
         // Act
-        var response = await _exampleSubjectService.AddSubjectExampleAsync(request);
+        var response = await _service.AddAsync(request);
         
         // Assert
         Assert.IsType<AddSubjectExampleResponse>(response);
@@ -48,7 +48,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupPostMultipart<AddSubjectExampleResponse>();
 
         // Act
-        var response = await _exampleSubjectService.AddSubjectExampleAsync(request);
+        var response = await _service.AddAsync(request);
 
         // Assert
         Assert.NotNull(response);
@@ -64,7 +64,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupPostMultipart<AddSubjectExampleResponse>();
 
         // Act
-        var func = async () => await _exampleSubjectService.AddSubjectExampleAsync(null!);
+        var func = async () => await _service.AddAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -79,7 +79,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupPostJson<AddBase64SubjectExampleResponse, Url>();
         
         //Act
-        var response = await _exampleSubjectService.AddBase64SubjectExampleAsync(request);
+        var response = await _service.AddAsync(request);
         
         // Assert
         Assert.IsType<AddBase64SubjectExampleResponse>(response);
@@ -97,7 +97,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupPostJson<AddBase64SubjectExampleResponse, Url>();
 
         // Act
-        var response = await _exampleSubjectService.AddBase64SubjectExampleAsync(request);
+        var response = await _service.AddAsync(request);
 
         // Assert
         Assert.NotNull(response);
@@ -113,14 +113,14 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupPostJson<AddBase64SubjectExampleResponse, Url>();
 
         // Act
-        var func = async () => await _exampleSubjectService.AddBase64SubjectExampleAsync(null!);
+        var func = async () => await _service.AddAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
     }
 
     [Fact]
-    public async Task DeletAllAsync_TakesRequestModel_ReturnsProperResponseModel()
+    public async Task DeleteMultipleAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
         var request = new DeleteMultipleExampleRequest();
@@ -128,7 +128,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupPostJson<List<Face>, Url>();
 
         // Act
-        var response = await _exampleSubjectService.DeletMultipleExamplesAsync(request);
+        var response = await _service.DeleteAsync(request);
 
         // Assert
         Assert.IsType<DeleteMultipleExamplesResponse>(response);
@@ -137,7 +137,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
     }
 
     [Fact]
-    public async Task DeletAllAsync_TakesRequestModel_ReturnsNotNull()
+    public async Task DeleteMultipleAsync_TakesRequestModel_ReturnsNotNull()
     {
         // Arrange
         var request = new DeleteMultipleExampleRequest();
@@ -145,7 +145,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupPostJson<List<Face>, Url>();
 
         // Act
-        var response = await _exampleSubjectService.DeletMultipleExamplesAsync(request);
+        var response = await _service.DeleteAsync(request);
 
         // Assert
         Assert.NotNull(response);
@@ -154,13 +154,13 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
     }
 
     [Fact]
-    public async Task DeletAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task DeleteMultipleAsync_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
-        SetupPostJson<List<Face>, Url>();
+        SetupDeleteJson<DeleteImageByIdResponse, Url>();
 
         // Act
-        var func = async () => await _exampleSubjectService.DeletMultipleExamplesAsync(null!);
+        var func = async () => await _service.DeleteAsync((DeleteMultipleExampleRequest)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -175,7 +175,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupGetBytesFromRemote();
 
         // Act
-        var response = await _exampleSubjectService.DownloadImageByIdAsync(request);
+        var response = await _service.DownloadAsync(request);
 
         // Assert
         Assert.IsType<byte[]>(response);
@@ -192,7 +192,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupGetBytesFromRemote();
 
         // Act
-        var response = await _exampleSubjectService.DownloadImageByIdAsync(request);
+        var response = await _service.DownloadAsync(request);
 
         // Assert
         Assert.NotNull(response);
@@ -207,7 +207,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupGetBytesFromRemote();
 
         // Act
-        var func = async () => await _exampleSubjectService.DownloadImageByIdAsync(null!);
+        var func = async () => await _service.DownloadAsync((DownloadImageByIdRequest)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -222,7 +222,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupGetBytesFromRemote();
 
         // Act
-        var response = await _exampleSubjectService.DownloadImageBySubjectIdAsync(request);
+        var response = await _service.DownloadAsync(request);
 
         // Assert
         Assert.IsType<byte[]>(response);
@@ -239,7 +239,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupGetBytesFromRemote();
 
         // Act
-        var response = await _exampleSubjectService.DownloadImageBySubjectIdAsync(request);
+        var response = await _service.DownloadAsync(request);
 
         // Assert
         Assert.NotNull(response);
@@ -254,7 +254,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupGetBytesFromRemote();
 
         // Act
-        var func = async () => await _exampleSubjectService.DownloadImageBySubjectIdAsync(null!);
+        var func = async () => await _service.DownloadAsync((DownloadImageBySubjectIdRequest)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -269,7 +269,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupGetJson<ListAllSubjectExamplesResponse, Url>();
 
         // Act
-        var response = await _exampleSubjectService.GetAllSubjectExamplesAsync(request);
+        var response = await _service.ListAsync(request);
 
         // Assert
         Assert.IsType<ListAllSubjectExamplesResponse>(response);
@@ -287,7 +287,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupGetJson<ListAllSubjectExamplesResponse, Url>();
 
         // Act
-        var response = await _exampleSubjectService.GetAllSubjectExamplesAsync(request);
+        var response = await _service.ListAsync(request);
 
         // Assert
         Assert.NotNull(response);
@@ -302,7 +302,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupGetJson<ListAllSubjectExamplesResponse>();
 
         // Act
-        var func = async () => await _exampleSubjectService.GetAllSubjectExamplesAsync(null!);
+        var func = async () => await _service.ListAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -317,7 +317,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupDeleteJson<DeleteAllExamplesResponse, Url>();
 
         // Act
-        var response = await _exampleSubjectService.ClearSubjectAsync(request);
+        var response = await _service.DeleteAllAsync(request);
 
         // Assert
         Assert.IsType<DeleteAllExamplesResponse>(response);
@@ -335,7 +335,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupDeleteJson<DeleteAllExamplesResponse, Url>();
 
         // Act
-        var response = await _exampleSubjectService.ClearSubjectAsync(request);
+        var response = await _service.DeleteAllAsync(request);
 
         // Assert
         Assert.NotNull(response);
@@ -350,7 +350,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupDeleteJson<DeleteAllExamplesResponse, Url>();
 
         // Act
-        var func = async () => await _exampleSubjectService.ClearSubjectAsync(null!);
+        var func = async () => await _service.DeleteAllAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -365,7 +365,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupDeleteJson<DeleteImageByIdResponse, Url>();
 
         // Act
-        var response = await _exampleSubjectService.DeleteImageByIdAsync(request);
+        var response = await _service.DeleteAsync(request);
 
         // Assert
         Assert.IsType<DeleteImageByIdResponse>(response);
@@ -383,7 +383,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupDeleteJson<DeleteImageByIdResponse, Url>();
 
         // Act
-        var response = await _exampleSubjectService.DeleteImageByIdAsync(request);
+        var response = await _service.DeleteAsync(request);
 
         // Assert
         Assert.NotNull(response);
@@ -398,7 +398,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         SetupDeleteJson<DeleteImageByIdResponse, Url>();
 
         // Act
-        var func = async () => await _exampleSubjectService.DeleteImageByIdAsync(null!);
+        var func = async () => await _service.DeleteAsync((DeleteImageByIdRequest)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
