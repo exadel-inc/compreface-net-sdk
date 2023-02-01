@@ -7,13 +7,13 @@ using Flurl;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
-    public class RecognitionServiceTests : AbstractBaseServiceTests
+    public class RecognitionServiceTests : AbstractBaseServiceTests<RecognitionService>
     {
-        private readonly RecognitionService _recognitionService;
+        private readonly RecognitionService _service;
 
         public RecognitionServiceTests()
         {
-            _recognitionService = new RecognitionService(Configuration, ApiClientMock.Object);
+            _service = ServiceMock.Object;
         }
 
         [Fact]
@@ -28,13 +28,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostMultipart<RecognizeFaceFromImageResponse>();
 
             // Act
-            var response = await _recognitionService.RecognizeAsync(request);
+            var response = await _recognitionService.RecognizeFaceFromImage(request);
 
             // Assert
             Assert.IsType<RecognizeFaceFromImageResponse>(response);
 
             VerifyPostMultipart<RecognizeFaceFromImageResponse>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -49,13 +49,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostMultipart<RecognizeFaceFromImageResponse>();
 
             // Act
-            var response = await _recognitionService.RecognizeAsync(request);
+            var response = await _recognitionService.RecognizeFaceFromImage(request);
 
             // Assert
             Assert.NotNull(response);
 
             VerifyPostMultipart<RecognizeFaceFromImageResponse>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -65,14 +65,29 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostMultipart<RecognizeFaceFromImageResponse>();
 
             // Act
-            var func = async () => await _recognitionService.RecognizeAsync((RecognizeFaceFromImageRequest)null!);
+            var func = async () => await _recognitionService.RecognizeFaceFromImage(null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
         [Fact]
-        public async Task RecognizeBase64Async_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task RecognizeFaceFromImage_TakesIncorrectRequestModel_ThrowsArgumentNullException()
+        {
+            // Arrange
+            var request = new RecognizeFaceFromImageRequest();
+
+            SetupPostMultipart<RecognizeFaceFromImageResponse>();
+
+            // Act
+            var func = async () => await _recognitionService.RecognizeFaceFromImage(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
+        }
+
+        [Fact]
+        public async Task RecognizeFaceFromBase64File_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new RecognizeFacesFromImageWithBase64Request()
@@ -83,13 +98,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<RecognizeFaceFromImageResponse, Url>();
 
             // Act
-            var response = await _recognitionService.RecognizeAsync(request);
+            var response = await _recognitionService.RecognizeFaceFromBase64File(request);
 
             // Assert
             Assert.IsType<RecognizeFaceFromImageResponse>(response);
 
             VerifyPostJson<RecognizeFaceFromImageResponse, Url>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -104,13 +119,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<RecognizeFaceFromImageResponse, Url>();
 
             // Act
-            var response = await _recognitionService.RecognizeAsync(request);
+            var response = await _recognitionService.RecognizeFaceFromBase64File(request);
 
             // Assert
             Assert.NotNull(response);
 
             VerifyPostJson<RecognizeFaceFromImageResponse, Url>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -120,7 +135,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<RecognizeFaceFromImageResponse, Url>();
 
             // Act
-            var func = async () => await _recognitionService.RecognizeAsync((RecognizeFacesFromImageWithBase64Request)null!);
+            var func = async () => await _recognitionService.RecognizeFaceFromBase64File(null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -128,6 +143,21 @@ namespace Exadel.Compreface.UnitTests.Services
 
         [Fact]
         public async Task VerifyAsync_TakesRequestModel_ReturnsProperResponseModel()
+        {
+            // Arrange
+            var request = new RecognizeFacesFromImageWithBase64Request();
+
+            SetupPostJson<RecognizeFaceFromImageResponse, Url>();
+
+            // Act
+            var func = async () => await _recognitionService.RecognizeFaceFromBase64File(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
+        }
+
+        [Fact]
+        public async Task VerifyFacesFromImage_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new VerifyFacesFromImageRequest()
@@ -138,13 +168,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostMultipart<VerifyFacesFromImageResponse>();
 
             // Act
-            var response = await _recognitionService.VerifyAsync(request);
+            var response = await _recognitionService.VerifyFacesFromImage(request);
 
             // Assert
             Assert.IsType<VerifyFacesFromImageResponse>(response);
 
             VerifyPostMultipart<VerifyFacesFromImageResponse>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -159,13 +189,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostMultipart<VerifyFacesFromImageResponse>();
 
             // Act
-            var response = await _recognitionService.VerifyAsync(request);
+            var response = await _recognitionService.VerifyFacesFromImage(request);
 
             // Assert
             Assert.NotNull(response);
 
             VerifyPostMultipart<VerifyFacesFromImageResponse>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -175,7 +205,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostMultipart<VerifyFacesFromImageResponse>();
 
             // Act
-            var func = async () => await _recognitionService.VerifyAsync((VerifyFacesFromImageRequest)null!);
+            var func = async () => await _recognitionService.VerifyFacesFromImage(null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -183,6 +213,21 @@ namespace Exadel.Compreface.UnitTests.Services
 
         [Fact]
         public async Task VerifyBase64Async_TakesRequestModel_ReturnsProperResponseModel()
+        {
+            // Arrange
+            var request = new VerifyFacesFromImageRequest();
+
+            SetupPostMultipart<VerifyFacesFromImageResponse>();
+
+            // Act
+            var func = async () => await _recognitionService.VerifyFacesFromImage(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
+        }
+
+        [Fact]
+        public async Task VerifyFacesFromBase64File_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new VerifyFacesFromImageWithBase64Request()
@@ -193,13 +238,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<VerifyFacesFromImageResponse, Url>();
 
             // Act
-            var response = await _recognitionService.VerifyAsync(request);
+            var response = await _recognitionService.VerifyFacesFromBase64File(request);
 
             // Assert
             Assert.IsType<VerifyFacesFromImageResponse>(response);
 
             VerifyPostJson<VerifyFacesFromImageResponse, Url>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -214,13 +259,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<VerifyFacesFromImageResponse, Url>();
 
             // Act
-            var response = await _recognitionService.VerifyAsync(request);
+            var response = await _recognitionService.VerifyFacesFromBase64File(request);
 
             // Assert
             Assert.NotNull(response);
 
             VerifyPostJson<VerifyFacesFromImageResponse, Url>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -230,7 +275,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<VerifyFacesFromImageResponse, Url>();
 
             // Act
-            var func = async () => await _recognitionService.VerifyAsync((VerifyFacesFromImageWithBase64Request)null!);
+            var func = async () => await _recognitionService.VerifyFacesFromBase64File(null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -245,7 +290,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<VerifyFacesFromImageResponse, Url>();
 
             // Act
-            var func = async () => await _recognitionService.VerifyAsync(request);
+            var func = async () => await _recognitionService.VerifyFacesFromBase64File(request);
 
             // Assert
             await Assert.ThrowsAsync<ArgumentNullException>(func);

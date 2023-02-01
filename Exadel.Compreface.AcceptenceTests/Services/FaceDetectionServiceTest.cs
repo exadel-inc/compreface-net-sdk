@@ -18,7 +18,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public FaceDetectionServiceTest()
         {
             var configuration = new ComprefaceConfiguration(API_KEY_DETECTION_SERVICE, DOMAIN, PORT);
-            var client = new FaceDetectionClient(configuration);
+            var client = new CompreFaceClient(configuration);
             var detProbThreshold = 0.85m;
             var status = true;
             var limit = 0;
@@ -31,7 +31,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 "calculator"
             };
 
-            _faceDetectionService = client.FaceDetectionService;
+            _faceDetectionService = client.GetService<FaceDetectionService>(API_KEY_DETECTION_SERVICE);
             _faceDetectionRequest = new FaceDetectionRequest
             {
                 FilePath = FILE_PATH,

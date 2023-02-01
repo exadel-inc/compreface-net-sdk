@@ -33,7 +33,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public RecognitionServiceTests()
         {
             var configuration = new ComprefaceConfiguration(API_KEY_RECOGNITION_SERVICE, DOMAIN, PORT);
-            var client = new FaceRecognitionClient(configuration);
+            var client = new CompreFaceClient(configuration);
             var detProbThreshold = 0.85m;
             var status = true;
             var facePlugins = new List<string>()
@@ -46,9 +46,9 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             };
             var subjectName = TEST_SUBJECT_RECOGNITION_NAME;
 
-            _subjectService = client.SubjectService;
-            _subjectExampleService = client.SubjectExampleService;
-            _recognitionService = client.RecognitionService;
+            _subjectService = client.GetService<SubjectService>(API_KEY_RECOGNITION_SERVICE);
+            _subjectExampleService = client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE);
+            _recognitionService = client.GetService<RecognitionService>(API_KEY_RECOGNITION_SERVICE);
 
             _addSubjectRequest = new AddSubjectRequest
             {

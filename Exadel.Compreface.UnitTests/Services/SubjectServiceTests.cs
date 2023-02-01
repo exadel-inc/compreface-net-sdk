@@ -7,13 +7,13 @@ using Exadel.Compreface.Services;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
-    public class SubjectServiceTests : AbstractBaseServiceTests
+    public class SubjectServiceTests : AbstractBaseServiceTests<SubjectService>
     {
-        private readonly SubjectService _subjectService;
+        private readonly SubjectService _service;
 
         public SubjectServiceTests()
         {
-            _subjectService = new SubjectService(Configuration, ApiClientMock.Object);
+            _service = ServiceMock.Object;
         }
 
         [Fact]
@@ -23,13 +23,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupGetJson<GetAllSubjectResponse>();
 
             // Act
-            var response = await _subjectService.ListAsync();
+            var response = await _subjectService.GetAllSubject();
 
             // Assert
             Assert.IsType<GetAllSubjectResponse>(response);
 
             VerifyGetJson<GetAllSubjectResponse>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -39,13 +39,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupGetJson<GetAllSubjectResponse>();
 
             // Act
-            var response = await _subjectService.ListAsync();
+            var response = await _subjectService.GetAllSubject();
 
             // Assert
             Assert.NotNull(response);
 
             VerifyGetJson<GetAllSubjectResponse>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -57,13 +57,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<AddSubjectResponse, string>();
 
             // Act
-            var response = await _subjectService.AddAsync(request);
+            var response = await _subjectService.AddSubject(request);
 
             // Assert
             Assert.IsType<AddSubjectResponse>(response);
 
             VerifyPostJson<AddSubjectResponse, string>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -75,13 +75,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<AddSubjectResponse, string>();
 
             // Act
-            var response = await _subjectService.AddAsync(request);
+            var response = await _subjectService.AddSubject(request);
 
             // Assert
             Assert.NotNull(response);
 
             VerifyPostJson<AddSubjectResponse, string>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -93,13 +93,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPutJson<RenameSubjectResponse>();
 
             // Act
-            var response = await _subjectService.RenameAsync(request);
+            var response = await _subjectService.RenameSubject(request);
 
             // Assert
             Assert.IsType<RenameSubjectResponse>(response);
 
             VerifyPutJson<RenameSubjectResponse>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -111,13 +111,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPutJson<RenameSubjectResponse>();
 
             // Act
-            var response = await _subjectService.RenameAsync(request);
+            var response = await _subjectService.RenameSubject(request);
 
             // Assert
             Assert.NotNull(response);
 
             VerifyPutJson<RenameSubjectResponse>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -127,7 +127,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPutJson<RenameSubjectRequest>();
 
             // Act
-            var func = async () => await _subjectService.RenameAsync(null!);
+            var func = async () => await _subjectService.RenameSubject(null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -142,13 +142,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupDeleteJson<DeleteSubjectResponse>();
 
             // Act
-            var response = await _subjectService.DeleteAsync(request);
+            var response = await _subjectService.DeleteSubject(request);
 
             // Assert
             Assert.IsType<DeleteSubjectResponse>(response);
 
             VerifyDeleteJson<DeleteSubjectResponse>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -160,13 +160,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupDeleteJson<DeleteSubjectResponse>();
 
             // Act
-            var response = await _subjectService.DeleteAsync(request);
+            var response = await _subjectService.DeleteSubject(request);
 
             // Assert
             Assert.NotNull(response);
 
             VerifyDeleteJson<DeleteSubjectResponse>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -176,7 +176,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupDeleteJson<DeleteSubjectRequest>();
 
             // Act
-            var func = async () => await _subjectService.DeleteAsync(null!);
+            var func = async () => await _subjectService.DeleteSubject(null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -189,13 +189,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupDeleteJson<DeleteAllSubjectsResponse>();
 
             // Act
-            var response = await _subjectService.DeleteAllAsync();
+            var response = await _subjectService.DeleteAllSubjects();
 
             // Assert
             Assert.IsType<DeleteAllSubjectsResponse>(response);
 
             VerifyDeleteJson<DeleteAllSubjectsResponse>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -205,13 +205,13 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupDeleteJson<DeleteAllSubjectsResponse>();
 
             // Act
-            var response = await _subjectService.DeleteAllAsync();
+            var response = await _subjectService.DeleteAllSubjects();
 
             // Assert
             Assert.NotNull(response);
 
             VerifyDeleteJson<DeleteAllSubjectsResponse>();
-            ApiClientMock.VerifyNoOtherCalls();
+            ServiceMock.VerifyNoOtherCalls();
         }
     }
 }

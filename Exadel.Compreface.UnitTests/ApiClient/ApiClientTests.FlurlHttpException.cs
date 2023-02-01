@@ -15,13 +15,8 @@ public partial class ApiClientTests
         
         var httpException = It.IsAny<FlurlHttpException>();
         _httpTest.SimulateException(httpException);
-
-        var randomstring = GetRandomString();
-
-        var apiClient = new Clients.ApiClient(apiKey: randomstring);
         
-        var responseCall = apiClient.GetJsonAsync<GetAllSubjectResponse>(
-            requestUrl: RequestUrl);
+        var responseCall = _service.GetJsonAsync<GetAllSubjectResponse>(requestUrl: RequestUrl);
         
         await Assert.ThrowsAsync<ServiceException>(async () => await responseCall);
     }
@@ -33,12 +28,8 @@ public partial class ApiClientTests
         
         _httpTest.RespondWith(ExceptionMessage, BadResponseStatusCode);
         _httpTest.SimulateException(httpException);
-
-        var randomstring = GetRandomString();
         
-        var apiClient = new Clients.ApiClient(apiKey: randomstring);
-        
-        var responseCall = apiClient.PostJsonAsync<AddSubjectExampleResponse>(
+        var responseCall = _service.PostJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
             body: It.IsAny<object>());
         
@@ -53,11 +44,7 @@ public partial class ApiClientTests
         _httpTest.RespondWith(ExceptionMessage, BadResponseStatusCode);
         _httpTest.SimulateException(httpException);
         
-        var randomstring = GetRandomString();
-
-        var apiClient = new Clients.ApiClient(apiKey: randomstring);
-        
-        var responseCall = apiClient.PutJsonAsync<AddSubjectExampleResponse>(
+        var responseCall = _service.PutJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
             body: It.IsAny<object>());
 
@@ -71,13 +58,8 @@ public partial class ApiClientTests
         
         _httpTest.RespondWith(ExceptionMessage, BadResponseStatusCode);
         _httpTest.SimulateException(httpException);
-
-        var randomstring = GetRandomString();
-
-        var apiClient = new Clients.ApiClient(apiKey: randomstring);
         
-        var responseCall = apiClient.DeleteJsonAsync<AddSubjectExampleResponse>(
-            requestUrl: RequestUrl);
+        var responseCall = _service.DeleteJsonAsync<AddSubjectExampleResponse>(requestUrl: RequestUrl);
 
         await Assert.ThrowsAsync<ServiceException>(async () => await responseCall);
     }
@@ -92,12 +74,9 @@ public partial class ApiClientTests
         
         var randomstring = GetRandomString();
         
-        var apiClient = new Clients.ApiClient(apiKey: randomstring);
-        
-        var responseCall = apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
+        var responseCall = _service.PostMultipartAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
-            mp =>
-                mp.AddFile(randomstring, fileName: randomstring, path: randomstring));
+            mp => mp.AddFile(randomstring, fileName: randomstring, path: randomstring));
         
         await Assert.ThrowsAsync<ServiceException>(async () => await responseCall);
     }
@@ -110,12 +89,7 @@ public partial class ApiClientTests
         _httpTest.RespondWith(ExceptionMessage, BadResponseStatusCode);
         _httpTest.SimulateException(httpException);
         
-        var randomstring = GetRandomString();
-
-        var apiClient = new Clients.ApiClient(apiKey: randomstring);
-        
-        var responseCall = apiClient.GetBytesFromRemoteAsync(
-            requestUrl: RequestUrl);
+        var responseCall = _service.GetBytesFromRemoteAsync(requestUrl: RequestUrl);
 
         await Assert.ThrowsAsync<ServiceException>(async () => await responseCall);
     }
