@@ -19,6 +19,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
     {
         private readonly CompreFaceClient _client;
         private readonly AddBase64SubjectExampleRequest addBase64SubjectExampleRequest;
+
         public SubjectExampleServiceTest()
         {
             _client = new CompreFaceClient(new ComprefaceConfiguration(API_KEY_RECOGNITION_SERVICE,DOMAIN, PORT));
@@ -501,17 +502,6 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         {
             //Act
             var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadAsync((DownloadImageByIdRequest)null!);
-
-            // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
-        }
-
-        [Fact]
-        public async Task d()
-        {
-            //Act
-            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadAsync(
-                new DownloadImageByIdRequest() { ImageId = Guid.NewGuid(), RecognitionApiKey = Guid.Parse(API_KEY_DETECTION_SERVICE) });
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
