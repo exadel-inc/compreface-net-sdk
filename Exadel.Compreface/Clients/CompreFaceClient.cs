@@ -9,15 +9,15 @@ namespace Exadel.Compreface.Clients
     {
         private readonly IOptionsMonitor<ComprefaceConfiguration> _configuration;
 
-        
-        public FaceDetectionService FaceDetectionService { get; private set; }
-        public SubjectExampleService SubjectExampleService { get; private set; }
 
-        public SubjectService SubjectService { get; private set; }
+        public FaceDetectionService? FaceDetectionService { get; private set; }
+        public SubjectExampleService? SubjectExampleService { get; private set; }
 
-        public RecognitionService RecognitionService { get; private set; }
+        public SubjectService? SubjectService { get; private set; }
 
-        public FaceVerificationService FaceVerificationService { get; set; }
+        public RecognitionService? RecognitionService { get; private set; }
+
+        public FaceVerificationService? FaceVerificationService { get; set; }
 
         public CompreFaceClient(IOptionsMonitor<ComprefaceConfiguration> configuration)
         {

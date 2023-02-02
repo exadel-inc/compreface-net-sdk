@@ -1,14 +1,9 @@
-﻿using System.Net;
-using System.Threading.Channels;
-using Exadel.Compreface.Clients;
+﻿using Exadel.Compreface.Clients;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
-using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
-using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -19,7 +14,6 @@ var host = Host.CreateDefaultBuilder()
            .ConfigureServices((context, collection) =>
            {
                collection.Configure<ComprefaceConfiguration>(context.Configuration.GetSection("ComprefaceConfiguration"));
-              // collection.Configure<ComprefaceConfiguration>(context.Configuration.GetSection(nameof(ComprefaceConfiguration)));
               
            })
            .Build();
