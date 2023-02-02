@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients.Interfaces;
+using Exadel.Compreface.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace Exadel.Compreface.Clients.Factories
