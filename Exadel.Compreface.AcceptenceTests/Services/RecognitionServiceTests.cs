@@ -119,13 +119,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task RecognizeAsync_TakesNullRequest_ThrowsException()
+        public async Task RecognizeAsync_TakesNullRequest_ThrowsArgumentNullException()
         {
             // Act
-            var func = async () => await _recognitionService.RecognizeAsync((RecognizeFaceFromImageRequest)null!);
+            var func = async () => await _recognitionService.RecognizeAsync(null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
@@ -175,13 +175,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task RecognizeBase64Async_TakesNullRequest_ThrowsException()
+        public async Task RecognizeBase64Async_TakesNullRequest_ThrowsArgumentNullException()
         {
             // Act
-            var func = async () => await _recognitionService.RecognizeAsync((RecognizeFacesFromImageWithBase64Request)null!);
+            var func = async () => await _recognitionService.RecognizeAsync(null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
@@ -243,13 +243,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task VerifyAsync_TakesNullRequest_ThrowsException()
+        public async Task VerifyAsync_TakesNullRequest_ThrowsArgumentNullException()
         {
             // Act
             var func = async () => await _recognitionService.VerifyAsync((VerifyFacesFromImageRequest)null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
@@ -311,13 +311,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task VerifyBase64Async_TakesNullRequest_ThrowsException()
+        public async Task VerifyBase64Async_TakesNullRequest_ThrowsArgumentNullException()
         {
             // Act
             var func = async () => await _recognitionService.VerifyAsync((VerifyFacesFromImageWithBase64Request)null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]

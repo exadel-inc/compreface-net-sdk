@@ -62,6 +62,7 @@ public class RecognitionService : AbstractBaseService
     public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(
         RecognizeFacesFromImageWithBase64Request request)
     {
+        if (request == null) throw new ArgumentNullException();
         if (request.FacePlugins == null) throw new NullReferenceException();
 
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/recognize";
@@ -85,6 +86,7 @@ public class RecognitionService : AbstractBaseService
 
     public async Task<VerifyFacesFromImageResponse> VerifyAsync(VerifyFacesFromImageRequest request)
     {
+        if (request == null) throw new ArgumentNullException();
         if (request.FacePlugins == null) throw new NullReferenceException();
 
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
@@ -110,6 +112,7 @@ public class RecognitionService : AbstractBaseService
     
     public async Task<VerifyFacesFromImageResponse> VerifyAsync(VerifyFacesFromImageWithBase64Request request)
     {
+        if (request == null) throw new ArgumentNullException();
         if (request.FacePlugins == null) throw new NullReferenceException();
 
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";

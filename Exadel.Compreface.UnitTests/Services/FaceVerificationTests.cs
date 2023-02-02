@@ -38,7 +38,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
     }
 
     [Fact]
-    public async Task VerifyAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task VerifyAsync_TakesNullRequestModel_ThrowsArgumentNullException()
     {
         // Arrange
         SetupPostMultipart<FaceVerificationResponse>();
@@ -47,7 +47,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
         var responseCall = async () => await _service.VerifyAsync(null!);
 
         // Assert
-        await Assert.ThrowsAsync<NullReferenceException>(responseCall);
+        await Assert.ThrowsAsync<ArgumentNullException>(responseCall);
     }
 
     [Fact]
@@ -88,7 +88,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
     }
 
     [Fact]
-    public async Task VerifyBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task VerifyBase64Async_TakesNullRequestModel_ThrowsArgumentNullException()
     {
         // Arrange
         SetupPostJson<FaceVerificationResponse, Url>();
@@ -97,11 +97,11 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
         var responseCall = async () => await _service.VerifyAsync(null!);
 
         // Assert
-        await Assert.ThrowsAsync<NullReferenceException>(responseCall);
+        await Assert.ThrowsAsync<ArgumentNullException>(responseCall);
     }
 
     [Fact]
-    public async Task VerifyBase64ImageAsync_TakesIncorrectRequestModel_ThrowsArgumentArgumentNullException()
+    public async Task VerifyBase64ImageAsync_TakesIncorrectRequestModel_ThrowsArgumentNullReferenceException()
     {
         // Arrange
         var request = new FaceVerificationWithBase64Request();

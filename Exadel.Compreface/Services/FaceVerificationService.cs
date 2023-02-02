@@ -65,6 +65,7 @@ public class FaceVerificationService : AbstractBaseService
     
     public async Task<FaceVerificationResponse> VerifyAsync(FaceVerificationWithBase64Request request)
     {
+        if (request == null) throw new ArgumentNullException();
         if (request.FacePlugins == null) throw new NullReferenceException();
 
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/verification/verify";

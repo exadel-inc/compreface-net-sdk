@@ -58,6 +58,8 @@ public class SubjectExampleService : AbstractBaseService
 
     public async Task<AddBase64SubjectExampleResponse> AddAsync(AddBase64SubjectExampleRequest request)
     {
+        if (request == null) throw new ArgumentNullException();
+
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
@@ -73,6 +75,8 @@ public class SubjectExampleService : AbstractBaseService
 
     public async Task<ListAllSubjectExamplesResponse> ListAsync(ListAllSubjectExamplesRequest request)
     {
+        if (request == null) throw new ArgumentNullException();
+
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
@@ -89,6 +93,8 @@ public class SubjectExampleService : AbstractBaseService
 
     public async Task<DeleteAllExamplesResponse> DeleteAllAsync(DeleteAllExamplesRequest request)
     {
+        if (request == null) throw new ArgumentNullException();
+
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParam("subject", request.Subject);
@@ -101,6 +107,8 @@ public class SubjectExampleService : AbstractBaseService
 
     public async Task<DeleteImageByIdResponse> DeleteAsync(DeleteImageByIdRequest request)
     {
+        if (request == null) throw new ArgumentNullException();
+
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .AppendPathSegment(request.ImageId.ToString());
@@ -113,6 +121,7 @@ public class SubjectExampleService : AbstractBaseService
 
     public async Task<DeleteMultipleExamplesResponse> DeleteAsync(DeleteMultipleExampleRequest deleteMultipleExamplesRequest)
     {
+        if (deleteMultipleExamplesRequest == null) throw new ArgumentNullException();
         if (deleteMultipleExamplesRequest.ImageIdList == null) throw new NullReferenceException();
 
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces";
@@ -126,6 +135,8 @@ public class SubjectExampleService : AbstractBaseService
 
     public async Task<byte[]> DownloadAsync(DownloadImageByIdRequest downloadImageByIdRequest)
     {
+        if (downloadImageByIdRequest == null) throw new ArgumentNullException();
+
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/static";
         var requestUrlWithQueryParameters = requestUrl
             .AppendPathSegments(
@@ -140,6 +151,8 @@ public class SubjectExampleService : AbstractBaseService
 
     public async Task<byte[]> DownloadAsync(DownloadImageBySubjectIdRequest downloadImageBySubjectIdRequest)
     {
+        if (downloadImageBySubjectIdRequest == null) throw new ArgumentNullException();
+
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .AppendPathSegments(downloadImageBySubjectIdRequest.ImageId.ToString(), "/img");

@@ -127,7 +127,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task RenameAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task RenameAsync_TakesNullRequestModel_ThrowsArgumentNullException()
         {
             // Arrange
             SetupPutJson<RenameSubjectRequest>();
@@ -136,7 +136,7 @@ namespace Exadel.Compreface.UnitTests.Services
             var func = async () => await _service.RenameAsync(null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
@@ -176,7 +176,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task DeleteAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DeleteAsync_TakesNullRequestModel_ThrowsArgumentNullException()
         {
             // Arrange
             SetupDeleteJson<DeleteSubjectRequest>();
@@ -185,7 +185,7 @@ namespace Exadel.Compreface.UnitTests.Services
             var func = async () => await _service.DeleteAsync(null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]

@@ -72,13 +72,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task DetectAsync_TakesNullRequest_ThrowsException()
+        public async Task DetectAsync_TakesNullRequest_ThrowsArgumentNullException()
         {
             // Act
             var func = async () => await _faceDetectionService.DetectAsync((FaceDetectionRequest)null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
@@ -129,13 +129,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task DetectBase64Async_TakesNullRequest_ThrowsException()
+        public async Task DetectBase64Async_TakesNullRequest_ThrowsArgumentNullException()
         {
             // Act
-            var func = async () => await _faceDetectionService.DetectAsync((FaceDetectionBase64Request)null!);
+            var func = async () => await _faceDetectionService.DetectAsync(null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]

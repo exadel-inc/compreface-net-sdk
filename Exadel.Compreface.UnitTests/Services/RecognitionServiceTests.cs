@@ -61,7 +61,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task RecognizeAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task RecognizeAsync_TakesNullRequestModel_ThrowsArgumentNullException()
         {
             // Arrange
             SetupPostMultipart<RecognizeFaceFromImageResponse>();
@@ -70,11 +70,11 @@ namespace Exadel.Compreface.UnitTests.Services
             var func = async () => await _service.RecognizeAsync(null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
-        public async Task RecognizeFaceFromImage_TakesIncorrectRequestModel_ThrowsArgumentNullException()
+        public async Task RecognizeFaceFromImage_TakesIncorrectRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
             var request = new RecognizeFaceFromImageRequest();
@@ -131,7 +131,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task RecognizeBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task RecognizeBase64Async_TakesNullRequestModel_ThrowsArgumentNullException()
         {
             // Arrange
             SetupPostJson<RecognizeFaceFromImageResponse, Url>();
@@ -140,7 +140,7 @@ namespace Exadel.Compreface.UnitTests.Services
             var func = async () => await _service.RecognizeAsync(null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
@@ -203,7 +203,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task VerifyAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task VerifyAsync_TakesNullRequestModel_ThrowsArgumentNullException()
         {
             // Arrange
             SetupPostMultipart<VerifyFacesFromImageResponse>();
@@ -212,7 +212,7 @@ namespace Exadel.Compreface.UnitTests.Services
             var func = async () => await _service.VerifyAsync((VerifyFacesFromImageRequest)null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
@@ -273,7 +273,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task VerifyBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task VerifyBase64Async_TakesNullRequestModel_ThrowsArgumentNullException()
         {
             // Arrange
             SetupPostJson<VerifyFacesFromImageResponse, Url>();
@@ -282,11 +282,11 @@ namespace Exadel.Compreface.UnitTests.Services
             var func = async () => await _service.VerifyAsync((VerifyFacesFromImageWithBase64Request)null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
-        public async Task VerifyFacesFromBase64File_TakesIncorrectRequestModel_ThrowsArgumentNullException()
+        public async Task VerifyFacesFromBase64File_TakesIncorrectRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
             var request = new VerifyFacesFromImageWithBase64Request();

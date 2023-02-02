@@ -79,13 +79,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task AddAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task AddAsync_TakesNullRequestModel_ThrowsArgumentNullException()
         {
             //Act
-            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync((AddSubjectExampleRequest)null!);
+            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
@@ -144,13 +144,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task AddBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task AddBase64Async_TakesNullRequestModel_ThrowsArgumentNullException()
         {
             //Act
-            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync((AddBase64SubjectExampleRequest)null!);
+            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
@@ -228,13 +228,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task GetAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task GetAllAsync_TakesNullRequestModel_ThrowsArgumentNullException()
         {
             //Act
             var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ListAsync(null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
@@ -309,13 +309,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task DeleteAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DeleteAllAsync_TakesNullRequestModel_ThrowsArgumentNullException()
         {
             //Act
             var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAllAsync(null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
@@ -371,13 +371,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task DeleteAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DeleteAsync_TakesNullRequestModel_ThrowsArgumentNullException()
         {
             //Act
             var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync((DeleteImageByIdRequest)null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
@@ -447,13 +447,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task DeletMultipleAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DeletMultipleAsync_TakesNullRequestModel_ThrowsArgumentNullException()
         {
             //Act
             var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync((DeleteMultipleExampleRequest)null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
@@ -503,13 +503,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task DownloadAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DownloadAsync_TakesNullRequestModel_ThrowsArgumentNullException()
         {
             //Act
             var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadAsync((DownloadImageByIdRequest)null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
@@ -549,13 +549,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task DownloadImageBySubjectIdAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DownloadImageBySubjectIdAsync_TakesNullRequestModel_ThrowsArgumentNullException()
         {
             //Act
             var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadAsync((DownloadImageBySubjectIdRequest)null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]

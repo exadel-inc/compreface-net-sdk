@@ -96,17 +96,17 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task AddAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task AddAsync_TakesNullRequestModel_ThrowsArgumentNullException()
         {
             // Act
             var func = async () => await _subjectService.AddAsync(null!);
 
             // Assert
-            await Assert.ThrowsAsync<ServiceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
-        public async Task AddAsync_TakesNullRequestModel_ThrowsServiceException()
+        public async Task AddAsync_TakesRequestWithExistModel_ThrowsServiceException()
         {
             //Arrange 
             var addSubjectRequest = new AddSubjectRequest
@@ -116,7 +116,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             await _subjectService.AddAsync(addSubjectRequest);
 
             // Act
-            var func = async () => await _subjectService.AddAsync(null!);
+            var func = async () => await _subjectService.AddAsync(addSubjectRequest);
 
             // Assert
             await Assert.ThrowsAsync<ServiceException>(func);
@@ -155,13 +155,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task RenameAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task RenameAsync_TakesNullRequestModel_ThrowsArgumentNullException()
         {
             // Act
             var func = async () => await _subjectService.RenameAsync(null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
@@ -219,13 +219,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task DeleteAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DeleteAsync_TakesNullRequestModel_ThrowsArgumentNullException()
         {
             // Act
             var func = async () => await _subjectService.DeleteAsync(null!);
 
             // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]

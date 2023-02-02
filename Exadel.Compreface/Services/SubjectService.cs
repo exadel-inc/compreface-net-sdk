@@ -24,6 +24,8 @@ public class SubjectService : AbstractBaseService
 
     public async Task<AddSubjectResponse> AddAsync(AddSubjectRequest request)
     {
+        if (request == null) throw new ArgumentNullException();
+
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/subjects";
 
         var response = await PostJsonAsync<AddSubjectResponse>(requestUrl, request);
@@ -33,6 +35,7 @@ public class SubjectService : AbstractBaseService
 
     public async Task<RenameSubjectResponse> RenameAsync(RenameSubjectRequest request)
     {
+        if (request == null) throw new ArgumentNullException();
         if (string.IsNullOrEmpty(request.Subject)) throw new NullReferenceException();
 
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/subjects/{request.CurrentSubject}";
@@ -44,6 +47,8 @@ public class SubjectService : AbstractBaseService
 
     public async Task<DeleteSubjectResponse> DeleteAsync(DeleteSubjectRequest request)
     {
+        if (request == null) throw new ArgumentNullException();
+
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/subjects/{request.ActualSubject}";
 
         var response = await DeleteJsonAsync<DeleteSubjectResponse>(requestUrl);

@@ -64,7 +64,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
     }
 
     [Fact]
-    public async Task AddAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task AddAsync_TakesNullRequestModel_ThrowsArgumentNullException()
     {
         // Arrange
         SetupPostMultipart<AddSubjectExampleResponse>();
@@ -73,7 +73,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         var func = async () => await _service.AddAsync(null!);
 
         // Assert
-        await Assert.ThrowsAsync<NullReferenceException>(func);
+        await Assert.ThrowsAsync<ArgumentNullException>(func);
     }
 
     [Fact]
@@ -113,7 +113,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
     }
 
     [Fact]
-    public async Task AddBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task AddBase64Async_TakesNullRequestModel_ThrowsArgumentNullException()
     {
         // Arrange
         SetupPostJson<AddBase64SubjectExampleResponse, Url>();
@@ -122,7 +122,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         var func = async () => await _service.AddAsync(null!);
 
         // Assert
-        await Assert.ThrowsAsync<NullReferenceException>(func);
+        await Assert.ThrowsAsync<ArgumentNullException>(func);
     }
 
     [Fact]
@@ -166,7 +166,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
     }
 
     [Fact]
-    public async Task DeleteMultipleAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task DeleteMultipleAsync_TakesNullRequestModel_ThrowsArgumentNullException()
     {
         // Arrange
         SetupDeleteJson<DeleteImageByIdResponse, Url>();
@@ -175,7 +175,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         var func = async () => await _service.DeleteAsync((DeleteMultipleExampleRequest)null!);
 
         // Assert
-        await Assert.ThrowsAsync<NullReferenceException>(func);
+        await Assert.ThrowsAsync<ArgumentNullException>(func);
     }
 
     [Fact]
@@ -213,7 +213,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
     }
 
     [Fact]
-    public async Task DownloadAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task DownloadAsync_TakesNullRequestModel_ThrowsArgumentNullException()
     {
         // Arrange
         SetupGetBytesFromRemote();
@@ -222,7 +222,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         var func = async () => await _service.DownloadAsync((DownloadImageByIdRequest)null!);
 
         // Assert
-        await Assert.ThrowsAsync<NullReferenceException>(func);
+        await Assert.ThrowsAsync<ArgumentNullException>(func);
     }
 
     [Fact]
@@ -260,7 +260,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
     }
 
     [Fact]
-    public async Task DownloadImageBySubjectIdAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task DownloadImageBySubjectIdAsync_TakesNullRequestModel_ThrowsArgumentNullException()
     {
         // Arrange
         SetupGetBytesFromRemote();
@@ -269,7 +269,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         var func = async () => await _service.DownloadAsync((DownloadImageBySubjectIdRequest)null!);
 
         // Assert
-        await Assert.ThrowsAsync<NullReferenceException>(func);
+        await Assert.ThrowsAsync<ArgumentNullException>(func);
     }
 
     [Fact]
@@ -308,7 +308,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
     }
 
     [Fact]
-    public async Task GetAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task GetAllAsync_TakesNullRequestModel_ThrowsArgumentNullException()
     {
         // Arrange
         SetupGetJson<ListAllSubjectExamplesResponse>();
@@ -317,7 +317,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         var func = async () => await _service.ListAsync(null!);
 
         // Assert
-        await Assert.ThrowsAsync<NullReferenceException>(func);
+        await Assert.ThrowsAsync<ArgumentNullException>(func);
     }
 
     [Fact]
@@ -356,7 +356,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
     }
 
     [Fact]
-    public async Task DeleteAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task DeleteAllAsync_TakesNullRequestModel_ThrowsArgumentNullException()
     {
         // Arrange
         SetupDeleteJson<DeleteAllExamplesResponse, Url>();
@@ -365,7 +365,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         var func = async () => await _service.DeleteAllAsync(null!);
 
         // Assert
-        await Assert.ThrowsAsync<NullReferenceException>(func);
+        await Assert.ThrowsAsync<ArgumentNullException>(func);
     }
 
     [Fact]
@@ -404,7 +404,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
     }
 
     [Fact]
-    public async Task DeleteAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task DeleteAsync_TakesNullRequestModel_ThrowsArgumentNullException()
     {
         // Arrange
         SetupDeleteJson<DeleteImageByIdResponse, Url>();
@@ -413,6 +413,6 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         var func = async () => await _service.DeleteAsync((DeleteImageByIdRequest)null!);
 
         // Assert
-        await Assert.ThrowsAsync<NullReferenceException>(func);
+        await Assert.ThrowsAsync<ArgumentNullException>(func);
     }
 }

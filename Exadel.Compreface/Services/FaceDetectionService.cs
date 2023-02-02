@@ -15,6 +15,7 @@ namespace Exadel.Compreface.Services
 
         public async Task<FaceDetectionResponse> DetectAsync(FaceDetectionRequest faceDetectionRequest, bool isFileInTheRemoteServer = false)
         {
+            if (faceDetectionRequest == null) throw new ArgumentNullException();
             if (faceDetectionRequest.FacePlugins == null) throw new NullReferenceException();
             if (string.IsNullOrEmpty(faceDetectionRequest.FilePath)) throw new NullReferenceException();
 
@@ -56,6 +57,7 @@ namespace Exadel.Compreface.Services
 
         public async Task<FaceDetectionResponse> DetectAsync(FaceDetectionBase64Request faceDetectionRequest)
         {
+            if (faceDetectionRequest == null) throw new ArgumentNullException();
             if (faceDetectionRequest.FacePlugins == null) throw new NullReferenceException();
 
             var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/detection/detect";
