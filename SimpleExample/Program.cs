@@ -1,4 +1,5 @@
 ﻿using Exadel.Compreface.Clients;
+using Exadel.Compreface.Clients.Factories;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
@@ -25,44 +26,8 @@ var configuration = serviceProvider.GetRequiredService<IOptionsMonitor<Comprefac
 
 
 
-var client = new CompreFaceClient(configuration);
-client.GetClient();
-
-var faceDetectionRequest = new FaceDetectionRequest()
-{
-    FilePath = "http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcS6j6jazxVpBpf4ZdKMgUeN61C_s4EJPqI7NijX0PDep3SGXQ_bT9ap12h2MWoIolUIpngs3pApkIH-Kzw",
-    DetProbThreshold = 0.85m,
-    FacePlugins = new List<string>()
-            {
-                "age",
-                "gender",
-                "mask",
-                "calculator",
-            },
-    Status = true,
-};
-var result = await client.FaceDetectionService.FaceDetectionAsync(faceDetectionRequest, isFileInTheRemoteServer: true);
-
-var addSubjectExampleRequest = new AddSubjectExampleRequest()
-{
-    Subject = "API",
-    File = "http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcS6j6jazxVpBpf4ZdKMgUeN61C_s4EJPqI7NijX0PDep3SGXQ_bT9ap12h2MWoIolUIpngs3pApkIH-Kzw",
-    //FilePath = "https://raw.githubusercontent.com/exadel-inc/compreface-net-sdk/main/Exadel.Compreface.AcceptenceTests/Resources/Images/brad-pitt_24.jpg",
-};
-
-var createdSubjectExample = await client.SubjectExampleService.AddSubjectExampleAsync(addSubjectExampleRequest, isFileInTheRemoteServer: true);
-
-host.Run();
-
-
-
-
-
-
-
-
-
-
+//var client = new CompreFaceClient(configuration);
+//client.GetClient();
 
 
 var recognizeFaceFromImageRequest = new RecognizeFaceFromImageRequest()
@@ -78,8 +43,32 @@ var recognizeFaceFromImageRequest = new RecognizeFaceFromImageRequest()
             },
     Status = true,
 };
+var faceDetectionRequest = new FaceDetectionRequest()
+{
+    FilePath = "http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcS6j6jazxVpBpf4ZdKMgUeN61C_s4EJPqI7NijX0PDep3SGXQ_bT9ap12h2MWoIolUIpngs3pApkIH-Kzw",
+    DetProbThreshold = 0.85m,
+    FacePlugins = new List<string>()
+            {
+                "age",
+                "gender",
+                "mask",
+                "calculator",
+            },
+    Status = true,
+};
+//var result = await client.FaceDetectionService.FaceDetectionAsync(faceDetectionRequest, isFileInTheRemoteServer: true);
 
-var FaceVerificationExampleRequest = new FaceVerificationRequest()
+var addSubjectExampleRequest = new AddSubjectExampleRequest()
+{
+    Subject = "API",
+    File = "http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcS6j6jazxVpBpf4ZdKMgUeN61C_s4EJPqI7NijX0PDep3SGXQ_bT9ap12h2MWoIolUIpngs3pApkIH-Kzw",
+    //FilePath = "https://raw.githubusercontent.com/exadel-inc/compreface-net-sdk/main/Exadel.Compreface.AcceptenceTests/Resources/Images/brad-pitt_24.jpg",
+};
+
+//var createdSubjectExample = await client.SubjectExampleService.AddSubjectExampleAsync(addSubjectExampleRequest, isFileInTheRemoteServer: true);
+
+
+var faceVerificationExampleRequest = new FaceVerificationRequest()
 {
     DetProbThreshold = 0.85m,
     FacePlugins = new List<string>()
@@ -99,6 +88,39 @@ var FaceVerificationExampleRequest = new FaceVerificationRequest()
     //TargetImageFilePath = "https://raw.githubusercontent.com/exadel-inc/compreface-net-sdk/main/Exadel.Compreface.AcceptenceTests/Resources/Images/brad-pitt_24.jpg",
 
 };
+
+//var type = new FaceVerificationFactory(configuration.CurrentValue.FaceVerificationApiKey,configuration);
+
+//FaceVerificationClient client = (FaceVerificationClient)type.GetClient();
+//var result = client.FaceVerificationService.VerifyImageAsync(faceVerificationExampleRequest);
+
+
+
+//var type2 = new FaceRecognitionFactory(configuration.CurrentValue.FaceVerificationApiKey, configuration);
+//FaceRecognitionClient client2 = (FaceRecognitionClient)type2.GetClient();
+//var result2 = client2.SubjectExampleService.AddSubjectExampleAsync(addSubjectExampleRequest, isFileInTheRemoteServer: true);
+
+
+var type3 = new FaceDetectionFactory(configuration.CurrentValue.FaceDetectionApiKey, configuration);
+FaceDetectionClient client3 = (FaceDetectionClient)type3.GetClient();   
+var result3 = client3.FaceDetectionService.FaceDetectionAsync(faceDetectionRequest, isFileInTheRemoteServer: true);
+
+host.Run();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //var createdSubjectExample = await faceRecognitionClient.RecognitionService.RecognizeFaceFromImage(recognizeFaceFromImageRequest, isFileInTheRemoteServer: true);
