@@ -6,22 +6,23 @@ using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
 using Exadel.Compreface.Helpers;
 using Flurl;
 using Flurl.Http;
+using Microsoft.Extensions.Options;
 
 namespace Exadel.Compreface.Services;
 
 public class FaceVerificationService
 {
-    private readonly IComprefaceConfiguration _comprefaceConfiguration;
+    private readonly IOptionsMonitor<ComprefaceConfiguration> _configuration;
     private readonly IApiClient _apiClient;
 
-    public FaceVerificationService(IComprefaceConfiguration configuration, IApiClient apiClient)
+    public FaceVerificationService(IOptionsMonitor<ComprefaceConfiguration> configuration, IApiClient apiClient)
     {
-        _comprefaceConfiguration = configuration;
+        _configuration = configuration;
         _apiClient = apiClient;
     }
     public async Task<FaceVerificationResponse> VerifyImageAsync(FaceVerificationRequest request, bool isFileInTheRemoteServer = false)
     {
-        var requestUrl = $"{_comprefaceConfiguration.Domain}:{_comprefaceConfiguration.Port}/api/v1/verification/verify";
+        var requestUrl = $"{_configuration.CurrentValue.Domain}:{_configuration.CurrentValue.Port}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -67,7 +68,7 @@ public class FaceVerificationService
 
     public async Task<FaceVerificationResponse> VerifyBase64ImageAsync(FaceVerificationWithBase64Request request)
     {
-        var requestUrl = $"{_comprefaceConfiguration.Domain}:{_comprefaceConfiguration.Port}/api/v1/verification/verify";
+        var requestUrl = $"{_configuration.CurrentValue.Domain}:{_configuration.CurrentValue.Port}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {

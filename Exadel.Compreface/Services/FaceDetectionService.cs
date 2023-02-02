@@ -6,22 +6,23 @@ using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Exadel.Compreface.Helpers;
 using Flurl;
 using Flurl.Http;
+using Microsoft.Extensions.Options;
 
 namespace Exadel.Compreface.Services
 {
     public class FaceDetectionService
     {
-        private readonly IComprefaceConfiguration _configuration;
+        private readonly IOptionsMonitor<ComprefaceConfiguration> _configuration;
         private readonly IApiClient _apiClient;
 
-        public FaceDetectionService(ComprefaceConfiguration configuration, IApiClient apiClient)
+        public FaceDetectionService(IOptionsMonitor<ComprefaceConfiguration> configuration, IApiClient apiClient)
         {
             _configuration= configuration;
             _apiClient = apiClient;
         }
         public async Task<FaceDetectionResponse> FaceDetectionAsync(FaceDetectionRequest faceDetectionRequest, bool isFileInTheRemoteServer = false)
         {
-            var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/detection/detect";
+            var requestUrl = $"{_configuration.CurrentValue.Domain}:{_configuration.CurrentValue.Port}/api/v1/detection/detect";
             var requestUrlWithQueryParameters = requestUrl
                 .SetQueryParams(new
                 {
@@ -59,7 +60,7 @@ namespace Exadel.Compreface.Services
 
         public async Task<FaceDetectionResponse> FaceDetectionBase64Async(FaceDetectionBase64Request faceDetectionRequest)
         {
-            var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/detection/detect";
+            var requestUrl = $"{_configuration.CurrentValue.Domain}:{_configuration.CurrentValue.Port}/api/v1/detection/detect";
             var requestUrlWithQueryParameters = requestUrl
                 .SetQueryParams(new
                 {

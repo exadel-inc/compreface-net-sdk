@@ -2,30 +2,32 @@
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace Exadel.Compreface.Clients
 {
     public class FaceRecognitionClient
     {
+        private readonly IOptionsMonitor<ComprefaceConfiguration> _configuration;
         public SubjectExampleService SubjectExampleService { get; private set; }
 
         public SubjectService SubjectService { get; private set; }
 
         public RecognitionService RecognitionService { get; private set; }
 
-        public FaceRecognitionClient(string apiKey, string domain, string port) : this(new ComprefaceConfiguration(apiKey, domain, port))
-        { }
 
-        public FaceRecognitionClient(IConfiguration configuration, string sectionForApiKey, string sectionForDomain, string sectionForPort) : this(new ComprefaceConfiguration(configuration, sectionForApiKey, sectionForDomain, sectionForPort))
-        { }
+        public FaceRecognitionClient(IOptionsMonitor<ComprefaceConfiguration> configuration)
+        {
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(ComprefaceConfiguration));
+        }
 
         public FaceRecognitionClient(ComprefaceConfiguration configuration)
         {
-            var apiClient = new ApiClient(configuration.ApiKey);
+            var apiClient = new ApiClient(configuration.FaceRecognitionApiKey);
 
-            SubjectExampleService = new SubjectExampleService(apiClient: apiClient, configuration: configuration);
-            SubjectService = new SubjectService(apiClient: apiClient, configuration: configuration);
-            RecognitionService = new RecognitionService(apiClient: apiClient, configuration: configuration);
+            SubjectExampleService = new SubjectExampleService(apiClient: apiClient, configuration: _configuration);
+            SubjectService = new SubjectService(apiClient: apiClient, configuration: _configuration);
+            RecognitionService = new RecognitionService(apiClient: apiClient, configuration: _configuration);
 
             ConfigInitializer.InitializeSnakeCaseJsonConfigs();
         }

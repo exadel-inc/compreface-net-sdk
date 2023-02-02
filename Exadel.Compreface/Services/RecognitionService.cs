@@ -8,22 +8,23 @@ using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
 using Exadel.Compreface.Helpers;
 using Flurl;
 using Flurl.Http;
+using Microsoft.Extensions.Options;
 
 namespace Exadel.Compreface.Services;
 
 public class RecognitionService
 {
-    private readonly ComprefaceConfiguration _configuration;
+    private readonly IOptionsMonitor<ComprefaceConfiguration> _configuration;
     private readonly IApiClient _apiClient;
 
-    public RecognitionService(ComprefaceConfiguration configuration, IApiClient apiClient)
+    public RecognitionService(IOptionsMonitor<ComprefaceConfiguration> configuration, IApiClient apiClient)
     {
         _configuration = configuration;
         _apiClient = apiClient;
     }
     public async Task<RecognizeFaceFromImageResponse> RecognizeFaceFromImage(RecognizeFaceFromImageRequest request, bool isFileInTheRemoteServer = false)
     {
-        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/recognize";
+        var requestUrl = $"{_configuration.CurrentValue.Domain}:{_configuration.CurrentValue.Port}/api/v1/recognition/recognize";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -64,7 +65,7 @@ public class RecognitionService
     public async Task<RecognizeFaceFromImageResponse> RecognizeFaceFromBase64File(
         RecognizeFacesFromImageWithBase64Request request)
     {
-        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/recognize";
+        var requestUrl = $"{_configuration.CurrentValue.Domain}:{_configuration.CurrentValue.Port}/api/v1/recognition/recognize";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -85,7 +86,7 @@ public class RecognitionService
 
     public async Task<VerifyFacesFromImageResponse> VerifyFacesFromImage(VerifyFacesFromImageRequest request)
     {
-        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
+        var requestUrl = $"{_configuration.CurrentValue.Domain}:{_configuration.CurrentValue.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -106,7 +107,7 @@ public class RecognitionService
     
     public async Task<VerifyFacesFromImageResponse> VerifyFacesFromBase64File(VerifyFacesFromImageWithBase64Request request)
     {
-        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
+        var requestUrl = $"{_configuration.CurrentValue.Domain}:{_configuration.CurrentValue.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {

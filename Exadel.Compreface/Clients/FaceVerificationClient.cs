@@ -2,24 +2,26 @@
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace Exadel.Compreface.Clients
 {
     public class FaceVerificationClient
     {
+        private readonly IOptionsMonitor<ComprefaceConfiguration> _configuration;
         public FaceVerificationService FaceVerificationService { get; set; }
 
-        public FaceVerificationClient(string apiKey, string domain, string port) : this(new ComprefaceConfiguration(apiKey, domain, port))
-        { }
 
-        public FaceVerificationClient(IConfiguration configuration, string sectionForApiKey, string sectionForDomain, string sectionForPort) : this(new ComprefaceConfiguration(configuration, sectionForApiKey, sectionForDomain, sectionForPort))
-        { }
+        public FaceVerificationClient(IOptionsMonitor<ComprefaceConfiguration> configuration)
+        { 
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(ComprefaceConfiguration));
+        }
 
         public FaceVerificationClient(ComprefaceConfiguration configuration)
         {
-            var apiClient = new ApiClient(configuration.ApiKey);
+            var apiClient = new ApiClient(configuration.FaceVerificationApiKey);
 
-            FaceVerificationService = new FaceVerificationService(apiClient: apiClient, configuration: configuration);
+            FaceVerificationService = new FaceVerificationService(apiClient: apiClient, configuration: _configuration);
 
             ConfigInitializer.InitializeSnakeCaseJsonConfigs();
         }
