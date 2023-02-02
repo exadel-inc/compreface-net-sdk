@@ -15,7 +15,7 @@ public class Program
     
     private static string VerificationService => nameof(VerificationService);
 
-    static async Task Main(string[] args)
+    static void Main()
     {
         var host = Host.CreateDefaultBuilder()
             .ConfigureServices(s => 

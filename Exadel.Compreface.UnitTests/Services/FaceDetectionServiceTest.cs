@@ -20,7 +20,8 @@ namespace Exadel.Compreface.UnitTests.Services
             // Arrange
             var request = new FaceDetectionRequest()
             {
-                FacePlugins = new List<string>()
+                FacePlugins = new List<string>(),
+                FilePath = GetRandomString()
             };
 
             SetupPostMultipart<FaceDetectionResponse>();
@@ -41,7 +42,8 @@ namespace Exadel.Compreface.UnitTests.Services
             // Arrange
             var request = new FaceDetectionRequest()
             {
-                FacePlugins = new List<string>()
+                FacePlugins = new List<string>(),
+                FilePath = GetRandomString()
             };
 
             SetupPostMultipart<FaceDetectionResponse>();
@@ -81,7 +83,7 @@ namespace Exadel.Compreface.UnitTests.Services
             var func = async () => await _service.DetectAsync(request);
 
             // Assert
-            await Assert.ThrowsAsync<ArgumentNullException>(func);
+            await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
         [Fact]
@@ -151,7 +153,7 @@ namespace Exadel.Compreface.UnitTests.Services
             var func = async () => await _service.DetectAsync(request);
 
             // Assert
-            await Assert.ThrowsAsync<ArgumentNullException>(func);
+            await Assert.ThrowsAsync<NullReferenceException>(func);
         }
     }
 }

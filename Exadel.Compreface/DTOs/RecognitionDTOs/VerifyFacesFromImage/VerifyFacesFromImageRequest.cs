@@ -4,5 +4,5 @@ namespace Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 
 public class VerifyFacesFromImageRequest : BaseVerifyFacesFromImageRequest
 {
-    public string FilePath { get; set; }
+    public string? FilePath { get; set; }
 }

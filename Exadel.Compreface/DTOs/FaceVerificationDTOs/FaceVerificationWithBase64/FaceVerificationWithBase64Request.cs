@@ -4,7 +4,7 @@ namespace Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64
 
 public class FaceVerificationWithBase64Request : BaseFaceRequest
 {
-    public string SourceImageWithBase64 { get; set; }
+    public string? SourceImageWithBase64 { get; set; }
     
-    public string TargetImageWithBase64 { get; set; }
+    public string? TargetImageWithBase64 { get; set; }
 }

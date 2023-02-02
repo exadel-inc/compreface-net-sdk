@@ -22,7 +22,8 @@ namespace Exadel.Compreface.UnitTests.Services
             // Arrange
             var request = new RecognizeFaceFromImageRequest()
             {
-                FacePlugins = new List<string>()
+                FacePlugins = new List<string>(),
+                FilePath = GetRandomString()
             };
 
             SetupPostMultipart<RecognizeFaceFromImageResponse>();
@@ -43,7 +44,8 @@ namespace Exadel.Compreface.UnitTests.Services
             // Arrange
             var request = new RecognizeFaceFromImageRequest()
             {
-                FacePlugins = new List<string>()
+                FacePlugins = new List<string>(),
+                FilePath = GetRandomString()
             };
 
             SetupPostMultipart<RecognizeFaceFromImageResponse>();
@@ -83,7 +85,7 @@ namespace Exadel.Compreface.UnitTests.Services
             var func = async () => await _service.RecognizeAsync(request);
 
             // Assert
-            await Assert.ThrowsAsync<ArgumentNullException>(func);
+            await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
         [Fact]
@@ -153,7 +155,7 @@ namespace Exadel.Compreface.UnitTests.Services
             var func = async () => await _service.RecognizeAsync(request);
 
             // Assert
-            await Assert.ThrowsAsync<ArgumentNullException>(func);
+            await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
         [Fact]
@@ -162,7 +164,8 @@ namespace Exadel.Compreface.UnitTests.Services
             // Arrange
             var request = new VerifyFacesFromImageRequest()
             {
-                FacePlugins = new List<string>()
+                FacePlugins = new List<string>(),
+                FilePath = GetRandomString()
             };
 
             SetupPostMultipart<VerifyFacesFromImageResponse>();
@@ -183,7 +186,8 @@ namespace Exadel.Compreface.UnitTests.Services
             // Arrange
             var request = new VerifyFacesFromImageRequest()
             {
-                FacePlugins = new List<string>()
+                FacePlugins = new List<string>(),
+                FilePath = GetRandomString()
             };
 
             SetupPostMultipart<VerifyFacesFromImageResponse>();
@@ -223,7 +227,7 @@ namespace Exadel.Compreface.UnitTests.Services
             var func = async () => await _service.VerifyAsync(request);
 
             // Assert
-            await Assert.ThrowsAsync<ArgumentNullException>(func);
+            await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
         [Fact]
@@ -293,7 +297,7 @@ namespace Exadel.Compreface.UnitTests.Services
             var func = async () => await _service.VerifyAsync(request);
 
             // Assert
-            await Assert.ThrowsAsync<ArgumentNullException>(func);
+            await Assert.ThrowsAsync<NullReferenceException>(func);
         }
     }
 }

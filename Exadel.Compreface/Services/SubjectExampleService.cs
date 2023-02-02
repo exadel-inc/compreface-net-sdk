@@ -21,6 +21,8 @@ public class SubjectExampleService : AbstractBaseService
 
     public async Task<AddSubjectExampleResponse> AddAsync(AddSubjectExampleRequest request, bool isFileInTheRemoteServer = false)
     {
+        if (string.IsNullOrEmpty(request.File)) throw new NullReferenceException();
+
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
@@ -111,6 +113,8 @@ public class SubjectExampleService : AbstractBaseService
 
     public async Task<DeleteMultipleExamplesResponse> DeleteAsync(DeleteMultipleExampleRequest deleteMultipleExamplesRequest)
     {
+        if (deleteMultipleExamplesRequest.ImageIdList == null) throw new NullReferenceException();
+
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .AppendPathSegment("delete");

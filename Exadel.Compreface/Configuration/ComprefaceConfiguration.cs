@@ -9,9 +9,6 @@ public class ComprefaceConfiguration : IComprefaceConfiguration
     public string Port { get; set; }
 
     public string ApiKey { get; set; }
-
-    public ComprefaceConfiguration()
-    { }
     
     public ComprefaceConfiguration(string apiKey, string domain, string port)
     {

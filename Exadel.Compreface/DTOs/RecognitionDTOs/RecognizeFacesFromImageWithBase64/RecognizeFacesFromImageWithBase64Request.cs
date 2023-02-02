@@ -4,5 +4,5 @@ namespace Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase
 
 public class RecognizeFacesFromImageWithBase64Request : BaseRecognizeFaceFromImageRequest
 {
-    public string FileBase64Value { get; set; }
+    public string? FileBase64Value { get; set; }
 }

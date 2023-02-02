@@ -129,6 +129,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task RenameAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
+            await _subjectService.DeleteAllAsync();
             await _subjectService.AddAsync(_addSubjectRequest);
 
             // Act
@@ -166,17 +167,19 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         [Fact]
         public async Task RenameAsync_TakesNullRequestModel_ThrowsServiceException()
         {
-            //Arrange 
+            //Arrange
             var addSubjectRequest = new AddSubjectRequest
             {
                 Subject = TEST_SUBJECT_NAME
             };
+
+            await _subjectService.DeleteAllAsync();
             await _subjectService.AddAsync(addSubjectRequest);
 
             var renameSubjectRequest = new RenameSubjectRequest
             {
                 CurrentSubject = addSubjectRequest.Subject,
-                Subject = ""
+                Subject = RENAMED_SUBJECT_NAME
             };
 
             // Act

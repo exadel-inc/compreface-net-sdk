@@ -15,6 +15,10 @@ public class FaceVerificationService : AbstractBaseService
 
     public async Task<FaceVerificationResponse> VerifyAsync(FaceVerificationRequest request, bool isFileInTheRemoteServer = false)
     {
+        if (request.FacePlugins == null) throw new NullReferenceException();
+        if (string.IsNullOrEmpty(request.SourceImageFilePath)) throw new NullReferenceException();
+        if (string.IsNullOrEmpty(request.TargetImageFilePath)) throw new NullReferenceException();
+
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
@@ -61,6 +65,8 @@ public class FaceVerificationService : AbstractBaseService
     
     public async Task<FaceVerificationResponse> VerifyAsync(FaceVerificationWithBase64Request request)
     {
+        if (request.FacePlugins == null) throw new NullReferenceException();
+
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new

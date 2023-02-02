@@ -14,11 +14,11 @@ public partial class ApiClientTests : IDisposable
     {
         _httpTest = new HttpTest();
         _service = new(new ComprefaceConfiguration
-        {
-            ApiKey = GetRandomString(),
-            Domain = GetRandomString(),
-            Port = GetRandomString(),
-        });
+        (
+            apiKey: GetRandomString(),
+            domain: GetRandomString(),
+            port: GetRandomString()
+        ));
     }
 
     private const string RequestUrl = "http://site.com";

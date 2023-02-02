@@ -21,7 +21,9 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
         // Arrange
         var request = new FaceVerificationRequest()
         {
-            FacePlugins = new List<string>()
+            FacePlugins = new List<string>(),
+            SourceImageFilePath = GetRandomString(),
+            TargetImageFilePath = GetRandomString()
         };
 
         SetupPostMultipart<FaceVerificationResponse>();
@@ -60,7 +62,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
         var responseCall = async () => await _service.VerifyAsync(request);
 
         // Assert
-        await Assert.ThrowsAsync<ArgumentNullException>(responseCall);
+        await Assert.ThrowsAsync<NullReferenceException>(responseCall);
     }
 
     [Fact]
@@ -110,6 +112,6 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
         var responseCall = async () => await _service.VerifyAsync(request);
 
         // Assert
-        await Assert.ThrowsAsync<ArgumentNullException>(responseCall);
+        await Assert.ThrowsAsync<NullReferenceException>(responseCall);
     }
 }

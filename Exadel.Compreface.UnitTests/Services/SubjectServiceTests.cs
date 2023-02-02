@@ -88,7 +88,10 @@ namespace Exadel.Compreface.UnitTests.Services
         public async Task RenameAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
-            var request = new RenameSubjectRequest();
+            var request = new RenameSubjectRequest()
+            {
+                Subject = GetRandomString()
+            };
 
             SetupPutJson<RenameSubjectResponse>();
 
@@ -106,7 +109,10 @@ namespace Exadel.Compreface.UnitTests.Services
         public async Task RenameAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
-            var request = new RenameSubjectRequest();
+            var request = new RenameSubjectRequest()
+            {
+                Subject = GetRandomString()
+            };
 
             SetupPutJson<RenameSubjectResponse>();
 

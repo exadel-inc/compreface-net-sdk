@@ -6,9 +6,11 @@ var client = new CompreFaceClient(
     domain: "http://localhost",
     port: "8000");
 
-var subjects = await client.GetService<SubjectService>("recognition api key...").ListAsync();
+var response = await client.GetService<SubjectService>("recognition api key...").ListAsync();
 
-foreach (var subject in subjects.Subjects)
+if (response.Subjects == null) throw new NullReferenceException();
+
+foreach (var subject in response.Subjects)
 {
     Console.WriteLine(subject);
 }

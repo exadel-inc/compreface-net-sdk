@@ -5,12 +5,12 @@ namespace Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 
 public class RecognizeFaceFromImageResponse
 {
-    public IList<Result> Result { get; set; }
+    public IList<Result>? Result { get; set; }
 
-    public PluginVersions PluginsVersions { get; set; }
+    public PluginVersions? PluginsVersions { get; set; }
 }
 
 public class Result : BaseResult
 {
-    public IList<SimilarSubject> Subjects { get; set; }
+    public IList<SimilarSubject>? Subjects { get; set; }
 }

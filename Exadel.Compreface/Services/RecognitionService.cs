@@ -1,5 +1,6 @@
 ﻿using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
+using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
@@ -17,6 +18,9 @@ public class RecognitionService : AbstractBaseService
 
     public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFaceFromImageRequest request, bool isFileInTheRemoteServer = false)
     {
+        if (request.FacePlugins == null) throw new NullReferenceException();
+        if (string.IsNullOrEmpty(request.FilePath)) throw new NullReferenceException();
+
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/recognize";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
@@ -58,6 +62,8 @@ public class RecognitionService : AbstractBaseService
     public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(
         RecognizeFacesFromImageWithBase64Request request)
     {
+        if (request.FacePlugins == null) throw new NullReferenceException();
+
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/recognize";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
@@ -79,6 +85,8 @@ public class RecognitionService : AbstractBaseService
 
     public async Task<VerifyFacesFromImageResponse> VerifyAsync(VerifyFacesFromImageRequest request)
     {
+        if (request.FacePlugins == null) throw new NullReferenceException();
+
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
@@ -88,6 +96,8 @@ public class RecognitionService : AbstractBaseService
                 face_plugins = string.Join(",", request.FacePlugins),
                 status = request.Status,
             });
+
+        if (request.FilePath == null) throw new NullReferenceException();
 
         var response = await 
             PostMultipartAsync<VerifyFacesFromImageResponse>(
@@ -100,6 +110,8 @@ public class RecognitionService : AbstractBaseService
     
     public async Task<VerifyFacesFromImageResponse> VerifyAsync(VerifyFacesFromImageWithBase64Request request)
     {
+        if (request.FacePlugins == null) throw new NullReferenceException();
+
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new

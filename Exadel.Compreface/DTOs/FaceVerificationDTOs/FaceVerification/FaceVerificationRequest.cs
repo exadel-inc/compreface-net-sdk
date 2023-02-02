@@ -4,7 +4,7 @@ namespace Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 
 public class FaceVerificationRequest : BaseFaceRequest
 {
-    public string SourceImageFilePath { get; set; }
+    public string? SourceImageFilePath { get; set; }
 
-    public string TargetImageFilePath { get; set; }
+    public string? TargetImageFilePath { get; set; }
 }

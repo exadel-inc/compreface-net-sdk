@@ -8,6 +8,7 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteMultipleExamples;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageById;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageBySubjectId;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
+using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.DTOs.HelperDTOs;
 using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services;
@@ -47,6 +48,8 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             //Act
             var resultList = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ListAsync(
                 new ListAllSubjectExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
+
+            if (resultList.Faces == null) throw new NullReferenceException();
 
             var actualSubjectExample = resultList.Faces
                 .First(x => x.ImageId == expectedAddExampleSubjectResponse.ImageId & x.Subject == expectedAddExampleSubjectResponse.Subject);
@@ -115,6 +118,8 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             //Act
             var resultList = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ListAsync(
                 new ListAllSubjectExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
+
+            if (resultList.Faces == null) throw new NullReferenceException();
 
             var actualSubjectExample = resultList.Faces
                     .First(x => x.ImageId == expectedAddBase64SubjectExampleResponse.ImageId & x.Subject == expectedAddBase64SubjectExampleResponse.Subject);
@@ -189,7 +194,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             //Act
             var actualAllSubjectExamplesResponse = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ListAsync(allSubjectExamples);
-            var actualCount = actualAllSubjectExamplesResponse.Faces.Count;
+            var actualCount = actualAllSubjectExamplesResponse.Faces?.Count;
 
             //Assert
             Assert.Equal(actualCount, expectedCount);
@@ -410,7 +415,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             var actualResponse = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync(
                 new DeleteMultipleExampleRequest() { ImageIdList = unnecessaryExampleList });
 
-            var actualFacesCount = actualResponse.Faces.Count;
+            var actualFacesCount = actualResponse.Faces?.Count;
 
             //Assert
             Assert.Equal(expectedFacesCount, actualFacesCount);

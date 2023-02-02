@@ -1,4 +1,5 @@
 ﻿using Exadel.Compreface.Configuration;
+using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteMultipleExamples;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteAllSubjects;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
@@ -32,6 +33,8 @@ public class SubjectService : AbstractBaseService
 
     public async Task<RenameSubjectResponse> RenameAsync(RenameSubjectRequest request)
     {
+        if (string.IsNullOrEmpty(request.Subject)) throw new NullReferenceException();
+
         var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/subjects/{request.CurrentSubject}";
 
         var response = await PutJsonAsync<RenameSubjectResponse>(requestUrl, body: request.Subject);

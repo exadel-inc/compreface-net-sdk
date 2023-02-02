@@ -4,6 +4,6 @@ namespace Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64
 {
     public class FaceDetectionBase64Request : BaseFaceRequest
     {
-        public string File { get; set; }
+        public string? File { get; set; }
     }
 }

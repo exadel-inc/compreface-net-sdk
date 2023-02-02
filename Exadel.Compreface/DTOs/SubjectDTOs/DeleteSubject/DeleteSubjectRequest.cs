@@ -2,5 +2,5 @@
 
 public class DeleteSubjectRequest
 {
-    public string ActualSubject { get; set; }
+    public string? ActualSubject { get; set; }
 }

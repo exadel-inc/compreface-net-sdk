@@ -4,7 +4,7 @@ namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
 
 public class ListAllSubjectExamplesResponse
 {
-    public IList<Face> Faces { get; set; }
+    public IList<Face>? Faces { get; set; }
 
     public int PageNumber { get; set; }
 

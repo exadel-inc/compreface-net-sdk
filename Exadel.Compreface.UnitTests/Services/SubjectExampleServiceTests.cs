@@ -25,7 +25,10 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
     public async Task AddAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
-        var request = new AddSubjectExampleRequest();
+        var request = new AddSubjectExampleRequest()
+        {
+            File = GetRandomString()
+        };
 
         SetupPostMultipart<AddSubjectExampleResponse>();
         
@@ -43,7 +46,10 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
     public async Task AddAsync_TakesRequestModel_ReturnsNotNull()
     {
         // Arrange
-        var request = new AddSubjectExampleRequest();
+        var request = new AddSubjectExampleRequest()
+        {
+            File = GetRandomString()
+        };
 
         SetupPostMultipart<AddSubjectExampleResponse>();
 
@@ -123,7 +129,10 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
     public async Task DeleteMultipleAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
-        var request = new DeleteMultipleExampleRequest();
+        var request = new DeleteMultipleExampleRequest()
+        {
+            ImageIdList = new List<Guid>()
+        };
 
         SetupPostJson<List<Face>, Url>();
 
@@ -140,7 +149,10 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
     public async Task DeleteMultipleAsync_TakesRequestModel_ReturnsNotNull()
     {
         // Arrange
-        var request = new DeleteMultipleExampleRequest();
+        var request = new DeleteMultipleExampleRequest()
+        {
+            ImageIdList = new List<Guid>()
+        };
 
         SetupPostJson<List<Face>, Url>();
 
