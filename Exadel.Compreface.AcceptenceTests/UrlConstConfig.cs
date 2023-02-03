@@ -36,8 +36,13 @@
 
         static UrlConstConfig()
         {
-            FILE_PATH = Path.GetFullPath(@"..\..\..\Resources\Images\pexels-jonathan-yakubu.jpg");
-            PATH_OF_WRONG_FILE = Path.GetFullPath(@"..\..\..\Resources\Images\pexels.jpg");
+            var rootPath = Directory.GetCurrentDirectory();
+            var debugPath = Directory.GetParent(rootPath)?.ToString();
+            var binPath = Directory.GetParent(debugPath!)?.ToString();
+            var projectPath = Directory.GetParent(binPath!)?.ToString();
+
+            FILE_PATH = Path.Combine(projectPath!, "Resources", "Images", "pexels-jonathan-yakubu.jpg");
+            PATH_OF_WRONG_FILE = Path.Combine(projectPath!, "Resources", "Images", "pexels.jpg");
         }
     }
 }
