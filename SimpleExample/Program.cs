@@ -1,4 +1,5 @@
 ﻿using Exadel.Compreface.Clients;
+using Exadel.Compreface.Clients.Config;
 using Exadel.Compreface.Clients.Interfaces;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
@@ -75,6 +76,7 @@ var faceVerificationExampleRequest = new FaceVerificationRequest()
     TargetImageFilePath = "http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcS6j6jazxVpBpf4ZdKMgUeN61C_s4EJPqI7NijX0PDep3SGXQ_bT9ap12h2MWoIolUIpngs3pApkIH-Kzw",
 
 };
+ConfigInitializer.InitializeSnakeCaseJsonConfigs();
 var result3 = faceVerificationService.VerifyImageAsync(faceVerificationExampleRequest, true);
 
 var recognizeFaceFromImageRequest = new RecognizeFaceFromImageRequest()
