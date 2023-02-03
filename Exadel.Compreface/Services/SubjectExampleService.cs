@@ -15,10 +15,11 @@ using System;
 using System.Text;
 using Flurl.Http;
 using Microsoft.Extensions.Options;
+using Exadel.Compreface.Services.Interfaces;
 
 namespace Exadel.Compreface.Services;
 
-public class SubjectExampleService
+public class SubjectExampleService : IFaceRecognitionService
 {
     private readonly IOptionsMonitor<ComprefaceConfiguration> _configuration;
     private readonly IApiClient _apiClient;

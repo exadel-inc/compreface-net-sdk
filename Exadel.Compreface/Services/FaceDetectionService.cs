@@ -4,13 +4,14 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Exadel.Compreface.Helpers;
+using Exadel.Compreface.Services.Interfaces;
 using Flurl;
 using Flurl.Http;
 using Microsoft.Extensions.Options;
 
 namespace Exadel.Compreface.Services
 {
-    public class FaceDetectionService
+    public class FaceDetectionService: IFaceDetectionService
     {
         private readonly IOptionsMonitor<ComprefaceConfiguration> _configuration;
         private readonly IApiClient _apiClient;
