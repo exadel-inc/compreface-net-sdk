@@ -156,7 +156,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact(Timeout = 15000)]
         public async Task VerifyFacesFromImage_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Assert

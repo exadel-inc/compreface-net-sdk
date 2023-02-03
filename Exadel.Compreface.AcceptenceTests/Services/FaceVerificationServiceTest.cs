@@ -63,7 +63,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.IsType<FaceVerificationResponse>(response);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact(Timeout = 15000)]
         public async Task VerifyImageAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Act

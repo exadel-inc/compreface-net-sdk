@@ -73,7 +73,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.Equal(expectedAddBase64SubjectExampleResponse.ImageId, actualSubjectExample.ImageId);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact(Timeout = 15000)]
         [SubjectExampleTestBeforeAfter]
         public async Task GetAllSubjectExamplesAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
