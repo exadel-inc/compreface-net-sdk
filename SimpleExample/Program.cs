@@ -89,21 +89,20 @@ var faceVerificationExampleRequest = new FaceVerificationRequest()
 
 };
 
-//var type = new FaceVerificationFactory(configuration.CurrentValue.FaceVerificationApiKey,configuration);
-
-//FaceVerificationClient client = (FaceVerificationClient)type.GetClient();
-//var result = client.FaceVerificationService.VerifyImageAsync(faceVerificationExampleRequest);
-
+var type = new FaceVerificationFactory(configuration.CurrentValue.FaceVerificationApiKey, configuration);
+FaceVerificationClient client = (FaceVerificationClient)type.GetClient();
+var result = await client.FaceVerificationService.VerifyImageAsync(faceVerificationExampleRequest);
 
 
-//var type2 = new FaceRecognitionFactory(configuration.CurrentValue.FaceVerificationApiKey, configuration);
-//FaceRecognitionClient client2 = (FaceRecognitionClient)type2.GetClient();
-//var result2 = client2.SubjectExampleService.AddSubjectExampleAsync(addSubjectExampleRequest, isFileInTheRemoteServer: true);
+
+var type2 = new FaceRecognitionFactory(configuration.CurrentValue.FaceVerificationApiKey, configuration);
+FaceRecognitionClient client2 = (FaceRecognitionClient)type2.GetClient();
+var result2 = await client2.SubjectExampleService.AddSubjectExampleAsync(addSubjectExampleRequest, isFileInTheRemoteServer: true);
 
 
 var type3 = new FaceDetectionFactory(configuration.CurrentValue.FaceDetectionApiKey, configuration);
-FaceDetectionClient client3 = (FaceDetectionClient)type3.GetClient();   
-var result3 = client3.FaceDetectionService.FaceDetectionAsync(faceDetectionRequest, isFileInTheRemoteServer: true);
+FaceDetectionClient client3 = (FaceDetectionClient)type3.GetClient();
+var result3 = await client3.FaceDetectionService.FaceDetectionAsync(faceDetectionRequest, isFileInTheRemoteServer: true);
 
 host.Run();
 
