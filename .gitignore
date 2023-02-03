@@ -351,3 +351,5 @@ MigrationBackup/
 
 # rider idea files
 .idea/
+.vscode/tasks.json
+.vscode/launch.json
