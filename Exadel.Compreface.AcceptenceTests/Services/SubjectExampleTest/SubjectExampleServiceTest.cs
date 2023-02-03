@@ -26,7 +26,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             };
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         [SubjectExampleTestBeforeAfter]
         public async Task AddSubjectExampleAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
@@ -52,7 +52,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.Equal(expectedAddExampleSubjectResponse.ImageId, actualSubjectExample.ImageId);
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         [SubjectExampleTestBeforeAfter]
         public async Task AddBase64SubjectExampleAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
@@ -73,7 +73,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.Equal(expectedAddBase64SubjectExampleResponse.ImageId, actualSubjectExample.ImageId);
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         [SubjectExampleTestBeforeAfter]
         public async Task GetAllSubjectExamplesAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
@@ -101,7 +101,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.Equal(actualCount, expectedCount);
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         [SubjectExampleTestBeforeAfter]
         public async Task ClearSubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
@@ -123,7 +123,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.Equal(expectedCount, actualResponse.Deleted);
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         [SubjectExampleTestBeforeAfter]
         public async Task DeleteImageByIdAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
@@ -144,7 +144,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.Equal(testImage.ImageId, actualDeleteImageByIdResponse.ImageId);
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         [SubjectExampleTestBeforeAfter]
         public async Task DeletMultipleExamplesAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
@@ -173,7 +173,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.Equal(expectedFacesCount, actualFacesCount);
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         [SubjectExampleTestBeforeAfter]
         public async Task DownloadImageByIdAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
@@ -192,7 +192,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.Equal(expectedResult, actualResult);
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         [SubjectExampleTestBeforeAfter]
         public async Task DownloadImageBySubjectIdAsync_TakesRequestModel_ReturnsProperResponseModel()
         {

@@ -48,7 +48,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             };
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         public async Task GetAllSubject_Executes_ReturnsProperResponseModel()
         {
             // Act
@@ -58,7 +58,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.IsType<GetAllSubjectResponse>(response);
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         public async Task GetAllSubject_Executes_ReturnsNotNull()
         {
             // Act
@@ -68,7 +68,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.NotNull(response);
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         public async Task AddSubject_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
@@ -81,7 +81,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             await _subjectService.DeleteSubject(new DeleteSubjectRequest { ActualSubject = _addSubjectRequest.Subject });
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         public async Task AddSubject_TakesRequestModel_ReturnsNotNull()
         {
             // Act
@@ -92,7 +92,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             await _subjectService.DeleteSubject(new DeleteSubjectRequest { ActualSubject = _addSubjectRequest.Subject });
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         public async Task AddSubject_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Act
@@ -102,7 +102,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             await Assert.ThrowsAsync<ServiceException>(func);
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         public async Task RenameSubject_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
@@ -116,7 +116,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.IsType<RenameSubjectResponse>(response);
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         public async Task RenameSubject_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
@@ -130,7 +130,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.NotNull(response);
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         public async Task RenameSubject_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Act
@@ -140,7 +140,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         public async Task DeleteSubject_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
@@ -153,7 +153,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.IsType<DeleteSubjectResponse>(response);
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         public async Task DeleteSubject_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
@@ -166,7 +166,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.NotNull(response);
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         public async Task DeleteSubject_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Act
@@ -176,7 +176,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         public async Task DeleteAllSubjects_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
@@ -186,7 +186,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.IsType<DeleteAllSubjectsResponse>(response);
         }
 
-        [Fact]
+        [Fact(Timeout = 5000)]
         public async Task DeleteAllSubjects_TakesRequestModel_ReturnsNotNull()
         {
             // Act
