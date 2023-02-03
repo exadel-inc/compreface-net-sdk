@@ -22,7 +22,13 @@ var host = Host.CreateDefaultBuilder()
                collection.AddScoped<IApiClient>((serviceProvider) =>
                {
                    var configuration = serviceProvider.GetRequiredService<IOptionsMonitor<ComprefaceConfiguration>>();
-                   return new ApiClient(configuration.CurrentValue.ApiKey);
+                   return configuration.CurrentValue.FlagForClient switch
+                   {
+                       FlagForClient.VerificationClient => new ApiClient(configuration.CurrentValue.FaceVerificationApiKey),
+                       FlagForClient.DetectionClient => new ApiClient(configuration.CurrentValue.FaceDetectionApiKey),
+                       FlagForClient.RecognitionClient => new ApiClient(configuration.CurrentValue.FaceRecognitionApiKey),
+                       _ => throw new ArgumentOutOfRangeException()
+                   };
                });
                collection.AddScoped<IFaceDetectionService>((serviceProvider) =>
                {
@@ -74,7 +80,7 @@ var faceVerificationExampleRequest = new FaceVerificationRequest()
 
 };
 
-var faceVerificationresult = faceVerificationService.VerifyImageAsync(faceVerificationExampleRequest, true);
+var faceVerificationresult = await faceVerificationService.VerifyImageAsync(faceVerificationExampleRequest, true);
 
 var recognizeFaceFromImageRequest = new RecognizeFaceFromImageRequest()
 {

@@ -10,4 +10,6 @@ public class ComprefaceConfiguration
     public string FaceDetectionApiKey { get; set; } = null;
     public string FaceVerificationApiKey { get; set; } = null;
     public string FaceRecognitionApiKey { get; set; } = null;
+
+    public FlagForClient FlagForClient { get; set; }  
 }
