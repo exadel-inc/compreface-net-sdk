@@ -1,4 +1,5 @@
 ﻿using Exadel.Compreface.Configuration;
+using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services.Attributes;
 using System.Reflection;
 
@@ -44,14 +45,19 @@ public class CompreFaceClient : ICompreFaceClient
     {
         try
         {
-            object service = null;
+            object baseService = null;
+
             if (type.GetCustomAttribute(typeof(CompreFaceService)) != null)
-                service = Activator.CreateInstance(type, config);
-            return service;
+                baseService = Activator.CreateInstance(type, config);
+
+            if (baseService == null)
+                throw new TypeNotBelongCompreFaceException("Type don't belong CompreFace services. Class should be covered by CompreFaceService attribute.");
+
+            return baseService;
         }
-        catch
+        catch (TypeNotBelongCompreFaceException)
         {
-            throw new NullReferenceException();
+            throw;
         }
     }
 
