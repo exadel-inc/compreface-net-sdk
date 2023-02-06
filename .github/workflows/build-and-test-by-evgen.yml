@@ -24,7 +24,7 @@ jobs:
 
         docker version
 
-        docker run --rm compreface-ui
+        docker run --rm cf
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
