@@ -6,7 +6,6 @@ using Exadel.Compreface.Helpers;
 using Exadel.Compreface.Services.Attributes;
 using Flurl;
 using Flurl.Http;
-using Microsoft.Extensions.Configuration;
 
 namespace Exadel.Compreface.Services
 {

@@ -40,21 +40,6 @@ public class CompreFaceClient : ICompreFaceClient
         return (baseService as T)!;
     }
 
-    //public T GetService<T>(string apiKey) where T : CompreFaceService
-    //{
-    //    var key = new ServiceDictionaryKey(apiKey, typeof(T));
-    //    var baseService = _services.GetValueOrDefault(key);
-
-    //    if (baseService == null)
-    //    {
-    //        var config = new ComprefaceConfiguration(key.ApiKey, _domain, _port);
-    //        baseService = Activator.CreateInstance(typeof(T), config) as T;
-
-    //        _services.Add(key, baseService!);
-    //    }
-
-    //    return (baseService as T)!;
-    //}
     private object GetBaseService(Type type, ComprefaceConfiguration config)
     {
         try
