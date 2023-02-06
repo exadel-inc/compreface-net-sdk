@@ -1,4 +1,6 @@
-﻿namespace Exadel.Compreface.Clients
+﻿using Exadel.Compreface.Services.Attributes;
+
+namespace Exadel.Compreface.Clients
 {
     public interface ICompreFaceClient
     {

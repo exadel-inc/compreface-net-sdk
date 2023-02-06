@@ -1,5 +1,6 @@
 ﻿using Exadel.Compreface.Configuration;
-using Exadel.Compreface.Services.Interfaces;
+using Exadel.Compreface.Services.Attributes;
+using System.Reflection;
 
 namespace Exadel.Compreface.Clients;
 
@@ -30,7 +31,7 @@ public class CompreFaceClient : ICompreFaceClient
         if (baseService == null)
         {
             var config = new ComprefaceConfiguration(apiKey, _domain, _port);
-            
+
             baseService = GetBaseService(typeof(T), config);
 
             _services.Add(key, baseService!);
@@ -39,15 +40,31 @@ public class CompreFaceClient : ICompreFaceClient
         return (baseService as T)!;
     }
 
+    //public T GetService<T>(string apiKey) where T : CompreFaceService
+    //{
+    //    var key = new ServiceDictionaryKey(apiKey, typeof(T));
+    //    var baseService = _services.GetValueOrDefault(key);
+
+    //    if (baseService == null)
+    //    {
+    //        var config = new ComprefaceConfiguration(key.ApiKey, _domain, _port);
+    //        baseService = Activator.CreateInstance(typeof(T), config) as T;
+
+    //        _services.Add(key, baseService!);
+    //    }
+
+    //    return (baseService as T)!;
+    //}
     private object GetBaseService(Type type, ComprefaceConfiguration config)
     {
-        try { 
-        object service = null;
-        if (type.GetInterface(nameof(IBaseService)) != null)
-            service = Activator.CreateInstance(type, config);
-        return service;
+        try
+        {
+            object service = null;
+            if (type.GetCustomAttribute(typeof(CompreFaceService)) != null)
+                service = Activator.CreateInstance(type, config);
+            return service;
         }
-        catch 
+        catch
         {
             throw new NullReferenceException();
         }

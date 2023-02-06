@@ -3,13 +3,14 @@ using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
 using Exadel.Compreface.Helpers;
-using Exadel.Compreface.Services.Interfaces;
+using Exadel.Compreface.Services.Attributes;
 using Flurl;
 using Flurl.Http;
 
 namespace Exadel.Compreface.Services;
 
-public class FaceVerificationService : IBaseService
+[CompreFaceService]
+public class FaceVerificationService
 {
     private readonly IComprefaceConfiguration _configuration;
     private readonly ApiClient _apiClient;
