@@ -17,6 +17,14 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '7.0.x'
+    - uses: docker-practice/actions-setup-docker@master
+      timeout-minutes: 12
+    - run: |
+        set -x
+
+        docker version
+
+        docker run --rm hello-world
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
