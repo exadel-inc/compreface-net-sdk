@@ -11,11 +11,11 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Exadel.Compreface.AcceptenceTests")]
 namespace Exadel.Compreface.Services
 {
-    public abstract class AbstractBaseService
+    public class ApiClient
     {
         protected IComprefaceConfiguration Configuration { get; private set; }
 
-        public AbstractBaseService(IComprefaceConfiguration configuration)
+        public ApiClient(IComprefaceConfiguration configuration)
         {
             Configuration = configuration;
 

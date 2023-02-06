@@ -5,19 +5,26 @@ using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
 using Exadel.Compreface.Helpers;
+using Exadel.Compreface.Services.Interfaces;
 using Flurl;
 using Flurl.Http;
 
 namespace Exadel.Compreface.Services;
 
-public class RecognitionService : AbstractBaseService
+public class RecognitionService : IBaseService
 {
+    private readonly IComprefaceConfiguration _configuration;
+    private readonly ApiClient _apiClient;
+
     public RecognitionService(IComprefaceConfiguration configuration)
-            : base(configuration) { }
+    {
+        _configuration = configuration;
+        _apiClient = new ApiClient(configuration);
+    }
 
     public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFaceFromImageRequest request, bool isFileInTheRemoteServer = false)
     {
-        var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/recognize";
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/recognize";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -41,13 +48,13 @@ public class RecognitionService : AbstractBaseService
                 File = fileInBase64String,
             };
 
-            response = await PostJsonAsync<RecognizeFaceFromImageResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+            response = await _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
 
             return response;
         }
 
         response = await
-            PostMultipartAsync<RecognizeFaceFromImageResponse>(
+            _apiClient.PostMultipartAsync<RecognizeFaceFromImageResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
                 mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.FilePath), path: request.FilePath));
@@ -58,7 +65,7 @@ public class RecognitionService : AbstractBaseService
     public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(
         RecognizeFacesFromImageWithBase64Request request)
     {
-        var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/recognize";
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/recognize";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -70,7 +77,7 @@ public class RecognitionService : AbstractBaseService
             });
 
         var response = await 
-            PostJsonAsync<RecognizeFaceFromImageResponse>(
+            _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(
                 requestUrl: requestUrlWithQueryParameters, 
                 body: new { file = request.FileBase64Value });
 
@@ -79,7 +86,7 @@ public class RecognitionService : AbstractBaseService
 
     public async Task<VerifyFacesFromImageResponse> VerifyAsync(VerifyFacesFromImageRequest request)
     {
-        var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -90,7 +97,7 @@ public class RecognitionService : AbstractBaseService
             });
 
         var response = await 
-            PostMultipartAsync<VerifyFacesFromImageResponse>(
+            _apiClient.PostMultipartAsync<VerifyFacesFromImageResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
                 mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.FilePath), path: request.FilePath));
@@ -100,7 +107,7 @@ public class RecognitionService : AbstractBaseService
     
     public async Task<VerifyFacesFromImageResponse> VerifyAsync(VerifyFacesFromImageWithBase64Request request)
     {
-        var requestUrl = $"{Configuration.Domain}:{Configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
+        var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParams(new
             {
@@ -111,7 +118,7 @@ public class RecognitionService : AbstractBaseService
             });
 
         var response = await 
-            PostJsonAsync<VerifyFacesFromImageResponse>(
+            _apiClient.PostJsonAsync<VerifyFacesFromImageResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 body: new { file = request.FileBase64Value });
 

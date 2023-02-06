@@ -7,7 +7,7 @@ using Exadel.Compreface.Services;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
-    public abstract class AbstractBaseServiceTests<T> where T : AbstractBaseService
+    public abstract class AbstractBaseServiceTests<T> where T : Compreface.Services.ApiClient
     {
         protected ComprefaceConfiguration Configuration { get; }
 
