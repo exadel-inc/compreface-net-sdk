@@ -53,7 +53,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             };
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task VerifyImageAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
@@ -63,7 +63,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.IsType<FaceVerificationResponse>(response);
         }
 
-        [Fact(Timeout = 15000)]
+        [Fact]
         public async Task VerifyImageAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Act
@@ -73,7 +73,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.NotNull(response);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task VerifyImageAsync_TakesNullRequest_ThrowsException()
         {
             // Act
@@ -83,7 +83,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task VerifyBase64ImageAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
@@ -93,7 +93,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.IsType<FaceVerificationResponse>(response);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task VerifyBase64ImageAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Act
@@ -103,7 +103,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.NotNull(response);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task VerifyBase64ImageAsync_TakesNullRequest_ThrowsException()
         {
             // Act

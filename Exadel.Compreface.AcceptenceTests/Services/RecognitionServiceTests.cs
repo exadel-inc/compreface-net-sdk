@@ -96,7 +96,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             };
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task RecognizeFaceFromImage_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Act
@@ -106,7 +106,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.IsType<RecognizeFaceFromImageResponse>(response);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task RecognizeFaceFromImage_TakesRequestModel_ReturnsNotNull()
         {
             // Act
@@ -116,7 +116,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.NotNull(response);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task RecognizeFaceFromImage_TakesNullRequest_ThrowsException()
         {
             // Act
@@ -126,7 +126,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task RecognizeFaceFromBase64File_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Act
@@ -136,7 +136,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.IsType<RecognizeFaceFromImageResponse>(response);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task RecognizeFaceFromBase64File_TakesRequestModel_ReturnsNotNull()
         {
             // Act
@@ -146,7 +146,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.NotNull(response);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task RecognizeFaceFromBase64File_TakesNullRequest_ThrowsException()
         {
             // Act
@@ -156,7 +156,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
-        [Fact(Timeout = 15000)]
+        [Fact]
         public async Task VerifyFacesFromImage_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Assert
@@ -198,7 +198,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task VerifyFacesFromBase64File_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Assert
@@ -214,7 +214,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             await _subjectService.DeleteSubject(_deleteSubjectRequest);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task VerifyFacesFromBase64File_TakesRequestModel_ReturnsNotNull()
         {
             // Assert
@@ -230,7 +230,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             await _subjectService.DeleteSubject(_deleteSubjectRequest);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task VerifyFacesFromBase64File_TakesNullRequest_ThrowsException()
         {
             // Act

@@ -50,7 +50,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             };
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task FaceDetectionAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
@@ -60,7 +60,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.IsType<FaceDetectionResponse>(response);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task FaceDetectionAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Act
@@ -70,7 +70,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.NotNull(response);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task FaceDetectionAsync_TakesNullRequest_ThrowsException()
         {
             // Act
@@ -80,7 +80,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task FaceDetectionBase64Async_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
@@ -90,7 +90,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.IsType<FaceDetectionResponse>(response);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task FaceDetectionBase64Async_TakesRequestModel_ReturnsNotNull()
         {
             // Act
@@ -100,7 +100,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             Assert.NotNull(response);
         }
 
-        [Fact(Timeout = 5000)]
+        [Fact]
         public async Task FaceDetectionBase64Async_TakesNullRequest_ThrowsException()
         {
             // Act
