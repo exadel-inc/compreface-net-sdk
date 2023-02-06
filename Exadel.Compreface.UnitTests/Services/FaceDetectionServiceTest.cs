@@ -2,6 +2,7 @@
 using Exadel.Compreface.Services;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Flurl;
+using Moq;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
@@ -23,7 +24,7 @@ namespace Exadel.Compreface.UnitTests.Services
                 FacePlugins = new List<string>()
             };
 
-            SetupPostMultipart<FaceDetectionResponse>();
+            SetupPostJson<FaceDetectionResponse>();
 
             // Act
             var response = await _service.DetectAsync(request);
@@ -31,9 +32,32 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.IsType<FaceDetectionResponse>(response);
 
-            VerifyPostMultipart<FaceDetectionResponse>();
+            VerifyPostJson<FaceDetectionResponse>();
             base.ServiceMock.VerifyNoOtherCalls();
         }
+
+        //[Fact]
+        //public async Task DetectAsync_TakesFileFromTheRemoteServer_ReturnsProperResponseModel()
+        //{
+        //    // Arrange
+
+        //    var request = new FaceDetectionRequest()
+        //    {
+        //        FacePlugins = new List<string>(),
+        //        FilePath = "uri",
+        //    };
+        //    SetupGetBytesFromRemote();
+        //    SetupPostJson<FaceDetectionResponse, Url>();
+
+        //    // Act
+        //    var response = await _service.DetectAsync(request, true);
+
+        //    // Assert
+        //    Assert.IsType<FaceDetectionResponse>(response);
+
+        //    VerifyPostJson<FaceDetectionResponse, Url>();
+        //    base.ServiceMock.VerifyNoOtherCalls();
+        //}
 
         [Fact]
         public async Task DetectAsync_TakesRequestModel_ReturnsNotNull()
@@ -44,7 +68,7 @@ namespace Exadel.Compreface.UnitTests.Services
                 FacePlugins = new List<string>()
             };
 
-            SetupPostMultipart<FaceDetectionResponse>();
+            SetupPostJson<FaceDetectionResponse>();
 
             // Act
             var response = await _service.DetectAsync(request);
@@ -52,7 +76,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.NotNull(response);
 
-            VerifyPostMultipart<FaceDetectionResponse>();
+            VerifyPostJson<FaceDetectionResponse>();
             base.ServiceMock.VerifyNoOtherCalls();
         }
 
@@ -60,7 +84,7 @@ namespace Exadel.Compreface.UnitTests.Services
         public async Task DetectAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
-            SetupPostMultipart<FaceDetectionResponse>();
+            SetupPostJson<FaceDetectionResponse>();
 
             // Act
             var func = async () => await _service.DetectAsync(null!);
@@ -75,7 +99,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Arrange
             var request = new FaceDetectionRequest();
 
-            SetupPostMultipart<FaceDetectionResponse>();
+            SetupPostJson<FaceDetectionResponse>();
 
             // Act
             var func = async () => await _service.DetectAsync(request);

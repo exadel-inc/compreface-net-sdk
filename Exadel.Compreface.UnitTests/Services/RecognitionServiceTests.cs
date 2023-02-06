@@ -25,7 +25,7 @@ namespace Exadel.Compreface.UnitTests.Services
                 FacePlugins = new List<string>()
             };
 
-            SetupPostMultipart<RecognizeFaceFromImageResponse>();
+            SetupPostJson<RecognizeFaceFromImageResponse>();
 
             // Act
             var response = await _service.RecognizeAsync(request);
@@ -33,7 +33,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.IsType<RecognizeFaceFromImageResponse>(response);
 
-            VerifyPostMultipart<RecognizeFaceFromImageResponse>();
+            VerifyPostJson<RecognizeFaceFromImageResponse>();
             ServiceMock.VerifyNoOtherCalls();
         }
 
@@ -46,7 +46,7 @@ namespace Exadel.Compreface.UnitTests.Services
                 FacePlugins = new List<string>()
             };
 
-            SetupPostMultipart<RecognizeFaceFromImageResponse>();
+            SetupPostJson<RecognizeFaceFromImageResponse>();
 
             // Act
             var response = await _service.RecognizeAsync(request);
@@ -54,7 +54,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.NotNull(response);
 
-            VerifyPostMultipart<RecognizeFaceFromImageResponse>();
+            VerifyPostJson<RecognizeFaceFromImageResponse>();
             ServiceMock.VerifyNoOtherCalls();
         }
 
@@ -62,7 +62,7 @@ namespace Exadel.Compreface.UnitTests.Services
         public async Task RecognizeAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
-            SetupPostMultipart<RecognizeFaceFromImageResponse>();
+            SetupPostJson<RecognizeFaceFromImageResponse>();
 
             // Act
             var func = async () => await _service.RecognizeAsync(null!);
@@ -77,7 +77,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Arrange
             var request = new RecognizeFaceFromImageRequest();
 
-            SetupPostMultipart<RecognizeFaceFromImageResponse>();
+            SetupPostJson<RecognizeFaceFromImageResponse>();
 
             // Act
             var func = async () => await _service.RecognizeAsync(request);
@@ -165,7 +165,7 @@ namespace Exadel.Compreface.UnitTests.Services
                 FacePlugins = new List<string>()
             };
 
-            SetupPostMultipart<VerifyFacesFromImageResponse>();
+            SetupPostJson<VerifyFacesFromImageResponse>();
 
             // Act
             var response = await _service.VerifyAsync(request);
@@ -173,7 +173,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.IsType<VerifyFacesFromImageResponse>(response);
 
-            VerifyPostMultipart<VerifyFacesFromImageResponse>();
+            VerifyPostJson<VerifyFacesFromImageResponse>();
             ServiceMock.VerifyNoOtherCalls();
         }
 
@@ -186,7 +186,7 @@ namespace Exadel.Compreface.UnitTests.Services
                 FacePlugins = new List<string>()
             };
 
-            SetupPostMultipart<VerifyFacesFromImageResponse>();
+            SetupPostJson<VerifyFacesFromImageResponse>();
 
             // Act
             var response = await _service.VerifyAsync(request);
@@ -194,7 +194,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.NotNull(response);
 
-            VerifyPostMultipart<VerifyFacesFromImageResponse>();
+            VerifyPostJson<VerifyFacesFromImageResponse>();
             ServiceMock.VerifyNoOtherCalls();
         }
 
@@ -202,7 +202,7 @@ namespace Exadel.Compreface.UnitTests.Services
         public async Task VerifyAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
-            SetupPostMultipart<VerifyFacesFromImageResponse>();
+            SetupPostJson<VerifyFacesFromImageResponse>();
 
             // Act
             var func = async () => await _service.VerifyAsync((VerifyFacesFromImageRequest)null!);
@@ -217,7 +217,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Arrange
             var request = new VerifyFacesFromImageRequest();
 
-            SetupPostMultipart<VerifyFacesFromImageResponse>();
+            SetupPostJson<VerifyFacesFromImageResponse>();
 
             // Act
             var func = async () => await _service.VerifyAsync(request);

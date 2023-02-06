@@ -27,7 +27,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         // Arrange
         var request = new AddSubjectExampleRequest();
 
-        SetupPostMultipart<AddSubjectExampleResponse>();
+        SetupPostJson<AddSubjectExampleResponse>();
         
         // Act
         var response = await _service.AddAsync(request);
@@ -35,7 +35,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         // Assert
         Assert.IsType<AddSubjectExampleResponse>(response);
 
-        VerifyPostMultipart<AddSubjectExampleResponse>();
+        VerifyPostJson<AddSubjectExampleResponse>();
         ServiceMock.VerifyNoOtherCalls();
     }
 
@@ -45,7 +45,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         // Arrange
         var request = new AddSubjectExampleRequest();
 
-        SetupPostMultipart<AddSubjectExampleResponse>();
+        SetupPostJson<AddSubjectExampleResponse>();
 
         // Act
         var response = await _service.AddAsync(request);
@@ -53,7 +53,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
         // Assert
         Assert.NotNull(response);
 
-        VerifyPostMultipart<AddSubjectExampleResponse>();
+        VerifyPostJson<AddSubjectExampleResponse>();
         ServiceMock.VerifyNoOtherCalls();
     }
 
@@ -61,7 +61,7 @@ public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampl
     public async Task AddAsync_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
-        SetupPostMultipart<AddSubjectExampleResponse>();
+        SetupPostJson<AddSubjectExampleResponse>();
 
         // Act
         var func = async () => await _service.AddAsync(null!);

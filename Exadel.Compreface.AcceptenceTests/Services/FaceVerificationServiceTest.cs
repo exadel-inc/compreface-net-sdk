@@ -14,6 +14,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         private readonly FaceVerificationService _faceVerificationService;
 
         private readonly FaceVerificationRequest _faceVerificationRequest;
+        private readonly FaceVerificationRequest _remoteImageRequest;
         private readonly FaceVerificationWithBase64Request _faceVerificationBase64Request;
 
         public FaceVerificationServiceTest()
@@ -37,6 +38,16 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             {
                 SourceImageFilePath = FILE_PATH,
                 TargetImageFilePath = FILE_PATH,
+                DetProbThreshold = detProbThreshold,
+                FacePlugins = facePlugins,
+                Status = status,
+                Limit = limit
+            };
+
+            _remoteImageRequest = new FaceVerificationRequest
+            {
+                SourceImageFilePath = IMAGE_FROM_REMOTE_SERVER,
+                TargetImageFilePath = IMAGE_FROM_REMOTE_SERVER,
                 DetProbThreshold = detProbThreshold,
                 FacePlugins = facePlugins,
                 Status = status,
@@ -110,6 +121,36 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             // Assert
             await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
+        public async Task VerifyAsync_TakesFileFromTheRemoteServer_ReturnsProperResponseModel()
+        {
+            // Act
+            var response = await _faceVerificationService.VerifyAsync(_remoteImageRequest, true);
+
+            // Assert
+            Assert.IsType<FaceVerificationResponse>(response);
+        }
+
+        [Fact]
+        public async Task VerifyAsync_TakesFileFromTheRemoteServer_ReturnsNotNull()
+        {
+            // Act
+            var response = await _faceVerificationService.VerifyAsync(_remoteImageRequest, true);
+
+            // Assert
+            Assert.NotNull(response);
+        }
+
+        [Fact]
+        public async Task VerifyAsync_TakesFileFromTheRemoteServer_ThrowsException()
+        {
+            // Act
+            var func = async () => await _faceVerificationService.VerifyAsync((FaceVerificationRequest)null!, true);
+
+            // Assert
+            await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
         [Fact]

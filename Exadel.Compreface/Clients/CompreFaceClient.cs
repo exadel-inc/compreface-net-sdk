@@ -6,7 +6,7 @@ namespace Exadel.Compreface.Clients;
 /// <summary>
 /// Wrapper on top of Flurl.Http package's extension methods
 /// </summary>
-public class CompreFaceClient
+public class CompreFaceClient : ICompreFaceClient
 {
     private readonly string _domain;
     private readonly string _port;

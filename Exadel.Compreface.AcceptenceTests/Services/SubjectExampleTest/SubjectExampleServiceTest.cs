@@ -11,6 +11,7 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
 using Exadel.Compreface.DTOs.HelperDTOs;
 using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services;
+using Moq;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
@@ -102,6 +103,79 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             // Assert
             await Assert.ThrowsAsync<ServiceException>(func);
         }
+
+        [Fact]
+        [SubjectExampleTestBeforeAfter]
+        public async Task AddAsync_TakesFileFromTheRemoteServer_ReturnsProperResponseModel()
+        {
+            //Arrange
+            var subjectExample = new AddSubjectExampleRequest()
+            {
+                DetProbThreShold = 0.81m,
+                File = IMAGE_FROM_REMOTE_SERVER,
+                Subject = TEST_SUBJECT_EXAMPLE_NAME,
+            };
+
+            var expectedAddExampleSubjectResponse = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(subjectExample, true);
+
+            //Act
+            var resultList = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ListAsync(
+                new ListAllSubjectExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
+
+            var actualSubjectExample = resultList.Faces
+                .First(x => x.ImageId == expectedAddExampleSubjectResponse.ImageId & x.Subject == expectedAddExampleSubjectResponse.Subject);
+
+            //Assert
+            Assert.Equal(expectedAddExampleSubjectResponse.Subject, actualSubjectExample.Subject);
+            Assert.Equal(expectedAddExampleSubjectResponse.ImageId, actualSubjectExample.ImageId);
+        }
+
+        [Fact]
+        [SubjectExampleTestBeforeAfter]
+        public async Task AddAsync_TakesFileFromTheRemoteServer_ReturnsNotNull()
+        {
+            //Arrange
+            var subjectExample = new AddSubjectExampleRequest()
+            {
+                DetProbThreShold = 0.81m,
+                File = IMAGE_FROM_REMOTE_SERVER,
+                Subject = TEST_SUBJECT_EXAMPLE_NAME,
+            };
+
+            //Act
+            var expectedAddExampleSubjectResponse = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(subjectExample, true);
+
+            // Assert
+            Assert.NotNull(expectedAddExampleSubjectResponse);
+        }
+
+        [Fact]
+        public async Task AddAsync_TakesFileFromTheRemoteServer_ThrowsNullReferenceException()
+        {
+            //Act
+            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync((AddSubjectExampleRequest)null!, true);
+
+            // Assert
+            await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        //[Fact]
+        //public async Task AddAsync_TakesFileFromTheRemoteServer_ThrowsServiceException()
+        //{
+        //    //Arrange
+        //    var subjectExample = new AddSubjectExampleRequest()
+        //    {
+        //        DetProbThreShold = 0.81m,
+        //        File = BROKEN_IMAGE_FROM_REMOTE_SERVER_PATH +"213423redg",
+        //        Subject = TEST_SUBJECT_EXAMPLE_NAME,
+        //    };
+
+        //    //Act
+        //    var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(subjectExample, true);
+
+        //    // Assert
+        //    await Assert.ThrowsAsync<ServiceException>(func);
+        //}
 
         [Fact]
         [SubjectExampleTestBeforeAfter]

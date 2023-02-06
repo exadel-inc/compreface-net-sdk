@@ -24,14 +24,14 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
             FacePlugins = new List<string>()
         };
 
-        SetupPostMultipart<FaceVerificationResponse>();
+        SetupPostJson<FaceVerificationResponse>();
 
         // Act
         var response = await _service.VerifyAsync(request);
 
         // Assert
         Assert.IsType<FaceVerificationResponse>(response);
-        VerifyPostMultipart<FaceVerificationResponse>();
+        VerifyPostJson<FaceVerificationResponse>();
         ServiceMock.VerifyNoOtherCalls();
     }
 
@@ -39,7 +39,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
     public async Task VerifyAsync_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
-        SetupPostMultipart<FaceVerificationResponse>();
+        SetupPostJson<FaceVerificationResponse>();
 
         // Act
         var responseCall = async () => await _service.VerifyAsync(null!);
@@ -54,7 +54,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
         // Arrange
         var request = new FaceVerificationRequest();
 
-        SetupPostMultipart<FaceVerificationResponse>();
+        SetupPostJson<FaceVerificationResponse>();
 
         // Act
         var responseCall = async () => await _service.VerifyAsync(request);

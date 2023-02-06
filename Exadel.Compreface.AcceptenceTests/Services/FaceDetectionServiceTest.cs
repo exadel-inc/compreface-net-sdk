@@ -13,6 +13,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         private readonly FaceDetectionService _faceDetectionService;
 
         private readonly FaceDetectionRequest _faceDetectionRequest;
+        private readonly FaceDetectionRequest _requestWithRemoteImage;
         private readonly FaceDetectionBase64Request _faceDetectionBase64Request;
      
         public FaceDetectionServiceTest()
@@ -35,6 +36,15 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             _faceDetectionRequest = new FaceDetectionRequest
             {
                 FilePath = FILE_PATH,
+                DetProbThreshold = detProbThreshold,
+                FacePlugins = facePlugins,
+                Status = status,
+                Limit = limit
+            };
+
+            _requestWithRemoteImage = new FaceDetectionRequest
+            {
+                FilePath = IMAGE_FROM_REMOTE_SERVER,
                 DetProbThreshold = detProbThreshold,
                 FacePlugins = facePlugins,
                 Status = status,
@@ -106,6 +116,36 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             // Assert
             await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
+        public async Task DetectAsync_TakesFileFromTheRemoteServer_ReturnsProperResponseModel()
+        {
+            // Act
+            var response = await _faceDetectionService.DetectAsync(_requestWithRemoteImage, true);
+
+            // Assert
+            Assert.IsType<FaceDetectionResponse>(response);
+        }
+
+        [Fact]
+        public async Task DetectAsync_TakesFileFromTheRemoteServer_ReturnsNotNull()
+        {
+            // Act
+            var response = await _faceDetectionService.DetectAsync(_requestWithRemoteImage, true);
+
+            // Assert
+            Assert.NotNull(response);
+        }
+
+        [Fact]
+        public async Task DetectAsync_TakesFileFromTheRemoteServer_ThrowsException()
+        {
+            // Act
+            var func = async () => await _faceDetectionService.DetectAsync((FaceDetectionRequest)null!, true);
+
+            // Assert
+            await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
         [Fact]

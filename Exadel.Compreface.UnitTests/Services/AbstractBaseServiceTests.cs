@@ -30,7 +30,7 @@ namespace Exadel.Compreface.UnitTests.Services
                     It.IsAny<Url>(),
                     It.IsAny<HttpCompletionOption>(),
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Array.Empty<byte>());
+                .ReturnsAsync(new byte[1]);
         }
 
         protected void VerifyGetBytesFromRemote()
@@ -80,7 +80,7 @@ namespace Exadel.Compreface.UnitTests.Services
                     It.IsAny<CancellationToken>()), Times.Once);
         }
 
-        protected void SetupPostMultipart<TResponse>() where TResponse : new()
+        protected void SetupPostJson<TResponse>() where TResponse : new()
         {
             ServiceMock.Setup(service =>
                 service.PostMultipartAsync<TResponse>(
@@ -91,7 +91,7 @@ namespace Exadel.Compreface.UnitTests.Services
                 .ReturnsAsync(new TResponse());
         }
 
-        protected void VerifyPostMultipart<TResponse>()
+        protected void VerifyPostJson<TResponse>()
         {
             ServiceMock.Verify(service =>
             service.PostMultipartAsync<TResponse>(

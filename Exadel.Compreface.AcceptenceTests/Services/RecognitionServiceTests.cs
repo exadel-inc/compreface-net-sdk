@@ -25,6 +25,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         private readonly AddSubjectExampleRequest _addSubjectExampleRequest;
 
         private readonly RecognizeFaceFromImageRequest _request;
+        private readonly RecognizeFaceFromImageRequest _remoteImageRequest;
         private readonly RecognizeFacesFromImageWithBase64Request _request64;
 
         private readonly VerifyFacesFromImageRequest _verifyRequest;
@@ -69,6 +70,14 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             _request = new RecognizeFaceFromImageRequest
             {
                 FilePath = FILE_PATH,
+                DetProbThreshold = detProbThreshold,
+                FacePlugins = facePlugins,
+                Status = status,
+            };
+
+            _remoteImageRequest = new RecognizeFaceFromImageRequest
+            {
+                FilePath = IMAGE_FROM_REMOTE_SERVER,
                 DetProbThreshold = detProbThreshold,
                 FacePlugins = facePlugins,
                 Status = status,
@@ -152,6 +161,36 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             // Assert
             await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
+        public async Task RecognizeAsync_TakesFileFromTheRemoteServer_ReturnsModelWithProperType()
+        {
+            // Act
+            var response = await _recognitionService.RecognizeAsync(_remoteImageRequest, true);
+
+            // Assert
+            Assert.IsType<RecognizeFaceFromImageResponse>(response);
+        }
+
+        [Fact]
+        public async Task RecognizeAsync_TakesFileFromTheRemoteServer_ReturnsNotNull()
+        {
+            // Act
+            var response = await _recognitionService.RecognizeAsync(_remoteImageRequest, true);
+
+            // Assert
+            Assert.NotNull(response);
+        }
+
+        [Fact]
+        public async Task RecognizeAsync_TakesFileFromTheRemoteServer_ThrowsException()
+        {
+            // Act
+            var func = async () => await _recognitionService.RecognizeAsync((RecognizeFaceFromImageRequest)null!, true);
+
+            // Assert
+            await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
         [Fact]
