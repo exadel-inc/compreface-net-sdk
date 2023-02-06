@@ -4,11 +4,7 @@ using Flurl.Http;
 using Flurl;
 using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Clients.Config;
-using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
-[assembly: InternalsVisibleTo("Exadel.Compreface.UnitTests")]
-[assembly: InternalsVisibleTo("Exadel.Compreface.AcceptenceTests")]
 namespace Exadel.Compreface.Services
 {
     public class ApiClient
