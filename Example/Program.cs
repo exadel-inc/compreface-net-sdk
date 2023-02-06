@@ -1,6 +1,7 @@
 ﻿using Exadel.Compreface.Clients;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.Services;
+using Exadel.Compreface.Services.RecognitionService;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

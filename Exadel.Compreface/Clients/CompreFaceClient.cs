@@ -47,7 +47,7 @@ public class CompreFaceClient : ICompreFaceClient
             service = Activator.CreateInstance(type, config);
         return service;
         }
-        catch(NullReferenceException ex) 
+        catch 
         {
             throw new NullReferenceException();
         }
