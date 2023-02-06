@@ -13,9 +13,6 @@ namespace Exadel.Compreface.Services.RecognitionService;
 
 public class RecognitionService : IBaseService
 {
-	//private readonly FaceCollection _faceCollection;
- //   private readonly Subject _subject;
-	//private readonly RecognizeFaceFromImage _recognizeFaceFromImage;
     public RecognitionService(IComprefaceConfiguration configuration)
 	{
 		FaceCollection = new FaceCollection(configuration);

@@ -10,6 +10,7 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
 using Exadel.Compreface.DTOs.HelperDTOs;
 using Exadel.Compreface.Helpers;
 using Flurl;
+using Flurl.Http;
 
 namespace Exadel.Compreface.Services.RecognitionService
 {
@@ -35,21 +36,21 @@ namespace Exadel.Compreface.Services.RecognitionService
                 });
             AddSubjectExampleResponse? response = null;
 
-            //if (isFileInTheRemoteServer)
-            //{
-            //    var fileStream = await request.File.GetBytesAsync();
-            //    var fileInBase64String = Convert.ToBase64String(fileStream);
+            if (isFileInTheRemoteServer)
+            {
+                var fileStream = await request.File.GetBytesAsync();
+                var fileInBase64String = Convert.ToBase64String(fileStream);
 
-            //    var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
-            //    {
-            //        DetProbThreShold = request.DetProbThreShold,
-            //        File = fileInBase64String,
-            //        Subject = request.Subject,
-            //    };
+                var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
+                {
+                    DetProbThreShold = request.DetProbThreShold,
+                    File = fileInBase64String,
+                    Subject = request.Subject,
+                };
 
-            //    response = await _apiClient.PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
-            //    return response;
-            //}
+                response = await _apiClient.PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+                return response;
+            }
 
             response = await _apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
                 requestUrl: requestUrlWithQueryParameters,
