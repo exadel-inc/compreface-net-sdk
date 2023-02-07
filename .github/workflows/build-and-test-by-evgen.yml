@@ -24,7 +24,7 @@ jobs:
 
         docker version
 
-        docker run --rm e2e-tests-container
+        docker run --rm e2e-tests
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
