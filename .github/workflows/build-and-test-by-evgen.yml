@@ -31,7 +31,7 @@ jobs:
       run: pwd
       
     - name: Build the Docker image
-      run: docker build . --file Dockerfile
+      run: docker build . --file Exadel.Compreface.AcceptenceTests/Dockerfile
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
