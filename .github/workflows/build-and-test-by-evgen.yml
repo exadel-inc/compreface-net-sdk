@@ -30,7 +30,7 @@ jobs:
         set -x
 
         docker version
-        docker build -t e2e-tests -f Dockerfile .
+        docker build -t e2e-tests .
         docker run --rm e2e-tests
       
     - name: Test
