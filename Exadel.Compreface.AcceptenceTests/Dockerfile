@@ -6,4 +6,4 @@ COPY publish .
 ARG dotnet_cli_home_arg=/tmp/
 ENV DOTNET_CLI_HOME=$dotnet_cli_home_arg
 
-ENTRYPOINT dotnet test "Exadel.Compreface.AcceptenceTests.dll" -l:"console;verbosity=detailed"
+ENTRYPOINT dotnet test "Exadel.Compreface.AcceptenceTests.dll" -l:"console;verbosity=detailed" 
