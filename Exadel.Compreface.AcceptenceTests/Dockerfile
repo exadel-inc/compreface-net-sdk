@@ -1,9 +1,19 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine
+FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine AS build-env
+WORKDIR /add
 
-WORKDIR /tests-app
-COPY publish .
+#Copy everything
+COPY . ./
+RUN dotnet restore
+RUN dotnet publish -c Release -o out
 
-ARG dotnet_cli_home_arg=/tmp/
-ENV DOTNET_CLI_HOME=$dotnet_cli_home_arg
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+WORKDIR /app
+COPY --from=build-env /app/out .
 
-ENTRYPOINT dotnet test "Exadel.Compreface.AcceptenceTests.dll" -l:"console;verbosity=detailed" 
+
+#ARG dotnet_cli_home_arg=/tmp/
+#ENV DOTNET_CLI_HOME=$dotnet_cli_home_arg
+
+ENTRYPOINT ["dotnet", "Exadel.Compreface.AcceptenceTests.dll"]
+#ENTRYPOINT dotnet test "Exadel.Compreface.AcceptenceTests.dll" -l:"console;verbosity=detailed" 
