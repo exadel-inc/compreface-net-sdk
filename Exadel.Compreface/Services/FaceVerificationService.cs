@@ -11,7 +11,7 @@ using Microsoft.Extensions.Options;
 
 namespace Exadel.Compreface.Services;
 
-public class FaceVerificationService : IFaceVerificationService
+public class FaceVerificationService: IFaceVerificationService
 {
     private readonly IOptionsMonitor<ComprefaceConfiguration> _configuration;
     private readonly IApiClient _apiClient;
@@ -21,7 +21,7 @@ public class FaceVerificationService : IFaceVerificationService
         _configuration = configuration;
         _apiClient = apiClient;
     }
-    public async Task<FaceVerificationResponse> VerifyImageAsync(FaceVerificationRequest request, bool isFileInTheRemoteServer = false)
+    public async Task<FaceVerificationResponse> VerifyAsync(FaceVerificationRequest request, bool isFileInTheRemoteServer = false)
     {
         var requestUrl = $"{_configuration.CurrentValue.Domain}:{_configuration.CurrentValue.Port}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl
@@ -67,7 +67,7 @@ public class FaceVerificationService : IFaceVerificationService
         return response;
     }
 
-    public async Task<FaceVerificationResponse> VerifyBase64ImageAsync(FaceVerificationWithBase64Request request)
+    public async Task<FaceVerificationResponse> VerifyAsync(FaceVerificationWithBase64Request request)
     {
         var requestUrl = $"{_configuration.CurrentValue.Domain}:{_configuration.CurrentValue.Port}/api/v1/verification/verify";
         var requestUrlWithQueryParameters = requestUrl

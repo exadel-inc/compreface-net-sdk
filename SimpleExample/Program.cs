@@ -8,6 +8,7 @@ using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.Services;
 using Exadel.Compreface.Services.Interfaces;
+using Exadel.Compreface.Services.RecognitionService;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -18,35 +19,32 @@ var host = Host.CreateDefaultBuilder()
            .ConfigureServices((context, collection) =>
            {
                collection.Configure<ComprefaceConfiguration>(context.Configuration.GetSection("ComprefaceConfiguration"));
-
-               collection.AddScoped<IApiClient>((serviceProvider) =>
-               {
-                   var configuration = serviceProvider.GetRequiredService<IOptionsMonitor<ComprefaceConfiguration>>();
-                   return configuration.CurrentValue.FlagForClient switch
-                   {
-                       FlagForClient.VerificationClient => new ApiClient(configuration.CurrentValue.FaceVerificationApiKey),
-                       FlagForClient.DetectionClient => new ApiClient(configuration.CurrentValue.FaceDetectionApiKey),
-                       FlagForClient.RecognitionClient => new ApiClient(configuration.CurrentValue.FaceRecognitionApiKey),
-                       _ => throw new ArgumentOutOfRangeException()
-                   };
-               });
+               
+               var factory = ActivatorUtilities.CreateFactory(typeof(ApiClient), new Type[] { typeof(string) });
+               collection.AddTransient<IApiClient>(sp => (IApiClient) factory(sp, new object[] { sp.GetService<IOptionsMonitor<ComprefaceConfiguration>>().CurrentValue.FaceVerificationApiKey }));
+               collection.AddTransient<IApiClient>(sp => (IApiClient)factory(sp, new object[] { sp.GetService<IOptionsMonitor<ComprefaceConfiguration>>().CurrentValue.FaceDetectionApiKey }));
+               collection.AddTransient<IApiClient>(sp => (IApiClient)factory(sp, new object[] { sp.GetService<IOptionsMonitor<ComprefaceConfiguration>>().CurrentValue.FaceRecognitionApiKey }));
+               collection.AddTransient<Client>();
                collection.AddScoped<IFaceDetectionService>((serviceProvider) =>
                {
                    var configuration = serviceProvider.GetRequiredService<IOptionsMonitor<ComprefaceConfiguration>>();
-                   var _apiClirnt = serviceProvider.GetRequiredService<IApiClient>();
-                   return new FaceDetectionService(configuration, _apiClirnt);
+                   var client = serviceProvider.GetRequiredService<Client>();
+                   var apiClient = client.GetBarByKey(configuration.CurrentValue.FaceDetectionApiKey);
+                   return new FaceDetectionService(configuration, apiClient);
                });
                collection.AddScoped<IFaceVerificationService>((serviceProvider) =>
                {
                    var configuration = serviceProvider.GetRequiredService<IOptionsMonitor<ComprefaceConfiguration>>();
-                   var _apiClirnt = serviceProvider.GetRequiredService<IApiClient>();
-                   return new FaceVerificationService(configuration, _apiClirnt);
+                   var client = serviceProvider.GetRequiredService<Client>();
+                   var apiClient = client.GetBarByKey(configuration.CurrentValue.FaceVerificationApiKey);
+                   return new FaceVerificationService(configuration, apiClient);
                });
-               collection.AddScoped<IFaceRecognitionService>((serviceProvider) =>
+               collection.AddScoped<IRecognitionService>((serviceProvider) =>
                {
                    var configuration = serviceProvider.GetRequiredService<IOptionsMonitor<ComprefaceConfiguration>>();
-                   var _apiClirnt = serviceProvider.GetRequiredService<IApiClient>();
-                   return new SubjectExampleService(configuration, _apiClirnt);
+                   var client = serviceProvider.GetRequiredService<Client>();
+                   var apiClient = client.GetBarByKey(configuration.CurrentValue.FaceRecognitionApiKey);
+                   return new RecognitionService(configuration, apiClient);
                });
            }).Build();
 
@@ -54,10 +52,19 @@ var serviceProvider = host.Services;
 
 var configuration = serviceProvider.GetRequiredService<IOptionsMonitor<ComprefaceConfiguration>>();
 
-
 var faceVerificationService = serviceProvider.GetRequiredService<IFaceVerificationService>();
-var faceDetectionService = serviceProvider.GetRequiredService<IFaceDetectionService>(); 
-var faceRecognitionService = serviceProvider.GetRequiredService<IFaceRecognitionService>();
+var faceDetectionService = serviceProvider.GetRequiredService<IFaceDetectionService>();
+var faceRecognitionService = serviceProvider.GetRequiredService<IRecognitionService>();
+
+//var client = serviceProvider.GetRequiredService<Client>();
+//var verificationClient = client.GetBarByKey("2283c5cf-4a8b-49d9-9bd7-0a75f49c816b");
+//var detectionClient = client.GetBarByKey("59e2df37-0781-439d-802a-63329bb7e60a");
+//var recognitionClient = client.GetBarByKey("3b4d6aaa-252f-41fd-aa6a-052cc6cc1474");
+
+//var faceVerificationService = new FaceVerificationService(configuration, verificationClient);
+//var faceDetectionService = new FaceDetectionService(configuration, detectionClient);
+//var faceRecognitionService = new RecognitionClient(configuration, recognitionClient);
+
 
 ConfigInitializer.InitializeSnakeCaseJsonConfigs();
 
@@ -80,7 +87,7 @@ var faceVerificationExampleRequest = new FaceVerificationRequest()
 
 };
 
-var faceVerificationresult = await faceVerificationService.VerifyImageAsync(faceVerificationExampleRequest, true);
+var faceVerificationresult = await faceVerificationService.VerifyAsync(faceVerificationExampleRequest, true);
 
 var recognizeFaceFromImageRequest = new RecognizeFaceFromImageRequest()
 {
@@ -109,7 +116,7 @@ var faceDetectionRequest = new FaceDetectionRequest()
     Status = true,
 };
 
-var faceDetectionresult = await faceDetectionService.FaceDetectionAsync(faceDetectionRequest, isFileInTheRemoteServer: true);
+var faceDetectionresult = await faceDetectionService.DetectAsync(faceDetectionRequest, isFileInTheRemoteServer: true);
 
 
 var addSubjectExampleRequest = new AddSubjectExampleRequest()
@@ -119,7 +126,7 @@ var addSubjectExampleRequest = new AddSubjectExampleRequest()
     //FilePath = "https://raw.githubusercontent.com/exadel-inc/compreface-net-sdk/main/Exadel.Compreface.AcceptenceTests/Resources/Images/brad-pitt_24.jpg",
 };
 
-var faceRecognitionresult = await faceRecognitionService.AddSubjectExampleAsync(addSubjectExampleRequest, isFileInTheRemoteServer: true);
+//var faceRecognitionresult = await faceRecognitionService.AddSubjectExampleAsync(addSubjectExampleRequest, isFileInTheRemoteServer: true);
 
 
 

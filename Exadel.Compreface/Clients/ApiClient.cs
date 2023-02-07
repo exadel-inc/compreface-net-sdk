@@ -11,7 +11,7 @@ namespace Exadel.Compreface.Clients;
 /// </summary>
 public class ApiClient : IApiClient
 {
-    private readonly string _apiKey;
+    public readonly string _apiKey;
     
     public ApiClient(string apiKey)
     {

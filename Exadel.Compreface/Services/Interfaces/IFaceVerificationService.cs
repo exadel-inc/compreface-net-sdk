@@ -6,7 +6,7 @@ namespace Exadel.Compreface.Services.Interfaces
 {
     public interface IFaceVerificationService
     {
-        Task<FaceVerificationResponse> VerifyImageAsync(FaceVerificationRequest request, bool isFileInTheRemoteServer = false);
-        Task<FaceVerificationResponse> VerifyBase64ImageAsync(FaceVerificationWithBase64Request request);
+        Task<FaceVerificationResponse> VerifyAsync(FaceVerificationRequest request, bool isFileInTheRemoteServer = false);
+        Task<FaceVerificationResponse> VerifyAsync(FaceVerificationWithBase64Request request);
     }
 }

@@ -17,19 +17,19 @@ using Flurl.Http;
 using Microsoft.Extensions.Options;
 using Exadel.Compreface.Services.Interfaces;
 
-namespace Exadel.Compreface.Services;
+namespace Exadel.Compreface.Services.RecognitionService;
 
-public class SubjectExampleService : IFaceRecognitionService
+public class FaceCollection : IFaceCollection
 {
     private readonly IOptionsMonitor<ComprefaceConfiguration> _configuration;
     private readonly IApiClient _apiClient;
 
-    public SubjectExampleService(IOptionsMonitor<ComprefaceConfiguration> configuration, IApiClient apiClient)
+    public FaceCollection(IOptionsMonitor<ComprefaceConfiguration> configuration, IApiClient apiClient)
     {
         _configuration = configuration;
         _apiClient = apiClient;
     }
-    public async Task<AddSubjectExampleResponse> AddSubjectExampleAsync(AddSubjectExampleRequest request, bool isFileInTheRemoteServer = false)
+    public async Task<AddSubjectExampleResponse> AddAsync(AddSubjectExampleRequest request, bool isFileInTheRemoteServer = false)
     {
         var requestUrl = $"{_configuration.CurrentValue.Domain}:{_configuration.CurrentValue.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
@@ -65,7 +65,7 @@ public class SubjectExampleService : IFaceRecognitionService
         return response;
     }
 
-    public async Task<AddBase64SubjectExampleResponse> AddBase64SubjectExampleAsync(AddBase64SubjectExampleRequest request)
+    public async Task<AddBase64SubjectExampleResponse> AddAsync(AddBase64SubjectExampleRequest request)
     {
         var requestUrl = $"{_configuration.CurrentValue.Domain} : {_configuration.CurrentValue.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
@@ -76,12 +76,12 @@ public class SubjectExampleService : IFaceRecognitionService
             });
 
         var response = await _apiClient
-            .PostJsonAsync<AddBase64SubjectExampleResponse>(requestUrlWithQueryParameters,new { file = request.File });
+            .PostJsonAsync<AddBase64SubjectExampleResponse>(requestUrlWithQueryParameters, new { file = request.File });
 
         return response;
     }
 
-    public async Task<ListAllSubjectExamplesResponse> GetAllSubjectExamplesAsync(ListAllSubjectExamplesRequest request)
+    public async Task<ListAllSubjectExamplesResponse> ListAsync(ListAllSubjectExamplesRequest request)
     {
         var requestUrl = $"{_configuration.CurrentValue.Domain}  :  {_configuration.CurrentValue.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
@@ -97,43 +97,43 @@ public class SubjectExampleService : IFaceRecognitionService
         return response;
     }
 
-    public async Task<DeleteAllExamplesResponse> ClearSubjectAsync(DeleteAllExamplesRequest request)
+    public async Task<DeleteAllExamplesResponse> DeleteAllAsync(DeleteAllExamplesRequest request)
     {
         var requestUrl = $"{_configuration.CurrentValue.Domain}  :  {_configuration.CurrentValue.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .SetQueryParam("subject", request.Subject);
 
-        var response = 
+        var response =
             await _apiClient.DeleteJsonAsync<DeleteAllExamplesResponse>(requestUrlWithQueryParameters);
 
         return response;
     }
 
-    public async Task<DeleteImageByIdResponse> DeleteImageByIdAsync(DeleteImageByIdRequest request)
+    public async Task<DeleteImageByIdResponse> DeleteAsync(DeleteImageByIdRequest request)
     {
         var requestUrl = $"{_configuration.CurrentValue.Domain}  :  {_configuration.CurrentValue.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .AppendPathSegment(request.ImageId.ToString());
 
-        var response = await 
+        var response = await
             _apiClient.DeleteJsonAsync<DeleteImageByIdResponse>(requestUrlWithQueryParameters);
 
         return response;
     }
 
-    public async Task<DeleteMultipleExamplesResponse> DeletMultipleExamplesAsync(DeleteMultipleExampleRequest deleteMultipleExamplesRequest)
+    public async Task<DeleteMultipleExamplesResponse> DeleteAsync(DeleteMultipleExampleRequest deleteMultipleExamplesRequest)
     {
         var requestUrl = $"{_configuration.CurrentValue.Domain}  :  {_configuration.CurrentValue.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .AppendPathSegment("delete");
 
-        var response = await 
+        var response = await
             _apiClient.PostJsonAsync<List<Face>>(requestUrlWithQueryParameters, deleteMultipleExamplesRequest.ImageIdList);
 
         return new DeleteMultipleExamplesResponse() { Faces = response };
     }
 
-    public async Task<byte[]> DownloadImageByIdAsync(DownloadImageByIdRequest downloadImageByIdRequest)
+    public async Task<byte[]> DownloadAsync(DownloadImageByIdRequest downloadImageByIdRequest)
     {
         var requestUrl = $"{_configuration.CurrentValue.Domain}  :  {_configuration.CurrentValue.Port}/api/v1/static";
         var requestUrlWithQueryParameters = requestUrl
@@ -142,19 +142,19 @@ public class SubjectExampleService : IFaceRecognitionService
                 "/images/",
                 downloadImageByIdRequest.ImageId.ToString());
 
-        var response = await 
+        var response = await
             _apiClient.GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
 
         return response;
     }
 
-    public async Task<byte[]> DownloadImageBySubjectIdAsync(DownloadImageBySubjectIdRequest downloadImageBySubjectIdRequest)
+    public async Task<byte[]> DownloadAsync(DownloadImageBySubjectIdRequest downloadImageBySubjectIdRequest)
     {
         var requestUrl = $"{_configuration.CurrentValue.Domain}  :  {_configuration.CurrentValue.Port}/api/v1/recognition/faces";
         var requestUrlWithQueryParameters = requestUrl
             .AppendPathSegments(downloadImageBySubjectIdRequest.ImageId.ToString(), "/img");
 
-        var response = await 
+        var response = await
             _apiClient.GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
 
         return response;

@@ -5,8 +5,8 @@ namespace Exadel.Compreface.Services.Interfaces
 {
     public interface IFaceDetectionService
     {
-        Task<FaceDetectionResponse> FaceDetectionAsync(FaceDetectionRequest faceDetectionRequest, bool isFileInTheRemoteServer = false);
-        Task<FaceDetectionResponse> FaceDetectionBase64Async(FaceDetectionBase64Request faceDetectionRequest);
+        Task<FaceDetectionResponse> DetectAsync(FaceDetectionRequest faceDetectionRequest, bool isFileInTheRemoteServer = false);
+        Task<FaceDetectionResponse> DetectAsync(FaceDetectionBase64Request faceDetectionRequest);
 
     }
 }

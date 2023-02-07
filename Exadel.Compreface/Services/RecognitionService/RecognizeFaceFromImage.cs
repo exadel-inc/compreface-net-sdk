@@ -6,23 +6,24 @@ using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
 using Exadel.Compreface.Helpers;
+using Exadel.Compreface.Services.Interfaces;
 using Flurl;
 using Flurl.Http;
 using Microsoft.Extensions.Options;
 
-namespace Exadel.Compreface.Services;
+namespace Exadel.Compreface.Services.RecognitionService;
 
-public class RecognitionService
+public class RecognizeFaceFromImage : IRecognizeFaceFromImage
 {
     private readonly IOptionsMonitor<ComprefaceConfiguration> _configuration;
     private readonly IApiClient _apiClient;
 
-    public RecognitionService(IOptionsMonitor<ComprefaceConfiguration> configuration, IApiClient apiClient)
+    public RecognizeFaceFromImage(IOptionsMonitor<ComprefaceConfiguration> configuration, IApiClient apiClient)
     {
         _configuration = configuration;
         _apiClient = apiClient;
     }
-    public async Task<RecognizeFaceFromImageResponse> RecognizeFaceFromImage(RecognizeFaceFromImageRequest request, bool isFileInTheRemoteServer = false)
+    public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFaceFromImageRequest request, bool isFileInTheRemoteServer = false)
     {
         var requestUrl = $"{_configuration.CurrentValue.Domain}:{_configuration.CurrentValue.Port}/api/v1/recognition/recognize";
         var requestUrlWithQueryParameters = requestUrl
@@ -62,8 +63,7 @@ public class RecognitionService
         return response;
     }
 
-    public async Task<RecognizeFaceFromImageResponse> RecognizeFaceFromBase64File(
-        RecognizeFacesFromImageWithBase64Request request)
+    public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFacesFromImageWithBase64Request request)
     {
         var requestUrl = $"{_configuration.CurrentValue.Domain}:{_configuration.CurrentValue.Port}/api/v1/recognition/recognize";
         var requestUrlWithQueryParameters = requestUrl
@@ -76,15 +76,15 @@ public class RecognitionService
                 status = request.Status,
             });
 
-        var response = await 
+        var response = await
             _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(
-                requestUrl: requestUrlWithQueryParameters, 
+                requestUrl: requestUrlWithQueryParameters,
                 body: new { file = request.FileBase64Value });
 
         return response;
     }
 
-    public async Task<VerifyFacesFromImageResponse> VerifyFacesFromImage(VerifyFacesFromImageRequest request)
+    public async Task<VerifyFacesFromImageResponse> VerifyAsync(VerifyFacesFromImageRequest request)
     {
         var requestUrl = $"{_configuration.CurrentValue.Domain}:{_configuration.CurrentValue.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
         var requestUrlWithQueryParameters = requestUrl
@@ -96,7 +96,7 @@ public class RecognitionService
                 status = request.Status,
             });
 
-        var response = await 
+        var response = await
             _apiClient.PostMultipartAsync<VerifyFacesFromImageResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
@@ -104,8 +104,8 @@ public class RecognitionService
 
         return response;
     }
-    
-    public async Task<VerifyFacesFromImageResponse> VerifyFacesFromBase64File(VerifyFacesFromImageWithBase64Request request)
+
+    public async Task<VerifyFacesFromImageResponse> VerifyAsync(VerifyFacesFromImageWithBase64Request request)
     {
         var requestUrl = $"{_configuration.CurrentValue.Domain}:{_configuration.CurrentValue.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
         var requestUrlWithQueryParameters = requestUrl
@@ -117,7 +117,7 @@ public class RecognitionService
                 status = request.Status,
             });
 
-        var response = await 
+        var response = await
             _apiClient.PostJsonAsync<VerifyFacesFromImageResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 body: new { file = request.FileBase64Value });
