@@ -7,7 +7,7 @@ COPY publish .
 RUN apk add --no-cache tzdata
 
 ARG dotnet_cli_home_arg=/tmp/
-ENV DOTNET_CLI_HOME=$dotnet_cli_home_arg
+ENV DOTNET_CLI_HOME=$dotnet_cli_home_arg 
 
 
 ENTRYPOINT dotnet test "Exadel.Compreface.AcceptenceTests.dll" -l:"console;verbosity=detailed"
