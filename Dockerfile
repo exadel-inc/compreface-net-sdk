@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine
 
 WORKDIR "/src/Exadel.Compreface.AcceptenceTests"
-RUN dotnet build "Exadel.Compreface.AcceptenceTests.csproj" -c Release -o /app/build
+RUN dotnet build "Exadel.Compreface.AcceptenceTests.csproj" -c Release -o /build
 
 FROM build AS publish
 RUN dotnet publish "Exadel.Compreface.AcceptenceTests.csproj" -c Release -o /publish /p:UseAppHost=false
