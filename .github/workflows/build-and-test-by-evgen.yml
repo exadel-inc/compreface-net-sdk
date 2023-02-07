@@ -31,7 +31,7 @@ jobs:
       run: pwd
       
     - name: Build the Docker image
-      working-directory: Exadel.Compreface.AcceptenceTests
+      working-directory: compreface-net-sdk
       run: docker build . --file Dockerfile
       
     - name: Test
