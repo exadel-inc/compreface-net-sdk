@@ -32,7 +32,7 @@ jobs:
       
     - name: Build the Docker image
       working-directory: Exadel.Compreface.AcceptenceTests
-      run: docker build . --file Dockerfile --tag my-app-dotnet:$(data +%s)
+      run: docker build . --file Dockerfile
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
