@@ -18,10 +18,10 @@ public class CompreFaceClient : ICompreFaceClient
     public CompreFaceClient(IComprefaceConfiguration configuration)
         : this(configuration.Domain, configuration.Port) { }
 
-    public CompreFaceClient(string domain, string port)
+    public CompreFaceClient(string? domain, string? port)
     {
-        _domain = domain;
-        _port = port;
+        _domain = domain ?? throw new ArgumentNullException($"{nameof(domain)} cannot be null!");
+        _port = port ?? throw new ArgumentNullException($"{nameof(port)} cannot be null!");
     }
 
     public T GetService<T>(string apiKey) where T : class
