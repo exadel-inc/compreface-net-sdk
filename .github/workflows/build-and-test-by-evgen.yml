@@ -17,17 +17,21 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '7.0.x'
-    - uses: docker-practice/actions-setup-docker@master
+
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+      
+    - name: Docker
+      uses: docker-practice/actions-setup-docker@master
       timeout-minutes: 12
     - run: |
         set -x
 
         docker version
-
+        docker build -t e2e-tests -f Dockerfile .
         docker run --rm e2e-tests
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
+      
     - name: Test
       run: dotnet test --no-build --verbosity normal
