@@ -32,7 +32,7 @@ jobs:
       
     - name: Build the Docker image
       working-directory: compreface-net-sdk
-      run: docker build . --file Dockerfile
+      run: docker build . --file Exadel.Compreface.AcceptenceTests/Dockerfile
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
