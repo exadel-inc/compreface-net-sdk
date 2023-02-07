@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients.ApiClient;
+using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteAllSubjectExamples;
@@ -17,7 +18,7 @@ namespace Exadel.Compreface.Services.RecognitionService
     public class FaceCollection
     {
         private readonly IComprefaceConfiguration _configuration;
-        private readonly ApiClient _apiClient;
+        private readonly IApiClient _apiClient;
 
         public FaceCollection(IComprefaceConfiguration configuration)
         {

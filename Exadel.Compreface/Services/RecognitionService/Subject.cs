@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients.ApiClient;
+using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteAllSubjects;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
@@ -10,7 +11,7 @@ namespace Exadel.Compreface.Services.RecognitionService
     public class Subject
     {
         private readonly IComprefaceConfiguration _configuration;
-        private readonly ApiClient _apiClient;
+        private readonly IApiClient _apiClient;
 
         public Subject(IComprefaceConfiguration configuration)
         {

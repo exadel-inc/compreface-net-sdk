@@ -1,4 +1,4 @@
-﻿using Exadel.Compreface.Clients;
+﻿using Exadel.Compreface.Clients.CompreFaceClient;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteAllSubjectExamples;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;

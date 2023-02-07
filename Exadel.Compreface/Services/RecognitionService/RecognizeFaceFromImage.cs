@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients.ApiClient;
+using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
@@ -13,7 +14,7 @@ namespace Exadel.Compreface.Services.RecognitionService
     public class RecognizeFaceFromImage
     {
         private readonly IComprefaceConfiguration _configuration;
-        private readonly ApiClient _apiClient;
+        private readonly IApiClient _apiClient;
 
         public RecognizeFaceFromImage(IComprefaceConfiguration configuration)
         {

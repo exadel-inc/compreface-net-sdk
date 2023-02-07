@@ -1,3 +1,4 @@
+using Exadel.Compreface.Clients.ApiClient;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
@@ -13,7 +14,7 @@ namespace Exadel.Compreface.Services;
 public class FaceVerificationService
 {
     private readonly IComprefaceConfiguration _configuration;
-    private readonly ApiClient _apiClient;
+    private readonly IApiClient _apiClient;
 
     public FaceVerificationService(IComprefaceConfiguration configuration)
     {

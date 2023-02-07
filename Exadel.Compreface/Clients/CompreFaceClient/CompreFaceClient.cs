@@ -3,7 +3,7 @@ using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services.Attributes;
 using System.Reflection;
 
-namespace Exadel.Compreface.Clients;
+namespace Exadel.Compreface.Clients.CompreFaceClient;
 
 /// <summary>
 /// Wrapper on top of Flurl.Http package's extension methods

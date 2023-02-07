@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients.ApiClient;
+using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
@@ -13,7 +14,7 @@ namespace Exadel.Compreface.Services
     public class FaceDetectionService 
     {
         private readonly IComprefaceConfiguration _configuration;
-        private readonly ApiClient _apiClient;
+        private readonly IApiClient _apiClient;
 
         public FaceDetectionService(IComprefaceConfiguration configuration)
         {

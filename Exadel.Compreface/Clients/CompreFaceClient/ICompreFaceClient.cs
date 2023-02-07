@@ -1,4 +1,4 @@
-﻿namespace Exadel.Compreface.Clients
+﻿namespace Exadel.Compreface.Clients.CompreFaceClient
 {
     public interface ICompreFaceClient
     {

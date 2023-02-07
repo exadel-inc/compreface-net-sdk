@@ -1,5 +1,4 @@
-﻿using Exadel.Compreface.Clients;
-using Exadel.Compreface.Services;
+﻿using Exadel.Compreface.Clients.CompreFaceClient;
 using Exadel.Compreface.Services.RecognitionService;
 
 // the rest of the other services will be configured like this
