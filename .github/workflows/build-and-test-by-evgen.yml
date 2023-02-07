@@ -30,23 +30,9 @@ jobs:
     - name: Show contents
       run: pwd
       
-    - name: Build and push
-      uses: docker/build-push-action@v2
-      with:
-          context: .
-          file: ./Exadel.Compreface.AcceptenceTests/Dockerfile
-          pull: true
-          push: true
-          cache-from: type=registry,ref=hustakin/hello-world-docker-action:latest
-          cache-to: type=inline
-          tags: hustakin/hello-world-docker-action:latest
-          build-args: PROFILE=nectar,ARG2=test
-      
-    - run: |
-        set -x
-
-        docker version
-        docker run --rm e2e-tests
+    - name: Build the Docker image
+      working-directory: Exadel.Compreface.AcceptenceTests
+      run: docker build . --file Dockerfile --tag my-app-dotnet:$(data +%s)
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
