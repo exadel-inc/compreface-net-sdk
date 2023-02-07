@@ -26,39 +26,39 @@ public class CompreFaceClient : ICompreFaceClient
 
     public T GetService<T>(string apiKey) where T : class
     {
-        var key = new ServiceDictionaryKey(apiKey, typeof(T));
-        var baseService = _services.GetValueOrDefault(key);
-
-        if (baseService == null)
+        try
         {
-            var config = new ComprefaceConfiguration(apiKey, _domain, _port);
+            var key = new ServiceDictionaryKey(apiKey, typeof(T));
+            var baseService = _services.GetValueOrDefault(key);
 
-            baseService = GetBaseService(typeof(T), config);
+            if (baseService == null)
+            {
+                var config = new ComprefaceConfiguration(apiKey, _domain, _port);
 
-            _services.Add(key, baseService!);
+                baseService = GetBaseService(typeof(T), config);
+
+                _services.Add(key, baseService!);
+            }
+
+            return (T)baseService;
         }
-
-        return (baseService as T)!;
+        catch (Exception)
+        {
+            throw;
+        }
     }
 
     private object GetBaseService(Type type, ComprefaceConfiguration config)
     {
-        try
-        {
-            object baseService = null;
+        object baseService = null;
 
-            if (type.GetCustomAttribute(typeof(CompreFaceService)) != null)
-                baseService = Activator.CreateInstance(type, config);
+        if (type.GetCustomAttribute(typeof(CompreFaceService)) != null)
+            baseService = Activator.CreateInstance(type, config);
 
-            if (baseService == null)
-                throw new TypeNotBelongCompreFaceException("Type don't belong CompreFace services. Class should be covered by CompreFaceService attribute.");
+        if (baseService == null)
+            throw new TypeNotBelongCompreFaceException("Type don't belong CompreFace services. Class should be covered by CompreFaceService attribute.");
 
-            return baseService;
-        }
-        catch (TypeNotBelongCompreFaceException)
-        {
-            throw;
-        }
+        return baseService;
     }
 
     private class ServiceDictionaryKey
