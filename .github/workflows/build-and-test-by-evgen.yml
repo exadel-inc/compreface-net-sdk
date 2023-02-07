@@ -26,11 +26,26 @@ jobs:
     - name: Docker
       uses: docker-practice/actions-setup-docker@master
       timeout-minutes: 12
+      
+    - name: Show contents
+      run: pwd
+      
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+          context: .
+          file: ./Dockerfile
+          pull: true
+          push: true
+          cache-from: type=registry,ref=hustakin/hello-world-docker-action:latest
+          cache-to: type=inline
+          tags: hustakin/hello-world-docker-action:latest
+          build-args: PROFILE=nectar,ARG2=test
+      
     - run: |
         set -x
 
         docker version
-        docker build -t e2e-tests .
         docker run --rm e2e-tests
       
     - name: Test
