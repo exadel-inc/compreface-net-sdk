@@ -34,7 +34,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
           context: .
-          file: ./Dockerfile
+          file: ./Exadel.Compreface.AcceptenceTests/Dockerfile
           pull: true
           push: true
           cache-from: type=registry,ref=hustakin/hello-world-docker-action:latest
