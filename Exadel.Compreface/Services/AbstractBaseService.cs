@@ -38,11 +38,11 @@ namespace Exadel.Compreface.Services
             }
             catch (FlurlHttpTimeoutException exception)
             {
-                throw await ThrowServiceTimeoutExceptionAsync(exception);
+                throw exception;
             }
             catch (FlurlHttpException exception)
             {
-                throw await ThrowServiceExceptionAsync(exception);
+                throw exception;
             }
         }
 
@@ -76,11 +76,11 @@ namespace Exadel.Compreface.Services
             }
             catch (FlurlHttpTimeoutException exception)
             {
-                throw await ThrowServiceTimeoutExceptionAsync(exception);
+                throw exception;
             }
             catch (FlurlHttpException exception)
             {
-                throw await ThrowServiceExceptionAsync(exception);
+                throw exception;
             }
         }
 
@@ -114,11 +114,11 @@ namespace Exadel.Compreface.Services
             }
             catch (FlurlHttpTimeoutException exception)
             {
-                throw await ThrowServiceTimeoutExceptionAsync(exception);
+                throw exception;
             }
             catch (FlurlHttpException exception)
             {
-                throw await ThrowServiceExceptionAsync(exception);
+                throw exception;
             }
         }
 
@@ -151,11 +151,11 @@ namespace Exadel.Compreface.Services
             }
             catch (FlurlHttpTimeoutException exception)
             {
-                throw await ThrowServiceTimeoutExceptionAsync(exception);
+                throw exception;
             }
             catch (FlurlHttpException exception)
             {
-                throw await ThrowServiceExceptionAsync(exception);
+                throw exception;
             }
         }
 
@@ -188,11 +188,11 @@ namespace Exadel.Compreface.Services
             }
             catch (FlurlHttpTimeoutException exception)
             {
-                throw await ThrowServiceTimeoutExceptionAsync(exception);
+                throw exception;
             }
             catch (FlurlHttpException exception)
             {
-                throw await ThrowServiceExceptionAsync(exception);
+                throw exception;
             }
         }
 
@@ -224,11 +224,11 @@ namespace Exadel.Compreface.Services
             }
             catch (FlurlHttpTimeoutException exception)
             {
-                throw await ThrowServiceTimeoutExceptionAsync(exception);
+                throw exception;
             }
             catch (FlurlHttpException exception)
             {
-                throw await ThrowServiceExceptionAsync(exception);
+                throw exception;
             }
         }
 

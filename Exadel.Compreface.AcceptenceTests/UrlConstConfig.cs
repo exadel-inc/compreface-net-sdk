@@ -3,10 +3,12 @@
     public static class UrlConstConfig
     {
 
-        public static string FILE_PATH { get; }
+        //public static string FILE_PATH { get; }
+        public const string FILE_PATH = @"Resources/Images/pexels-jonathan-yakubu.jpg";
+
 
         public static string PATH_OF_WRONG_FILE { get; }
-        
+
         public static string TWO_FACES_IMAGE_PATH { get; }
 
         static UrlConstConfig()
@@ -16,7 +18,8 @@
             var binPath = Directory.GetParent(debugPath!)?.ToString();
             var projectPath = Directory.GetParent(binPath!)?.ToString();
 
-            FILE_PATH = Path.Combine(projectPath!, "Resources", "Images", "pexels-jonathan-yakubu.jpg");
+            //FILE_PATH = Path.Combine(projectPath!, "Resources", "Images", "pexels-jonathan-yakubu.jpg");
+
             PATH_OF_WRONG_FILE = Path.Combine(projectPath!, "Resources", "Images", "pexels.jpg");
             TWO_FACES_IMAGE_PATH = Path.Combine(projectPath!, "Resources", "Images", "pexels-14344696.jpg");
         }
