@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <None Remove="Resources\Images\brad-pitt_24.jpg" />
+      <None Remove="UrlConstConfig.cs~RF3b53ae.TMP" />
     </ItemGroup>
 
     <ItemGroup>
@@ -30,10 +31,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Exadel.Compreface\Exadel.Compreface.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Resource Include="Resources\Images\brad-pitt_24.jpg" />
     </ItemGroup>
 
     <ItemGroup>
