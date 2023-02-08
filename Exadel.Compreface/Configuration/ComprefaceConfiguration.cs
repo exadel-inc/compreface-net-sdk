@@ -2,9 +2,7 @@
 
 public class ComprefaceConfiguration 
 {
-    public string Domain { get; set; } = null;
-    public string Port { get; set; } = null;
-    public string FaceDetectionApiKey { get; set; } = null;
-    public string FaceVerificationApiKey { get; set; } = null;
-    public string FaceRecognitionApiKey { get; set; } = null;
+    public string? Domain { get; set; } 
+    public string? Port { get; set; } 
+    public List<ServicesConfiguration>? ServicesConfiguration { get; set; } 
 }
