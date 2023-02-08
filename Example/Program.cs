@@ -1,4 +1,5 @@
 ﻿using Exadel.Compreface.Clients;
+using Exadel.Compreface.Clients.CompreFaceClient;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.Services;
 using Exadel.Compreface.Services.RecognitionService;
@@ -34,9 +35,9 @@ public class Program
         var apiKeyVerification = new ComprefaceConfiguration(configuration?.GetValue<string>("FaceVerificationApiKey"));
 
         var client = new CompreFaceClient(configuration?.GetValue<string>("Domain"), configuration?.GetValue<string>("Port"));
-        var recognitionService = client.GetService<RecognitionService>(apiKeyRecognition.ApiKey);
-        var detectionService = client.GetService<FaceDetectionService>(apiKeyDetection.ApiKey);
-        var verificationService = client.GetService<FaceVerificationService>(apiKeyVerification.ApiKey);
+        var recognitionService = client.GetCompreFaceService<RecognitionService>(apiKeyRecognition.ApiKey);
+        var detectionService = client.GetCompreFaceService<FaceDetectionService>(apiKeyDetection.ApiKey);
+        var verificationService = client.GetCompreFaceService<FaceVerificationService>(apiKeyVerification.ApiKey);
 
         // use client methods here.....
     }

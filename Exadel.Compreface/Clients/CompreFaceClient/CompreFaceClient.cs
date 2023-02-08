@@ -1,6 +1,7 @@
 ﻿using Exadel.Compreface.Configuration;
 using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services.Attributes;
+using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
 namespace Exadel.Compreface.Clients.CompreFaceClient;
@@ -15,32 +16,51 @@ public class CompreFaceClient : ICompreFaceClient
 
     private readonly Dictionary<ServiceDictionaryKey, object> _services = new();
 
-    public CompreFaceClient(IComprefaceConfiguration configuration)
-        : this(configuration.Domain, configuration.Port) { }
-
     public CompreFaceClient(string? domain, string? port)
     {
         _domain = domain ?? throw new ArgumentNullException($"{nameof(domain)} cannot be null!");
         _port = port ?? throw new ArgumentNullException($"{nameof(port)} cannot be null!");
     }
 
-    public T GetService<T>(string apiKey) where T : class
+    public CompreFaceClient(IConfiguration configuration, string? domainSection, string? portSection)
+    {
+        _domain = configuration.GetSection(domainSection).Value ?? throw new ArgumentNullException($"{nameof(domainSection)} cannot be null!");
+        _port = configuration.GetSection(portSection).Value ?? throw new ArgumentNullException($"{nameof(portSection)} cannot be null!");
+    }
+
+    public T GetCompreFaceService<T>(string apiKey) where T : class
+    {
+        var compreFaceService = GetService(apiKey, typeof(T));
+
+        return (T)compreFaceService;
+    }
+
+    public T GetCompreFaceService<T>(IConfiguration configuration, string apiKeySection) where T : class
+    {
+
+        var apiKey = configuration.GetSection(apiKeySection).Value ?? throw new ArgumentNullException($"{nameof(apiKeySection)} cannot be null!");
+        var compreFaceService = GetService(apiKey, typeof(T));
+
+        return (T)compreFaceService;
+    }
+
+    private object GetService(string apiKey, Type type)
     {
         try
         {
-            var key = new ServiceDictionaryKey(apiKey, typeof(T));
+            var key = new ServiceDictionaryKey(apiKey, type);
             var baseService = _services.GetValueOrDefault(key);
 
             if (baseService == null)
             {
                 var config = new ComprefaceConfiguration(apiKey, _domain, _port);
 
-                baseService = GetBaseService(typeof(T), config);
+                baseService = ReturnServiceIfTypeIsValid(type, config);
 
                 _services.Add(key, baseService!);
             }
 
-            return (T)baseService;
+            return baseService;
         }
         catch (Exception)
         {
@@ -48,7 +68,7 @@ public class CompreFaceClient : ICompreFaceClient
         }
     }
 
-    private object GetBaseService(Type type, ComprefaceConfiguration config)
+    private object ReturnServiceIfTypeIsValid(Type type, ComprefaceConfiguration config)
     {
         object baseService = null;
 
