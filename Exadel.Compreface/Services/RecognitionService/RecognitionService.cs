@@ -8,7 +8,7 @@ namespace Exadel.Compreface.Services.RecognitionService
     public class RecognitionService : IRecognitionService
     {
         private readonly IOptionsMonitor<ComprefaceConfiguration> _configuration;
-        private readonly IApiClient _apiClient;
+        public readonly IApiClient _apiClient;
         public IFaceCollection FaceCollection { get; private set; }
         public ISubject Subject { get; private set; }
         public IRecognizeFaceFromImage RecognizeFaceFromImage { get; private set; }

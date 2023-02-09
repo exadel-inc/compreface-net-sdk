@@ -7,6 +7,7 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
+using Exadel.Compreface.Helpers;
 using Exadel.Compreface.Services;
 using Exadel.Compreface.Services.Interfaces;
 using Exadel.Compreface.Services.RecognitionService;
@@ -32,8 +33,13 @@ var builder = new CompreFaceBuilder(configuration);
 director.Builder = builder;
 director.BuildFullServices();
 
-//var detectionService = builder.BuildFaceDetection();
-//var recognitionService = builder.BuildRecognition();
+
+var detectionService = builder.BuildFaceDetection();
+var recognitionService = builder.BuildRecognition();
+
+var ds = GetServiceHelper.GetService(detectionService, "59e2df37-0781-439d-802a-63329bb7e60a");
+var rs = GetServiceHelper.GetService(recognitionService, "000000000000000000000000000000000000");
+
 
 
 ConfigInitializer.InitializeSnakeCaseJsonConfigs();
@@ -87,7 +93,7 @@ var faceDetectionRequest = new FaceDetectionRequest()
 };
 
 //var faceDetectionresult = await faceDetectionService.DetectAsync(faceDetectionRequest, isFileInTheRemoteServer: true);
-
+var result = await ds.DetectAsync(faceDetectionRequest, true);
 
 var addSubjectExampleRequest = new AddSubjectExampleRequest()
 {

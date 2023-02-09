@@ -14,7 +14,7 @@ namespace Exadel.Compreface.Services
     public class FaceDetectionService: IFaceDetectionService
     {
         private readonly IOptionsMonitor<ComprefaceConfiguration> _configuration;
-        private readonly IApiClient _apiClient;
+        public readonly IApiClient _apiClient;
 
         public FaceDetectionService(IOptionsMonitor<ComprefaceConfiguration> configuration, IApiClient apiClient)
         {
