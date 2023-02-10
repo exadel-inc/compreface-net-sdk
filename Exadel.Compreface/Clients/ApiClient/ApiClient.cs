@@ -240,6 +240,29 @@ namespace Exadel.Compreface.Clients.ApiClient
             return response;
         }
 
+        public async Task<byte[]> GetBytesAsync(
+            string url, 
+            HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
+            CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var response = await url
+                    .WithHeader("x-api-key", _configuration.ApiKey)
+                    .GetBytesAsync(completionOption, cancellationToken);
+
+                return response;
+            }
+            catch (FlurlHttpTimeoutException exception)
+            {
+                throw await ThrowServiceTimeoutExceptionAsync(exception);
+            }
+            catch (FlurlHttpException exception)
+            {
+                throw await ThrowServiceExceptionAsync(exception);
+            }
+        }
+
         private static async Task<ServiceTimeoutException> ThrowServiceTimeoutExceptionAsync(FlurlHttpTimeoutException exception)
         {
             var exceptionMessage = await exception.GetResponseStringAsync();

@@ -38,7 +38,7 @@ namespace Exadel.Compreface.Services
         {
             var requestUrlWithQueryParameters = GetRequestUrl(faceDetectionRequest);
 
-            var fileInBase64String = ConvertUrlToBase64StringHelpers.ConvertUrlAsync(faceDetectionRequest.FileUrl).Result;
+            var fileInBase64String = ConvertUrlToBase64StringHelpers.ConvertUrlAsync(_apiClient, faceDetectionRequest.FileUrl).Result;
 
             var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
             {

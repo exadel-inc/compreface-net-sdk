@@ -14,6 +14,7 @@ using Exadel.Compreface.DTOs.SubjectExampleDTOs.AddSubjectExample;
 using Exadel.Compreface.Helpers;
 using Flurl;
 using Flurl.Http;
+using System;
 
 namespace Exadel.Compreface.Services.RecognitionService
 {
@@ -43,7 +44,7 @@ namespace Exadel.Compreface.Services.RecognitionService
         {
             var requestUrlWithQueryParameters = GetRequestUrl(request);
 
-            var fileInBase64String = ConvertUrlToBase64StringHelpers.ConvertUrlAsync(request.FileUrl).Result;
+            var fileInBase64String = ConvertUrlToBase64StringHelpers.ConvertUrlAsync(_apiClient, request.FileUrl).Result;
 
             var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
             {
