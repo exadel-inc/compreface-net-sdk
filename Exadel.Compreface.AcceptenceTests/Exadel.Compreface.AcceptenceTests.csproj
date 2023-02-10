@@ -33,16 +33,4 @@
       <ProjectReference Include="..\Exadel.Compreface\Exadel.Compreface.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <None Update="Resources\Images\pexels-14344696.jpg">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Resources\Images\pexels-jonathan-yakubu.jpg">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Resources\Images\pexels.jpg">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-
 </Project>

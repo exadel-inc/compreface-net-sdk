@@ -5,28 +5,22 @@ using Flurl;
 using Exadel.Compreface.Exceptions;
 using Microsoft.Extensions.Logging;
 using Exadel.Compreface.Clients.Config;
-using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
-[assembly: InternalsVisibleTo("Exadel.Compreface.UnitTests")]
-[assembly: InternalsVisibleTo("Exadel.Compreface.AcceptenceTests")]
-namespace Exadel.Compreface.Services
+namespace Exadel.Compreface.Clients.ApiClient
 {
-    public abstract class AbstractBaseService
+    public class ApiClient : IApiClient
     {
-        protected IComprefaceConfiguration Configuration { get; private set; }
-        private readonly ILogger<AbstractBaseService> _logger;
+        private readonly IComprefaceConfiguration _configuration;
 
-        //public AbstractBaseService(ILogger<AbstractBaseService> logger, IComprefaceConfiguration configuration)
-        public AbstractBaseService(IComprefaceConfiguration configuration)
+        public ApiClient(IComprefaceConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
 
             ConfigInitializer.InitializeSnakeCaseJsonConfigs();
             //_logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        internal virtual async Task<TResponse> GetJsonAsync<TResponse>(
+        public async Task<TResponse> GetJsonAsync<TResponse>(
             Url requestUrl,
             HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
             CancellationToken cancellationToken = default)
@@ -34,7 +28,7 @@ namespace Exadel.Compreface.Services
             try
             {
                 var response = await requestUrl
-                    .WithHeader("x-api-key", Configuration.ApiKey)
+                    .WithHeader("x-api-key", _configuration.ApiKey)
                     .GetAsync(completionOption, cancellationToken: cancellationToken)
                     .ReceiveJson<TResponse>();
 
@@ -50,7 +44,7 @@ namespace Exadel.Compreface.Services
             }
         }
 
-        internal virtual async Task<TResponse> GetJsonAsync<TResponse>(
+        public async Task<TResponse> GetJsonAsync<TResponse>(
             string requestUrl,
             HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
             CancellationToken cancellationToken = default)
@@ -62,7 +56,7 @@ namespace Exadel.Compreface.Services
             return response;
         }
 
-        internal virtual async Task<TResponse> PostJsonAsync<TResponse>(
+        public async Task<TResponse> PostJsonAsync<TResponse>(
             Url requestUrl,
             object body,
             HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
@@ -75,7 +69,7 @@ namespace Exadel.Compreface.Services
 
        _logger.LogInformation("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!some info");
                 var response = await requestUrl
-                    .WithHeader("x-api-key", Configuration.ApiKey)
+                    .WithHeader("x-api-key", _configuration.ApiKey)
                     .PostJsonAsync(body, completionOption, cancellationToken)
                     .ReceiveJson<TResponse>();
 
@@ -91,7 +85,7 @@ namespace Exadel.Compreface.Services
             }
         }
 
-        internal virtual async Task<TResponse> PostJsonAsync<TResponse>(
+        public async Task<TResponse> PostJsonAsync<TResponse>(
             string requestUrl,
             object body,
             HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
@@ -104,7 +98,7 @@ namespace Exadel.Compreface.Services
             return response;
         }
 
-        internal virtual async Task<TResponse> PutJsonAsync<TResponse>(
+        public async Task<TResponse> PutJsonAsync<TResponse>(
             Url requestUrl,
             object body,
             HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
@@ -113,7 +107,7 @@ namespace Exadel.Compreface.Services
             try
             {
                 var response = await requestUrl
-                    .WithHeader("x-api-key", Configuration.ApiKey)
+                    .WithHeader("x-api-key", _configuration.ApiKey)
                     .PutJsonAsync(body, completionOption, cancellationToken)
                     .ReceiveJson<TResponse>();
 
@@ -129,7 +123,7 @@ namespace Exadel.Compreface.Services
             }
         }
 
-        internal virtual async Task<TResponse> PutJsonAsync<TResponse>(
+        public async Task<TResponse> PutJsonAsync<TResponse>(
             string requestUrl,
             object body,
             HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
@@ -142,7 +136,7 @@ namespace Exadel.Compreface.Services
             return response;
         }
 
-        internal virtual async Task<TResponse> DeleteJsonAsync<TResponse>(
+        public async Task<TResponse> DeleteJsonAsync<TResponse>(
             Url requestUrl,
             HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
             CancellationToken cancellationToken = default)
@@ -150,7 +144,7 @@ namespace Exadel.Compreface.Services
             try
             {
                 var response = await requestUrl
-                    .WithHeader("x-api-key", Configuration.ApiKey)
+                    .WithHeader("x-api-key", _configuration.ApiKey)
                     .DeleteAsync(completionOption, cancellationToken)
                     .ReceiveJson<TResponse>();
 
@@ -166,7 +160,7 @@ namespace Exadel.Compreface.Services
             }
         }
 
-        internal virtual async Task<TResponse> DeleteJsonAsync<TResponse>(
+        public async Task<TResponse> DeleteJsonAsync<TResponse>(
             string requestUrl,
             HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
             CancellationToken cancellationToken = default)
@@ -178,7 +172,7 @@ namespace Exadel.Compreface.Services
             return response;
         }
 
-        internal virtual async Task<TResponse> PostMultipartAsync<TResponse>(
+        public async Task<TResponse> PostMultipartAsync<TResponse>(
             Url requestUrl,
             Action<CapturedMultipartContent> buildContent,
             HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
@@ -187,7 +181,7 @@ namespace Exadel.Compreface.Services
             try
             {
                 var response = await requestUrl
-                    .WithHeader("x-api-key", Configuration.ApiKey)
+                    .WithHeader("x-api-key", _configuration.ApiKey)
                     .PostMultipartAsync(buildContent, completionOption, cancellationToken)
                     .ReceiveJson<TResponse>();
 
@@ -203,7 +197,7 @@ namespace Exadel.Compreface.Services
             }
         }
 
-        internal virtual async Task<TResponse> PostMultipartAsync<TResponse>(
+        public async Task<TResponse> PostMultipartAsync<TResponse>(
             string requestUrl,
             Action<CapturedMultipartContent> buildContent,
             HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
@@ -216,7 +210,7 @@ namespace Exadel.Compreface.Services
             return response;
         }
 
-        internal virtual async Task<byte[]> GetBytesFromRemoteAsync(
+        public async Task<byte[]> GetBytesFromRemoteAsync(
             Url requestUrl,
             HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
             CancellationToken cancellationToken = default)
@@ -224,7 +218,7 @@ namespace Exadel.Compreface.Services
             try
             {
                 var response = await requestUrl
-                    .WithHeader("x-api-key", Configuration.ApiKey)
+                    .WithHeader("x-api-key", _configuration.ApiKey)
                     .GetBytesAsync(completionOption, cancellationToken);
 
                 return response;
@@ -239,7 +233,7 @@ namespace Exadel.Compreface.Services
             }
         }
 
-        internal virtual async Task<byte[]> GetBytesFromRemoteAsync(
+        public async Task<byte[]> GetBytesFromRemoteAsync(
             string requestUrl,
             HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
             CancellationToken cancellationToken = default)

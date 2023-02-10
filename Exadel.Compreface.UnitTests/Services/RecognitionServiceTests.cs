@@ -2,7 +2,7 @@
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
-using Exadel.Compreface.Services;
+using Exadel.Compreface.Services.RecognitionService;
 using Flurl;
 
 namespace Exadel.Compreface.UnitTests.Services
