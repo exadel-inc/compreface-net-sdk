@@ -1,5 +1,6 @@
 ﻿using Exadel.Compreface.Clients.CompreFaceClient;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
+using Exadel.Compreface.DTOs.SubjectExampleDTOs.AddSubjectExample;
 using Exadel.Compreface.Services;
 using Exadel.Compreface.Services.RecognitionService;
 using Microsoft.Extensions.Configuration;
@@ -33,11 +34,18 @@ var faceDetectionRequest = new FaceDetectionRequestByFileUrl()
 };
 var configdetect = configuration.GetSection("FaceDetectionApiKey").Value;
 var detectService = client.GetCompreFaceService<FaceDetectionService>(configdetect);
-await detectService.DetectAsync(faceDetectionRequest);
+var result = await detectService.DetectAsync(faceDetectionRequest);
+
+var addSubjectExampleRequest = new AddSubjectExampleRequestByFileUrl()
+{
+    Subject = "API",
+    FileUrl = "http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcS6j6jazxVpBpf4ZdKMgUeN61C_s4EJPqI7NijX0PDep3SGXQ_bT9ap12h2MWoIolUIpngs3pApkIH-Kzw",
+    //FilePath = "https://raw.githubusercontent.com/exadel-inc/compreface-net-sdk/main/Exadel.Compreface.AcceptenceTests/Resources/Images/brad-pitt_24.jpg",
+};
 
 var config = configuration.GetSection("FaceRecognitionApiKey").Value;
-var subjects = client.GetCompreFaceService<RecognitionService>(config);
-await subjects.FaceCollection.ListAsync(new Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject.ListAllSubjectExamplesRequest() { Subject = "Subject name" });
+var recognitionService = client.GetCompreFaceService<RecognitionService>(config);
+var result1 = await recognitionService.FaceCollection.AddAsync(addSubjectExampleRequest);
 
 var conf = serviceProvider.GetService<IConfiguration>();
 var subject = client.GetCompreFaceService<RecognitionService>(conf, "FaceRecognitionApiKey");
