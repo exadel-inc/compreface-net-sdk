@@ -19,7 +19,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
     public async Task VerifyAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
-        var request = new FaceVerificationRequest()
+        var request = new FaceVerificationRequestByFilePath()
         {
             FacePlugins = new List<string>()
         };
@@ -52,7 +52,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationSe
     public async Task VerifyBase64Async_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
-        var request = new FaceVerificationRequest();
+        var request = new FaceVerificationRequestByFilePath();
 
         SetupPostMultipart<FaceVerificationResponse>();
 

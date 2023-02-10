@@ -13,7 +13,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
     {
         private readonly FaceVerificationService _faceVerificationService;
 
-        private readonly FaceVerificationRequest _faceVerificationRequest;
+        private readonly FaceVerificationRequestByFilePath _faceVerificationRequest;
         private readonly FaceVerificationWithBase64Request _faceVerificationBase64Request;
 
         public FaceVerificationServiceTest()
@@ -33,7 +33,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             };
 
             _faceVerificationService = client.GetService<FaceVerificationService>(API_KEY_VERIFICATION_SERVICE);
-            _faceVerificationRequest = new FaceVerificationRequest
+            _faceVerificationRequest = new FaceVerificationRequestByFilePath
             {
                 SourceImageFilePath = FILE_PATH,
                 TargetImageFilePath = FILE_PATH,
@@ -78,7 +78,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task VerifyAsync_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _faceVerificationService.VerifyAsync((FaceVerificationRequest)null!);
+            var func = async () => await _faceVerificationService.VerifyAsync((FaceVerificationRequestByFilePath)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -88,7 +88,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task VerifyAsync_TakesNullRequest_ThrowsServiceException()
         {
             //Arrange
-            var request = new FaceVerificationRequest
+            var request = new FaceVerificationRequestByFilePath
             {
                 SourceImageFilePath = TWO_FACES_IMAGE_PATH,
                 TargetImageFilePath = FILE_PATH,

@@ -9,6 +9,8 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageById;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageBySubjectId;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
 using Exadel.Compreface.DTOs.HelperDTOs;
+using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
+using Exadel.Compreface.DTOs.SubjectExampleDTOs.AddSubjectExample;
 using Exadel.Compreface.Helpers;
 using Flurl;
 using Flurl.Http;
@@ -26,53 +28,40 @@ namespace Exadel.Compreface.Services.RecognitionService
             _apiClient = new ApiClient(configuration);
         }
 
-        public async Task<AddSubjectExampleResponse> AddAsync(AddSubjectExampleRequest request, bool isFileInTheRemoteServer = false)
+        public async Task<AddSubjectExampleResponse> AddAsync(AddSubjectExampleRequestByFilePath request)
         {
-            var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
-            var requestUrlWithQueryParameters = requestUrl
-                .SetQueryParams(new
-                {
-                    subject = request.Subject,
-                    det_prob_threshold = request.DetProbThreShold,
-                });
-            AddSubjectExampleResponse? response = null;
+            var requestUrlWithQueryParameters = GetRequestUrl(request);
 
-            if (isFileInTheRemoteServer)
+            var response = await _apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
+               requestUrl: requestUrlWithQueryParameters,
+               buildContent: mp =>
+                   mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.FilePath), path: request.FilePath));
+
+            return response;
+        }
+        public async Task<AddSubjectExampleResponse> AddAsync(AddSubjectExampleRequestByFileUrl request)
+        {
+            var requestUrlWithQueryParameters = GetRequestUrl(request);
+
+            var fileStream = await request.FileUrl.GetBytesAsync();
+            var fileInBase64String = Convert.ToBase64String(fileStream);
+
+            var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
             {
-                var fileStream = await request.File.GetBytesAsync();
-                var fileInBase64String = Convert.ToBase64String(fileStream);
+                DetProbThreShold = request.DetProbThreShold,
+                File = fileInBase64String,
+                Subject = request.Subject,
+            };
 
-                var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
-                {
-                    DetProbThreShold = request.DetProbThreShold,
-                    File = fileInBase64String,
-                    Subject = request.Subject,
-                };
-
-                response = await _apiClient.PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
-                return response;
-            }
-
-            response = await _apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
-                requestUrl: requestUrlWithQueryParameters,
-                buildContent: mp =>
-                    mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.File), path: request.File));
-
+            var response = await _apiClient.PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
             return response;
         }
 
         public async Task<AddBase64SubjectExampleResponse> AddAsync(AddBase64SubjectExampleRequest request)
         {
-            var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
-            var requestUrlWithQueryParameters = requestUrl
-                .SetQueryParams(new
-                {
-                    subject = request.Subject,
-                    det_prob_threshold = request.DetProbThreShold,
-                });
+            var requestUrlWithQueryParameters = GetRequestUrl(request);
 
             var response = await _apiClient.PostJsonAsync<AddBase64SubjectExampleResponse>(requestUrlWithQueryParameters, new { file = request.File });
-
             return response;
         }
 
@@ -150,6 +139,16 @@ namespace Exadel.Compreface.Services.RecognitionService
             var response = await _apiClient.GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
 
             return response;
+        }
+        private Url GetRequestUrl(BaseExampleRequest request)
+        {
+            var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
+            return requestUrl
+               .SetQueryParams(new
+               {
+                   subject = request.Subject,
+                   det_prob_threshold = request.DetProbThreShold,
+               });
         }
     }
 }

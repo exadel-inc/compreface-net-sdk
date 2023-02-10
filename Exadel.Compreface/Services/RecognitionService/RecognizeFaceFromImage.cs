@@ -22,7 +22,7 @@ namespace Exadel.Compreface.Services.RecognitionService
             _apiClient = new ApiClient(configuration);
         }
 
-        public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFaceFromImageRequest request, bool isFileInTheRemoteServer = false)
+        public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFaceFromImageRequestByFilePath request)
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/recognize";
             var requestUrlWithQueryParameters = requestUrl
@@ -35,29 +35,37 @@ namespace Exadel.Compreface.Services.RecognitionService
                     status = request.Status,
                 });
 
-            RecognizeFaceFromImageResponse? response = null;
-
-            if (isFileInTheRemoteServer)
-            {
-                var fileStream = await request.FilePath.GetBytesAsync();
-                var fileInBase64String = Convert.ToBase64String(fileStream);
-
-                var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
-                {
-                    DetProbThreShold = request.DetProbThreshold,
-                    File = fileInBase64String,
-                };
-
-                response = await _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
-
-                return response;
-            }
-
-            response = await
+            var response = await
                 _apiClient.PostMultipartAsync<RecognizeFaceFromImageResponse>(
                     requestUrl: requestUrlWithQueryParameters,
                     buildContent: mp =>
                     mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.FilePath), path: request.FilePath));
+
+            return response;
+        }
+        public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFaceFromImageRequestByFileUrl request)
+        {
+            var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/recognize";
+            var requestUrlWithQueryParameters = requestUrl
+                .SetQueryParams(new
+                {
+                    limit = request.Limit,
+                    prediction_count = request.PredictionCount,
+                    det_prob_threshold = request.DetProbThreshold,
+                    face_plugins = string.Join(",", request.FacePlugins),
+                    status = request.Status,
+                });
+
+            var fileStream = await request.FileUrl.GetBytesAsync();
+            var fileInBase64String = Convert.ToBase64String(fileStream);
+
+            var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
+            {
+                DetProbThreShold = request.DetProbThreshold,
+                File = fileInBase64String,
+            };
+
+            var response = await _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
 
             return response;
         }

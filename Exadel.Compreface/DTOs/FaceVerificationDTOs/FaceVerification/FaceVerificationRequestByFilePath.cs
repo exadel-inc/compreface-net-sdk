@@ -2,7 +2,7 @@ using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
 
 namespace Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 
-public class FaceVerificationRequest : BaseFaceRequest
+public class FaceVerificationRequestByFilePath : BaseFaceRequest
 {
     public string SourceImageFilePath { get; set; }
 
