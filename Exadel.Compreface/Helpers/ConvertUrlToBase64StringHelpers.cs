@@ -2,7 +2,7 @@
 
 namespace Exadel.Compreface.Helpers
 {
-    public static class ConvertUrlToBase64String
+    public static class ConvertUrlToBase64StringHelpers
     {
         public static async Task<string> ConvertUrlAsync(string url)
         {
