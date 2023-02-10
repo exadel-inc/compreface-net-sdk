@@ -1,4 +1,4 @@
-﻿using Exadel.Compreface.Clients;
+﻿using Exadel.Compreface.Clients.CompreFaceClient;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
@@ -42,10 +42,10 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 Subject = TEST_SUBJECT_EXAMPLE_NAME,
             };
 
-            var expectedAddExampleSubjectResponse = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(subjectExample);
+            var expectedAddExampleSubjectResponse = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(subjectExample);
 
             //Act
-            var resultList = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ListAsync(
+            var resultList = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ListAsync(
                 new ListAllSubjectExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
 
             var actualSubjectExample = resultList.Faces
@@ -69,7 +69,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             };
 
             //Act
-            var expectedAddExampleSubjectResponse = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(subjectExample);
+            var expectedAddExampleSubjectResponse = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(subjectExample);
 
             // Assert
             Assert.NotNull(expectedAddExampleSubjectResponse);
@@ -79,7 +79,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task AddAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             //Act
-            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync((AddSubjectExampleRequest)null!);
+            var func = async () => await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync((AddSubjectExampleRequest)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -97,7 +97,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             };
 
             //Act
-            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(subjectExample);
+            var func = async () => await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(subjectExample);
 
             // Assert
             await Assert.ThrowsAsync<ServiceException>(func);
@@ -110,10 +110,10 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
-            var expectedAddBase64SubjectExampleResponse = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
+            var expectedAddBase64SubjectExampleResponse = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
 
             //Act
-            var resultList = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ListAsync(
+            var resultList = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ListAsync(
                 new ListAllSubjectExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
 
             var actualSubjectExample = resultList.Faces
@@ -132,7 +132,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
             //Act
-            var expectedAddExampleSubjectResponse = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
+            var expectedAddExampleSubjectResponse = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
 
             // Assert
             Assert.NotNull(expectedAddExampleSubjectResponse);
@@ -142,7 +142,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task AddBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             //Act
-            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync((AddBase64SubjectExampleRequest)null!);
+            var func = async () => await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync((AddBase64SubjectExampleRequest)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -161,7 +161,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             request.File = "Base64TestString";
 
             //Act
-            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(request);
+            var func = async () => await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(request);
 
             // Assert
             await Assert.ThrowsAsync<ServiceException>(func);
@@ -184,11 +184,11 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             var expectedCount = 3;
             for (int counter = expectedCount; counter > 0; counter--)
             {
-                await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
+                await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
             }
 
             //Act
-            var actualAllSubjectExamplesResponse = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ListAsync(allSubjectExamples);
+            var actualAllSubjectExamplesResponse = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ListAsync(allSubjectExamples);
             var actualCount = actualAllSubjectExamplesResponse.Faces.Count;
 
             //Assert
@@ -212,11 +212,11 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             var expectedCount = 3;
             for (int counter = expectedCount; counter > 0; counter--)
             {
-                await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
+                await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
             }
 
             //Act
-            var actualAllSubjectExamplesResponse = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ListAsync(allSubjectExamples);
+            var actualAllSubjectExamplesResponse = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ListAsync(allSubjectExamples);
 
             // Assert
             Assert.NotNull(actualAllSubjectExamplesResponse);
@@ -226,7 +226,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task GetAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             //Act
-            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ListAsync(null!);
+            var func = async () => await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ListAsync(null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -253,7 +253,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             };
 
             //Act
-            var actualResponse = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ListAsync(request);
+            var actualResponse = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).ListAsync(request);
 
             //Assert
             Assert.Equivalent(expectedDefaultResponse, actualResponse);
@@ -270,11 +270,11 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             for (int counter = expectedCount; counter > 0; counter--)
             {
-                await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
+                await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
             }
 
             //Act
-            var actualResponse = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAllAsync(
+            var actualResponse = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAllAsync(
                 new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
 
             //Assert
@@ -292,11 +292,11 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             for (int counter = expectedCount; counter > 0; counter--)
             {
-                await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
+                await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
             }
 
             //Act
-            var actualResponse = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAllAsync(
+            var actualResponse = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAllAsync(
                 new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
 
             // Assert
@@ -307,7 +307,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DeleteAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             //Act
-            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAllAsync(null!);
+            var func = async () => await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAllAsync(null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -317,7 +317,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DeleteAllAsync_TakesNullRequestModel_ThrowsServiceException()
         {
             //Act
-            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_DETECTION_SERVICE).DeleteAllAsync(
+            var func = async () => await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_DETECTION_SERVICE).DeleteAllAsync(
                 new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
 
             // Assert
@@ -330,7 +330,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         {
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
-            var testImage = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
+            var testImage = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
 
             var deleteImageByIdRequest = new DeleteImageByIdRequest()
             {
@@ -338,7 +338,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             };
 
             //Act
-            var actualDeleteImageByIdResponse = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync(deleteImageByIdRequest);
+            var actualDeleteImageByIdResponse = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync(deleteImageByIdRequest);
 
             //Assert
             Assert.Equal(testImage.Subject, actualDeleteImageByIdResponse.Subject);
@@ -351,7 +351,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         {
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
-            var testImage = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
+            var testImage = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
 
             var deleteImageByIdRequest = new DeleteImageByIdRequest()
             {
@@ -359,7 +359,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             };
 
             //Act
-            var actualDeleteImageByIdResponse = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync(deleteImageByIdRequest);
+            var actualDeleteImageByIdResponse = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync(deleteImageByIdRequest);
 
             // Assert
             Assert.NotNull(actualDeleteImageByIdResponse);
@@ -369,7 +369,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DeleteAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             //Act
-            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync((DeleteImageByIdRequest)null!);
+            var func = async () => await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync((DeleteImageByIdRequest)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -380,7 +380,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DeleteAsync_TakesRequestModel_ThrowsServiceException()
         {
             //Act
-            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync(
+            var func = async () => await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync(
                 new DeleteImageByIdRequest() { ImageId = Guid.Parse("e1a7653d-af52-4b0b-a05f-ee3f7b667fba") });
 
             // Assert
@@ -399,7 +399,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             for (int counter = expectedCount; counter > 0; counter--)
             {
-                var response = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
+                var response = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
 
                 unnecessaryExampleList.Add(response.ImageId);
             }
@@ -407,7 +407,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             var expectedFacesCount = expectedCount;
 
             //Act
-            var actualResponse = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync(
+            var actualResponse = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync(
                 new DeleteMultipleExampleRequest() { ImageIdList = unnecessaryExampleList });
 
             var actualFacesCount = actualResponse.Faces.Count;
@@ -428,13 +428,13 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             for (int counter = count; counter > 0; counter--)
             {
-                var response = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
+                var response = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
 
                 unnecessaryExampleList.Add(response.ImageId);
             }
 
             //Act
-            var actualResponse = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync(
+            var actualResponse = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync(
                 new DeleteMultipleExampleRequest() { ImageIdList = unnecessaryExampleList });
 
             // Assert
@@ -445,7 +445,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DeletMultipleAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             //Act
-            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync((DeleteMultipleExampleRequest)null!);
+            var func = async () => await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DeleteAsync((DeleteMultipleExampleRequest)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -455,7 +455,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DeletMultipleAsync_TakesNullRequestModel_ThrowsServiceException()
         {
             //Act
-            var func = async() => await _client.GetService<SubjectExampleService>(API_KEY_DETECTION_SERVICE).DeleteAsync(
+            var func = async() => await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_DETECTION_SERVICE).DeleteAsync(
                 new DeleteMultipleExampleRequest() { ImageIdList = new List<Guid>() });
 
             // Assert
@@ -469,12 +469,12 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
-            var testImage = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
+            var testImage = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
 
             var expectedResult = Convert.FromBase64String(IMAGE_BASE64_STRING);
 
             //Act
-            var actualResult = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadAsync(
+            var actualResult = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadAsync(
                 new DownloadImageByIdRequest() { ImageId = testImage.ImageId, RecognitionApiKey = Guid.Parse(API_KEY_RECOGNITION_SERVICE) });
 
             //Assert
@@ -487,10 +487,10 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
-            var testImage = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
+            var testImage = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
 
             //Act
-            var actualResult = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadAsync(
+            var actualResult = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadAsync(
                 new DownloadImageByIdRequest() { ImageId = testImage.ImageId, RecognitionApiKey = Guid.Parse(API_KEY_RECOGNITION_SERVICE) });
 
             // Assert
@@ -501,7 +501,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DownloadAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             //Act
-            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadAsync((DownloadImageByIdRequest)null!);
+            var func = async () => await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadAsync((DownloadImageByIdRequest)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -514,12 +514,12 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
-            var testImage = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
+            var testImage = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
 
             var expectedResult = Convert.FromBase64String(IMAGE_BASE64_STRING);
 
             //Act
-            var actualResult = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadAsync(
+            var actualResult = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadAsync(
                 new DownloadImageBySubjectIdRequest() { ImageId = testImage.ImageId });
 
             //Assert
@@ -533,10 +533,10 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
-            var testImage = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
+            var testImage = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).AddAsync(addBase64SubjectExampleRequest);
 
             //Act
-            var actualResult = await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadAsync(
+            var actualResult = await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadAsync(
                 new DownloadImageBySubjectIdRequest() { ImageId = testImage.ImageId });
 
             // Assert
@@ -547,7 +547,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DownloadImageBySubjectIdAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             //Act
-            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadAsync((DownloadImageBySubjectIdRequest)null!);
+            var func = async () => await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_RECOGNITION_SERVICE).DownloadAsync((DownloadImageBySubjectIdRequest)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -557,7 +557,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DownloadImageBySubjectIdAsync_TakesNullRequestModel_ThrowsServiceException()
         {
             //Act
-            var func = async () => await _client.GetService<SubjectExampleService>(API_KEY_DETECTION_SERVICE).DownloadAsync(
+            var func = async () => await _client.GetCompreFaceService<SubjectExampleService>(API_KEY_DETECTION_SERVICE).DownloadAsync(
                 new DownloadImageBySubjectIdRequest() { ImageId = Guid.NewGuid() });
 
             // Assert

@@ -3,11 +3,10 @@ using Flurl.Http.Content;
 using Flurl;
 using Moq;
 using Tynamix.ObjectFiller;
-using Exadel.Compreface.Services;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
-    public abstract class AbstractBaseServiceTests<T> where T : AbstractBaseService
+    public abstract class AbstractBaseServiceTests<T> where T : Clients.ApiClient.ApiClient
     {
         protected ComprefaceConfiguration Configuration { get; }
 
