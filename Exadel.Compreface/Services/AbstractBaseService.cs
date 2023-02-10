@@ -3,6 +3,7 @@ using Flurl.Http.Content;
 using Flurl.Http;
 using Flurl;
 using Exadel.Compreface.Exceptions;
+using Microsoft.Extensions.Logging;
 using Exadel.Compreface.Clients.Config;
 using System.Runtime.CompilerServices;
 
@@ -14,12 +15,15 @@ namespace Exadel.Compreface.Services
     public abstract class AbstractBaseService
     {
         protected IComprefaceConfiguration Configuration { get; private set; }
+        private readonly ILogger<AbstractBaseService> _logger;
 
+        //public AbstractBaseService(ILogger<AbstractBaseService> logger, IComprefaceConfiguration configuration)
         public AbstractBaseService(IComprefaceConfiguration configuration)
         {
             Configuration = configuration;
 
             ConfigInitializer.InitializeSnakeCaseJsonConfigs();
+            //_logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         internal virtual async Task<TResponse> GetJsonAsync<TResponse>(
@@ -63,10 +67,13 @@ namespace Exadel.Compreface.Services
             object body,
             HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
             CancellationToken cancellationToken = default)
+
             where TResponse : class
         {
             try
             {
+
+       _logger.LogInformation("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!some info");
                 var response = await requestUrl
                     .WithHeader("x-api-key", Configuration.ApiKey)
                     .PostJsonAsync(body, completionOption, cancellationToken)

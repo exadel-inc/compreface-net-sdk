@@ -5,6 +5,7 @@ using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Exadel.Compreface.Helpers;
 using Flurl;
 using Flurl.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Exadel.Compreface.Services
 {
@@ -12,6 +13,8 @@ namespace Exadel.Compreface.Services
     {
         public FaceDetectionService(IComprefaceConfiguration configuration)
             : base(configuration) { }
+        //public FaceDetectionService(IComprefaceConfiguration configuration, ILogger<AbstractBaseService> _logger)
+        //    : base(_logger, configuration) { }
 
         public async Task<FaceDetectionResponse> DetectAsync(FaceDetectionRequest faceDetectionRequest, bool isFileInTheRemoteServer = false)
         {
@@ -63,9 +66,9 @@ namespace Exadel.Compreface.Services
                     status = faceDetectionRequest.Status,
                 });
 
-            var response = await 
+            var response = await
                 PostJsonAsync<FaceDetectionResponse>(
-                    requestUrl: requestUrlWithQueryParameters, 
+                    requestUrl: requestUrlWithQueryParameters,
                     body: new { file = faceDetectionRequest.File });
 
             return response;

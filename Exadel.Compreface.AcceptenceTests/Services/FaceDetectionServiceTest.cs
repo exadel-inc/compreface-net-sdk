@@ -4,6 +4,7 @@ using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services;
+using Microsoft.Extensions.Logging;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
@@ -30,7 +31,6 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 "detector",
                 "calculator"
             };
-
             _faceDetectionService = client.GetService<FaceDetectionService>(API_KEY_DETECTION_SERVICE);
             _faceDetectionRequest = new FaceDetectionRequest
             {
@@ -60,6 +60,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             // Assert
             Assert.IsType<FaceDetectionResponse>(response);
         }
+
 
         //[Fact]
         //public async Task DetectAsync_TakesRequestModel_ReturnsNotNull()
