@@ -23,7 +23,7 @@ namespace Exadel.Compreface.Services
             _apiClient = new ApiClient(configuration);
         }
 
-        public async Task<FaceDetectionResponse> DetectAsync(FaceDetectionRequestByFileRath faceDetectionRequest)
+        public async Task<FaceDetectionResponse> DetectAsync(FaceDetectionRequestByFilePath faceDetectionRequest)
         {
             var requestUrlWithQueryParameters = GetRequestUrl(faceDetectionRequest);
             var response = await
