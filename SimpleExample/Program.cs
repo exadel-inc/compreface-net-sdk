@@ -17,25 +17,12 @@ var serviceProvider = host.Services;
 var configuration = serviceProvider.GetService<IConfiguration>();
 var config = configuration.GetSection("FaceRecognitionApiKey").Value;
 var subjects = client.GetCompreFaceService<RecognitionService>(config);
-await subjects.FaceCollection.ListAsync(new Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject.ListAllSubjectExamplesRequest() { Subject = "dssdgsd" });
+await subjects.FaceCollection.ListAsync(new Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject.ListAllSubjectExamplesRequest() { Subject = "Subject name" });
 
 var conf = serviceProvider.GetService<IConfiguration>();
 var subject = client.GetCompreFaceService<RecognitionService>(conf, "FaceRecognitionApiKey");
-await subject.FaceCollection.ListAsync(new Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject.ListAllSubjectExamplesRequest() { Subject = "dssdgsd" });
+await subject.FaceCollection.ListAsync(new Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject.ListAllSubjectExamplesRequest() { Subject = "Subject name" });
 
 var subj = client.GetCompreFaceService<RecognitionService>("00000000-0000-0000-0000-000000000002");
-await subj.FaceCollection.ListAsync(new Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject.ListAllSubjectExamplesRequest() { Subject = "dssdgsd" });
+await subj.FaceCollection.ListAsync(new Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject.ListAllSubjectExamplesRequest() { Subject = "Subject name" });
 
-
-//var subjects1 = client.GetCompreFaceService<RecognitionService>("");
-//var subjects2 = client.GetCompreFaceService<RecognitionService>("00000000-0000-0000-0000-000000000002");
-//var subjects3 = client.GetCompreFaceService<RecognitionService>("00000000-0000-0000-0000-000000000002");
-//var subjects4 = client.GetCompreFaceService<RecognitionService>("00000000-0000-0000-0000-000000000002");
-//var subjects5 = client.GetCompreFaceService<RecognitionService>("00000000-0000-0000-0000-000000000002");
-//var subjects6 = client.GetCompreFaceService<RecognitionService>("00000000-0000-0000-0000-000000000002");
-
-
-//foreach (var subject in subjects.Subjects)
-//{
-//    Console.WriteLine(subject);
-//}

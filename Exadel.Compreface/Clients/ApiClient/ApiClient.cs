@@ -9,11 +9,11 @@ namespace Exadel.Compreface.Clients.ApiClient
 {
     public class ApiClient : IApiClient
     {
-        protected IComprefaceConfiguration Configuration { get; private set; }
+        private readonly IComprefaceConfiguration _configuration;
 
         public ApiClient(IComprefaceConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
 
             ConfigInitializer.InitializeSnakeCaseJsonConfigs();
         }
@@ -26,7 +26,7 @@ namespace Exadel.Compreface.Clients.ApiClient
             try
             {
                 var response = await requestUrl
-                    .WithHeader("x-api-key", Configuration.ApiKey)
+                    .WithHeader("x-api-key", _configuration.ApiKey)
                     .GetAsync(completionOption, cancellationToken: cancellationToken)
                     .ReceiveJson<TResponse>();
 
@@ -64,7 +64,7 @@ namespace Exadel.Compreface.Clients.ApiClient
             try
             {
                 var response = await requestUrl
-                    .WithHeader("x-api-key", Configuration.ApiKey)
+                    .WithHeader("x-api-key", _configuration.ApiKey)
                     .PostJsonAsync(body, completionOption, cancellationToken)
                     .ReceiveJson<TResponse>();
 
@@ -102,7 +102,7 @@ namespace Exadel.Compreface.Clients.ApiClient
             try
             {
                 var response = await requestUrl
-                    .WithHeader("x-api-key", Configuration.ApiKey)
+                    .WithHeader("x-api-key", _configuration.ApiKey)
                     .PutJsonAsync(body, completionOption, cancellationToken)
                     .ReceiveJson<TResponse>();
 
@@ -139,7 +139,7 @@ namespace Exadel.Compreface.Clients.ApiClient
             try
             {
                 var response = await requestUrl
-                    .WithHeader("x-api-key", Configuration.ApiKey)
+                    .WithHeader("x-api-key", _configuration.ApiKey)
                     .DeleteAsync(completionOption, cancellationToken)
                     .ReceiveJson<TResponse>();
 
@@ -176,7 +176,7 @@ namespace Exadel.Compreface.Clients.ApiClient
             try
             {
                 var response = await requestUrl
-                    .WithHeader("x-api-key", Configuration.ApiKey)
+                    .WithHeader("x-api-key", _configuration.ApiKey)
                     .PostMultipartAsync(buildContent, completionOption, cancellationToken)
                     .ReceiveJson<TResponse>();
 
@@ -213,7 +213,7 @@ namespace Exadel.Compreface.Clients.ApiClient
             try
             {
                 var response = await requestUrl
-                    .WithHeader("x-api-key", Configuration.ApiKey)
+                    .WithHeader("x-api-key", _configuration.ApiKey)
                     .GetBytesAsync(completionOption, cancellationToken);
 
                 return response;
