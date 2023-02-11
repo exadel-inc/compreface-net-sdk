@@ -2,12 +2,12 @@
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
-using Exadel.Compreface.Services.RecognitionService;
+using Exadel.Compreface.Services;
 using Flurl;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
-    public class RecognitionServiceTests : AbstractBaseServiceTests<RecognitionService>
+    public class RecognitionServiceTests : ApiClientTests<RecognitionService>
     {
         private readonly RecognitionService _service;
 

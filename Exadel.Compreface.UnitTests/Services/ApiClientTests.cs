@@ -6,19 +6,19 @@ using Tynamix.ObjectFiller;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
-    public abstract class AbstractBaseServiceTests<T> where T : Clients.ApiClient.ApiClient
+    public class ApiClientTests
     {
         protected ComprefaceConfiguration Configuration { get; }
 
-        protected Mock<T> ServiceMock { get; }
+        protected Mock ServiceMock { get; }
 
-        public AbstractBaseServiceTests()
+        public ApiClientTests()
         {
             var apiKey = GetRandomString();
             var domain = GetRandomString();
             var port = GetRandomString();
 
-            Configuration = new ComprefaceConfiguration(apiKey, domain, port);
+            Configuration = new ComprefaceConfiguration(apiKey,domain, port);
             ServiceMock = new Mock<T>(Configuration);
         }
 

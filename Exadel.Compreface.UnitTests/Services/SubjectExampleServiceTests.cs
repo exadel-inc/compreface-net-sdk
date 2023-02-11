@@ -12,7 +12,7 @@ using Flurl;
 
 namespace Exadel.Compreface.UnitTests.Services;
 
-public class SubjectExampleServiceTests : AbstractBaseServiceTests<SubjectExampleService>
+public class SubjectExampleServiceTests : ApiClientTests<SubjectExampleService>
 {
     private readonly SubjectExampleService _service;
 

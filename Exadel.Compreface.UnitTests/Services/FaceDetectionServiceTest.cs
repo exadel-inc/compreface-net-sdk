@@ -5,7 +5,7 @@ using Flurl;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
-    public class FaceDetectionServiceTest : AbstractBaseServiceTests<FaceDetectionService>
+    public class FaceDetectionServiceTest
     {
         private readonly FaceDetectionService _service;
 

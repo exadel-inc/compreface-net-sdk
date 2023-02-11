@@ -7,7 +7,7 @@ using Exadel.Compreface.Services;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
-    public class SubjectServiceTests : AbstractBaseServiceTests<SubjectService>
+    public class SubjectServiceTests : ApiClientTests<SubjectService>
     {
         private readonly SubjectService _service;
 

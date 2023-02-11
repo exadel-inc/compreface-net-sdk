@@ -1,5 +1,4 @@
-﻿using Exadel.Compreface.Clients;
-using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients.CompreFaceClient;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
@@ -18,8 +17,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
         public FaceVerificationServiceTest()
         {
-            var configuration = new ComprefaceConfiguration(API_KEY_VERIFICATION_SERVICE, DOMAIN, PORT);
-            var client = new CompreFaceClient(configuration);
+            var client = new CompreFaceClient(DOMAIN, PORT);
             var detProbThreshold = 0.85m;
             var status = true;
             var limit = 0;
@@ -32,7 +30,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 "calculator"
             };
 
-            _faceVerificationService = client.GetService<FaceVerificationService>(API_KEY_VERIFICATION_SERVICE);
+            _faceVerificationService = client.GetCompreFaceService<FaceVerificationService>(API_KEY_VERIFICATION_SERVICE);
             _faceVerificationRequest = new FaceVerificationRequest
             {
                 SourceImageFilePath = FILE_PATH,

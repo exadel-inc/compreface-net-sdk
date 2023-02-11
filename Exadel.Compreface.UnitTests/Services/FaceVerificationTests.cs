@@ -6,7 +6,7 @@ using Flurl;
 
 namespace Exadel.Compreface.UnitTests.Services;
 
-public class FaceVerificationTests : AbstractBaseServiceTests<FaceVerificationService>
+public class FaceVerificationTests : ApiClientTests<FaceVerificationService>
 {
     private readonly FaceVerificationService _service;
 
