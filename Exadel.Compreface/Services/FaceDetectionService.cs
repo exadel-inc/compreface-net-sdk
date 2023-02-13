@@ -26,6 +26,7 @@ namespace Exadel.Compreface.Services
         public async Task<FaceDetectionResponse> DetectAsync(FaceDetectionRequestByFilePath faceDetectionRequest)
         {
             var requestUrlWithQueryParameters = GetRequestUrl(faceDetectionRequest);
+
             var response = await
                 _apiClient.PostMultipartAsync<FaceDetectionResponse>(
                     requestUrl: requestUrlWithQueryParameters,
@@ -34,6 +35,7 @@ namespace Exadel.Compreface.Services
 
             return response;
         }
+
         public async Task<FaceDetectionResponse> DetectAsync(FaceDetectionRequestByFileUrl faceDetectionRequest)
         {
             var requestUrlWithQueryParameters = GetRequestUrl(faceDetectionRequest);
@@ -66,6 +68,7 @@ namespace Exadel.Compreface.Services
         private Url GetRequestUrl(BaseFaceRequest baseFaceRequest)
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/detection/detect";
+
             return requestUrl
                 .SetQueryParams(new
                 {

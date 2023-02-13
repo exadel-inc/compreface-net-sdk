@@ -28,6 +28,7 @@ namespace Exadel.Compreface.Clients.ApiClient
         Task<TResponse> PutJsonAsync<TResponse>(string requestUrl, object body, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, CancellationToken cancellationToken = default);
 
         Task<TResponse> PutJsonAsync<TResponse>(Url requestUrl, object body, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, CancellationToken cancellationToken = default);
+       
         Task<byte[]> GetBytesAsync(string url, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, CancellationToken cancellationToken = default);
     }
 }

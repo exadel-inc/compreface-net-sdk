@@ -14,7 +14,6 @@ using Exadel.Compreface.DTOs.SubjectExampleDTOs.AddSubjectExample;
 using Exadel.Compreface.Helpers;
 using Flurl;
 using Flurl.Http;
-using System;
 
 namespace Exadel.Compreface.Services.RecognitionService
 {
@@ -40,6 +39,7 @@ namespace Exadel.Compreface.Services.RecognitionService
 
             return response;
         }
+
         public async Task<AddSubjectExampleResponse> AddAsync(AddSubjectExampleRequestByFileUrl request)
         {
             var requestUrlWithQueryParameters = GetRequestUrl(request);
@@ -54,6 +54,7 @@ namespace Exadel.Compreface.Services.RecognitionService
             };
 
             var response = await _apiClient.PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+           
             return response;
         }
 
@@ -62,6 +63,7 @@ namespace Exadel.Compreface.Services.RecognitionService
             var requestUrlWithQueryParameters = GetRequestUrl(request);
 
             var response = await _apiClient.PostJsonAsync<AddBase64SubjectExampleResponse>(requestUrlWithQueryParameters, new { file = request.File });
+            
             return response;
         }
 
@@ -77,7 +79,7 @@ namespace Exadel.Compreface.Services.RecognitionService
                 });
 
             var response = await _apiClient.GetJsonAsync<ListAllSubjectExamplesResponse>(requestUrlWithQueryParameters);
-
+           
             return response;
         }
 
@@ -89,7 +91,7 @@ namespace Exadel.Compreface.Services.RecognitionService
 
             var response =
                 await _apiClient.DeleteJsonAsync<DeleteAllExamplesResponse>(requestUrlWithQueryParameters);
-
+           
             return response;
         }
 
@@ -101,7 +103,7 @@ namespace Exadel.Compreface.Services.RecognitionService
 
             var response = await
                 _apiClient.DeleteJsonAsync<DeleteImageByIdResponse>(requestUrlWithQueryParameters);
-
+            
             return response;
         }
 
@@ -126,7 +128,7 @@ namespace Exadel.Compreface.Services.RecognitionService
                     downloadImageByIdRequest.ImageId.ToString());
 
             var response = await _apiClient.GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
-
+           
             return response;
         }
 
@@ -137,12 +139,14 @@ namespace Exadel.Compreface.Services.RecognitionService
                 .AppendPathSegments(downloadImageBySubjectIdRequest.ImageId.ToString(), "/img");
 
             var response = await _apiClient.GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
-
+           
             return response;
         }
+
         private Url GetRequestUrl(BaseExampleRequest request)
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
+
             return requestUrl
                .SetQueryParams(new
                {

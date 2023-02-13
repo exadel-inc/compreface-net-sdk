@@ -41,6 +41,7 @@ public class FaceVerificationService
 
         return response;
     }
+
     public async Task<FaceVerificationResponse> VerifyAsync(FaceVerificationRequestByFileUrl request)
     {
         var requestUrlWithQueryParameters = GetRequestUrl(request);
@@ -71,9 +72,11 @@ public class FaceVerificationService
 
         return response;
     }
+
     private Url GetRequestUrl(BaseFaceRequest baseFaceRequest)
     {
         var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/verification/verify";
+
         return requestUrl
             .SetQueryParams(new
             {

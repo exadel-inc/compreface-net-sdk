@@ -1,5 +1,4 @@
 ﻿using Exadel.Compreface.Clients.ApiClient;
-using Flurl.Http;
 
 namespace Exadel.Compreface.Helpers
 {

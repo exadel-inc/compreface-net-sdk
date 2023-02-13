@@ -43,6 +43,7 @@ namespace Exadel.Compreface.Services.RecognitionService
 
             return response;
         }
+
         public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFaceFromImageRequestByFileUrl request)
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/recognize";
@@ -69,8 +70,7 @@ namespace Exadel.Compreface.Services.RecognitionService
             return response;
         }
 
-        public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(
-            RecognizeFacesFromImageWithBase64Request request)
+        public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFacesFromImageWithBase64Request request)
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/recognize";
             var requestUrlWithQueryParameters = requestUrl
