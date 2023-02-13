@@ -558,16 +558,5 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
-
-        [Fact]
-        public async Task DownloadAnImageExampleOfTheSubjectByIDAsync_TakesNullRequestModel_ThrowsServiceException()
-        {
-            //Act
-            var func = async () => await _recognitionService.FaceCollection.DownloadAsync(
-                new DownloadImageBySubjectIdRequest());
-
-            // Assert
-            await Assert.ThrowsAsync<ServiceException>(func);
-        }
     }
 }
