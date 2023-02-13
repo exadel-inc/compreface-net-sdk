@@ -9,7 +9,6 @@ using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services;
-using Exadel.Compreface.Services.RecognitionService;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
@@ -23,9 +22,9 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         private readonly AddSubjectRequest _addSubjectRequest;
         private readonly DeleteSubjectRequest _deleteSubjectRequest;
 
-        private readonly AddSubjectExampleRequest _addSubjectExampleRequest;
+        private readonly AddSubjectExampleRequestByFilePath _addSubjectExampleRequest;
 
-        private readonly RecognizeFaceFromImageRequest _request;
+        private readonly RecognizeFaceFromImageRequestByFilePath _request;
         private readonly RecognizeFacesFromImageWithBase64Request _request64;
 
         private readonly VerifyFacesFromImageRequest _verifyRequest;
@@ -60,14 +59,14 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 ActualSubject = subjectName
             };
 
-            _addSubjectExampleRequest = new AddSubjectExampleRequest
+            _addSubjectExampleRequest = new AddSubjectExampleRequestByFilePath
             {
                 Subject = subjectName,
                 File = FILE_PATH,
                 DetProbThreShold = detProbThreshold
             };
 
-            _request = new RecognizeFaceFromImageRequest
+            _request = new RecognizeFaceFromImageRequestByFilePath
             {
                 FilePath = FILE_PATH,
                 DetProbThreshold = detProbThreshold,
@@ -123,7 +122,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task RecognizeAsync_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _recognitionService.RecognizeAsync((RecognizeFaceFromImageRequest)null!);
+            var func = async () => await _recognitionService.RecognizeAsync((RecognizeFaceFromImageRequestByFilePath)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -133,7 +132,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task RecognizeAsync_TakesNullRequest_ThrowsServiceException()
         {
             //Arrange
-            var request = new RecognizeFaceFromImageRequest
+            var request = new RecognizeFaceFromImageRequestByFilePath
             {
                 FilePath = PATH_OF_WRONG_FILE,
                 DetProbThreshold = 0.81m,

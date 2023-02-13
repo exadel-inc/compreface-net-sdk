@@ -12,7 +12,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
     {
         private readonly FaceDetectionService _faceDetectionService;
 
-        private readonly FaceDetectionRequest _faceDetectionRequest;
+        private readonly FaceDetectionRequestByFilePath _faceDetectionRequest;
         private readonly FaceDetectionBase64Request _faceDetectionBase64Request;
      
         public FaceDetectionServiceTest()
@@ -32,7 +32,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             };
 
             _faceDetectionService = client.GetService<FaceDetectionService>(API_KEY_DETECTION_SERVICE);
-            _faceDetectionRequest = new FaceDetectionRequest
+            _faceDetectionRequest = new FaceDetectionRequestByFilePath
             {
                 FilePath = FILE_PATH,
                 DetProbThreshold = detProbThreshold,
@@ -75,7 +75,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DetectAsync_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _faceDetectionService.DetectAsync((FaceDetectionRequest)null!);
+            var func = async () => await _faceDetectionService.DetectAsync((FaceDetectionRequestByFilePath)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -85,7 +85,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DetectAsync_TakesNullRequest_ThrowsServiceException()
         {
             // Act
-            var detectRequest = new FaceDetectionRequest()
+            var detectRequest = new FaceDetectionRequestByFilePath()
             {
                 FilePath = PATH_OF_WRONG_FILE,
                 DetProbThreshold = 0.81m,

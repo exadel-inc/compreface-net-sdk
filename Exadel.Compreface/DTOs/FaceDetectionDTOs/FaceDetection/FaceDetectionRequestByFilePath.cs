@@ -2,7 +2,7 @@
 
 namespace Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection
 {
-    public class FaceDetectionRequest : BaseFaceRequest
+    public class FaceDetectionRequestByFilePath : BaseFaceRequest
     {
         public string FilePath { get; set; }
     }
