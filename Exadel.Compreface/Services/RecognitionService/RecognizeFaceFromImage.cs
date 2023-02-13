@@ -6,12 +6,13 @@ using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
 using Exadel.Compreface.Helpers;
+using Exadel.Compreface.Services.Interfaces;
 using Flurl;
 using Flurl.Http;
 
 namespace Exadel.Compreface.Services.RecognitionService
 {
-    public class RecognizeFaceFromImage
+    public class RecognizeFaceFromImage : IRecognizeFaceFromImage
     {
         private readonly IComprefaceConfiguration _configuration;
         private readonly IApiClient _apiClient;

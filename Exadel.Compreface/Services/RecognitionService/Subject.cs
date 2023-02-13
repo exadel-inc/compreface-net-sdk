@@ -5,10 +5,11 @@ using Exadel.Compreface.DTOs.SubjectDTOs.DeleteAllSubjects;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
 using Exadel.Compreface.DTOs.SubjectDTOs.RenameSubject;
+using Exadel.Compreface.Services.Interfaces;
 
 namespace Exadel.Compreface.Services.RecognitionService
 {
-    public class Subject
+    public class Subject : ISubject
     {
         private readonly IComprefaceConfiguration _configuration;
         private readonly IApiClient _apiClient;

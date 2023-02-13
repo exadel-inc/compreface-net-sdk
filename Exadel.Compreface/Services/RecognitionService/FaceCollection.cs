@@ -12,12 +12,13 @@ using Exadel.Compreface.DTOs.HelperDTOs;
 using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
 using Exadel.Compreface.DTOs.SubjectExampleDTOs.AddSubjectExample;
 using Exadel.Compreface.Helpers;
+using Exadel.Compreface.Services.Interfaces;
 using Flurl;
 using Flurl.Http;
 
 namespace Exadel.Compreface.Services.RecognitionService
 {
-    public class FaceCollection
+    public class FaceCollection : IFaceCollection
     {
         private readonly IComprefaceConfiguration _configuration;
         private readonly IApiClient _apiClient;
