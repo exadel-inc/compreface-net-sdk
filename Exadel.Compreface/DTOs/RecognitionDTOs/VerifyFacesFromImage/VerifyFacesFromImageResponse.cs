@@ -16,4 +16,3 @@ public class Result : BaseResult
     
     public decimal Similarity { get; set; }
 }
-
