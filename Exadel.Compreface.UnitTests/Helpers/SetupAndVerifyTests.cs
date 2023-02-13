@@ -1,30 +1,22 @@
-﻿using Exadel.Compreface.Configuration;
-using Flurl.Http.Content;
+﻿using Exadel.Compreface.Clients.ApiClient;
 using Flurl;
+using Flurl.Http.Content;
 using Moq;
-using Tynamix.ObjectFiller;
 
-namespace Exadel.Compreface.UnitTests.Services
+namespace Exadel.Compreface.UnitTests.Helpers
 {
-    public class ApiClientTests
+    public abstract class SetupAndVerifyTests
     {
-        protected ComprefaceConfiguration Configuration { get; }
+        public Mock<IApiClient> ApiClientMock { get; set; }
 
-        protected Mock ServiceMock { get; }
-
-        public ApiClientTests()
+        public  SetupAndVerifyTests()
         {
-            var apiKey = GetRandomString();
-            var domain = GetRandomString();
-            var port = GetRandomString();
-
-            Configuration = new ComprefaceConfiguration(apiKey,domain, port);
-            ServiceMock = new Mock<T>(Configuration);
+            ApiClientMock = new Mock<IApiClient>();
         }
 
-        protected void SetupGetBytesFromRemote()
+        public void SetupGetBytesFromRemote()
         {
-            ServiceMock.Setup(service =>
+            ApiClientMock.Setup(service =>
                 service.GetBytesFromRemoteAsync(
                     It.IsAny<Url>(),
                     It.IsAny<HttpCompletionOption>(),
@@ -32,18 +24,18 @@ namespace Exadel.Compreface.UnitTests.Services
                 .ReturnsAsync(Array.Empty<byte>());
         }
 
-        protected void VerifyGetBytesFromRemote()
+        public void VerifyGetBytesFromRemote()
         {
-            ServiceMock.Verify(service =>
+            ApiClientMock.Verify(service =>
                 service.GetBytesFromRemoteAsync(
                     It.IsAny<Url>(),
                     It.IsAny<HttpCompletionOption>(),
                     It.IsAny<CancellationToken>()), Times.Once);
         }
 
-        protected void SetupGetJson<TResponse>() where TResponse : new()
+        public void SetupGetJson<TResponse>() where TResponse : new()
         {
-            ServiceMock.Setup(service =>
+            ApiClientMock.Setup(service =>
                 service.GetJsonAsync<TResponse>(
                     It.IsAny<string>(),
                     It.IsAny<HttpCompletionOption>(),
@@ -51,9 +43,9 @@ namespace Exadel.Compreface.UnitTests.Services
                 .ReturnsAsync(new TResponse());
         }
 
-        protected void SetupGetJson<TResponse, TUrl>() where TResponse : new()
+        public void SetupGetJson<TResponse, TUrl>() where TResponse : new()
         {
-            ServiceMock.Setup(service =>
+            ApiClientMock.Setup(service =>
                 service.GetJsonAsync<TResponse>(
                     It.IsAny<Url>(),
                     It.IsAny<HttpCompletionOption>(),
@@ -61,27 +53,27 @@ namespace Exadel.Compreface.UnitTests.Services
                 .ReturnsAsync(new TResponse());
         }
 
-        protected void VerifyGetJson<TResponse>()
+        public void VerifyGetJson<TResponse>()
         {
-            ServiceMock.Verify(service =>
+            ApiClientMock.Verify(service =>
                 service.GetJsonAsync<TResponse>(
                     It.IsAny<string>(),
                     It.IsAny<HttpCompletionOption>(),
                     It.IsAny<CancellationToken>()), Times.Once);
         }
 
-        protected void VerifyGetJson<TResponse, TUrl>()
+        public void VerifyGetJson<TResponse, TUrl>()
         {
-            ServiceMock.Verify(service =>
+            ApiClientMock.Verify(service =>
                 service.GetJsonAsync<TResponse>(
                     It.IsAny<Url>(),
                     It.IsAny<HttpCompletionOption>(),
                     It.IsAny<CancellationToken>()), Times.Once);
         }
 
-        protected void SetupPostMultipart<TResponse>() where TResponse : new()
+        public void SetupPostMultipart<TResponse>() where TResponse : new()
         {
-            ServiceMock.Setup(service =>
+            ApiClientMock.Setup(service =>
                 service.PostMultipartAsync<TResponse>(
                     It.IsAny<Url>(),
                     It.IsAny<Action<CapturedMultipartContent>>(),
@@ -90,9 +82,9 @@ namespace Exadel.Compreface.UnitTests.Services
                 .ReturnsAsync(new TResponse());
         }
 
-        protected void VerifyPostMultipart<TResponse>()
+        public void VerifyPostMultipart<TResponse>()
         {
-            ServiceMock.Verify(service =>
+            ApiClientMock.Verify(service =>
             service.PostMultipartAsync<TResponse>(
                 It.IsAny<Url>(),
                 It.IsAny<Action<CapturedMultipartContent>>(),
@@ -100,11 +92,11 @@ namespace Exadel.Compreface.UnitTests.Services
                 It.IsAny<CancellationToken>()), Times.Once);
         }
 
-        protected void SetupPostJson<TResponse, TUrl>() where TResponse : class, new()
+        public void SetupPostJson<TResponse, TUrl>() where TResponse : class, new()
         {
             if (typeof(TUrl).IsEquivalentTo(typeof(Url)))
             {
-                ServiceMock.Setup(service =>
+                ApiClientMock.Setup(service =>
                 service.PostJsonAsync<TResponse>(
                     It.IsAny<Url>(),
                     It.IsAny<object>(),
@@ -114,7 +106,7 @@ namespace Exadel.Compreface.UnitTests.Services
             }
             else if (typeof(TUrl).IsEquivalentTo(typeof(string)))
             {
-                ServiceMock.Setup(service =>
+                ApiClientMock.Setup(service =>
                 service.PostJsonAsync<TResponse>(
                     It.IsAny<string>(),
                     It.IsAny<object>(),
@@ -128,11 +120,11 @@ namespace Exadel.Compreface.UnitTests.Services
             }
         }
 
-        protected void VerifyPostJson<TResponse, TUrl>() where TResponse : class, new()
+        public void VerifyPostJson<TResponse, TUrl>() where TResponse : class, new()
         {
             if (typeof(TUrl).IsEquivalentTo(typeof(Url)))
             {
-                ServiceMock.Verify(service =>
+                ApiClientMock.Verify(service =>
                 service.PostJsonAsync<TResponse>(
                     It.IsAny<Url>(),
                     It.IsAny<object>(),
@@ -141,7 +133,7 @@ namespace Exadel.Compreface.UnitTests.Services
             }
             else if (typeof(TUrl).IsEquivalentTo(typeof(string)))
             {
-                ServiceMock.Verify(service =>
+                ApiClientMock.Verify(service =>
                 service.PostJsonAsync<TResponse>(
                     It.IsAny<string>(),
                     It.IsAny<object>(),
@@ -154,9 +146,9 @@ namespace Exadel.Compreface.UnitTests.Services
             }
         }
 
-        protected void SetupPutJson<TResponse>() where TResponse : class, new()
+        public void SetupPutJson<TResponse>() where TResponse : class, new()
         {
-            ServiceMock.Setup(service =>
+            ApiClientMock.Setup(service =>
                 service.PutJsonAsync<TResponse>(
                     It.IsAny<string>(),
                     It.IsAny<object>(),
@@ -165,9 +157,9 @@ namespace Exadel.Compreface.UnitTests.Services
                 .ReturnsAsync(new TResponse());
         }
 
-        protected void VerifyPutJson<TResponse>() where TResponse : class
+        public void VerifyPutJson<TResponse>() where TResponse : class
         {
-            ServiceMock.Verify(service =>
+            ApiClientMock.Verify(service =>
                 service.PutJsonAsync<TResponse>(
                     It.IsAny<string>(),
                     It.IsAny<object>(),
@@ -175,9 +167,9 @@ namespace Exadel.Compreface.UnitTests.Services
                     It.IsAny<CancellationToken>()), Times.Once);
         }
 
-        protected void SetupDeleteJson<TResponse>() where TResponse : class, new()
+        public void SetupDeleteJson<TResponse>() where TResponse : class, new()
         {
-            ServiceMock.Setup(service =>
+            ApiClientMock.Setup(service =>
                 service.DeleteJsonAsync<TResponse>(
                     It.IsAny<string>(),
                     It.IsAny<HttpCompletionOption>(),
@@ -185,9 +177,9 @@ namespace Exadel.Compreface.UnitTests.Services
                 .ReturnsAsync(new TResponse());
         }
 
-        protected void SetupDeleteJson<TResponse, TUrl>() where TResponse : class, new()
+        public void SetupDeleteJson<TResponse, TUrl>() where TResponse : class, new()
         {
-            ServiceMock.Setup(service =>
+            ApiClientMock.Setup(service =>
                 service.DeleteJsonAsync<TResponse>(
                     It.IsAny<Url>(),
                     It.IsAny<HttpCompletionOption>(),
@@ -195,27 +187,22 @@ namespace Exadel.Compreface.UnitTests.Services
                 .ReturnsAsync(new TResponse());
         }
 
-        protected void VerifyDeleteJson<TResponse>() where TResponse : class
+        public void VerifyDeleteJson<TResponse>() where TResponse : class
         {
-            ServiceMock.Verify(service =>
+            ApiClientMock.Verify(service =>
                 service.DeleteJsonAsync<TResponse>(
                     It.IsAny<string>(),
                     It.IsAny<HttpCompletionOption>(),
                     It.IsAny<CancellationToken>()), Times.Once);
         }
 
-        protected void VerifyDeleteJson<TResponse, TUrl>() where TResponse : class
+        public void VerifyDeleteJson<TResponse, TUrl>() where TResponse : class
         {
-            ServiceMock.Verify(service =>
+            ApiClientMock.Verify(service =>
                 service.DeleteJsonAsync<TResponse>(
                     It.IsAny<Url>(),
                     It.IsAny<HttpCompletionOption>(),
                     It.IsAny<CancellationToken>()), Times.Once);
-        }
-
-        protected static string GetRandomString()
-        {
-            return new Filler<string>().Create();
         }
     }
 }

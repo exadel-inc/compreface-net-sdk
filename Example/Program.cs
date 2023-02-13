@@ -30,9 +30,9 @@ public class Program
 
         var configuration = serviceProvider.GetService<IConfiguration>();
 
-        var apiKeyRecognition = new ComprefaceConfiguration(configuration?.GetValue<string>("FaceRecognitionApiKey"));
-        var apiKeyDetection = new ComprefaceConfiguration(configuration?.GetValue<string>("FaceDetectionApiKey"));
-        var apiKeyVerification = new ComprefaceConfiguration(configuration?.GetValue<string>("FaceVerificationApiKey"));
+        var apiKeyRecognition = new ComprefaceConfiguration("dsfsd", "dsfsd", "dsfsd");
+        var apiKeyDetection = new ComprefaceConfiguration("dsfsd", "dsfsd", "dsfsd");
+        var apiKeyVerification = new ComprefaceConfiguration("dsfsd", "dsfsd", "dsfsd");
 
         var client = new CompreFaceClient(configuration?.GetValue<string>("Domain"), configuration?.GetValue<string>("Port"));
         var recognitionService = client.GetCompreFaceService<RecognitionService>(apiKeyRecognition.ApiKey);

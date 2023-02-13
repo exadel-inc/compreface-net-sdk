@@ -324,7 +324,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         {
             //Act
             var func = async () => await _recognitionService.FaceCollection.DeleteAllAsync(
-                new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
+                new DeleteAllExamplesRequest());
 
             // Assert
             await Assert.ThrowsAsync<ServiceException>(func);
@@ -462,7 +462,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         {
             //Act
             var func = async () => await _recognitionService.FaceCollection.DeleteAsync(
-                new DeleteMultipleExampleRequest() { ImageIdList = new List<Guid>() });
+                new DeleteMultipleExampleRequest() {});
 
             // Assert
             await Assert.ThrowsAsync<ServiceException>(func);
@@ -515,7 +515,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
 
         [Fact]
         [FaceCollectionTestBeforeAfter]
-        public async Task DownloadImageBySubjectIdAsync_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DownloadAnImageExampleOfTheSubjectByIDAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
@@ -534,7 +534,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
 
         [Fact]
         [FaceCollectionTestBeforeAfter]
-        public async Task DownloadImageBySubjectIdAsync_TakesRequestModel_ReturnsNotNull()
+        public async Task DownloadAnImageExampleOfTheSubjectByIDAsync_TakesRequestModel_ReturnsNotNull()
         {
             //Arrange
             addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
@@ -550,7 +550,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         }
 
         [Fact]
-        public async Task DownloadImageBySubjectIdAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DownloadAnImageExampleOfTheSubjectByIDAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             //Act
             var func = async () => await _recognitionService.FaceCollection.DownloadAsync((DownloadImageBySubjectIdRequest)null!);
@@ -560,11 +560,11 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         }
 
         [Fact]
-        public async Task DownloadImageBySubjectIdAsync_TakesNullRequestModel_ThrowsServiceException()
+        public async Task DownloadAnImageExampleOfTheSubjectByIDAsync_TakesNullRequestModel_ThrowsServiceException()
         {
             //Act
             var func = async () => await _recognitionService.FaceCollection.DownloadAsync(
-                new DownloadImageBySubjectIdRequest() { ImageId = Guid.NewGuid() });
+                new DownloadImageBySubjectIdRequest());
 
             // Assert
             await Assert.ThrowsAsync<ServiceException>(func);

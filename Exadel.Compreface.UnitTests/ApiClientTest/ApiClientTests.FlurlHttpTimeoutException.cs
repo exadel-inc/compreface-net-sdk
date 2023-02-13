@@ -3,8 +3,10 @@ using Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
 using Exadel.Compreface.Exceptions;
 using Flurl.Http;
 using Moq;
+using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;
 
-namespace Exadel.Compreface.UnitTests.ApiClient;
+
+namespace Exadel.Compreface.UnitTests.ApiClientTest;
 
 public partial class ApiClientTests
 {
@@ -17,7 +19,7 @@ public partial class ApiClientTests
             .SimulateTimeout()
             .SimulateException(httpException);
         
-        var responseCall = _service.GetJsonAsync<GetAllSubjectResponse>(requestUrl: RequestUrl);
+        var responseCall = _apiClient.GetJsonAsync<GetAllSubjectResponse>(requestUrl: RequestUrl);
         
         await Assert.ThrowsAsync<ServiceTimeoutException>(async () => await responseCall);
     }
@@ -31,7 +33,7 @@ public partial class ApiClientTests
             .SimulateTimeout()
             .SimulateException(httpException);
         
-        var responseCall = _service.PostJsonAsync<AddSubjectExampleResponse>(requestUrl: RequestUrl, body: It.IsAny<object>());
+        var responseCall = _apiClient.PostJsonAsync<AddSubjectExampleResponse>(requestUrl: RequestUrl, body: It.IsAny<object>());
         
         await Assert.ThrowsAsync<ServiceTimeoutException>(async () => await responseCall);
     }
@@ -45,7 +47,7 @@ public partial class ApiClientTests
             .SimulateTimeout()
             .SimulateException(httpException);
         
-        var responseCall = _service.PutJsonAsync<AddSubjectExampleResponse>(
+        var responseCall = _apiClient.PutJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
             body: It.IsAny<object>());
 
@@ -61,7 +63,7 @@ public partial class ApiClientTests
             .SimulateTimeout()
             .SimulateException(httpException);
         
-        var responseCall = _service.DeleteJsonAsync<AddSubjectExampleResponse>(requestUrl: RequestUrl);
+        var responseCall = _apiClient.DeleteJsonAsync<AddSubjectExampleResponse>(requestUrl: RequestUrl);
 
         await Assert.ThrowsAsync<ServiceTimeoutException>(async () => await responseCall);
     }
@@ -77,7 +79,7 @@ public partial class ApiClientTests
         
         var randomstring = GetRandomString();
         
-        var responseCall = _service.PostMultipartAsync<AddSubjectExampleResponse>(
+        var responseCall = _apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
             mp => mp.AddFile(randomstring, fileName: randomstring, path: randomstring));
         
@@ -93,7 +95,7 @@ public partial class ApiClientTests
             .SimulateTimeout()
             .SimulateException(httpException);
         
-        var responseCall = _service.GetBytesFromRemoteAsync(requestUrl: RequestUrl);
+        var responseCall = _apiClient.GetBytesFromRemoteAsync(requestUrl: RequestUrl);
 
         await Assert.ThrowsAsync<ServiceTimeoutException>(async () => await responseCall);
     }

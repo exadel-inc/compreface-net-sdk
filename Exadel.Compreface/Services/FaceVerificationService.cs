@@ -14,12 +14,12 @@ namespace Exadel.Compreface.Services;
 public class FaceVerificationService
 {
     private readonly IComprefaceConfiguration _configuration;
-    private readonly IApiClient _apiClient;
+    public IApiClient ApiClient { get; set; }
 
     public FaceVerificationService(IComprefaceConfiguration configuration)
     {
         _configuration = configuration;
-        _apiClient = new ApiClient(configuration);
+        ApiClient = new ApiClient(configuration);
     }
 
     public async Task<FaceVerificationResponse> VerifyAsync(FaceVerificationRequest request, bool isFileInTheRemoteServer = false)
@@ -44,7 +44,7 @@ public class FaceVerificationService
             var fileTargetImageStream = await request.TargetImageFilePath.GetBytesAsync();
             var fileTargetImagegInBase64Strin = Convert.ToBase64String(fileTargetImageStream);
            
-            response = await _apiClient.PostJsonAsync<FaceVerificationResponse>(requestUrlWithQueryParameters, body: new
+            response = await ApiClient.PostJsonAsync<FaceVerificationResponse>(requestUrlWithQueryParameters, body: new
             {
                 source_image = fileSourceImagInBase64String,
                 target_image = fileTargetImagegInBase64Strin
@@ -54,7 +54,7 @@ public class FaceVerificationService
         }
 
         response = await
-            _apiClient.PostMultipartAsync<FaceVerificationResponse>(
+            ApiClient.PostMultipartAsync<FaceVerificationResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
                 {
@@ -81,7 +81,7 @@ public class FaceVerificationService
             });
 
         var response = await
-            _apiClient.PostJsonAsync<FaceVerificationResponse>(
+            ApiClient.PostJsonAsync<FaceVerificationResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 body: new
                 {

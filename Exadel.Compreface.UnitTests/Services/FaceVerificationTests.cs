@@ -1,18 +1,33 @@
+using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
 using Exadel.Compreface.Services;
+using Exadel.Compreface.UnitTests.Helpers;
 using Flurl;
+using Moq;
+using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;
 
 namespace Exadel.Compreface.UnitTests.Services;
 
-public class FaceVerificationTests : ApiClientTests<FaceVerificationService>
+public class FaceVerificationTests : SetupAndVerifyTests
 {
-    private readonly FaceVerificationService _service;
+    private readonly IComprefaceConfiguration _comprefaceConfiguration;
+
+    private readonly FaceVerificationService _faceVerificationService;
 
     public FaceVerificationTests()
     {
-        _service = ServiceMock.Object;
+        var apiKey = GetRandomString();
+        var domain = GetRandomString();
+        var port = GetRandomString();
+
+        _comprefaceConfiguration = new ComprefaceConfiguration(apiKey, domain, port);
+
+        var serviceMock = new Mock<FaceVerificationService>(_comprefaceConfiguration);
+
+        _faceVerificationService = serviceMock.Object;
+        _faceVerificationService.ApiClient = ApiClientMock.Object;
     }
 
     [Fact]
@@ -27,12 +42,12 @@ public class FaceVerificationTests : ApiClientTests<FaceVerificationService>
         SetupPostMultipart<FaceVerificationResponse>();
 
         // Act
-        var response = await _service.VerifyAsync(request);
+        var response = await _faceVerificationService.VerifyAsync(request);
 
         // Assert
         Assert.IsType<FaceVerificationResponse>(response);
         VerifyPostMultipart<FaceVerificationResponse>();
-        ServiceMock.VerifyNoOtherCalls();
+        ApiClientMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -42,7 +57,7 @@ public class FaceVerificationTests : ApiClientTests<FaceVerificationService>
         SetupPostMultipart<FaceVerificationResponse>();
 
         // Act
-        var responseCall = async () => await _service.VerifyAsync(null!);
+        var responseCall = async () => await _faceVerificationService.VerifyAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(responseCall);
@@ -57,7 +72,7 @@ public class FaceVerificationTests : ApiClientTests<FaceVerificationService>
         SetupPostMultipart<FaceVerificationResponse>();
 
         // Act
-        var responseCall = async () => await _service.VerifyAsync(request);
+        var responseCall = async () => await _faceVerificationService.VerifyAsync(request);
 
         // Assert
         await Assert.ThrowsAsync<ArgumentNullException>(responseCall);
@@ -75,14 +90,14 @@ public class FaceVerificationTests : ApiClientTests<FaceVerificationService>
         SetupPostJson<FaceVerificationResponse, Url>();
 
         // Act
-        var response = await _service.VerifyAsync(request);
+        var response = await _faceVerificationService.VerifyAsync(request);
 
         // Assert
         Assert.IsType<FaceVerificationResponse>(response);
         Assert.NotNull(response);
         
         VerifyPostJson<FaceVerificationResponse, Url>();
-        ServiceMock.VerifyNoOtherCalls();
+        ApiClientMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -92,7 +107,7 @@ public class FaceVerificationTests : ApiClientTests<FaceVerificationService>
         SetupPostJson<FaceVerificationResponse, Url>();
 
         // Act
-        var responseCall = async () => await _service.VerifyAsync(null!);
+        var responseCall = async () => await _faceVerificationService.VerifyAsync(null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(responseCall);
@@ -107,7 +122,7 @@ public class FaceVerificationTests : ApiClientTests<FaceVerificationService>
         SetupPostJson<FaceVerificationResponse, Url>();
 
         // Act
-        var responseCall = async () => await _service.VerifyAsync(request);
+        var responseCall = async () => await _faceVerificationService.VerifyAsync(request);
 
         // Assert
         await Assert.ThrowsAsync<ArgumentNullException>(responseCall);
