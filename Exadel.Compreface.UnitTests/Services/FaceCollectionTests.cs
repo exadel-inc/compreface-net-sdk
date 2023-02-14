@@ -185,7 +185,7 @@ public class FaceCollectionTests : SetupAndVerifyTests
     public async Task DownloadAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
-        var request = new DownloadImageByIdRequest();
+        var request = new DownloadImageByIdDirectlyRequest();
 
         SetupGetBytesFromRemote();
 
@@ -202,7 +202,7 @@ public class FaceCollectionTests : SetupAndVerifyTests
     public async Task DownloadAsync_TakesRequestModel_ReturnsNotNull()
     {
         // Arrange
-        var request = new DownloadImageByIdRequest();
+        var request = new DownloadImageByIdDirectlyRequest();
 
         SetupGetBytesFromRemote();
 
@@ -222,7 +222,7 @@ public class FaceCollectionTests : SetupAndVerifyTests
         SetupGetBytesFromRemote();
 
         // Act
-        var func = async () => await _faceCollection.DownloadAsync((DownloadImageByIdRequest)null!);
+        var func = async () => await _faceCollection.DownloadAsync((DownloadImageByIdDirectlyRequest)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -232,7 +232,7 @@ public class FaceCollectionTests : SetupAndVerifyTests
     public async Task DownloadImageBySubjectAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
-        var request = new DownloadImageBySubjectIdRequest();
+        var request = new DownloadImageByIdFromSubjectRequest();
 
         SetupGetBytesFromRemote();
 
@@ -249,7 +249,7 @@ public class FaceCollectionTests : SetupAndVerifyTests
     public async Task DownloadImageBySubjectAsync_TakesRequestModel_ReturnsNotNull()
     {
         // Arrange
-        var request = new DownloadImageBySubjectIdRequest();
+        var request = new DownloadImageByIdFromSubjectRequest();
 
         SetupGetBytesFromRemote();
 
@@ -269,7 +269,7 @@ public class FaceCollectionTests : SetupAndVerifyTests
         SetupGetBytesFromRemote();
 
         // Act
-        var func = async () => await _faceCollection.DownloadAsync((DownloadImageBySubjectIdRequest)null!);
+        var func = async () => await _faceCollection.DownloadAsync((DownloadImageByIdFromSubjectRequest)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);

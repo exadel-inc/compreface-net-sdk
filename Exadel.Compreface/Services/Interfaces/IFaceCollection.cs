@@ -26,8 +26,8 @@ namespace Exadel.Compreface.Services.Interfaces
 
         Task<DeleteMultipleExamplesResponse> DeleteAsync(DeleteMultipleExampleRequest deleteMultipleExamplesRequest);
 
-        Task<byte[]> DownloadAsync(DownloadImageByIdRequest downloadImageByIdRequest);
+        Task<byte[]> DownloadAsync(DownloadImageByIdDirectlyRequest downloadImageByIdRequest);
 
-        Task<byte[]> DownloadAsync(DownloadImageBySubjectIdRequest downloadImageBySubjectIdRequest);
+        Task<byte[]> DownloadAsync(DownloadImageByIdFromSubjectRequest downloadImageBySubjectIdRequest);
     }
 }
