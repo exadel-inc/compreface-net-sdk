@@ -23,9 +23,9 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         private readonly AddSubjectRequest _addSubjectRequest;
         private readonly DeleteSubjectRequest _deleteSubjectRequest;
 
-        private readonly AddSubjectExampleRequest _addSubjectExampleRequest;
+        private readonly AddSubjectExampleRequestByFilePath _addSubjectExampleRequest;
 
-        private readonly RecognizeFaceFromImageRequest _request;
+        private readonly RecognizeFaceFromImageRequestByFilePath _request;
         private readonly RecognizeFacesFromImageWithBase64Request _request64;
 
         private readonly VerifyFacesFromImageRequest _verifyRequest;
@@ -62,14 +62,14 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
                 ActualSubject = subjectName
             };
 
-            _addSubjectExampleRequest = new AddSubjectExampleRequest
+            _addSubjectExampleRequest = new AddSubjectExampleRequestByFilePath
             {
                 Subject = subjectName,
                 File = FILE_PATH,
                 DetProbThreShold = detProbThreshold
             };
 
-            _request = new RecognizeFaceFromImageRequest
+            _request = new RecognizeFaceFromImageRequestByFilePath
             {
                 FilePath = FILE_PATH,
                 DetProbThreshold = detProbThreshold,
@@ -135,7 +135,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         public async Task RecognizeAsync_TakesNullRequest_ThrowsServiceException()
         {
             //Arrange
-            var request = new RecognizeFaceFromImageRequest
+            var request = new RecognizeFaceFromImageRequestByFilePath
             {
                 FilePath = PATH_OF_WRONG_FILE,
                 DetProbThreshold = 0.81m,

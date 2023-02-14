@@ -40,7 +40,7 @@ public class FaceCollectionTests : SetupAndVerifyTests
     public async Task AddAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
-        var request = new AddSubjectExampleRequest();
+        var request = new AddSubjectExampleRequestByFilePath();
 
         SetupPostMultipart<AddSubjectExampleResponse>();
         
@@ -58,7 +58,7 @@ public class FaceCollectionTests : SetupAndVerifyTests
     public async Task AddAsync_TakesRequestModel_ReturnsNotNull()
     {
         // Arrange
-        var request = new AddSubjectExampleRequest();
+        var request = new AddSubjectExampleRequestByFilePath();
 
         SetupPostMultipart<AddSubjectExampleResponse>();
 

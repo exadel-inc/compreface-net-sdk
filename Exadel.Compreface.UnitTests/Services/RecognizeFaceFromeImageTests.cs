@@ -35,7 +35,7 @@ namespace Exadel.Compreface.UnitTests.Services
         public async Task RecognizeAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
-            var request = new RecognizeFaceFromImageRequest()
+            var request = new RecognizeFaceFromImageRequestByFilePath()
             {
                 FacePlugins = new List<string>()
             };
@@ -56,7 +56,7 @@ namespace Exadel.Compreface.UnitTests.Services
         public async Task RecognizeAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
-            var request = new RecognizeFaceFromImageRequest()
+            var request = new RecognizeFaceFromImageRequestByFilePath()
             {
                 FacePlugins = new List<string>()
             };
@@ -90,7 +90,7 @@ namespace Exadel.Compreface.UnitTests.Services
         public async Task RecognizeFaceFromImage_TakesIncorrectRequestModel_ThrowsArgumentNullException()
         {
             // Arrange
-            var request = new RecognizeFaceFromImageRequest();
+            var request = new RecognizeFaceFromImageRequestByFilePath();
 
             SetupPostMultipart<RecognizeFaceFromImageResponse>();
 

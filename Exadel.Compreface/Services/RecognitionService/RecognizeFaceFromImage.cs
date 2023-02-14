@@ -6,23 +6,24 @@ using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
 using Exadel.Compreface.Helpers;
+using Exadel.Compreface.Services.Interfaces;
 using Flurl;
 using Flurl.Http;
 
 namespace Exadel.Compreface.Services.RecognitionService
 {
-    public class RecognizeFaceFromImage
+    public class RecognizeFaceFromImage : IRecognizeFaceFromImage
     {
         private readonly IComprefaceConfiguration _configuration;
-        public IApiClient ApiClient { get; set; }
+        private readonly IApiClient _apiClient;
 
         public RecognizeFaceFromImage(IComprefaceConfiguration configuration)
         {
             _configuration = configuration;
-            ApiClient = new ApiClient(configuration);
+            _apiClient = new ApiClient(configuration);
         }
 
-        public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFaceFromImageRequest request, bool isFileInTheRemoteServer = false)
+        public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFaceFromImageRequestByFilePath request)
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/recognize";
             var requestUrlWithQueryParameters = requestUrl
@@ -35,26 +36,8 @@ namespace Exadel.Compreface.Services.RecognitionService
                     status = request.Status,
                 });
 
-            RecognizeFaceFromImageResponse? response = null;
-
-            if (isFileInTheRemoteServer)
-            {
-                var fileStream = await request.FilePath.GetBytesAsync();
-                var fileInBase64String = Convert.ToBase64String(fileStream);
-
-                var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
-                {
-                    DetProbThreShold = request.DetProbThreshold,
-                    File = fileInBase64String,
-                };
-
-                response = await ApiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
-
-                return response;
-            }
-
-            response = await
-                ApiClient.PostMultipartAsync<RecognizeFaceFromImageResponse>(
+            var response = await
+                _apiClient.PostMultipartAsync<RecognizeFaceFromImageResponse>(
                     requestUrl: requestUrlWithQueryParameters,
                     buildContent: mp =>
                     mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.FilePath), path: request.FilePath));
@@ -62,8 +45,33 @@ namespace Exadel.Compreface.Services.RecognitionService
             return response;
         }
 
-        public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(
-            RecognizeFacesFromImageWithBase64Request request)
+        public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFaceFromImageRequestByFileUrl request)
+        {
+            var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/recognize";
+            var requestUrlWithQueryParameters = requestUrl
+                .SetQueryParams(new
+                {
+                    limit = request.Limit,
+                    prediction_count = request.PredictionCount,
+                    det_prob_threshold = request.DetProbThreshold,
+                    face_plugins = string.Join(",", request.FacePlugins),
+                    status = request.Status,
+                });
+
+            var fileInBase64String = ConvertUrlToBase64StringHelpers.ConvertUrlAsync(_apiClient, request.FileUrl).Result;
+
+            var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
+            {
+                DetProbThreShold = request.DetProbThreshold,
+                File = fileInBase64String,
+            };
+
+            var response = await _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+
+            return response;
+        }
+
+        public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFacesFromImageWithBase64Request request)
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/recognize";
             var requestUrlWithQueryParameters = requestUrl

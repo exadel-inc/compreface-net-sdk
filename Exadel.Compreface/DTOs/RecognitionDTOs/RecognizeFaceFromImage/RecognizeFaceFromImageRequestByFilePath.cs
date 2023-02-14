@@ -2,7 +2,7 @@
 
 namespace Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 
-public class RecognizeFaceFromImageRequest : BaseRecognizeFaceFromImageRequest
+public class RecognizeFaceFromImageRequestByFilePath : BaseRecognizeFaceFromImageRequest
 {
     public string FilePath { get; set; }
 }

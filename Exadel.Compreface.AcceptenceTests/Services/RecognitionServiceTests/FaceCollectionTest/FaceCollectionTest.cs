@@ -1,4 +1,4 @@
-﻿using Exadel.Compreface.Clients.CompreFaceClient;
+﻿using Exadel.Compreface.Clients;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
@@ -41,7 +41,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         public async Task AddAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             //Arrange
-            var subjectExample = new AddSubjectExampleRequest()
+            var subjectExample = new AddSubjectExampleRequestByFilePath()
             {
                 DetProbThreShold = 0.81m,
                 File = FILE_PATH,
@@ -67,7 +67,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         public async Task AddAsync_TakesRequestModel_ReturnsNotNull()
         {
             //Arrange
-            var subjectExample = new AddSubjectExampleRequest()
+            var subjectExample = new AddSubjectExampleRequestByFilePath()
             {
                 DetProbThreShold = 0.81m,
                 File = FILE_PATH,
@@ -95,7 +95,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         public async Task AddAsync_TakesRequestModel_ThrowsServiceException()
         {
             //Arrange
-            var subjectExample = new AddSubjectExampleRequest()
+            var subjectExample = new AddSubjectExampleRequestByFilePath()
             {
                 DetProbThreShold = 0.81m,
                 File = PATH_OF_WRONG_FILE,

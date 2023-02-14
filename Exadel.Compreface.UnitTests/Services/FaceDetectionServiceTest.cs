@@ -33,7 +33,7 @@ namespace Exadel.Compreface.UnitTests.Services
         public async Task DetectAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
-            var request = new FaceDetectionRequest()
+            var request = new FaceDetectionRequestByFilePath()
             {
                 FacePlugins = new List<string>()
             };
@@ -54,7 +54,7 @@ namespace Exadel.Compreface.UnitTests.Services
         public async Task DetectAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
-            var request = new FaceDetectionRequest()
+            var request = new FaceDetectionRequestByFilePath()
             {
                 FacePlugins = new List<string>()
             };
@@ -88,7 +88,7 @@ namespace Exadel.Compreface.UnitTests.Services
         public async Task DetectBase64Async_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
-            var request = new FaceDetectionRequest();
+            var request = new FaceDetectionRequestByFilePath();
 
             SetupPostMultipart<FaceDetectionResponse>();
 
