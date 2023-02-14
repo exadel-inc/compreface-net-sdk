@@ -5,6 +5,7 @@ using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
 using Exadel.Compreface.DTOs.SubjectDTOs.RenameSubject;
 using Exadel.Compreface.Exceptions;
+using Exadel.Compreface.Services.Interfaces;
 using Exadel.Compreface.Services.RecognitionService;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
@@ -12,7 +13,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
 {
     public class SubjectTests
     {
-        private readonly Subject _subjectService;
+        private readonly ISubject _subjectService;
 
         private readonly AddSubjectRequest _addSubjectRequest;
         private readonly RenameSubjectRequest _renameSubjectRequest;

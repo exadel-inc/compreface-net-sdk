@@ -12,7 +12,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class FaceCollectionTestBeforeAfter : BeforeAfterTestAttribute
     {
-        private readonly CompreFaceClient _client;
+        private readonly ICompreFaceClient _client;
         private readonly RecognitionService _recognitionService;
 
         public FaceCollectionTestBeforeAfter()

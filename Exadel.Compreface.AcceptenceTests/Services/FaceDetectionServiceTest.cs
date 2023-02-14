@@ -3,13 +3,14 @@ using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services;
+using Exadel.Compreface.Services.Interfaces;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
 {
     public class FaceDetectionServiceTest
     {
-        private readonly FaceDetectionService _faceDetectionService;
+        private readonly IFaceDetectionService _faceDetectionService;
 
         private readonly FaceDetectionRequestByFilePath _faceDetectionRequest;
         private readonly FaceDetectionBase64Request _faceDetectionBase64Request;
@@ -30,7 +31,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             };
 
             _faceDetectionService = client.GetCompreFaceService<FaceDetectionService>(API_KEY_DETECTION_SERVICE);
-            _faceDetectionRequest = new FaceDetectionRequest
+            _faceDetectionRequest = new FaceDetectionRequestByFilePath
             {
                 FilePath = FILE_PATH,
                 DetProbThreshold = detProbThreshold,

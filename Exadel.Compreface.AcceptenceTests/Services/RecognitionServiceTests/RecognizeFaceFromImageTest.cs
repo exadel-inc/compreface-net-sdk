@@ -9,6 +9,7 @@ using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.Exceptions;
+using Exadel.Compreface.Services.Interfaces;
 using Exadel.Compreface.Services.RecognitionService;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
@@ -16,9 +17,9 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
 {
     public class RecognizeFaceFromImageTest
     {
-        private readonly Subject _subjectSubService;
-        private readonly FaceCollection _faceCollectionSubService;
-        private readonly RecognizeFaceFromImage _recognizeFaceFromImageSubService;
+        private readonly ISubject _subjectSubService;
+        private readonly IFaceCollection _faceCollectionSubService;
+        private readonly IRecognizeFaceFromImage _recognizeFaceFromImageSubService;
 
         private readonly AddSubjectRequest _addSubjectRequest;
         private readonly DeleteSubjectRequest _deleteSubjectRequest;
@@ -65,7 +66,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
             _addSubjectExampleRequest = new AddSubjectExampleRequestByFilePath
             {
                 Subject = subjectName,
-                File = FILE_PATH,
+                FilePath = FILE_PATH,
                 DetProbThreShold = detProbThreshold
             };
 
@@ -125,7 +126,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         public async Task RecognizeAsync_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _recognizeFaceFromImageSubService.RecognizeAsync((RecognizeFaceFromImageRequest)null!);
+            var func = async () => await _recognizeFaceFromImageSubService.RecognizeAsync((RecognizeFaceFromImageRequestByFilePath)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);

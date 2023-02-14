@@ -1,4 +1,5 @@
 ﻿using Exadel.Compreface.Clients;
+using Exadel.Compreface.Clients.CompreFaceClient;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
@@ -18,7 +19,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
 {
     public class FaceCollectionTest
     {
-        private readonly CompreFaceClient _client;
+        private readonly ICompreFaceClient _client;
 
         private readonly RecognitionService _recognitionService;
 
@@ -44,7 +45,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
             var subjectExample = new AddSubjectExampleRequestByFilePath()
             {
                 DetProbThreShold = 0.81m,
-                File = FILE_PATH,
+                FilePath = FILE_PATH,
                 Subject = TEST_SUBJECT_EXAMPLE_NAME,
             };
 
@@ -70,7 +71,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
             var subjectExample = new AddSubjectExampleRequestByFilePath()
             {
                 DetProbThreShold = 0.81m,
-                File = FILE_PATH,
+                FilePath = FILE_PATH,
                 Subject = TEST_SUBJECT_EXAMPLE_NAME,
             };
 
@@ -85,7 +86,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         public async Task AddAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             //Act
-            var func = async () => await _recognitionService.FaceCollection.AddAsync((AddSubjectExampleRequest)null!);
+            var func = async () => await _recognitionService.FaceCollection.AddAsync((AddSubjectExampleRequestByFilePath)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -98,7 +99,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
             var subjectExample = new AddSubjectExampleRequestByFilePath()
             {
                 DetProbThreShold = 0.81m,
-                File = PATH_OF_WRONG_FILE,
+                FilePath = PATH_OF_WRONG_FILE,
                 Subject = TEST_SUBJECT_EXAMPLE_NAME,
             };
 

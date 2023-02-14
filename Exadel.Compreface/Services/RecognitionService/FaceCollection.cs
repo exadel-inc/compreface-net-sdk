@@ -114,7 +114,7 @@ namespace Exadel.Compreface.Services.RecognitionService
             var requestUrlWithQueryParameters = requestUrl
                 .AppendPathSegment("delete");
 
-            var response = await ApiClient.PostJsonAsync<List<Face>>(requestUrlWithQueryParameters, deleteMultipleExamplesRequest.ImageIdList);
+            var response = await _apiClient.PostJsonAsync<List<Face>>(requestUrlWithQueryParameters, deleteMultipleExamplesRequest.ImageIdList);
 
             return new DeleteMultipleExamplesResponse() { Faces = response };
         }

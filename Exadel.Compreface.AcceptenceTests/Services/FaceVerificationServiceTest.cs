@@ -4,13 +4,14 @@ using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
 using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services;
+using Exadel.Compreface.Services.Interfaces;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
 {
     public class FaceVerificationServiceTest
     {
-        private readonly FaceVerificationService _faceVerificationService;
+        private readonly IFaceVerificationService _faceVerificationService;
 
         private readonly FaceVerificationRequestByFilePath _faceVerificationRequest;
         private readonly FaceVerificationWithBase64Request _faceVerificationBase64Request;
@@ -31,7 +32,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             };
 
             _faceVerificationService = client.GetCompreFaceService<FaceVerificationService>(API_KEY_VERIFICATION_SERVICE);
-            _faceVerificationRequest = new FaceVerificationRequest
+            _faceVerificationRequest = new FaceVerificationRequestByFilePath
             {
                 SourceImageFilePath = FILE_PATH,
                 TargetImageFilePath = FILE_PATH,
