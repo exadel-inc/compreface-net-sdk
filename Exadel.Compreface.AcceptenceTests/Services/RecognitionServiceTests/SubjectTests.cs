@@ -1,33 +1,32 @@
-﻿using Exadel.Compreface.Clients;
-using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients.CompreFaceClient;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteAllSubjects;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
 using Exadel.Compreface.DTOs.SubjectDTOs.RenameSubject;
 using Exadel.Compreface.Exceptions;
-using Exadel.Compreface.Services;
+using Exadel.Compreface.Services.Interfaces;
+using Exadel.Compreface.Services.RecognitionService;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
-namespace Exadel.Compreface.AcceptenceTests.Services
+namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
 {
-    public class SubjectServiceTests
+    public class SubjectTests
     {
-        private readonly SubjectService _subjectService;
+        private readonly ISubject _subjectService;
 
         private readonly AddSubjectRequest _addSubjectRequest;
         private readonly RenameSubjectRequest _renameSubjectRequest;
         private readonly DeleteSubjectRequest _deleteSubjectRequest;
         private readonly DeleteSubjectRequest _renamedSubjectDeleteRequest;
 
-        public SubjectServiceTests()
+        public SubjectTests()
         {
-            var configuration = new ComprefaceConfiguration(API_KEY_RECOGNITION_SERVICE, DOMAIN, PORT);
-            var client = new CompreFaceClient(configuration);
+            var client = new CompreFaceClient(DOMAIN, PORT);
             var subjectName = TEST_SUBJECT_NAME;
             var renamedSubjectName = RENAMED_SUBJECT_NAME;
 
-            _subjectService = client.GetService<SubjectService>(API_KEY_RECOGNITION_SERVICE);
+            _subjectService = client.GetCompreFaceService<RecognitionService>(API_KEY_RECOGNITION_SERVICE).Subject;
 
             _addSubjectRequest = new AddSubjectRequest
             {
@@ -259,10 +258,9 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         public async Task DeleteAllAsync_TakesNullRequestModel_ThrowsServiceException()
         {
             //Arrange
-            var configuration = new ComprefaceConfiguration(API_KEY_DETECTION_SERVICE, DOMAIN, PORT);
-            var client = new CompreFaceClient(configuration);
+            var client = new CompreFaceClient(DOMAIN, PORT);
 
-            var subjectService = client.GetService<SubjectService>(API_KEY_DETECTION_SERVICE);
+            var subjectService = client.GetCompreFaceService<RecognitionService>(API_KEY_DETECTION_SERVICE).Subject;
 
             // Act
             var func = async () => await subjectService.DeleteAllAsync();

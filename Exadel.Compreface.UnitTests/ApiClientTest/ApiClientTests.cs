@@ -1,24 +1,24 @@
+using Exadel.Compreface.Clients.ApiClient;
 using Exadel.Compreface.Configuration;
-using Exadel.Compreface.Services;
 using Flurl.Http.Testing;
-using Tynamix.ObjectFiller;
+using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;
 
-namespace Exadel.Compreface.UnitTests.ApiClient;
+namespace Exadel.Compreface.UnitTests.ApiClientTest;
 
 public partial class ApiClientTests : IDisposable
 {
     private readonly HttpTest _httpTest;
-    private readonly FaceDetectionService _service;
+    private readonly IApiClient _apiClient;
 
     public ApiClientTests()
     {
+        var apiKey = GetRandomString();
+        var domain = GetRandomString();
+        var port = GetRandomString();
+
         _httpTest = new HttpTest();
-        _service = new(new ComprefaceConfiguration
-        {
-            ApiKey = GetRandomString(),
-            Domain = GetRandomString(),
-            Port = GetRandomString(),
-        });
+        _apiClient = new ApiClient(new ComprefaceConfiguration(apiKey, domain, port));
+
     }
 
     private const string RequestUrl = "http://site.com";
@@ -26,12 +26,7 @@ public partial class ApiClientTests : IDisposable
     private const string SuccessMessage = "{\"message\":\"Everything is good so far!!!\"}";
     public const int BadResponseStatusCode = 400;
     public const int SuccessResponseStatusCode = 200;
-    
-    private static string GetRandomString()
-    {
-        return new Filler<string>().Create();
-    }
-
+   
     public void Dispose()
     {
         _httpTest.Dispose();

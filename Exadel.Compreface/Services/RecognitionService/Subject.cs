@@ -12,19 +12,19 @@ namespace Exadel.Compreface.Services.RecognitionService
     public class Subject : ISubject
     {
         private readonly IComprefaceConfiguration _configuration;
-        private readonly IApiClient _apiClient;
+        public IApiClient ApiClient { get; set; }
 
         public Subject(IComprefaceConfiguration configuration)
         {
             _configuration = configuration;
-            _apiClient = new ApiClient(configuration);
+            ApiClient = new ApiClient(configuration);
         }
 
         public async Task<GetAllSubjectResponse> ListAsync()
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects/";
 
-            var response = await _apiClient.GetJsonAsync<GetAllSubjectResponse>(requestUrl);
+            var response = await ApiClient.GetJsonAsync<GetAllSubjectResponse>(requestUrl);
 
             return response;
         }
@@ -33,7 +33,7 @@ namespace Exadel.Compreface.Services.RecognitionService
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects";
 
-            var response = await _apiClient.PostJsonAsync<AddSubjectResponse>(requestUrl, request);
+            var response = await ApiClient.PostJsonAsync<AddSubjectResponse>(requestUrl, request);
 
             return response;
         }
@@ -42,7 +42,7 @@ namespace Exadel.Compreface.Services.RecognitionService
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects/{request.CurrentSubject}";
 
-            var response = await _apiClient.PutJsonAsync<RenameSubjectResponse>(requestUrl, body: request.Subject);
+            var response = await ApiClient.PutJsonAsync<RenameSubjectResponse>(requestUrl, body: request.Subject);
 
             return response;
         }
@@ -51,7 +51,7 @@ namespace Exadel.Compreface.Services.RecognitionService
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects/{request.ActualSubject}";
 
-            var response = await _apiClient.DeleteJsonAsync<DeleteSubjectResponse>(requestUrl);
+            var response = await ApiClient.DeleteJsonAsync<DeleteSubjectResponse>(requestUrl);
 
             return response;
         }
@@ -60,7 +60,7 @@ namespace Exadel.Compreface.Services.RecognitionService
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/subjects";
 
-            var response = await _apiClient.DeleteJsonAsync<DeleteAllSubjectsResponse>(requestUrl);
+            var response = await ApiClient.DeleteJsonAsync<DeleteAllSubjectsResponse>(requestUrl);
 
             return response;
         }

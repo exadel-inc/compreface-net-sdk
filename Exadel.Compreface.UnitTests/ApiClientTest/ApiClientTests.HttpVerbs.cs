@@ -1,8 +1,10 @@
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
 using Moq;
+using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;
 
-namespace Exadel.Compreface.UnitTests.ApiClient;
+
+namespace Exadel.Compreface.UnitTests.ApiClientTest;
 
 public partial class ApiClientTests
 {
@@ -12,7 +14,7 @@ public partial class ApiClientTests
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
 
-        await _service.GetJsonAsync<GetAllSubjectResponse>(RequestUrl);
+        await _apiClient.GetJsonAsync<GetAllSubjectResponse>(RequestUrl);
 
         _httpTest
             .ShouldHaveCalled(RequestUrl)
@@ -25,7 +27,7 @@ public partial class ApiClientTests
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
         
-        await _service.PostJsonAsync<AddSubjectExampleResponse>(
+        await _apiClient.PostJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
             body: It.IsAny<object>());
 
@@ -40,7 +42,7 @@ public partial class ApiClientTests
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
         
-        await _service.PutJsonAsync<AddSubjectExampleResponse>(
+        await _apiClient.PutJsonAsync<AddSubjectExampleResponse>(
             requestUrl: RequestUrl,
             body: It.IsAny<object>());
 
@@ -55,7 +57,7 @@ public partial class ApiClientTests
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
         
-        await _service.DeleteJsonAsync<AddSubjectExampleResponse>(requestUrl: RequestUrl);
+        await _apiClient.DeleteJsonAsync<AddSubjectExampleResponse>(requestUrl: RequestUrl);
 
         _httpTest
             .ShouldHaveCalled(RequestUrl)
@@ -70,7 +72,7 @@ public partial class ApiClientTests
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
         
-        await _service.PostMultipartAsync<AddSubjectExampleResponse>(requestUrl: RequestUrl, mp => mp.AddFile(randomstring, fileName: randomstring, path: randomstring));
+        await _apiClient.PostMultipartAsync<AddSubjectExampleResponse>(requestUrl: RequestUrl, mp => mp.AddFile(randomstring, fileName: randomstring, path: randomstring));
 
         _httpTest
             .ShouldHaveCalled(RequestUrl)
@@ -84,7 +86,7 @@ public partial class ApiClientTests
         // simulating api calls here and constructing fake response
         _httpTest.RespondWith(SuccessMessage, SuccessResponseStatusCode);
         
-        await _service.GetBytesFromRemoteAsync(
+        await _apiClient.GetBytesFromRemoteAsync(
             requestUrl: RequestUrl);
 
         _httpTest

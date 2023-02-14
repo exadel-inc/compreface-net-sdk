@@ -1,25 +1,24 @@
-﻿using Exadel.Compreface.Clients;
-using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients.CompreFaceClient;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
 using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services;
+using Exadel.Compreface.Services.Interfaces;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
 {
     public class FaceVerificationServiceTest
     {
-        private readonly FaceVerificationService _faceVerificationService;
+        private readonly IFaceVerificationService _faceVerificationService;
 
         private readonly FaceVerificationRequestByFilePath _faceVerificationRequest;
         private readonly FaceVerificationWithBase64Request _faceVerificationBase64Request;
 
         public FaceVerificationServiceTest()
         {
-            var configuration = new ComprefaceConfiguration(API_KEY_VERIFICATION_SERVICE, DOMAIN, PORT);
-            var client = new CompreFaceClient(configuration);
+            var client = new CompreFaceClient(DOMAIN, PORT);
             var detProbThreshold = 0.85m;
             var status = true;
             var limit = 0;
@@ -32,7 +31,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 "calculator"
             };
 
-            _faceVerificationService = client.GetService<FaceVerificationService>(API_KEY_VERIFICATION_SERVICE);
+            _faceVerificationService = client.GetCompreFaceService<FaceVerificationService>(API_KEY_VERIFICATION_SERVICE);
             _faceVerificationRequest = new FaceVerificationRequestByFilePath
             {
                 SourceImageFilePath = FILE_PATH,

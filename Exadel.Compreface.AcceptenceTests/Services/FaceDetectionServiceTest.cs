@@ -1,24 +1,23 @@
-﻿using Exadel.Compreface.Clients;
-using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients.CompreFaceClient;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services;
+using Exadel.Compreface.Services.Interfaces;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
 {
     public class FaceDetectionServiceTest
     {
-        private readonly FaceDetectionService _faceDetectionService;
+        private readonly IFaceDetectionService _faceDetectionService;
 
         private readonly FaceDetectionRequestByFilePath _faceDetectionRequest;
         private readonly FaceDetectionBase64Request _faceDetectionBase64Request;
      
         public FaceDetectionServiceTest()
         {
-            var configuration = new ComprefaceConfiguration(API_KEY_DETECTION_SERVICE, DOMAIN, PORT);
-            var client = new CompreFaceClient(configuration);
+            var client = new CompreFaceClient(DOMAIN, PORT);
             var detProbThreshold = 0.85m;
             var status = true;
             var limit = 0;
@@ -31,7 +30,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 "calculator"
             };
 
-            _faceDetectionService = client.GetService<FaceDetectionService>(API_KEY_DETECTION_SERVICE);
+            _faceDetectionService = client.GetCompreFaceService<FaceDetectionService>(API_KEY_DETECTION_SERVICE);
             _faceDetectionRequest = new FaceDetectionRequestByFilePath
             {
                 FilePath = FILE_PATH,
