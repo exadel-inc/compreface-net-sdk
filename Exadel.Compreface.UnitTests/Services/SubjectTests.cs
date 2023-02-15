@@ -7,7 +7,6 @@ using Exadel.Compreface.DTOs.SubjectDTOs.RenameSubject;
 using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;
 using Exadel.Compreface.Services.RecognitionService;
 using Exadel.Compreface.UnitTests.Helpers;
-using Moq;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
@@ -25,9 +24,8 @@ namespace Exadel.Compreface.UnitTests.Services
 
             _comprefaceConfiguration = new ComprefaceConfiguration(apiKey, domain, port);
 
-            var serviceMock = new Mock<Subject>(_comprefaceConfiguration);
+            _subject = new Subject(_comprefaceConfiguration);
 
-            _subject = serviceMock.Object;
             _subject.ApiClient = ApiClientMock.Object;
         }
 

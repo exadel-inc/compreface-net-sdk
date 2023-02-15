@@ -16,12 +16,12 @@ namespace Exadel.Compreface.Services;
 public class FaceVerificationService : IFaceVerificationService
 {
     private readonly IComprefaceConfiguration _configuration;
-    private readonly IApiClient _apiClient;
+    public IApiClient ApiClient { get; set; }
 
     public FaceVerificationService(IComprefaceConfiguration configuration)
     {
         _configuration = configuration;
-        _apiClient = new ApiClient(configuration);
+        ApiClient = new ApiClient(configuration);
     }
 
     public async Task<FaceVerificationResponse> VerifyAsync(FaceVerificationRequestByFilePath request)
@@ -29,7 +29,7 @@ public class FaceVerificationService : IFaceVerificationService
         var requestUrlWithQueryParameters = GetRequestUrl(request);
 
         var response = await
-            _apiClient.PostMultipartAsync<FaceVerificationResponse>(
+            ApiClient.PostMultipartAsync<FaceVerificationResponse>(
                 requestUrl: requestUrlWithQueryParameters,
                 buildContent: mp =>
                 {
@@ -47,10 +47,10 @@ public class FaceVerificationService : IFaceVerificationService
     {
         var requestUrlWithQueryParameters = GetRequestUrl(request);
 
-        var fileSourceImagInBase64String = ConvertUrlToBase64StringHelpers.ConvertUrlAsync(_apiClient, request.SourceImageFileUrl).Result;
-        var fileTargetImagegInBase64Strin = ConvertUrlToBase64StringHelpers.ConvertUrlAsync(_apiClient, request.TargetImageFileUrl).Result;
+        var fileSourceImagInBase64String = ConvertUrlToBase64StringHelpers.ConvertUrlAsync(ApiClient, request.SourceImageFileUrl).Result;
+        var fileTargetImagegInBase64Strin = ConvertUrlToBase64StringHelpers.ConvertUrlAsync(ApiClient, request.TargetImageFileUrl).Result;
 
-        var response = await _apiClient.PostJsonAsync<FaceVerificationResponse>(requestUrlWithQueryParameters,
+        var response = await ApiClient.PostJsonAsync<FaceVerificationResponse>(requestUrlWithQueryParameters,
             body: new
             {
                 source_image = fileSourceImagInBase64String,
@@ -64,7 +64,7 @@ public class FaceVerificationService : IFaceVerificationService
     {
         var requestUrlWithQueryParameters = GetRequestUrl(request);
 
-        var response = await _apiClient.PostJsonAsync<FaceVerificationResponse>(requestUrl: requestUrlWithQueryParameters,
+        var response = await ApiClient.PostJsonAsync<FaceVerificationResponse>(requestUrl: requestUrlWithQueryParameters,
                 body: new
                 {
                     source_image = request.SourceImageWithBase64,

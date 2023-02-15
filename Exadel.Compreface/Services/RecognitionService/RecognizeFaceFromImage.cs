@@ -15,12 +15,12 @@ namespace Exadel.Compreface.Services.RecognitionService
     public class RecognizeFaceFromImage : IRecognizeFaceFromImage
     {
         private readonly IComprefaceConfiguration _configuration;
-        private readonly IApiClient _apiClient;
+        public IApiClient ApiClient { get; set; }
 
         public RecognizeFaceFromImage(IComprefaceConfiguration configuration)
         {
             _configuration = configuration;
-            _apiClient = new ApiClient(configuration);
+            ApiClient = new ApiClient(configuration);
         }
 
         public async Task<RecognizeFaceFromImageResponse> RecognizeAsync(RecognizeFaceFromImageRequestByFilePath request)
@@ -37,7 +37,7 @@ namespace Exadel.Compreface.Services.RecognitionService
                 });
 
             var response = await
-                _apiClient.PostMultipartAsync<RecognizeFaceFromImageResponse>(
+                ApiClient.PostMultipartAsync<RecognizeFaceFromImageResponse>(
                     requestUrl: requestUrlWithQueryParameters,
                     buildContent: mp =>
                     mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.FilePath), path: request.FilePath));
@@ -58,7 +58,7 @@ namespace Exadel.Compreface.Services.RecognitionService
                     status = request.Status,
                 });
 
-            var fileInBase64String = ConvertUrlToBase64StringHelpers.ConvertUrlAsync(_apiClient, request.FileUrl).Result;
+            var fileInBase64String = ConvertUrlToBase64StringHelpers.ConvertUrlAsync(ApiClient, request.FileUrl).Result;
 
             var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
             {
@@ -66,7 +66,7 @@ namespace Exadel.Compreface.Services.RecognitionService
                 File = fileInBase64String,
             };
 
-            var response = await _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+            var response = await ApiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
 
             return response;
         }
@@ -85,7 +85,7 @@ namespace Exadel.Compreface.Services.RecognitionService
                 });
 
             var response = await
-                _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(
+                ApiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(
                     requestUrl: requestUrlWithQueryParameters,
                     body: new { file = request.FileBase64Value });
 
@@ -105,7 +105,7 @@ namespace Exadel.Compreface.Services.RecognitionService
                 });
 
             var response = await
-                _apiClient.PostMultipartAsync<VerifyFacesFromImageResponse>(
+                ApiClient.PostMultipartAsync<VerifyFacesFromImageResponse>(
                     requestUrl: requestUrlWithQueryParameters,
                     buildContent: mp =>
                     mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.FilePath), path: request.FilePath));
@@ -126,7 +126,7 @@ namespace Exadel.Compreface.Services.RecognitionService
                 });
 
             var response = await
-                _apiClient.PostJsonAsync<VerifyFacesFromImageResponse>(
+                ApiClient.PostJsonAsync<VerifyFacesFromImageResponse>(
                     requestUrl: requestUrlWithQueryParameters,
                     body: new { file = request.FileBase64Value });
 

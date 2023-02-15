@@ -7,7 +7,6 @@ using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;
 using Exadel.Compreface.Services.RecognitionService;
 using Exadel.Compreface.UnitTests.Helpers;
 using Flurl;
-using Moq;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
@@ -25,9 +24,8 @@ namespace Exadel.Compreface.UnitTests.Services
 
             _comprefaceConfiguration = new ComprefaceConfiguration(apiKey, domain, port);
 
-            var serviceMock = new Mock<RecognizeFaceFromImage>(_comprefaceConfiguration);
+            _recognizeFaceFromImage = new RecognizeFaceFromImage(_comprefaceConfiguration);
 
-            _recognizeFaceFromImage = serviceMock.Object;
             _recognizeFaceFromImage.ApiClient = ApiClientMock.Object;
         }
 
@@ -80,7 +78,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostMultipart<RecognizeFaceFromImageResponse>();
 
             // Act
-            var func = async () => await _recognizeFaceFromImage.RecognizeAsync(null!);
+            var func = async () => await _recognizeFaceFromImage.RecognizeAsync((RecognizeFaceFromImageRequestByFilePath)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -150,7 +148,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<RecognizeFaceFromImageResponse, Url>();
 
             // Act
-            var func = async () => await _recognizeFaceFromImage.RecognizeAsync(null!);
+            var func = async () => await _recognizeFaceFromImage.RecognizeAsync((RecognizeFacesFromImageWithBase64Request)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);

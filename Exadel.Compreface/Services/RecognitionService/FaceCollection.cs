@@ -21,19 +21,19 @@ namespace Exadel.Compreface.Services.RecognitionService
     public class FaceCollection : IFaceCollection
     {
         private readonly IComprefaceConfiguration _configuration;
-        private readonly IApiClient _apiClient;
+        public IApiClient ApiClient { get; set; }
 
         public FaceCollection(IComprefaceConfiguration configuration)
         {
             _configuration = configuration;
-            _apiClient = new ApiClient(configuration);
+            ApiClient = new ApiClient(configuration);
         }
 
         public async Task<AddSubjectExampleResponse> AddAsync(AddSubjectExampleRequestByFilePath request)
         {
             var requestUrlWithQueryParameters = GetRequestUrl(request);
 
-            var response = await _apiClient.PostMultipartAsync<AddSubjectExampleResponse>(
+            var response = await ApiClient.PostMultipartAsync<AddSubjectExampleResponse>(
                requestUrl: requestUrlWithQueryParameters,
                buildContent: mp =>
                    mp.AddFile("file", fileName: FileHelpers.GenerateFileName(request.FilePath), path: request.FilePath));
@@ -45,7 +45,7 @@ namespace Exadel.Compreface.Services.RecognitionService
         {
             var requestUrlWithQueryParameters = GetRequestUrl(request);
 
-            var fileInBase64String = ConvertUrlToBase64StringHelpers.ConvertUrlAsync(_apiClient, request.FileUrl).Result;
+            var fileInBase64String = ConvertUrlToBase64StringHelpers.ConvertUrlAsync(ApiClient, request.FileUrl).Result;
 
             var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
             {
@@ -54,7 +54,7 @@ namespace Exadel.Compreface.Services.RecognitionService
                 Subject = request.Subject,
             };
 
-            var response = await _apiClient.PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+            var response = await ApiClient.PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
            
             return response;
         }
@@ -63,7 +63,7 @@ namespace Exadel.Compreface.Services.RecognitionService
         {
             var requestUrlWithQueryParameters = GetRequestUrl(request);
 
-            var response = await _apiClient.PostJsonAsync<AddBase64SubjectExampleResponse>(requestUrlWithQueryParameters, new { file = request.File });
+            var response = await ApiClient.PostJsonAsync<AddBase64SubjectExampleResponse>(requestUrlWithQueryParameters, new { file = request.File });
             
             return response;
         }
@@ -79,7 +79,7 @@ namespace Exadel.Compreface.Services.RecognitionService
                     subject = request.Subject,
                 });
 
-            var response = await _apiClient.GetJsonAsync<ListAllSubjectExamplesResponse>(requestUrlWithQueryParameters);
+            var response = await ApiClient.GetJsonAsync<ListAllSubjectExamplesResponse>(requestUrlWithQueryParameters);
            
             return response;
         }
@@ -91,7 +91,7 @@ namespace Exadel.Compreface.Services.RecognitionService
                 .SetQueryParam("subject", request.Subject);
 
             var response =
-                await _apiClient.DeleteJsonAsync<DeleteAllExamplesResponse>(requestUrlWithQueryParameters);
+                await ApiClient.DeleteJsonAsync<DeleteAllExamplesResponse>(requestUrlWithQueryParameters);
            
             return response;
         }
@@ -103,7 +103,7 @@ namespace Exadel.Compreface.Services.RecognitionService
                 .AppendPathSegment(request.ImageId.ToString());
 
             var response = await
-                _apiClient.DeleteJsonAsync<DeleteImageByIdResponse>(requestUrlWithQueryParameters);
+                ApiClient.DeleteJsonAsync<DeleteImageByIdResponse>(requestUrlWithQueryParameters);
             
             return response;
         }
@@ -114,7 +114,7 @@ namespace Exadel.Compreface.Services.RecognitionService
             var requestUrlWithQueryParameters = requestUrl
                 .AppendPathSegment("delete");
 
-            var response = await _apiClient.PostJsonAsync<List<Face>>(requestUrlWithQueryParameters, deleteMultipleExamplesRequest.ImageIdList);
+            var response = await ApiClient.PostJsonAsync<List<Face>>(requestUrlWithQueryParameters, deleteMultipleExamplesRequest.ImageIdList);
 
             return new DeleteMultipleExamplesResponse() { Faces = response };
         }
@@ -128,7 +128,7 @@ namespace Exadel.Compreface.Services.RecognitionService
                     "/images/",
                     downloadImageByIdRequest.ImageId.ToString());
 
-            var response = await _apiClient.GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
+            var response = await ApiClient.GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
            
             return response;
         }
@@ -139,7 +139,7 @@ namespace Exadel.Compreface.Services.RecognitionService
             var requestUrlWithQueryParameters = requestUrl
                 .AppendPathSegments(downloadImageBySubjectIdRequest.ImageId.ToString(), "/img");
 
-            var response = await _apiClient.GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
+            var response = await ApiClient.GetBytesFromRemoteAsync(requestUrlWithQueryParameters);
            
             return response;
         }

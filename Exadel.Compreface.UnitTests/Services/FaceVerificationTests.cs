@@ -5,7 +5,6 @@ using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
 using Exadel.Compreface.Services;
 using Exadel.Compreface.UnitTests.Helpers;
 using Flurl;
-using Moq;
 using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;
 
 namespace Exadel.Compreface.UnitTests.Services;
@@ -24,9 +23,8 @@ public class FaceVerificationTests : SetupAndVerifyTests
 
         _comprefaceConfiguration = new ComprefaceConfiguration(apiKey, domain, port);
 
-        var serviceMock = new Mock<FaceVerificationService>(_comprefaceConfiguration);
+        _faceVerificationService = new FaceVerificationService(_comprefaceConfiguration);
 
-        _faceVerificationService = serviceMock.Object;
         _faceVerificationService.ApiClient = ApiClientMock.Object;
     }
 
@@ -57,7 +55,7 @@ public class FaceVerificationTests : SetupAndVerifyTests
         SetupPostMultipart<FaceVerificationResponse>();
 
         // Act
-        var responseCall = async () => await _faceVerificationService.VerifyAsync(null!);
+        var responseCall = async () => await _faceVerificationService.VerifyAsync((FaceVerificationRequestByFilePath)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(responseCall);
@@ -107,7 +105,7 @@ public class FaceVerificationTests : SetupAndVerifyTests
         SetupPostJson<FaceVerificationResponse, Url>();
 
         // Act
-        var responseCall = async () => await _faceVerificationService.VerifyAsync(null!);
+        var responseCall = async () => await _faceVerificationService.VerifyAsync((FaceVerificationWithBase64Request)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(responseCall);

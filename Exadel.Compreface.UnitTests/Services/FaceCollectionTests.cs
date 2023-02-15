@@ -12,7 +12,6 @@ using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;
 using Exadel.Compreface.Services.RecognitionService;
 using Exadel.Compreface.UnitTests.Helpers;
 using Flurl;
-using Moq;
 
 namespace Exadel.Compreface.UnitTests.Services;
 
@@ -30,9 +29,8 @@ public class FaceCollectionTests : SetupAndVerifyTests
 
         _comprefaceConfiguration = new ComprefaceConfiguration(apiKey, domain, port);
 
-        var serviceMock = new Mock<FaceCollection>(_comprefaceConfiguration);
+        _faceCollection = new FaceCollection(_comprefaceConfiguration);
 
-        _faceCollection = serviceMock.Object;
         _faceCollection.ApiClient = ApiClientMock.Object;
     }
 
@@ -79,7 +77,7 @@ public class FaceCollectionTests : SetupAndVerifyTests
         SetupPostMultipart<AddSubjectExampleResponse>();
 
         // Act
-        var func = async () => await _faceCollection.AddAsync(null!);
+        var func = async () => await _faceCollection.AddAsync((AddSubjectExampleRequestByFilePath)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -128,7 +126,7 @@ public class FaceCollectionTests : SetupAndVerifyTests
         SetupPostJson<AddBase64SubjectExampleResponse, Url>();
 
         // Act
-        var func = async () => await _faceCollection.AddAsync(null!);
+        var func = async () => await _faceCollection.AddAsync((AddBase64SubjectExampleRequest)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
