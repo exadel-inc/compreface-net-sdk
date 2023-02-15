@@ -5,7 +5,6 @@ using Flurl;
 using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.UnitTests.Helpers;
-using Moq;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
@@ -23,9 +22,8 @@ namespace Exadel.Compreface.UnitTests.Services
 
             _comprefaceConfiguration = new ComprefaceConfiguration(apiKey, domain, port);
 
-            var serviceMock = new Mock<FaceDetectionService>(_comprefaceConfiguration);
+            _faceDetectionService = new FaceDetectionService(_comprefaceConfiguration);
 
-            _faceDetectionService = serviceMock.Object;
             _faceDetectionService.ApiClient = ApiClientMock.Object;
         }
 
@@ -78,7 +76,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostMultipart<FaceDetectionResponse>();
 
             // Act
-            var func = async () => await _faceDetectionService.DetectAsync(null!);
+            var func = async () => await _faceDetectionService.DetectAsync((FaceDetectionRequestByFilePath)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -148,7 +146,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<FaceDetectionResponse, Url>();
 
             // Act
-            var func = async () => await _faceDetectionService.DetectAsync(null!);
+            var func = async () => await _faceDetectionService.DetectAsync((FaceDetectionBase64Request)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
