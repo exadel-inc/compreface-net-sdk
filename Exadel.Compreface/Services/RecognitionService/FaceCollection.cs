@@ -119,7 +119,7 @@ namespace Exadel.Compreface.Services.RecognitionService
             return new DeleteMultipleExamplesResponse() { Faces = response };
         }
 
-        public async Task<byte[]> DownloadAsync(DownloadImageByIdRequest downloadImageByIdRequest)
+        public async Task<byte[]> DownloadAsync(DownloadImageByIdDirectlyRequest downloadImageByIdRequest)
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/static";
             var requestUrlWithQueryParameters = requestUrl
@@ -133,7 +133,7 @@ namespace Exadel.Compreface.Services.RecognitionService
             return response;
         }
 
-        public async Task<byte[]> DownloadAsync(DownloadImageBySubjectIdRequest downloadImageBySubjectIdRequest)
+        public async Task<byte[]> DownloadAsync(DownloadImageByIdFromSubjectRequest downloadImageBySubjectIdRequest)
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces";
             var requestUrlWithQueryParameters = requestUrl

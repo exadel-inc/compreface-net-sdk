@@ -482,7 +482,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
 
             //Act
             var actualResult = await _recognitionService.FaceCollection.DownloadAsync(
-                new DownloadImageByIdRequest() { ImageId = testImage.ImageId, RecognitionApiKey = Guid.Parse(API_KEY_RECOGNITION_SERVICE) });
+                new DownloadImageByIdDirectlyRequest() { ImageId = testImage.ImageId, RecognitionApiKey = Guid.Parse(API_KEY_RECOGNITION_SERVICE) });
 
             //Assert
             Assert.Equal(expectedResult, actualResult);
@@ -498,7 +498,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
 
             //Act
             var actualResult = await _recognitionService.FaceCollection.DownloadAsync(
-                new DownloadImageByIdRequest() { ImageId = testImage.ImageId, RecognitionApiKey = Guid.Parse(API_KEY_RECOGNITION_SERVICE) });
+                new DownloadImageByIdDirectlyRequest() { ImageId = testImage.ImageId, RecognitionApiKey = Guid.Parse(API_KEY_RECOGNITION_SERVICE) });
 
             // Assert
             Assert.NotNull(actualResult);
@@ -508,7 +508,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         public async Task DownloadAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             //Act
-            var func = async () => await _recognitionService.FaceCollection.DownloadAsync((DownloadImageByIdRequest)null!);
+            var func = async () => await _recognitionService.FaceCollection.DownloadAsync((DownloadImageByIdDirectlyRequest)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -527,7 +527,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
 
             //Act
             var actualResult = await _recognitionService.FaceCollection.DownloadAsync(
-                new DownloadImageBySubjectIdRequest() { ImageId = testImage.ImageId });
+                new DownloadImageByIdFromSubjectRequest() { ImageId = testImage.ImageId });
 
             //Assert
             Assert.Equal(expectedResult, actualResult);
@@ -544,7 +544,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
 
             //Act
             var actualResult = await _recognitionService.FaceCollection.DownloadAsync(
-                new DownloadImageBySubjectIdRequest() { ImageId = testImage.ImageId });
+                new DownloadImageByIdFromSubjectRequest() { ImageId = testImage.ImageId });
 
             // Assert
             Assert.NotNull(actualResult);
@@ -554,7 +554,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         public async Task DownloadAnImageExampleOfTheSubjectByIDAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             //Act
-            var func = async () => await _recognitionService.FaceCollection.DownloadAsync((DownloadImageBySubjectIdRequest)null!);
+            var func = async () => await _recognitionService.FaceCollection.DownloadAsync((DownloadImageByIdFromSubjectRequest)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
