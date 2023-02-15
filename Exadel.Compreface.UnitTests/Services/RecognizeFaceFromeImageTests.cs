@@ -51,6 +51,29 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
+        public async Task RecognizeAsync_TakesRequestModelUrl_ReturnsProperResponseModel()
+        {
+            // Arrange
+            var request = new RecognizeFaceFromImageRequestByFileUrl()
+            {
+                FacePlugins = new List<string>()
+            };
+
+            SetupPostJson<RecognizeFaceFromImageResponse>();
+            SetupGetBytes();
+
+            // Act
+            var response = await _recognizeFaceFromImage.RecognizeAsync(request);
+
+            // Assert
+            Assert.IsType<RecognizeFaceFromImageResponse>(response);
+
+            SetupPostJson<RecognizeFaceFromImageResponse>();
+            SetupGetBytes();
+           // ApiClientMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
         public async Task RecognizeAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
@@ -72,6 +95,28 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
+        public async Task RecognizeAsync_TakesRequestModelUrl_ReturnsNotNull()
+        {
+            // Arrange
+            var request = new RecognizeFaceFromImageRequestByFileUrl()
+            {
+                FacePlugins = new List<string>()
+            };
+
+            SetupPostJson<RecognizeFaceFromImageResponse>();
+            SetupGetBytes();
+
+            // Act
+            var response = await _recognizeFaceFromImage.RecognizeAsync(request);
+
+            // Assert
+            Assert.NotNull(response);
+
+            SetupPostJson<RecognizeFaceFromImageResponse>();
+           // ApiClientMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
         public async Task RecognizeAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
@@ -79,6 +124,19 @@ namespace Exadel.Compreface.UnitTests.Services
 
             // Act
             var func = async () => await _recognizeFaceFromImage.RecognizeAsync((RecognizeFaceFromImageRequestByFilePath)null!);
+
+            // Assert
+            await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task RecognizeAsync_TakesNullRequestModelUrl_ThrowsNullReferenceException()
+        {
+            // Arrange
+            SetupPostJson<RecognizeFaceFromImageResponse>();
+
+            // Act
+            var func = async () => await _recognizeFaceFromImage.RecognizeAsync((RecognizeFaceFromImageRequestByFileUrl)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);

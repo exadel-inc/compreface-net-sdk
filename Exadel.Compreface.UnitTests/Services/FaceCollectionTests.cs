@@ -12,6 +12,10 @@ using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;
 using Exadel.Compreface.Services.RecognitionService;
 using Exadel.Compreface.UnitTests.Helpers;
 using Flurl;
+using Exadel.Compreface.DTOs.SubjectExampleDTOs.AddSubjectExample;
+using Exadel.Compreface.Clients.ApiClient;
+using Exadel.Compreface.Helpers;
+using Moq;
 
 namespace Exadel.Compreface.UnitTests.Services;
 
@@ -51,6 +55,25 @@ public class FaceCollectionTests : SetupAndVerifyTests
         VerifyPostMultipart<AddSubjectExampleResponse>();
         ApiClientMock.VerifyNoOtherCalls();
     }
+    [Fact]
+    public async Task AddAsync_TakesRequestModelUrl_ReturnsProperResponseModel()
+    {
+        // Arrange
+        var request = new AddSubjectExampleRequestByFileUrl();
+
+        SetupPostJson<AddSubjectExampleResponse>();
+        SetupGetBytes();
+
+        // Act
+        var response = await _faceCollection.AddAsync(request);
+
+        // Assert
+        Assert.IsType<AddSubjectExampleResponse>(response);
+
+        SetupPostJson<AddSubjectExampleResponse>();
+        SetupGetBytes();
+        //ApiClientMock.VerifyNoOtherCalls();
+    }
 
     [Fact]
     public async Task AddAsync_TakesRequestModel_ReturnsNotNull()
@@ -71,6 +94,26 @@ public class FaceCollectionTests : SetupAndVerifyTests
     }
 
     [Fact]
+    public async Task AddAsync_TakesRequestModelUrl_ReturnsNotNull()
+    {
+        // Arrange
+        var request = new AddSubjectExampleRequestByFileUrl();
+
+        SetupPostJson<AddSubjectExampleResponse>();
+        SetupGetBytes();
+
+        // Act
+        var response = await _faceCollection.AddAsync(request);
+
+        // Assert
+        Assert.NotNull(response);
+
+        SetupPostJson<AddSubjectExampleResponse>();
+        SetupGetBytes();
+       // ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
     public async Task AddAsync_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
@@ -78,6 +121,20 @@ public class FaceCollectionTests : SetupAndVerifyTests
 
         // Act
         var func = async () => await _faceCollection.AddAsync((AddSubjectExampleRequestByFilePath)null!);
+
+        // Assert
+        await Assert.ThrowsAsync<NullReferenceException>(func);
+    }
+
+    [Fact]
+    public async Task AddAsync_TakesNullRequestModelUrl_ThrowsNullReferenceException()
+    {
+        // Arrange
+        SetupPostJson<AddSubjectExampleResponse>();
+        SetupGetBytes();
+
+        // Act
+        var func = async () => await _faceCollection.AddAsync((AddSubjectExampleRequestByFileUrl)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);
