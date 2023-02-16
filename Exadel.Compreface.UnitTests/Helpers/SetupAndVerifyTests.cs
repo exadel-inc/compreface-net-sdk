@@ -92,6 +92,28 @@ namespace Exadel.Compreface.UnitTests.Helpers
                 It.IsAny<CancellationToken>()), Times.Once);
         }
 
+        public void SetupPostJson<TResponse>() where TResponse : class, new()
+        {
+           
+                ApiClientMock.Setup(service =>
+                service.PostJsonAsync<TResponse>(
+                    It.IsAny<Url>(),
+                    It.IsAny<object>(),
+                    It.IsAny<HttpCompletionOption>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new TResponse());
+        }
+
+        public void VerifyPostJson<TResponse>() where TResponse : class, new()
+        {
+            ApiClientMock.Verify(service =>
+            service.PostJsonAsync<TResponse>(
+                It.IsAny<Url>(),
+                It.IsAny<object>(),
+                It.IsAny<HttpCompletionOption>(),
+                It.IsAny<CancellationToken>()), Times.Once);
+        }
+
         public void SetupPostJson<TResponse, TUrl>() where TResponse : class, new()
         {
             if (typeof(TUrl).IsEquivalentTo(typeof(Url)))
@@ -203,6 +225,34 @@ namespace Exadel.Compreface.UnitTests.Helpers
                     It.IsAny<Url>(),
                     It.IsAny<HttpCompletionOption>(),
                     It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        public void SetupGetBytes()
+        {
+            ApiClientMock.Setup(service =>
+                service.GetBytesAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<HttpCompletionOption>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new byte[] { });
+        }
+
+        public void VerifySetupGetBytes()
+        {
+            ApiClientMock.Verify(service =>
+                service.GetBytesAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<HttpCompletionOption>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        public void VerifySetupGetBytes2Times()
+        {
+            ApiClientMock.Verify(service =>
+                service.GetBytesAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<HttpCompletionOption>(),
+                    It.IsAny<CancellationToken>()), Times.Exactly(2));
         }
     }
 }

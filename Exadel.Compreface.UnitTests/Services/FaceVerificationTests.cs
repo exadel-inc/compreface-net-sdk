@@ -49,6 +49,28 @@ public class FaceVerificationTests : SetupAndVerifyTests
     }
 
     [Fact]
+    public async Task VerifyAsync_TakesRequestModelUsingUrl_ReturnsProperResponseModel()
+    {
+        // Arrange
+        var request = new FaceVerificationRequestByFileUrl()
+        {
+            FacePlugins = new List<string>()
+        };
+
+        SetupPostJson<FaceVerificationResponse>();
+        SetupGetBytes();
+
+        // Act
+        var response = await _faceVerificationService.VerifyAsync(request);
+
+        // Assert
+        Assert.IsType<FaceVerificationResponse>(response);
+        VerifyPostJson<FaceVerificationResponse>();
+        VerifySetupGetBytes2Times();
+        ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
     public async Task VerifyAsync_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
@@ -56,6 +78,19 @@ public class FaceVerificationTests : SetupAndVerifyTests
 
         // Act
         var responseCall = async () => await _faceVerificationService.VerifyAsync((FaceVerificationRequestByFilePath)null!);
+
+        // Assert
+        await Assert.ThrowsAsync<NullReferenceException>(responseCall);
+    }
+
+    [Fact]
+    public async Task VerifyAsync_TakesNullRequestModelUsingUrl_ThrowsNullReferenceException()
+    {
+        // Arrange
+        SetupPostJson<FaceVerificationResponse>();
+
+        // Act
+        var responseCall = async () => await _faceVerificationService.VerifyAsync((FaceVerificationRequestByFileUrl)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(responseCall);
