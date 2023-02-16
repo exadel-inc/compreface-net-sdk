@@ -70,9 +70,9 @@ public class FaceCollectionTests : SetupAndVerifyTests
         // Assert
         Assert.IsType<AddSubjectExampleResponse>(response);
 
-        SetupPostJson<AddSubjectExampleResponse>();
-        SetupGetBytes();
-        //ApiClientMock.VerifyNoOtherCalls();
+        VerifySetupPostJson<AddSubjectExampleResponse>();
+        VerifySetupGetBytes();
+        ApiClientMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -108,9 +108,9 @@ public class FaceCollectionTests : SetupAndVerifyTests
         // Assert
         Assert.NotNull(response);
 
-        SetupPostJson<AddSubjectExampleResponse>();
-        SetupGetBytes();
-       // ApiClientMock.VerifyNoOtherCalls();
+        VerifySetupPostJson<AddSubjectExampleResponse>();
+        VerifySetupGetBytes();
+        ApiClientMock.VerifyNoOtherCalls();
     }
 
     [Fact]
