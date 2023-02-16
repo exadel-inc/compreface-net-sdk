@@ -49,7 +49,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task DetectAsync_TakesRequestModelUrl_ReturnsProperResponseModel()
+        public async Task DetectAsync_TakesRequestModelUsingUrl_ReturnsProperResponseModel()
         {
             // Arrange
             var request = new FaceDetectionRequestByFileUrl()
@@ -93,7 +93,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task DetectAsync_TakesRequestModelUrl_ReturnsNotNull()
+        public async Task DetectAsync_TakesRequestModelUsingUrl_ReturnsNotNull()
         {
             // Arrange
             var request = new FaceDetectionRequestByFileUrl()
@@ -129,7 +129,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task DetectAsync_TakesNullRequestModelUrl_ThrowsNullReferenceException()
+        public async Task DetectAsync_TakesNullRequestModelUsingUrl_ThrowsNullReferenceException()
         {
             // Arrange
             SetupPostJson<FaceDetectionResponse>();

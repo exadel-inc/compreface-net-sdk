@@ -49,7 +49,7 @@ public class FaceVerificationTests : SetupAndVerifyTests
     }
 
     [Fact]
-    public async Task VerifyAsync_TakesRequestModelUrl_ReturnsProperResponseModel()
+    public async Task VerifyAsync_TakesRequestModelUsingUrl_ReturnsProperResponseModel()
     {
         // Arrange
         var request = new FaceVerificationRequestByFileUrl()
@@ -84,7 +84,7 @@ public class FaceVerificationTests : SetupAndVerifyTests
     }
 
     [Fact]
-    public async Task VerifyAsync_TakesNullRequestModelUrl_ThrowsNullReferenceException()
+    public async Task VerifyAsync_TakesNullRequestModelUsingUrl_ThrowsNullReferenceException()
     {
         // Arrange
         SetupPostJson<FaceVerificationResponse>();

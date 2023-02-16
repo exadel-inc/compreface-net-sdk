@@ -56,7 +56,7 @@ public class FaceCollectionTests : SetupAndVerifyTests
         ApiClientMock.VerifyNoOtherCalls();
     }
     [Fact]
-    public async Task AddAsync_TakesRequestModelUrl_ReturnsProperResponseModel()
+    public async Task AddAsync_TakesRequestModelUsingUrl_ReturnsProperResponseModel()
     {
         // Arrange
         var request = new AddSubjectExampleRequestByFileUrl();
@@ -94,7 +94,7 @@ public class FaceCollectionTests : SetupAndVerifyTests
     }
 
     [Fact]
-    public async Task AddAsync_TakesRequestModelUrl_ReturnsNotNull()
+    public async Task AddAsync_TakesRequestModelUsingUrl_ReturnsNotNull()
     {
         // Arrange
         var request = new AddSubjectExampleRequestByFileUrl();
@@ -127,7 +127,7 @@ public class FaceCollectionTests : SetupAndVerifyTests
     }
 
     [Fact]
-    public async Task AddAsync_TakesNullRequestModelUrl_ThrowsNullReferenceException()
+    public async Task AddAsync_TakesNullRequestModelUsingUrl_ThrowsNullReferenceException()
     {
         // Arrange
         SetupPostJson<AddSubjectExampleResponse>();
