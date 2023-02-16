@@ -68,7 +68,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.IsType<RecognizeFaceFromImageResponse>(response);
 
-            VerifySetupPostJson<RecognizeFaceFromImageResponse>();
+            VerifyPostJson<RecognizeFaceFromImageResponse>();
             VerifySetupGetBytes();
             ApiClientMock.VerifyNoOtherCalls();
         }
@@ -112,7 +112,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.NotNull(response);
 
-            VerifySetupPostJson<RecognizeFaceFromImageResponse>();
+            VerifyPostJson<RecognizeFaceFromImageResponse>();
             VerifySetupGetBytes();
             ApiClientMock.VerifyNoOtherCalls();
         }

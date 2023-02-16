@@ -102,19 +102,16 @@ namespace Exadel.Compreface.UnitTests.Helpers
                     It.IsAny<HttpCompletionOption>(),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new TResponse());
-            
         }
 
-        public void VerifySetupPostJson<TResponse>() where TResponse : class, new()
+        public void VerifyPostJson<TResponse>() where TResponse : class, new()
         {
-
             ApiClientMock.Verify(service =>
             service.PostJsonAsync<TResponse>(
                 It.IsAny<Url>(),
                 It.IsAny<object>(),
                 It.IsAny<HttpCompletionOption>(),
                 It.IsAny<CancellationToken>()), Times.Once);
-
         }
 
         public void SetupPostJson<TResponse, TUrl>() where TResponse : class, new()
@@ -229,6 +226,7 @@ namespace Exadel.Compreface.UnitTests.Helpers
                     It.IsAny<HttpCompletionOption>(),
                     It.IsAny<CancellationToken>()), Times.Once);
         }
+
         public void SetupGetBytes()
         {
             ApiClientMock.Setup(service =>
@@ -247,6 +245,7 @@ namespace Exadel.Compreface.UnitTests.Helpers
                     It.IsAny<HttpCompletionOption>(),
                     It.IsAny<CancellationToken>()), Times.Once);
         }
+
         public void VerifySetupGetBytes2Times()
         {
             ApiClientMock.Verify(service =>

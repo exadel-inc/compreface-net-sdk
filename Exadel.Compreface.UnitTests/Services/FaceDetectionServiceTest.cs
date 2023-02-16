@@ -66,7 +66,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.IsType<FaceDetectionResponse>(response);
 
-            VerifySetupPostJson<FaceDetectionResponse>();
+            VerifyPostJson<FaceDetectionResponse>();
             VerifySetupGetBytes();
             base.ApiClientMock.VerifyNoOtherCalls();
         }
@@ -110,7 +110,7 @@ namespace Exadel.Compreface.UnitTests.Services
             // Assert
             Assert.NotNull(response);
 
-            VerifySetupPostJson<FaceDetectionResponse>();
+            VerifyPostJson<FaceDetectionResponse>();
             VerifySetupGetBytes();  
             base.ApiClientMock.VerifyNoOtherCalls();
         }

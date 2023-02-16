@@ -65,7 +65,7 @@ public class FaceVerificationTests : SetupAndVerifyTests
 
         // Assert
         Assert.IsType<FaceVerificationResponse>(response);
-        VerifySetupPostJson<FaceVerificationResponse>();
+        VerifyPostJson<FaceVerificationResponse>();
         VerifySetupGetBytes2Times();
         ApiClientMock.VerifyNoOtherCalls();
     }
