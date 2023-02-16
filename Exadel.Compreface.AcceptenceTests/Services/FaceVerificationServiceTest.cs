@@ -15,6 +15,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
         private readonly FaceVerificationRequestByFilePath _faceVerificationRequest;
         private readonly FaceVerificationWithBase64Request _faceVerificationBase64Request;
+        private readonly FaceVerificationRequestByFileUrl _faceVerificationFromURLRequest;
 
         public FaceVerificationServiceTest()
         {
@@ -36,6 +37,16 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             {
                 SourceImageFilePath = FILE_PATH,
                 TargetImageFilePath = FILE_PATH,
+                DetProbThreshold = detProbThreshold,
+                FacePlugins = facePlugins,
+                Status = status,
+                Limit = limit
+            };
+
+            _faceVerificationFromURLRequest = new FaceVerificationRequestByFileUrl
+            {
+                SourceImageFileUrl = FILE_URL,
+                TargetImageFileUrl = FILE_URL,
                 DetProbThreshold = detProbThreshold,
                 FacePlugins = facePlugins,
                 Status = status,
@@ -149,6 +160,64 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             {
                 SourceImageWithBase64 = TWO_FACES_IMAGE_BASE64,
                 TargetImageWithBase64 = IMAGE_BASE64_STRING,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+                Limit = 0
+            };
+
+            // Act
+            var func = async () => await _faceVerificationService.VerifyAsync(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
+        public async Task VerifyFromURLAsync_TakesRequestModel_ReturnsProperResponseModel()
+        {
+            // Act
+            var response = await _faceVerificationService.VerifyAsync(_faceVerificationFromURLRequest);
+
+            // Assert
+            Assert.IsType<FaceVerificationResponse>(response);
+        }
+
+        [Fact]
+        public async Task VerifyFromURLAsync_TakesRequestModel_ReturnsNotNull()
+        {
+            // Act
+            var response = await _faceVerificationService.VerifyAsync(_faceVerificationFromURLRequest);
+
+            // Assert
+            Assert.NotNull(response);
+        }
+
+        [Fact]
+        public async Task VerifyFromURLAsync_TakesNullRequest_ThrowsException()
+        {
+            // Act
+            var func = async () => await _faceVerificationService.VerifyAsync((FaceVerificationRequestByFileUrl)null!);
+
+            // Assert
+            await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task VerifyFromURLAsync_TakesNullRequest_ThrowsServiceException()
+        {
+            //Arrange
+            var request = new FaceVerificationRequestByFileUrl()
+            {
+                SourceImageFileUrl = FILE_URL,
+                TargetImageFileUrl = WRONG_FILE_URL,
                 DetProbThreshold = 0.81m,
                 FacePlugins = new List<string>()
             {

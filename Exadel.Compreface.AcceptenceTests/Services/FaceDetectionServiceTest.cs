@@ -44,7 +44,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
             _faceDetectionFromURIRequest = new FaceDetectionRequestByFileUrl
             {
-                FileUrl = "https://images.pexels.com/photos/7605189/pexels-photo-7605189.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                FileUrl = FILE_URL,
                 DetProbThreshold = detProbThreshold,
                 FacePlugins = facePlugins,
                 Status = status,
@@ -211,7 +211,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             // Act
             var detectRequest = new FaceDetectionRequestByFileUrl()
             {
-                FileUrl = "https://images.pexels.com/photos/7364280/pexels-photo-7364280.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+                FileUrl = WRONG_FILE_URL,
                 DetProbThreshold = 0.81m,
                 FacePlugins = new List<string>()
             {
