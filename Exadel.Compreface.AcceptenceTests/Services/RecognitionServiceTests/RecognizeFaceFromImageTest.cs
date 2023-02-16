@@ -26,7 +26,8 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
 
         private readonly AddSubjectExampleRequestByFilePath _addSubjectExampleRequest;
 
-        private readonly RecognizeFaceFromImageRequestByFilePath _request;
+        private readonly RecognizeFaceFromImageRequestByFilePath _requestFromFile;
+        private readonly RecognizeFaceFromImageRequestByFileUrl _requestFromURL;
         private readonly RecognizeFacesFromImageWithBase64Request _request64;
 
         private readonly VerifyFacesFromImageRequest _verifyRequest;
@@ -58,6 +59,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
             {
                 Subject = subjectName
             };
+
             _deleteSubjectRequest = new DeleteSubjectRequest
             {
                 ActualSubject = subjectName
@@ -70,9 +72,17 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
                 DetProbThreShold = detProbThreshold
             };
 
-            _request = new RecognizeFaceFromImageRequestByFilePath
+            _requestFromFile = new RecognizeFaceFromImageRequestByFilePath
             {
                 FilePath = FILE_PATH,
+                DetProbThreshold = detProbThreshold,
+                FacePlugins = facePlugins,
+                Status = status,
+            };
+
+            _requestFromURL = new RecognizeFaceFromImageRequestByFileUrl
+            {
+                FileUrl = FILE_URL,
                 DetProbThreshold = detProbThreshold,
                 FacePlugins = facePlugins,
                 Status = status,
@@ -93,6 +103,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
                 FacePlugins = facePlugins,
                 Status = status,
             };
+
             _verifyRequest64 = new VerifyFacesFromImageWithBase64Request()
             {
                 FileBase64Value = Convert.ToBase64String(File.ReadAllBytes(FILE_PATH)),
@@ -106,7 +117,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         public async Task RecognizeAsync_TakesRequestModel_ReturnsModelWithProperType()
         {
             // Act
-            var response = await _recognizeFaceFromImageSubService.RecognizeAsync(_request);
+            var response = await _recognizeFaceFromImageSubService.RecognizeAsync(_requestFromFile);
 
             // Assert
             Assert.IsType<RecognizeFaceFromImageResponse>(response);
@@ -116,7 +127,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         public async Task RecognizeAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Act
-            var response = await _recognizeFaceFromImageSubService.RecognizeAsync(_request);
+            var response = await _recognizeFaceFromImageSubService.RecognizeAsync(_requestFromFile);
 
             // Assert
             Assert.NotNull(response);
@@ -139,6 +150,62 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
             var request = new RecognizeFaceFromImageRequestByFilePath
             {
                 FilePath = PATH_OF_WRONG_FILE,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+            };
+
+            // Act
+            var func = async () => await _recognizeFaceFromImageSubService.RecognizeAsync(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
+        public async Task RecognizeFromURLAsync_TakesRequestModel_ReturnsModelWithProperType()
+        {
+            // Act
+            var response = await _recognizeFaceFromImageSubService.RecognizeAsync(_requestFromURL);
+
+            // Assert
+            Assert.IsType<RecognizeFaceFromImageResponse>(response);
+        }
+
+        [Fact]
+        public async Task RecognizeFromURLAsync_TakesRequestModel_ReturnsNotNull()
+        {
+            // Act
+            var response = await _recognizeFaceFromImageSubService.RecognizeAsync(_requestFromURL);
+
+            // Assert
+            Assert.NotNull(response);
+        }
+
+        [Fact]
+        public async Task RecognizeFromURLAsync_TakesNullRequest_ThrowsException()
+        {
+            // Act
+            var func = async () => await _recognizeFaceFromImageSubService.RecognizeAsync((RecognizeFaceFromImageRequestByFileUrl)null!);
+
+            // Assert
+            await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task RecognizeFromURLAsync_TakesNullRequest_ThrowsServiceException()
+        {
+            //Arrange
+            var request = new RecognizeFaceFromImageRequestByFileUrl
+            {
+                FileUrl = WRONG_FILE_URL,
                 DetProbThreshold = 0.81m,
                 FacePlugins = new List<string>()
             {
