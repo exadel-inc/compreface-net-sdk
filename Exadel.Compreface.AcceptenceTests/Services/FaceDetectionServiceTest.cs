@@ -14,7 +14,9 @@ namespace Exadel.Compreface.AcceptenceTests.Services
 
         private readonly FaceDetectionRequestByFilePath _faceDetectionRequest;
         private readonly FaceDetectionBase64Request _faceDetectionBase64Request;
-     
+        private readonly FaceDetectionRequestByFileUrl _faceDetectionFromURIRequest;
+
+
         public FaceDetectionServiceTest()
         {
             var client = new CompreFaceClient(DOMAIN, PORT);
@@ -34,6 +36,15 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             _faceDetectionRequest = new FaceDetectionRequestByFilePath
             {
                 FilePath = FILE_PATH,
+                DetProbThreshold = detProbThreshold,
+                FacePlugins = facePlugins,
+                Status = status,
+                Limit = limit
+            };
+
+            _faceDetectionFromURIRequest = new FaceDetectionRequestByFileUrl
+            {
+                FileUrl = FILE_URL,
                 DetProbThreshold = detProbThreshold,
                 FacePlugins = facePlugins,
                 Status = status,
@@ -144,6 +155,63 @@ namespace Exadel.Compreface.AcceptenceTests.Services
             var detectRequest = new FaceDetectionBase64Request()
             {
                 File = WRONG_BASE64_IMAGE,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+                Limit = 0
+            };
+
+            // Act
+            var func = async () => await _faceDetectionService.DetectAsync(detectRequest);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
+        public async Task DetectFromURIAsync_TakesRequestModel_ReturnsProperResponseModel()
+        {
+            // Act
+            var response = await _faceDetectionService.DetectAsync(_faceDetectionFromURIRequest);
+
+            // Assert
+            Assert.IsType<FaceDetectionResponse>(response);
+        }
+
+        [Fact]
+        public async Task DetectFromURIAsync_TakesRequestModel_ReturnsNotNull()
+        {
+            // Act
+            var response = await _faceDetectionService.DetectAsync(_faceDetectionFromURIRequest);
+
+            // Assert
+            Assert.NotNull(response);
+        }
+
+        [Fact]
+        public async Task DetectFromURIAsync_TakesNullRequest_ThrowsException()
+        {
+            // Act
+            var func = async () => await _faceDetectionService.DetectAsync((FaceDetectionRequestByFileUrl)null!);
+
+            // Assert
+            await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task DetectFromURIAsync_TakesNullRequest_ThrowsServiceException()
+        {
+            // Act
+            var detectRequest = new FaceDetectionRequestByFileUrl()
+            {
+                FileUrl = WRONG_FILE_URL,
                 DetProbThreshold = 0.81m,
                 FacePlugins = new List<string>()
             {
