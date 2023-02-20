@@ -54,8 +54,8 @@ public class CompreFaceClient : ICompreFaceClient
             if (baseService == null)
             {
                 var config = new ComprefaceConfiguration(apiKey, _domain, _port);
-
-                baseService = ReturnServiceIfTypeIsValid(type, config);
+                var apiClient = new ApiClient.ApiClient(config);  
+                baseService = ReturnServiceIfTypeIsValid(type, config, apiClient);
 
                 _services.Add(key, baseService!);
             }
@@ -68,12 +68,12 @@ public class CompreFaceClient : ICompreFaceClient
         }
     }
 
-    private object ReturnServiceIfTypeIsValid(Type type, ComprefaceConfiguration config)
+    private object ReturnServiceIfTypeIsValid(Type type, ComprefaceConfiguration config, ApiClient.ApiClient apiClient)
     {
         object baseService = null;
 
         if (type.GetCustomAttribute(typeof(CompreFaceService)) != null)
-            baseService = Activator.CreateInstance(type, config);
+            baseService = Activator.CreateInstance(type, config, apiClient);
 
         if (baseService == null)
             throw new TypeNotBelongCompreFaceException("Type don't belong CompreFace services. Class should be covered by CompreFaceService attribute.");
