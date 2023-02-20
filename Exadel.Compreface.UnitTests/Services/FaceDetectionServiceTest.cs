@@ -5,6 +5,8 @@ using Flurl;
 using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.UnitTests.Helpers;
+using Exadel.Compreface.Clients.ApiClient;
+using Moq;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
@@ -22,9 +24,7 @@ namespace Exadel.Compreface.UnitTests.Services
 
             _comprefaceConfiguration = new ComprefaceConfiguration(apiKey, domain, port);
 
-            _faceDetectionService = new FaceDetectionService(_comprefaceConfiguration);
-
-            _faceDetectionService.ApiClient = ApiClientMock.Object;
+            _faceDetectionService = new FaceDetectionService(_comprefaceConfiguration, ApiClientMock.Object);
         }
 
         [Fact]

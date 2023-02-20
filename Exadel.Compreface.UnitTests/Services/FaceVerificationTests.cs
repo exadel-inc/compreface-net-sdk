@@ -23,9 +23,7 @@ public class FaceVerificationTests : SetupAndVerifyTests
 
         _comprefaceConfiguration = new ComprefaceConfiguration(apiKey, domain, port);
 
-        _faceVerificationService = new FaceVerificationService(_comprefaceConfiguration);
-
-        _faceVerificationService.ApiClient = ApiClientMock.Object;
+        _faceVerificationService = new FaceVerificationService(_comprefaceConfiguration, ApiClientMock.Object);
     }
 
     [Fact]
@@ -36,6 +34,9 @@ public class FaceVerificationTests : SetupAndVerifyTests
         {
             FacePlugins = new List<string>()
         };
+        var t = new Result();
+        List<Result> results = new List<Result> { t };
+        var result = new FaceVerificationResponse() { Result = results };
 
         SetupPostMultipart<FaceVerificationResponse>();
 

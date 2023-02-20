@@ -24,9 +24,7 @@ namespace Exadel.Compreface.UnitTests.Services
 
             _comprefaceConfiguration = new ComprefaceConfiguration(apiKey, domain, port);
 
-            _recognizeFaceFromImage = new RecognizeFaceFromImage(_comprefaceConfiguration);
-
-            _recognizeFaceFromImage.ApiClient = ApiClientMock.Object;
+            _recognizeFaceFromImage = new RecognizeFaceFromImage(_comprefaceConfiguration, ApiClientMock.Object);
         }
 
         [Fact]
