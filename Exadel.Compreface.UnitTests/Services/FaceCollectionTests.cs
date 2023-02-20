@@ -13,9 +13,6 @@ using Exadel.Compreface.Services.RecognitionService;
 using Exadel.Compreface.UnitTests.Helpers;
 using Flurl;
 using Exadel.Compreface.DTOs.SubjectExampleDTOs.AddSubjectExample;
-using Exadel.Compreface.Clients.ApiClient;
-using Exadel.Compreface.Helpers;
-using Moq;
 
 namespace Exadel.Compreface.UnitTests.Services;
 
@@ -33,9 +30,7 @@ public class FaceCollectionTests : SetupAndVerifyTests
 
         _comprefaceConfiguration = new ComprefaceConfiguration(apiKey, domain, port);
 
-        _faceCollection = new FaceCollection(_comprefaceConfiguration);
-
-        _faceCollection.ApiClient = ApiClientMock.Object;
+        _faceCollection = new FaceCollection(_comprefaceConfiguration, ApiClientMock.Object);
     }
 
     [Fact]
@@ -45,10 +40,10 @@ public class FaceCollectionTests : SetupAndVerifyTests
         var request = new AddSubjectExampleRequestByFilePath();
 
         SetupPostMultipart<AddSubjectExampleResponse>();
-        
+
         // Act
         var response = await _faceCollection.AddAsync(request);
-        
+
         // Assert
         Assert.IsType<AddSubjectExampleResponse>(response);
 
@@ -147,10 +142,10 @@ public class FaceCollectionTests : SetupAndVerifyTests
         var request = new AddBase64SubjectExampleRequest();
 
         SetupPostJson<AddBase64SubjectExampleResponse, Url>();
-        
+
         //Act
         var response = await _faceCollection.AddAsync(request);
-        
+
         // Assert
         Assert.IsType<AddBase64SubjectExampleResponse>(response);
 

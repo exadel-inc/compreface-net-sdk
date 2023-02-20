@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients.ApiClient;
+using Exadel.Compreface.Configuration;
 using Exadel.Compreface.Services.Attributes;
 using Exadel.Compreface.Services.Interfaces;
 
@@ -13,10 +14,10 @@ public class RecognitionService
 
     public IRecognizeFaceFromImage RecognizeFaceFromImage { get; set; }
 
-    public RecognitionService(IComprefaceConfiguration configuration)
+    public RecognitionService(IComprefaceConfiguration configuration, IApiClient apiClient)
 	{
-		FaceCollection = new FaceCollection(configuration);
-        Subject = new Subject(configuration);
-        RecognizeFaceFromImage = new RecognizeFaceFromImage(configuration);
+		FaceCollection = new FaceCollection(configuration, apiClient);
+        Subject = new Subject(configuration, apiClient);
+        RecognizeFaceFromImage = new RecognizeFaceFromImage(configuration, apiClient);
     }
 }

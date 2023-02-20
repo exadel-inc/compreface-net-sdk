@@ -1,6 +1,4 @@
-﻿using Exadel.Compreface.Clients;
-using Exadel.Compreface.Clients.CompreFaceClient;
-using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients.CompreFaceClient;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteAllSubjectExamples;
@@ -12,7 +10,6 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
 using Exadel.Compreface.DTOs.HelperDTOs;
 using Exadel.Compreface.DTOs.SubjectExampleDTOs.AddSubjectExample;
 using Exadel.Compreface.Exceptions;
-using Exadel.Compreface.Services;
 using Exadel.Compreface.Services.RecognitionService;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 

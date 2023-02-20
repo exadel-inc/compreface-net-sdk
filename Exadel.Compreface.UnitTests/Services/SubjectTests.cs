@@ -24,9 +24,7 @@ namespace Exadel.Compreface.UnitTests.Services
 
             _comprefaceConfiguration = new ComprefaceConfiguration(apiKey, domain, port);
 
-            _subject = new Subject(_comprefaceConfiguration);
-
-            _subject.ApiClient = ApiClientMock.Object;
+            _subject = new Subject(_comprefaceConfiguration, ApiClientMock.Object);
         }
 
         [Fact]
