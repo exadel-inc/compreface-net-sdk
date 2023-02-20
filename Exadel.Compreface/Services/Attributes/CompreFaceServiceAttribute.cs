@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Exadel.Exadel.Compreface.AcceptenceTests")]
+[assembly: InternalsVisibleTo("Exadel.Compreface.AcceptenceTests")]
 [assembly: InternalsVisibleTo("Exadel.Compreface.UnitTests")]
 namespace Exadel.Compreface.Services.Attributes
 {
