@@ -5,8 +5,6 @@ using Flurl;
 using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.UnitTests.Helpers;
-using Exadel.Compreface.Clients.ApiClient;
-using Moq;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
