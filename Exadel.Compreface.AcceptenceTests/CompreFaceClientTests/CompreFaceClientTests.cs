@@ -3,7 +3,6 @@ using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 using Exadel.Compreface.Services;
 using Exadel.Compreface.Services.RecognitionService;
 using Exadel.Compreface.Exceptions;
-using Exadel.Compreface.Services.Attributes;
 
 namespace Exadel.Compreface.AcceptenceTests.CompreFaceClientTests
 {
@@ -53,16 +52,10 @@ namespace Exadel.Compreface.AcceptenceTests.CompreFaceClientTests
             var testApiKey = Guid.NewGuid().ToString();
 
             //Act
-            var func = () => _compreFaceClient.GetCompreFaceService<TestServiceClass>(testApiKey);
+            var func = () => _compreFaceClient.GetCompreFaceService<TestService>(testApiKey);
 
             //Assert
             Assert.Throws<TypeNotBelongCompreFaceException>(func);
-        }
-
-        private class TestServiceClass
-        {
-            public TestServiceClass()
-            {}
         }
     }
 }
