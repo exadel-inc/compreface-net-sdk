@@ -65,5 +65,35 @@ namespace Exadel.Compreface.AcceptenceTests.CompreFaceClientTests
             //Assert
             Assert.Throws<TypeNotBelongCompreFaceException>(func);
         }
+
+        [Fact]
+        public void CompreFaceClientWithConfig_TakesNullForDOMAINSection_ThrowsArgumentNullException()
+        {
+            // Act
+            var func = () => new CompreFaceClient(_configuration, null, "Port").GetCompreFaceService<FaceDetectionService>(_configuration, "FaceDetectionApiKey");
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(func);
+        }
+
+        [Fact]
+        public void CompreFaceClientWithConfig_TakesNullForPORTSection_ThrowsArgumentNullException()
+        {
+            // Act
+            var func = () => new CompreFaceClient(_configuration, "Domain", null).GetCompreFaceService<FaceDetectionService>(_configuration, "FaceDetectionApiKey");
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(func);
+        }
+
+        [Fact]
+        public void CompreFaceClientWithConfig_TakesNullForAPIKEYSection_ThrowsArgumentNullException()
+        {
+            // Act
+            var func = () => new CompreFaceClient(_configuration, "Domain", "Port").GetCompreFaceService<FaceDetectionService>(_configuration, null!);
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(func);
+        }
     }
 }
