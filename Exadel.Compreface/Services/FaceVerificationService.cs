@@ -24,6 +24,7 @@ public class FaceVerificationService : IFaceVerificationService
         _apiClient = apiClient;
     }
 
+
     public async Task<FaceVerificationResponse> VerifyAsync(FaceVerificationRequestByFilePath request)
     {
         var requestUrlWithQueryParameters = GetRequestUrl(request);
