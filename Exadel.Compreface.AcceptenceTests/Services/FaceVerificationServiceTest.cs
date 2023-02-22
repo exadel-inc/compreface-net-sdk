@@ -1,25 +1,25 @@
-﻿using Exadel.Compreface.Clients;
-using Exadel.Compreface.Configuration;
+﻿using Exadel.Compreface.Clients.CompreFaceClient;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
+using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services;
+using Exadel.Compreface.Services.Interfaces;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
 {
-    [Collection("Sequential")]
     public class FaceVerificationServiceTest
     {
-        private readonly FaceVerificationService _faceVerificationService;
+        private readonly IFaceVerificationService _faceVerificationService;
 
-        private readonly FaceVerificationRequest _faceVerificationRequest;
+        private readonly FaceVerificationRequestByFilePath _faceVerificationRequest;
         private readonly FaceVerificationWithBase64Request _faceVerificationBase64Request;
+        private readonly FaceVerificationRequestByFileUrl _faceVerificationFromURLRequest;
 
         public FaceVerificationServiceTest()
         {
-            var configuration = new ComprefaceConfiguration(API_KEY_VERIFICATION_SERVICE, DOMAIN, PORT);
-            var client = new FaceVerificationClient(configuration);
+            var client = new CompreFaceClient(DOMAIN, PORT);
             var detProbThreshold = 0.85m;
             var status = true;
             var limit = 0;
@@ -32,13 +32,21 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 "calculator"
             };
 
-            _faceVerificationService = client.FaceVerificationService;
-            _faceVerificationRequest = new FaceVerificationRequest
+            _faceVerificationService = client.GetCompreFaceService<FaceVerificationService>(API_KEY_VERIFICATION_SERVICE);
+            _faceVerificationRequest = new FaceVerificationRequestByFilePath
             {
-                SourceImageFileName = FILE_NAME,
                 SourceImageFilePath = FILE_PATH,
-                TargetImageFileName = FILE_NAME,
                 TargetImageFilePath = FILE_PATH,
+                DetProbThreshold = detProbThreshold,
+                FacePlugins = facePlugins,
+                Status = status,
+                Limit = limit
+            };
+
+            _faceVerificationFromURLRequest = new FaceVerificationRequestByFileUrl
+            {
+                SourceImageFileUrl = FILE_URL,
+                TargetImageFileUrl = FILE_URL,
                 DetProbThreshold = detProbThreshold,
                 FacePlugins = facePlugins,
                 Status = status,
@@ -57,63 +65,177 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         }
 
         [Fact]
-        public async Task VerifyImageAsync_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task VerifyAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
-            var response = await _faceVerificationService.VerifyImageAsync(_faceVerificationRequest);
+            var response = await _faceVerificationService.VerifyAsync(_faceVerificationRequest);
 
             // Assert
             Assert.IsType<FaceVerificationResponse>(response);
         }
 
         [Fact]
-        public async Task VerifyImageAsync_TakesRequestModel_ReturnsNotNull()
+        public async Task VerifyAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Act
-            var response = await _faceVerificationService.VerifyImageAsync(_faceVerificationRequest);
+            var response = await _faceVerificationService.VerifyAsync(_faceVerificationRequest);
 
             // Assert
             Assert.NotNull(response);
         }
 
         [Fact]
-        public async Task VerifyImageAsync_TakesNullRequest_ThrowsException()
+        public async Task VerifyAsync_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _faceVerificationService.VerifyImageAsync(null!);
+            var func = async () => await _faceVerificationService.VerifyAsync((FaceVerificationRequestByFilePath)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
         }
 
         [Fact]
-        public async Task VerifyBase64ImageAsync_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task VerifyAsync_TakesNullRequest_ThrowsServiceException()
+        {
+            //Arrange
+            var request = new FaceVerificationRequestByFilePath
+            {
+                SourceImageFilePath = TWO_FACES_IMAGE_PATH,
+                TargetImageFilePath = FILE_PATH,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+                Limit = 0
+            };
+
+            // Act
+            var func = async () => await _faceVerificationService.VerifyAsync(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
+        public async Task VerifyBase64Async_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Act
-            var response = await _faceVerificationService.VerifyBase64ImageAsync(_faceVerificationBase64Request);
+            var response = await _faceVerificationService.VerifyAsync(_faceVerificationBase64Request);
 
             // Assert
             Assert.IsType<FaceVerificationResponse>(response);
         }
 
         [Fact]
-        public async Task VerifyBase64ImageAsync_TakesRequestModel_ReturnsNotNull()
+        public async Task VerifyBase64Async_TakesRequestModel_ReturnsNotNull()
         {
             // Act
-            var response = await _faceVerificationService.VerifyBase64ImageAsync(_faceVerificationBase64Request);
+            var response = await _faceVerificationService.VerifyAsync(_faceVerificationBase64Request);
 
             // Assert
             Assert.NotNull(response);
         }
 
         [Fact]
-        public async Task VerifyBase64ImageAsync_TakesNullRequest_ThrowsException()
+        public async Task VerifyBase64Async_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _faceVerificationService.VerifyBase64ImageAsync(null!);
+            var func = async () => await _faceVerificationService.VerifyAsync((FaceVerificationWithBase64Request)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task VerifyBase64Async_TakesNullRequest_ThrowsServiceException()
+        {
+            //Arrange
+            var request = new FaceVerificationWithBase64Request()
+            {
+                SourceImageWithBase64 = TWO_FACES_IMAGE_BASE64,
+                TargetImageWithBase64 = IMAGE_BASE64_STRING,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+                Limit = 0
+            };
+
+            // Act
+            var func = async () => await _faceVerificationService.VerifyAsync(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
+        public async Task VerifyFromURLAsync_TakesRequestModel_ReturnsProperResponseModel()
+        {
+            // Act
+            var response = await _faceVerificationService.VerifyAsync(_faceVerificationFromURLRequest);
+
+            // Assert
+            Assert.IsType<FaceVerificationResponse>(response);
+        }
+
+        [Fact]
+        public async Task VerifyFromURLAsync_TakesRequestModel_ReturnsNotNull()
+        {
+            // Act
+            var response = await _faceVerificationService.VerifyAsync(_faceVerificationFromURLRequest);
+
+            // Assert
+            Assert.NotNull(response);
+        }
+
+        [Fact]
+        public async Task VerifyFromURLAsync_TakesNullRequest_ThrowsException()
+        {
+            // Act
+            var func = async () => await _faceVerificationService.VerifyAsync((FaceVerificationRequestByFileUrl)null!);
+
+            // Assert
+            await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task VerifyFromURLAsync_TakesNullRequest_ThrowsServiceException()
+        {
+            //Arrange
+            var request = new FaceVerificationRequestByFileUrl()
+            {
+                SourceImageFileUrl = FILE_URL,
+                TargetImageFileUrl = WRONG_FILE_URL,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+                Limit = 0
+            };
+
+            // Act
+            var func = async () => await _faceVerificationService.VerifyAsync(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
         }
     }
 }

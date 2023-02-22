@@ -10,18 +10,6 @@ namespace Exadel.Compreface.Clients.Config
     public static class ConfigInitializer
     {
         /// <summary>
-        /// Adds Api Key to request header before sending http request to a given endpoint 
-        /// </summary>
-        /// <param name="apiKey">Valid api key for compreface api</param>
-        public static void InitializeApiKeyInRequestHeader(string apiKey)
-        {
-            FlurlHttp.GlobalSettings.BeforeCall += apiCall =>
-            {
-                apiCall.Request.Headers.Add("x-api-key", apiKey);
-            };
-        }
-
-        /// <summary>
         /// Creates the instance of <see cref="SystemJsonSerializer"/> instance and binds it to Flurl's built-in JsonSerializer 
         /// </summary>
         public static void InitializeSnakeCaseJsonConfigs()

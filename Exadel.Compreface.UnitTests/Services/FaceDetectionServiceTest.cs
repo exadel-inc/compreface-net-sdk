@@ -2,23 +2,34 @@
 using Exadel.Compreface.Services;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Flurl;
+using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;
+using Exadel.Compreface.Configuration;
+using Exadel.Compreface.UnitTests.Helpers;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
-    public class FaceDetectionServiceTest : AbstractBaseServiceTests
+    public class FaceDetectionServiceTest : SetupAndVerifyTests
     {
+        private readonly IComprefaceConfiguration _comprefaceConfiguration;
+
         private readonly FaceDetectionService _faceDetectionService;
 
         public FaceDetectionServiceTest()
         {
-            _faceDetectionService = new FaceDetectionService(Configuration, ApiClientMock.Object);
+            var apiKey = GetRandomString();
+            var domain = GetRandomString();
+            var port = GetRandomString();
+
+            _comprefaceConfiguration = new ComprefaceConfiguration(apiKey, domain, port);
+
+            _faceDetectionService = new FaceDetectionService(_comprefaceConfiguration, ApiClientMock.Object);
         }
 
         [Fact]
-        public async Task FaceDetectionAsync_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task DetectAsync_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
-            var request = new FaceDetectionRequest()
+            var request = new FaceDetectionRequestByFilePath()
             {
                 FacePlugins = new List<string>()
             };
@@ -26,20 +37,43 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostMultipart<FaceDetectionResponse>();
 
             // Act
-            var response = await _faceDetectionService.FaceDetectionAsync(request);
+            var response = await _faceDetectionService.DetectAsync(request);
 
             // Assert
             Assert.IsType<FaceDetectionResponse>(response);
 
             VerifyPostMultipart<FaceDetectionResponse>();
-            ApiClientMock.VerifyNoOtherCalls();
+            base.ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
-        public async Task FaceDetectionAsync_TakesRequestModel_ReturnsNotNull()
+        public async Task DetectAsync_TakesRequestModelUsingUrl_ReturnsProperResponseModel()
         {
             // Arrange
-            var request = new FaceDetectionRequest()
+            var request = new FaceDetectionRequestByFileUrl()
+            {
+                FacePlugins = new List<string>()
+            };
+
+            SetupPostJson<FaceDetectionResponse>();
+            SetupGetBytes();
+
+            // Act
+            var response = await _faceDetectionService.DetectAsync(request);
+
+            // Assert
+            Assert.IsType<FaceDetectionResponse>(response);
+
+            VerifyPostJson<FaceDetectionResponse>();
+            VerifySetupGetBytes();
+            base.ApiClientMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task DetectAsync_TakesRequestModel_ReturnsNotNull()
+        {
+            // Arrange
+            var request = new FaceDetectionRequestByFilePath()
             {
                 FacePlugins = new List<string>()
             };
@@ -47,26 +81,78 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostMultipart<FaceDetectionResponse>();
 
             // Act
-            var response = await _faceDetectionService.FaceDetectionAsync(request);
+            var response = await _faceDetectionService.DetectAsync(request);
 
             // Assert
             Assert.NotNull(response);
 
             VerifyPostMultipart<FaceDetectionResponse>();
-            ApiClientMock.VerifyNoOtherCalls();
+            base.ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
-        public async Task FaceDetectionAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DetectAsync_TakesRequestModelUsingUrl_ReturnsNotNull()
+        {
+            // Arrange
+            var request = new FaceDetectionRequestByFileUrl()
+            {
+                FacePlugins = new List<string>()
+            };
+
+            SetupPostJson<FaceDetectionResponse>();
+            SetupGetBytes();
+
+            // Act
+            var response = await _faceDetectionService.DetectAsync(request);
+
+            // Assert
+            Assert.NotNull(response);
+
+            VerifyPostJson<FaceDetectionResponse>();
+            VerifySetupGetBytes();  
+            base.ApiClientMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task DetectAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
             SetupPostMultipart<FaceDetectionResponse>();
 
             // Act
-            var func = async () => await _faceDetectionService.FaceDetectionAsync(null!);
+            var func = async () => await _faceDetectionService.DetectAsync((FaceDetectionRequestByFilePath)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task DetectAsync_TakesNullRequestModelUsingUrl_ThrowsNullReferenceException()
+        {
+            // Arrange
+            SetupPostJson<FaceDetectionResponse>();
+            SetupGetBytes();
+
+            // Act
+            var func = async () => await _faceDetectionService.DetectAsync((FaceDetectionRequestByFileUrl)null!);
+
+            // Assert
+            await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task DetectBase64Async_TakesRequestModel_ReturnsProperResponseModel()
+        {
+            // Arrange
+            var request = new FaceDetectionRequestByFilePath();
+
+            SetupPostMultipart<FaceDetectionResponse>();
+
+            // Act
+            var func = async () => await _faceDetectionService.DetectAsync(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
 
         [Fact]
@@ -81,17 +167,17 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<FaceDetectionResponse, Url>();
 
             // Act
-            var response = await _faceDetectionService.FaceDetectionBase64Async(request);
+            var response = await _faceDetectionService.DetectAsync(request);
 
             // Assert
             Assert.IsType<FaceDetectionResponse>(response);
 
             VerifyPostJson<FaceDetectionResponse, Url>();
-            ApiClientMock.VerifyNoOtherCalls();
+            base.ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]
-        public async Task FaceDetectionBase64Async_TakesRequestModel_ReturnsNotNull()
+        public async Task DetectBase64Async_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
             var request = new FaceDetectionBase64Request()
@@ -102,7 +188,7 @@ namespace Exadel.Compreface.UnitTests.Services
             SetupPostJson<FaceDetectionResponse, Url>();
 
             // Act
-            var response = await _faceDetectionService.FaceDetectionBase64Async(request);
+            var response = await _faceDetectionService.DetectAsync(request);
 
             // Assert
             Assert.NotNull(response);
@@ -112,16 +198,31 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task FaceDetectionBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task DetectBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
             SetupPostJson<FaceDetectionResponse, Url>();
 
             // Act
-            var func = async () => await _faceDetectionService.FaceDetectionBase64Async(null!);
+            var func = async () => await _faceDetectionService.DetectAsync((FaceDetectionBase64Request)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task FaceDetectionBase64Async_TakesIncorrectRequestModel_ThrowsArgumentNullException()
+        {
+            // Arrange
+            var request = new FaceDetectionBase64Request();
+
+            SetupPostJson<FaceDetectionResponse, Url>();
+
+            // Act
+            var func = async () => await _faceDetectionService.DetectAsync(request);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(func);
         }
     }
 }

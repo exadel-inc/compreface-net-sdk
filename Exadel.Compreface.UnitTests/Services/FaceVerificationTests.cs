@@ -1,53 +1,117 @@
+using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
 using Exadel.Compreface.Services;
+using Exadel.Compreface.UnitTests.Helpers;
 using Flurl;
+using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;
 
 namespace Exadel.Compreface.UnitTests.Services;
 
-public class FaceVerificationTests : AbstractBaseServiceTests
+public class FaceVerificationTests : SetupAndVerifyTests
 {
+    private readonly IComprefaceConfiguration _comprefaceConfiguration;
+
     private readonly FaceVerificationService _faceVerificationService;
 
     public FaceVerificationTests()
     {
-        _faceVerificationService = new FaceVerificationService(Configuration, ApiClientMock.Object);
+        var apiKey = GetRandomString();
+        var domain = GetRandomString();
+        var port = GetRandomString();
+
+        _comprefaceConfiguration = new ComprefaceConfiguration(apiKey, domain, port);
+
+        _faceVerificationService = new FaceVerificationService(_comprefaceConfiguration, ApiClientMock.Object);
     }
 
     [Fact]
-    public async Task VerifyImageAsync_TakesRequestModel_ReturnsProperResponseModel()
+    public async Task VerifyAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
-        var request = new FaceVerificationRequest()
+        var request = new FaceVerificationRequestByFilePath()
         {
             FacePlugins = new List<string>()
         };
+        var t = new Result();
+        List<Result> results = new List<Result> { t };
+        var result = new FaceVerificationResponse() { Result = results };
 
         SetupPostMultipart<FaceVerificationResponse>();
 
         // Act
-        var response = await _faceVerificationService.VerifyImageAsync(request);
+        var response = await _faceVerificationService.VerifyAsync(request);
 
         // Assert
         Assert.IsType<FaceVerificationResponse>(response);
         VerifyPostMultipart<FaceVerificationResponse>();
         ApiClientMock.VerifyNoOtherCalls();
     }
-    
+
     [Fact]
-    public async Task VerifyImageAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task VerifyAsync_TakesRequestModelUsingUrl_ReturnsProperResponseModel()
+    {
+        // Arrange
+        var request = new FaceVerificationRequestByFileUrl()
+        {
+            FacePlugins = new List<string>()
+        };
+
+        SetupPostJson<FaceVerificationResponse>();
+        SetupGetBytes();
+
+        // Act
+        var response = await _faceVerificationService.VerifyAsync(request);
+
+        // Assert
+        Assert.IsType<FaceVerificationResponse>(response);
+        VerifyPostJson<FaceVerificationResponse>();
+        VerifySetupGetBytes2Times();
+        ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task VerifyAsync_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
         SetupPostMultipart<FaceVerificationResponse>();
 
         // Act
-        var responseCall = async () => await _faceVerificationService.VerifyImageAsync(null!);
+        var responseCall = async () => await _faceVerificationService.VerifyAsync((FaceVerificationRequestByFilePath)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(responseCall);
     }
-    
+
+    [Fact]
+    public async Task VerifyAsync_TakesNullRequestModelUsingUrl_ThrowsNullReferenceException()
+    {
+        // Arrange
+        SetupPostJson<FaceVerificationResponse>();
+
+        // Act
+        var responseCall = async () => await _faceVerificationService.VerifyAsync((FaceVerificationRequestByFileUrl)null!);
+
+        // Assert
+        await Assert.ThrowsAsync<NullReferenceException>(responseCall);
+    }
+
+    [Fact]
+    public async Task VerifyBase64Async_TakesRequestModel_ReturnsProperResponseModel()
+    {
+        // Arrange
+        var request = new FaceVerificationRequestByFilePath();
+
+        SetupPostMultipart<FaceVerificationResponse>();
+
+        // Act
+        var responseCall = async () => await _faceVerificationService.VerifyAsync(request);
+
+        // Assert
+        await Assert.ThrowsAsync<ArgumentNullException>(responseCall);
+    }
+
     [Fact]
     public async Task VerifyBase64ImageAsync_TakesRequestModel_ReturnsProperResponseModel()
     {
@@ -60,7 +124,7 @@ public class FaceVerificationTests : AbstractBaseServiceTests
         SetupPostJson<FaceVerificationResponse, Url>();
 
         // Act
-        var response = await _faceVerificationService.VerifyBase64ImageAsync(request);
+        var response = await _faceVerificationService.VerifyAsync(request);
 
         // Assert
         Assert.IsType<FaceVerificationResponse>(response);
@@ -69,17 +133,32 @@ public class FaceVerificationTests : AbstractBaseServiceTests
         VerifyPostJson<FaceVerificationResponse, Url>();
         ApiClientMock.VerifyNoOtherCalls();
     }
-    
+
     [Fact]
-    public async Task VerifyBase64ImageAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+    public async Task VerifyBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
         SetupPostJson<FaceVerificationResponse, Url>();
-        
+
         // Act
-        var responseCall = async () => await _faceVerificationService.VerifyBase64ImageAsync(null!);
+        var responseCall = async () => await _faceVerificationService.VerifyAsync((FaceVerificationWithBase64Request)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(responseCall);
+    }
+
+    [Fact]
+    public async Task VerifyBase64ImageAsync_TakesIncorrectRequestModel_ThrowsArgumentArgumentNullException()
+    {
+        // Arrange
+        var request = new FaceVerificationWithBase64Request();
+
+        SetupPostJson<FaceVerificationResponse, Url>();
+
+        // Act
+        var responseCall = async () => await _faceVerificationService.VerifyAsync(request);
+
+        // Assert
+        await Assert.ThrowsAsync<ArgumentNullException>(responseCall);
     }
 }
