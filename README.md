@@ -46,7 +46,7 @@ Before using our SDK make sure you have installed CompreFace and .NET on your ma
 
 ## CompreFace compatibility matrix
 
-| CompreFace .NET SDK version | CompreFace 1.1.0 |
+| CompreFace .NET SDK version   | CompreFace 1.1.0 |
 | ------------------------------| ---------------- |
 | ?                             | ✔                |
 
@@ -71,25 +71,30 @@ All examples below you can find in repository inside [examples](/examples) folde
 
 ## Initialization
 
-To start using  Compreface .NET SDK you need to import ??? `CompreFace` ??? object from 'compreface-sdk' dependency.
+To start using  Compreface .NET SDK you need to import `CompreFace` object from 'compreface-sdk' dependency.
 
-Then you need to create ??? `ComprefaceClient`??? object and initialize it with ??? `url` and `api key`???. By default, if you run CompreFace on your local machine, it's address `http://localhost:8000`, ??? `url` in this case will be `http://localhost:8000/api/v1`???
-???You can pass optional `options` object when call method to set default parameters, see reference for [more information](#options-structure).???
+Then you need to create `CompreFaceClient` object and initialize it with `DOMAIN` and `PORT`. By default, if you run CompreFace on your local machine, it's `DOMAIN` will be `http://localhost`, and `PORT` in this case will be `8000`.
+You can pass optional `options` object when call method to set default parameters, see reference for [more information](#options-structure).
 
-???You can use `RecognitionService` service in `ComprefaceClient` object to recognize faces.???
+You should use `RecognitionService` service in `CompreFaceClient` object to recognize faces.
 
-However, before recognizing you need first to add faces into the face collection. To do this, get the face collection object with the help of `SubjectService`.
+However, before recognizing you need first to add subject into the face collection. To do this, get the `Subject` object with the help of `RecognitionService`. `Subject` is included in `RecognitionService` class.
 
 ```
-???? usings
+var client = new CompreFaceClient(
+    domain: "http://localhost",
+    port: "8000");
 
-const string BASE_URL = "http://localhost:8000/api/v1/";
-const string API_KEY = "your api key";
+var recognitionService = client.GetCompreFaceService<RecognitionService>(recognition api key);
 
-var comprefaceApiClient = new ComprefaceClient(new ComprefaceConfiguration(API_KEY,BASE_URL));
+var subject = recognitionService.Subject;
 
-var getAllSubjectResponse = await comprefaceApiClient.SubjectService.GetAllSubject();
+var subjectRequest = new AddSubjectRequest()
+{
+    Subject = "Subject name"
+};
 
+var subjectResponse = await subject.AddAsync(subjectRequest);
 ```
 
 ## Adding faces into a face collection
@@ -97,19 +102,41 @@ var getAllSubjectResponse = await comprefaceApiClient.SubjectService.GetAllSubje
 Here is example that shows how to add an image to your face collection from your file system:
 
 ```
-```
+var faceCollection = recognitionService.FaceCollection;
 
-```
+var request = new AddSubjectExampleRequestByFilePath()
+{
+    DetProbThreShold = 0.81m,
+    Subject = "Subject name",
+    FilePath = "Full file path"
+};
+
+var response = await faceCollection.AddAsync(request);
 ```
 
 ## Recognition
 
 This code snippet shows how to recognize unknown face.
 _Recognize faces from a given image_
-```python
 ```
+var recognizeRequest = new RecognizeFaceFromImageRequestByFilePath()
+{
+    FilePath = "Full file path",
+    DetProbThreshold = 0.81m,
+    FacePlugins = new List<string>()
+    {
+        "landmarks",
+        "gender",
+        "age",
+        "detector",
+        "calculator"
+    },
+    Limit = 0,
+    PredictionCount = 1,
+    Status = true
+};
 
-```
+var recognizeResponse = await recognitionService.RecognizeFaceFromImage.RecognizeAsync(recognizeRequest);
 ```
 
 # Reference
@@ -119,55 +146,71 @@ _Recognize faces from a given image_
 Global CompreFace Object is used for initializing connection to CompreFace and setting default values for options.
 Default values will be used in every service method if applicable.
 
-**???Constructor:???**
-
-```ComprefaceClient(domain, port)```
+**Constructor:**
+```CompreFaceClient(domain, port)```
 
 | Argument | Type   | Required | Notes                                     | 
 | ---------| ------ | -------- | ----------------------------------------- | 
-| url      | string | required | URL with protocol where CompreFace is located. E.g. `http://localhost` |
+| domain   | string | required | Domain with protocol where CompreFace is located. E.g. `http://localhost` |
 | port     | string | required | CompreFace port. E.g. `8000` |
 
+Example:
 
-### Methods
+```
+var client = new CompreFaceClient(
+    domain: "http://localhost",
+    port: "8000");
 
-1. ``````
+```
+
+### Services
+
+1. ```client.GetCompreFaceService<RecognitionService>(apiKey)```
 
 Inits face recognition service object.
 
 | Argument | Type   | Required | Notes                                     |
 | ---------| ------ | -------- | ----------------------------------------- |
-| api_key  | string | required | Face Recognition Api Key in UUID format    |
+| apiKey   | string | required | Face Recognition Api Key in UUID format   |
 
 Example:
 
 ```
+var apiKey = "00000000-0000-0000-0000-000000000002";
+
+var recognitionService = client.GetCompreFaceService<RecognitionService>(apiKey);
 ```
 
-2. ``````
+2. ```client.GetCompreFaceService<FaceDetectionService>(apiKey)```
 
 Inits face detection service object.
 
 | Argument | Type   | Required | Notes                                     |
 | ---------| ------ | -------- | ----------------------------------------- |
-| api_key  | string | required | Face Detection Api Key in UUID format    |
+| apiKey   | string | required | Face Detection Api Key in UUID format     |
 
 Example:
 
 ```
+var apiKey = "00000000-0000-0000-0000-000000000003";
+
+var faceDetectionService = client.GetCompreFaceService<FaceDetectionService>(api_key);
 ```
 
-3. ``````
+3. ```client.GetCompreFaceService<FaceVerificationService>(apiKey)```
 
 Inits face verification service object.
 
 | Argument | Type   | Required | Notes                                     |
 | ---------| ------ | -------- | ----------------------------------------- |
-| api_key  | string | required | Face Verification Api Key in UUID format    |
+| apiKey   | string | required | Face Verification Api Key in UUID format    |
 
 Example:
 
 ```
+var apiKey = "00000000-0000-0000-0000-000000000004";
+
+var faceVerificationService = client.GetCompreFaceService<FaceVerificationService>(api_key);
 ```
 
 ## Face Recognition Service
@@ -186,22 +229,84 @@ Recognizes all faces from the image.
 The first argument is the image location, it can be an url, local path or bytes.
 
 ```
+await recognitionService.RecognizeFaceFromImage.RecognizeAsync(recognizeRequest)
 ```
 
-| Argument           | Type    | Required | Notes                                                                                                                                          |
-| ------------------ | ------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-
+| Argument           | Type    						           | Required | Notes                                                                                                                                          |
+| ------------------ | --------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| recognizeRequest	 |	RecognizeFaceFromImageRequestByFilePath| required | 
 
 Response:
 
 ```
+{
+  "result" : [ {
+    "age" : {
+      "probability": 0.9308982491493225,
+      "high": 32,
+      "low": 25
+    },
+    "gender" : {
+      "probability": 0.9898611307144165,
+      "value": "female"
+    },
+    "mask" : {
+      "probability": 0.9999470710754395,
+      "value": "without_mask"
+    },
+    "embedding" : [ 9.424854069948196E-4, "...", -0.011415496468544006 ],
+    "box" : {
+      "probability" : 1.0,
+      "x_max" : 1420,
+      "y_max" : 1368,
+      "x_min" : 548,
+      "y_min" : 295
+    },
+    "landmarks" : [ [ 814, 713 ], [ 1104, 829 ], [ 832, 937 ], [ 704, 1030 ], [ 1017, 1133 ] ],
+    "subjects" : [ {
+      "similarity" : 0.97858,
+      "subject" : "subject1"
+    } ],
+    "execution_time" : {
+      "age" : 28.0,
+      "gender" : 26.0,
+      "detector" : 117.0,
+      "calculator" : 45.0,
+      "mask": 36.0
+    }
+  } ],
+  "plugins_versions" : {
+    "age" : "agegender.AgeDetector",
+    "gender" : "agegender.GenderDetector",
+    "detector" : "facenet.FaceDetector",
+    "calculator" : "facenet.Calculator",
+    "mask": "facemask.MaskDetector"
+  }
+}
 ```
+
+| Element                    | Type    | Description                                                                                                                                                 |
+| -------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| age                        | object  | detected age range. Return only if [age plugin](https://github.com/exadel-inc/CompreFace/blob/master/docs/Face-services-and-plugins.md) is enabled                                                       |
+| gender                     | object  | detected gender. Return only if [gender plugin](https://github.com/exadel-inc/CompreFace/blob/master/docs/Face-services-and-plugins.md) is enabled                                                       |
+| mask                       | object  | detected mask. Return only if [face mask plugin](https://github.com/exadel-inc/CompreFace/blob/master/docs/Face-services-and-plugins.md) is enabled.          |
+| embedding                  | array   | face embeddings. Return only if [calculator plugin](https://github.com/exadel-inc/CompreFace/blob/master/docs/Face-services-and-plugins.md) is enabled                                                   |
+| box                        | object  | list of parameters of the bounding box for this face                                                                                                        |
+| probability                | float   | probability that a found face is actually a face                                                                                                            |
+| x_max, y_max, x_min, y_min | integer | coordinates of the frame containing the face                                                                                                                |
+| landmarks                  | array   | list of the coordinates of the frame containing the face-landmarks.|
+| subjects                   | list    | list of similar subjects with size of <prediction_count> order by similarity                                                                                |
+| similarity                 | float   | similarity that on that image predicted person                                                                                                              |
+| subject                    | string  | name of the subject in Face Collection                                                                                                                      |
+| execution_time             | object  | execution time of all plugins                                                                                                                               |
+| plugins_versions           | object  | contains information about plugin versions                                                                                                                  |
 
 
 
 ### Get Face Collection
 
 ```
+recognitionService.FaceCollection
 ```
 
 Returns Face collection object
@@ -222,21 +327,27 @@ This creates an example of the subject by saving images. You can add as many ima
 contain only one face.
 
 ```
-
+await recognitionService.FaceCollection.AddAsync(request);
 ```
 
-| Argument           | Type   | Required | Notes                                                                                                |
-| ------------------ | ------ | -------- | ---------------------------------------------------------------------------------------------------- |
+| Argument| Type    						       | Required | Notes                                                                                                                                          |
+| ------- | -------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	AddSubjectExampleRequestByFilePath     | required | 
 
 
 Response:
 
-```json
-
+```
+{
+  "image_id": "6b135f5b-a365-4522-b1f1-4c9ac2dd0728",
+  "subject": "SubjectName"
+}
 ```
 
 | Element  | Type   | Description                |
 | -------- | ------ | -------------------------- |
+| image_id | UUID   | UUID of uploaded image     |
+| subject  | string | Subject of the saved image |
 
 
 #### List of All Saved Examples of the Subject
@@ -244,17 +355,31 @@ Response:
 To retrieve a list of subjects saved in a Face Collection:
 
 ```
-
+await recognitionService.FaceCollection.ListAsync(request);
 ```
+
+| Argument| Type    					 | Required | Notes                                                                                                                                          |
+| ------- | ---------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	ListAllSubjectExamplesRequest| required | 
+
 
 Response:
-
 ```
-
+{
+  "faces": [
+    {
+      "image_id": <image_id>,
+      "subject": <subject>
+    },
+    ...
+  ]
+}
 ```
 
 | Element  | Type   | Description                                                       |
 | -------- | ------ | ----------------------------------------------------------------- |
+| image_id | UUID   | UUID of the face                                                  |
+| subject  | string | <subject> of the person, whose picture was saved for this api key |
 
 
 #### Delete All Examples of the Subject by Name
@@ -264,20 +389,22 @@ Response:
 To delete all image examples of the <subject>:
 
 ```
+recognitionService.FaceCollection.DeleteAllAsync(request);
 ```
 
-| Argument  | Type   | Required | Notes                                                                                                                                |
-| --------- | ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| subject   | string | optional | is the name you assign to the image you save. If this parameter is absent, all faces in Face Collection will be removed |
+| Argument| Type    				| Required | Notes                                                                                                                                          |
+| ------- | ----------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	DeleteAllExamplesRequest| required | 
 
 Response:
-
 ```
-
+{
+    "deleted": <count>
+}
 ```
-
 | Element  | Type    | Description              |
 | -------- | ------- | ------------------------ |
+| deleted  | integer | Number of deleted faces  |
 
 
 #### Delete an Example of the Subject by ID
@@ -287,20 +414,24 @@ Response:
 To delete an image by ID:
 
 ```
-
+await recognitionService.FaceCollection.DeleteAsync(request);
 ```
-| Argument  | Type   | Required | Notes                                                        |
-| --------- | ------ | -------- | ------------------------------------------------------------ 
+| Argument| Type    			  | Required | Notes                                                                                                                                          |
+| ------- | --------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	DeleteImageByIdRequest| required | 
 
 
 Response:
-
 ```
-
+{
+  "image_id": <image_id>,
+  "subject": <subject>
+}
 ```
-
 | Element  | Type   | Description                                                       |
 | -------- | ------ | ----------------------------------------------------------------- |
+| image_id | UUID   | UUID of the removed face                                          |
+| subject  | string | <subject> of the person, whose picture was saved for this api key |
 
 
 #### Verify Faces from a Given Image
@@ -308,29 +439,87 @@ Response:
 *[Example](examples/)*
 
 ```
+await recognitionService.RecognizeFaceFromImage.VerifyAsync(request);
 ```
 
 Compares similarities of given image with image from your face collection.
 
-
-| Argument           | Type    | Required | Notes                                                                                                                                                 |
-| ------------------ | ------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-
+| Argument| Type    			       | Required | Notes                                                                                                                                          |
+| ------- | -------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	VerifyFacesFromImageRequest| required | 
 
 Response:
-
-```
+```json
+{
+  "result" : [ {
+    "age" : {
+      "probability": 0.9308982491493225,
+      "high": 32,
+      "low": 25
+    },
+    "gender" : {
+      "probability": 0.9898611307144165,
+      "value": "female"
+    },
+    "mask" : {
+      "probability": 0.9999470710754395,
+      "value": "without_mask"
+    },
+    "embedding" : [ 9.424854069948196E-4, "...", -0.011415496468544006 ],
+    "box" : {
+      "probability" : 1.0,
+      "x_max" : 1420,
+      "y_max" : 1368,
+      "x_min" : 548,
+      "y_min" : 295
+    },
+    "landmarks" : [ [ 814, 713 ], [ 1104, 829 ], [ 832, 937 ], [ 704, 1030 ], [ 1017, 1133 ] ],
+    "subjects" : [ {
+      "similarity" : 0.97858,
+      "subject" : "subject1"
+    } ],
+    "execution_time" : {
+      "age" : 28.0,
+      "gender" : 26.0,
+      "detector" : 117.0,
+      "calculator" : 45.0,
+      "mask": 36.0
+    }
+  } ],
+  "plugins_versions" : {
+    "age" : "agegender.AgeDetector",
+    "gender" : "agegender.GenderDetector",
+    "detector" : "facenet.FaceDetector",
+    "calculator" : "facenet.Calculator",
+    "mask": "facemask.MaskDetector"
+  }
+}
 ```
 
 | Element                        | Type    | Description                                                  |
 | ------------------------------ | ------- | ------------------------------------------------------------ |
-                   |
-
+| age                            | object  | detected age range. Return only if [age plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled         |
+| gender                         | object  | detected gender. Return only if [gender plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled         |
+| mask                           | object  | detected mask. Return only if [face mask plugin](https://github.com/exadel-inc/CompreFace/blob/master/docs/Face-services-and-plugins.md) is enabled.          |
+| embedding                      | array   | face embeddings. Return only if [calculator plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled      |
+| box                            | object  | list of parameters of the bounding box for this face         |
+| probability                    | float   | probability that a found face is actually a face             |
+| x_max, y_max, x_min, y_min     | integer | coordinates of the frame containing the face                 |
+| landmarks                      | array   | list of the coordinates of the frame containing the face-landmarks. Return only if [landmarks plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled      |
+| similarity                     | float   | similarity that on that image predicted person               |
+| execution_time                 | object  | execution time of all plugins                       |
+| plugins_versions               | object  | contains information about plugin versions                       |
+			
+			
 ### Get Subjects
 
 ```
+recognitionService.Subject
 ```
 
+Returns subjects object
+Subjects object allows working with subjects directly (not via subject examples).
+More information about subjects [here](https://github.com/exadel-inc/CompreFace/blob/master/docs/Rest-API-description.md#managing-subjects)
 
 
 **Methods:**
@@ -341,19 +530,23 @@ Response:
 
 Create a new subject in Face Collection.
 ```
+await recognitionService.Subject.AddAsync(request);
 ```
 
-| Argument           | Type   | Required | Notes                                                                   |
-| ------------------ | ------ | -------- | ------------------------------------------------------------------------|
-
+| Argument| Type    		 | Required | Notes                                                                                                                                          |
+| ------- | ---------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	AddSubjectRequest| required | 
 
 Response:
-
-```
+```json
+{
+  "subject": "subject1"
+}
 ```
 
 | Element  | Type   | Description                |
 | -------- | ------ | -------------------------- |
+| subject  | string | is the name of the subject |
 
 
 #### List Subjects
@@ -362,16 +555,24 @@ Response:
 
 Returns all subject related to Face Collection.
 ```
+await recognitionService.Subject.ListAsync();
 ```
 
 Response:
 
-```
+```json
+{
+  "subjects": [
+    "<subject_name1>",
+    "<subject_name2>"
+  ]
+}
 ```
 
 | Element  | Type   | Description                |
 | -------- | ------ | -------------------------- |
 | subjects | array  | the list of subjects in Face Collection |
+
 
 #### Rename a Subject
 
@@ -380,63 +581,70 @@ Response:
 Rename existing subject. If a new subject name already exists, subjects are merged - all faces from the old subject name are reassigned to the subject with the new name, old subject removed.
 
 ```
+await recognitionService.Subject.RenameAsync(request);
 ```
 
-| Argument            | Type   | Required | Notes                                                                   |
-| ------------------  | ------ | -------- | ------------------------------------------------------------------------|
-              |
+| Argument| Type    		    | Required | Notes                                                                                                                                          |
+| ------- | ------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	RenameSubjectRequest| required | 
 
 Response:
 
 ```json
-
+{
+  "updated": "true|false"
+}
 ```
 
 | Element  | Type    | Description                |
 | -------- | ------  | -------------------------- |
 | updated  | boolean | failed or success          |
 
+
 #### Delete a Subject
 
 *[Example](examples/delete_subject_by_name.py)*
 
 Delete existing subject and all saved faces.
-```python
-
+```
+await recognitionService.Subject.DeleteAsync(request);
 ```
 
-| Argument           | Type   | Required | Notes                                                                   |
-| ------------------ | ------ | -------- | ------------------------------------------------------------------------|
-| subject            | string | required | is the name of the subject.                                             |
+| Argument| Type    		    | Required | Notes                                                                                                                                          |
+| ------- | ------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	DeleteSubjectRequest| required |                                            |
 
 Response:
-
 ```json
-
+{
+  "subject": "subject1"
+}
 ```
 
 | Element  | Type   | Description                |
 | -------- | ------ | -------------------------- |
 | subject  | string | is the name of the subject |
 
+
 #### Delete All Subjects
 
 *[Example](examples/delete_all_subjects.py)*
 
 Delete all existing subjects and all saved faces.
-```python
-
+```
+await recognitionService.Subject.DeleteAllAsync();
 ```
 
 Response:
-
 ```json
-
+{
+  "deleted": "<count>"
+}
 ```
 
 | Element  | Type    | Description                |
-| -------- | ------  | -------------------------- |
-
+| -------- | ------- | -------------------------- |
+| deleted  | integer | number of deleted subjects |
 
 
 ## Face Detection Service
@@ -449,26 +657,73 @@ Face detection service is used for detecting faces in the image.
 
 *[Example](examples/detect_face_from_image.py)*
 
-```python
-
+```
+await faceDetectionService.DetectAsync(request);
 ```
 
 Finds all faces on the image.
 
-| Argument          | Type    | Required | Notes                                                                                                                                          |
-| ----------------- | ------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| image_path        | image   | required | image where to detect faces. Image can pass from url, local path or bytes. Max size is 5Mb                            |
-
+| Argument| Type    		              | Required | Notes                                                                                                                                          |
+| ------- | ----------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	FaceDetectionRequestByFilePath| required | 
 
 Response:
 
 ```json
-
+{
+  "result" : [ {
+    "age" : {
+      "probability": 0.9308982491493225,
+      "high": 32,
+      "low": 25
+    },
+    "gender" : {
+      "probability": 0.9898611307144165,
+      "value": "female"
+    },
+    "mask" : {
+      "probability": 0.9999470710754395,
+      "value": "without_mask"
+    },
+    "embedding" : [ -0.03027934394776821, "...", -0.05117142200469971 ],
+    "box" : {
+      "probability" : 0.9987509250640869,
+      "x_max" : 376,
+      "y_max" : 479,
+      "x_min" : 68,
+      "y_min" : 77
+    },
+    "landmarks" : [ [ 156, 245 ], [ 277, 253 ], [ 202, 311 ], [ 148, 358 ], [ 274, 365 ] ],
+    "execution_time" : {
+      "age" : 30.0,
+      "gender" : 26.0,
+      "detector" : 130.0,
+      "calculator" : 49.0,
+      "mask": 36.0
+    }
+  } ],
+  "plugins_versions" : {
+    "age" : "agegender.AgeDetector",
+    "gender" : "agegender.GenderDetector",
+    "detector" : "facenet.FaceDetector",
+    "calculator" : "facenet.Calculator",
+    "mask": "facemask.MaskDetector"
+  }
+}
 ```
 
 | Element                        | Type    | Description                                                  |
 | ------------------------------ | ------- | ------------------------------------------------------------ |
-
+| age                            | object  | detected age range. Return only if [age plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled         |
+| gender                         | object  | detected gender. Return only if [gender plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled         |
+| mask                           | object  | detected mask. Return only if [face mask plugin](https://github.com/exadel-inc/CompreFace/blob/master/docs/Face-services-and-plugins.md) is enabled.          |
+| embedding                      | array   | face embeddings. Return only if [calculator plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled      |
+| box                            | object  | list of parameters of the bounding box for this face (on processedImage) |
+| probability                    | float   | probability that a found face is actually a face (on processedImage)     |
+| x_max, y_max, x_min, y_min     | integer | coordinates of the frame containing the face (on processedImage)         |
+| landmarks                      | array   | list of the coordinates of the frame containing the face-landmarks. Return only if [landmarks plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled      |
+| execution_time                 | object  | execution time of all plugins                       |
+| plugins_versions               | object  | contains information about plugin versions                       |
 
 
 ## Face Verification Service
@@ -482,24 +737,110 @@ A source image should contain only one face which will be compared to all faces 
 
 ### Verify
 
-```python
-
+```
+await faceVerificationService.VerifyAsync(request);
 ```
 
 Compares two images provided in arguments. Source image should contain only one face, it will be compared to all faces in the target image.
 
-| Argument            | Type    | Required | Notes                                                                                                                                                 |
-| ------------------  | ------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-
+| Argument| Type    		                 | Required | Notes                                                                                                                                          |
+| ------- | -------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	FaceVerificationRequestByFilePath| required | 
 
 Response:
 
 ```json
-
+{
+  "result" : [{
+    "source_image_face" : {
+      "age" : {
+        "probability": 0.9308982491493225,
+        "high": 32,
+        "low": 25
+      },
+      "gender" : {
+        "probability": 0.9898611307144165,
+        "value": "female"
+      },
+      "mask" : {
+        "probability": 0.9999470710754395,
+        "value": "without_mask"
+      },
+      "embedding" : [ -0.0010271212086081505, "...", -0.008746841922402382 ],
+      "box" : {
+        "probability" : 0.9997453093528748,
+        "x_max" : 205,
+        "y_max" : 167,
+        "x_min" : 48,
+        "y_min" : 0
+      },
+      "landmarks" : [ [ 92, 44 ], [ 130, 68 ], [ 71, 76 ], [ 60, 104 ], [ 95, 125 ] ],
+      "execution_time" : {
+        "age" : 85.0,
+        "gender" : 51.0,
+        "detector" : 67.0,
+        "calculator" : 116.0,
+        "mask": 36.0
+      }
+    },
+    "face_matches": [
+      {
+        "age" : {
+          "probability": 0.9308982491493225,
+          "high": 32,
+          "low": 25
+        },
+        "gender" : {
+          "probability": 0.9898611307144165,
+          "value": "female"
+        },
+        "mask" : {
+          "probability": 0.9999470710754395,
+          "value": "without_mask"
+        },
+        "embedding" : [ -0.049007344990968704, "...", -0.01753818802535534 ],
+        "box" : {
+          "probability" : 0.99975,
+          "x_max" : 308,
+          "y_max" : 180,
+          "x_min" : 235,
+          "y_min" : 98
+        },
+        "landmarks" : [ [ 260, 129 ], [ 273, 127 ], [ 258, 136 ], [ 257, 150 ], [ 269, 148 ] ],
+        "similarity" : 0.97858,
+        "execution_time" : {
+          "age" : 59.0,
+          "gender" : 30.0,
+          "detector" : 177.0,
+          "calculator" : 70.0,
+          "mask": 36.0
+        }
+      }],
+    "plugins_versions" : {
+      "age" : "agegender.AgeDetector",
+      "gender" : "agegender.GenderDetector",
+      "detector" : "facenet.FaceDetector",
+      "calculator" : "facenet.Calculator",
+      "mask": "facemask.MaskDetector"
+    }
+  }]
+}
 ```
-
 | Element                        | Type    | Description                                                  |
 | ------------------------------ | ------- | ------------------------------------------------------------ |
+| source_image_face              | object  | additional info about source image face |
+| face_matches                   | array   | result of face verification |
+| age                            | object  | detected age range. Return only if [age plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled         |
+| gender                         | object  | detected gender. Return only if [gender plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled         |
+| mask                           | object  | detected mask. Return only if [face mask plugin](https://github.com/exadel-inc/CompreFace/blob/master/docs/Face-services-and-plugins.md) is enabled.          |
+| embedding                      | array   | face embeddings. Return only if [calculator plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled      |
+| box                            | object  | list of parameters of the bounding box for this face         |
+| probability                    | float   | probability that a found face is actually a face             |
+| x_max, y_max, x_min, y_min     | integer | coordinates of the frame containing the face                 |
+| landmarks                      | array   | list of the coordinates of the frame containing the face-landmarks. Return only if [landmarks plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled      |
+| similarity                     | float   | similarity between this face and the face on the source image               |
+| execution_time                 | object  | execution time of all plugins                       |
+| plugins_versions               | object  | contains information about plugin versions                       |
 
 
 # Contributing
