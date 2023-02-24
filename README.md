@@ -203,7 +203,7 @@ Inits face verification service object.
 
 | Argument | Type   | Required | Notes                                     |
 | ---------| ------ | -------- | ----------------------------------------- |
-| apiKey   | string | required | Face Verification Api Key in UUID format    |
+| apiKey   | string | required | Face Verification Api Key in UUID format  |
 
 Example:
 
@@ -236,7 +236,39 @@ await recognitionService.RecognizeFaceFromImage.RecognizeAsync(recognizeRequest)
 | ------------------ | --------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | recognizeRequest	 |	RecognizeFaceFromImageRequestByFilePath| required | 
 
-Response:
+`RecognizeFaceFromImageRequestByFilePath` this is data transfer object which is serialized to JSON. 
+
+```
+public class RecognizeFaceFromImageRequestByFilePath : BaseRecognizeFaceFromImageRequest
+{
+    public string FilePath { get; set; }
+}
+```
+`BaseRecognizeFaceFromImageRequest` class:
+
+```
+public class BaseRecognizeFaceFromImageRequest : BaseFaceRequest
+{
+    public int? PredictionCount { get; set; }
+}
+```
+
+`BaseFaceRequest` class:
+
+```
+public class BaseFaceRequest
+{
+    public int? Limit { get; set; }
+
+    public decimal DetProbThreshold { get; set; }
+
+    public IList<string> FacePlugins { get; set; }
+
+    public bool Status { get; set; }
+}
+```
+
+Response from ComreFace API:
 
 ```
 {
@@ -301,7 +333,40 @@ Response:
 | execution_time             | object  | execution time of all plugins                                                                                                                               |
 | plugins_versions           | object  | contains information about plugin versions                                                                                                                  |
 
+This JSON response is deserialized to `RecognizeFaceFromImageResponse` data transfer object(DTO).
+```
+public class RecognizeFaceFromImageResponse
+{
+    public IList<Result> Result { get; set; }
 
+    public PluginVersions PluginsVersions { get; set; }
+}
+
+public class Result : BaseResult
+{
+    public IList<SimilarSubject> Subjects { get; set; }
+} 
+```
+
+BaseResult class:
+```
+public class BaseResult
+{
+    public Age Age { get; set; }
+
+    public Gender Gender { get; set; }
+
+    public Mask Mask { get; set; }
+
+    public Box Box { get; set; }
+
+    public IList<List<int>> Landmarks { get; set; }
+
+    public ExecutionTime ExecutionTime { get; set; }
+
+    public IList<decimal> Embedding { get; set; }
+}
+```
 
 ### Get Face Collection
 
