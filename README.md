@@ -13,7 +13,7 @@ CompreFace NET SDK makes face recognition into your application even easier.
 - [Reference](#reference)
   - [CompreFace Global Object](#compreFace-global-object)
     - [Methods](#methods)
-  - [Options structure](#options-structure)
+  - [Optional properties](#optional-properties)
   - [Face Recognition Service](#face-recognition-service)
     - [Recognize Faces from a Given Image](#recognize-faces-from-a-given-image)
     - [Get Face Collection](#get-face-collection)
@@ -118,6 +118,7 @@ var response = await faceCollection.AddAsync(request);
 
 This code snippet shows how to recognize unknown face.
 _Recognize faces from a given image_
+
 ```
 var recognizeRequest = new RecognizeFaceFromImageRequestByFilePath()
 {
@@ -213,6 +214,55 @@ var apiKey = "00000000-0000-0000-0000-000000000004";
 var faceVerificationService = client.GetCompreFaceService<FaceVerificationService>(api_key);
 ```
 
+## Optional properties
+All optional properties are located in the `BaseFaceRequest` class.
+
+```
+public class BaseFaceRequest
+{
+    public int? Limit { get; set; }
+
+    public decimal DetProbThreshold { get; set; }
+
+    public IList<string> FacePlugins { get; set; }
+
+    public bool Status { get; set; }
+}
+```
+
+`BaseFaceRequest` class is inherited by several DTO classes which are serialized to request format.
+
+Here is description how it looks like in request body.
+| Option              | Type    | Notes                                     |
+| --------------------| ------  | ----------------------------------------- |
+| det_prob_threshold  | float   | minimum required confidence that a recognized face is actually a face. Value is between 0.0 and 1.0 |
+| limit               | integer | maximum number of faces on the image to be recognized. It recognizes the biggest faces first. Value of 0 represents no limit. Default value: 0       |
+| prediction_count    | integer | maximum number of subject predictions per face. It returns the most similar subjects. Default value: 1    |
+| face_plugins        | string  | comma-separated slugs of face plugins. If empty, no additional information is returned. [Learn more](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md)    |
+| status              | boolean | if true includes system information like execution_time and plugin_version fields. Default value is false    |
+
+Example of face recognition with object:
+```
+var recognizeRequest = new RecognizeFaceFromImageRequestByFilePath()
+{
+    FilePath = "Full file path",
+    DetProbThreshold = 0.81m,
+    FacePlugins = new List<string>()
+    {
+        "landmarks",
+        "gender",
+        "age",
+        "detector",
+        "calculator"
+    },
+    Limit = 0,
+    PredictionCount = 1,
+    Status = true
+};
+
+var recognizeResponse = await recognitionService.RecognizeFaceFromImage.RecognizeAsync(recognizeRequest);
+```
+
 ## Face Recognition Service
 
 Face recognition service is used for face identification.
@@ -222,8 +272,6 @@ Also, face recognition service supports verify endpoint to check if this person 
 For more information, see [CompreFace page](https://github.com/exadel-inc/CompreFace).
 
 ### Recognize Faces from a Given Image
-
-*[Example](examples/)*
 
 Recognizes all faces from the image.
 The first argument is the image location, it can be an url, local path or bytes.
@@ -262,7 +310,7 @@ public class BaseFaceRequest
 
     public decimal DetProbThreshold { get; set; }
 
-    public IList<string> FacePlugins { get; set; }
+    public IList<string> FacePlugins { get; set; } = new List<string>()
 
     public bool Status { get; set; }
 }
@@ -334,6 +382,7 @@ Response from ComreFace API:
 | plugins_versions           | object  | contains information about plugin versions                                                                                                                  |
 
 This JSON response is deserialized to `RecognizeFaceFromImageResponse` data transfer object(DTO).
+
 ```
 public class RecognizeFaceFromImageResponse
 {
@@ -348,7 +397,7 @@ public class Result : BaseResult
 } 
 ```
 
-BaseResult class:
+`BaseResult` class:
 ```
 public class BaseResult
 {
@@ -386,8 +435,6 @@ More information about face collection and managing examples [here](https://gith
 
 #### Add an Example of a Subject
 
-*[Example](examples/add_example_of_a_subject.py)*
-
 This creates an example of the subject by saving images. You can add as many images as you want to train the system. Image should
 contain only one face.
 
@@ -399,6 +446,30 @@ await recognitionService.FaceCollection.AddAsync(request);
 | ------- | -------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | request |	AddSubjectExampleRequestByFilePath     | required | 
 
+`AddSubjectExampleRequestByFilePath` this is data transfer object which is serialized to JSON.
+
+```
+public class AddSubjectExampleRequestByFilePath : BaseExampleRequest
+{
+    public string FilePath { get; set; }
+}
+``` 
+
+`BaseExampleRequest` class:
+
+```
+namespace Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs
+{
+    public class BaseExampleRequest
+    {
+        public string Subject { get; set; }
+
+        public decimal? DetProbThreShold { get; set; }
+    }
+}
+```
+
+`DetProbThreShold` is optional property.
 
 Response:
 
@@ -414,6 +485,16 @@ Response:
 | image_id | UUID   | UUID of uploaded image     |
 | subject  | string | Subject of the saved image |
 
+This JSON response is deserialized to `AddSubjectExampleResponse` data transfer object(DTO).
+
+```
+public class AddSubjectExampleResponse
+{
+    public Guid ImageId { get; set; }
+
+    public string Subject { get; set; }
+}
+```
 
 #### List of All Saved Examples of the Subject
 
@@ -427,6 +508,25 @@ await recognitionService.FaceCollection.ListAsync(request);
 | ------- | ---------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | request |	ListAllSubjectExamplesRequest| required | 
 
+`ListAllSubjectExamplesRequest` this is data transfer object which is serialized to JSON.
+
+```
+
+public class ListAllSubjectExamplesRequest
+{
+    public int? Page { get; set; }
+    
+    public int? Size { get; set; }
+    
+    public string Subject { get; set; }
+}
+```
+
+| Argument| Type| Required | Notes                                                                                                                                          |
+| ------- | --- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Page    |	int | optional | Page number of examples to return. Can be used for pagination. Default value is 0. Since 0.6 version.
+| Size    |	int | optional | Faces on page (page size). Can be used for pagination. Default value is 20. Since 0.6 version.
+| Subject |	int | optional | What subject examples endpoint should return. If empty, return examples for all subjects. Since 1.0 version
 
 Response:
 ```
@@ -446,10 +546,36 @@ Response:
 | image_id | UUID   | UUID of the face                                                  |
 | subject  | string | <subject> of the person, whose picture was saved for this api key |
 
+This JSON response is deserialized to `ListAllSubjectExamplesResponse` data transfer object(DTO).
+
+```
+public class ListAllSubjectExamplesResponse
+{
+    public IList<Face> Faces { get; set; }
+
+    public int PageNumber { get; set; }
+
+    public int PageSize { get; set; }
+    
+    public int TotalPages { get; set; }
+    
+    public int TotalElements { get; set; }
+}
+```
+
+`Face` class:
+
+```
+public class Face
+{
+    public Guid ImageId { get; set; }
+    
+    public string Subject{ get; set; }
+}
+```
+
 
 #### Delete All Examples of the Subject by Name
-
-*[Example](examples/)*
 
 To delete all image examples of the <subject>:
 
@@ -461,6 +587,15 @@ recognitionService.FaceCollection.DeleteAllAsync(request);
 | ------- | ----------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | request |	DeleteAllExamplesRequest| required | 
 
+`DeleteAllExamplesRequest` this is data transfer object which is serialized to JSON.
+
+```
+public class DeleteMultipleExampleRequest
+{
+	public IList<Guid> ImageIdList { get; set; }
+}
+```
+
 Response:
 ```
 {
@@ -471,10 +606,17 @@ Response:
 | -------- | ------- | ------------------------ |
 | deleted  | integer | Number of deleted faces  |
 
+This JSON response is deserialized to `DeleteMultipleExamplesResponse` data transfer object(DTO).
+
+```
+public class DeleteMultipleExamplesResponse
+{
+	public IList<Face> Faces { get; set; }
+}
+```
+
 
 #### Delete an Example of the Subject by ID
-
-*[Example](examples/delete_example_by_id.py)*
 
 To delete an image by ID:
 
@@ -485,6 +627,14 @@ await recognitionService.FaceCollection.DeleteAsync(request);
 | ------- | --------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | request |	DeleteImageByIdRequest| required | 
 
+`DeleteImageByIdRequest` this is data transfer object which is serialized to JSON.
+
+```
+public class DeleteImageByIdRequest
+{
+	public Guid ImageId { get; set; }
+}
+```
 
 Response:
 ```
@@ -493,15 +643,25 @@ Response:
   "subject": <subject>
 }
 ```
+
 | Element  | Type   | Description                                                       |
 | -------- | ------ | ----------------------------------------------------------------- |
 | image_id | UUID   | UUID of the removed face                                          |
 | subject  | string | <subject> of the person, whose picture was saved for this api key |
 
+This JSON response is deserialized to `DeleteImageByIdResponse` data transfer object(DTO).
+
+```
+public class DeleteImageByIdResponse
+{
+	public Guid ImageId { get; set; }
+
+	public string Subject { get; set; }
+}
+```
+
 
 #### Verify Faces from a Given Image
-
-*[Example](examples/)*
 
 ```
 await recognitionService.RecognizeFaceFromImage.VerifyAsync(request);
@@ -512,6 +672,39 @@ Compares similarities of given image with image from your face collection.
 | Argument| Type    			       | Required | Notes                                                                                                                                          |
 | ------- | -------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | request |	VerifyFacesFromImageRequest| required | 
+
+`VerifyFacesFromImageRequest` this is data transfer object which is serialized to JSON.
+
+```
+public class VerifyFacesFromImageRequest : BaseVerifyFacesFromImageRequest
+{
+    public string FilePath { get; set; }
+}
+```
+
+`BaseVerifyFacesFromImageRequest` class:
+
+```
+public class BaseVerifyFacesFromImageRequest : BaseFaceRequest
+{
+    public Guid ImageId { get; set; }
+}
+```
+
+`BaseFaceRequest` class:
+
+```
+public class BaseFaceRequest
+{
+    public int? Limit { get; set; }
+
+    public decimal DetProbThreshold { get; set; }
+
+    public IList<string> FacePlugins { get; set; }
+
+    public bool Status { get; set; }
+}
+```
 
 Response:
 ```json
@@ -574,6 +767,62 @@ Response:
 | similarity                     | float   | similarity that on that image predicted person               |
 | execution_time                 | object  | execution time of all plugins                       |
 | plugins_versions               | object  | contains information about plugin versions                       |
+
+This JSON response is deserialized to `VerifyFacesFromImageResponse` data transfer object(DTO).
+
+```
+public class VerifyFacesFromImageResponse
+{
+    public IList<Result> Result { get; set; }
+
+    public PluginVersions PluginsVersions { get; set; }
+}
+
+public class Result : BaseResult
+{
+    public string Subject { get; set; }
+    
+    public decimal Similarity { get; set; }
+}
+```
+
+`BaseResult` class:
+
+```
+public class BaseResult
+{
+    public Age Age { get; set; }
+
+    public Gender Gender { get; set; }
+
+    public Mask Mask { get; set; }
+
+    public Box Box { get; set; }
+
+    public IList<List<int>> Landmarks { get; set; }
+
+    public ExecutionTime ExecutionTime { get; set; }
+
+    public IList<decimal> Embedding { get; set; }
+}
+```
+
+`ExecutionTime` class:
+
+```
+public class ExecutionTime
+{
+    public decimal Age { get; set; }
+
+    public decimal Gender { get; set; }
+
+    public decimal Detector { get; set; }
+
+    public decimal Calculator { get; set; }
+
+    public decimal Mask { get; set; }
+}
+```
 			
 			
 ### Get Subjects
@@ -591,8 +840,6 @@ More information about subjects [here](https://github.com/exadel-inc/CompreFace/
 
 #### Add a Subject
 
-*[Example](examples/)*
-
 Create a new subject in Face Collection.
 ```
 await recognitionService.Subject.AddAsync(request);
@@ -601,6 +848,15 @@ await recognitionService.Subject.AddAsync(request);
 | Argument| Type    		 | Required | Notes                                                                                                                                          |
 | ------- | ---------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | request |	AddSubjectRequest| required | 
+
+`AddSubjectRequest` this is data transfer object which is serialized to JSON.
+
+```
+public class AddSubjectRequest
+{
+    public string Subject { get; set; }
+}
+```
 
 Response:
 ```json
@@ -613,10 +869,17 @@ Response:
 | -------- | ------ | -------------------------- |
 | subject  | string | is the name of the subject |
 
+This JSON response is deserialized to `AddSubjectResponse` data transfer object(DTO).
+
+```
+public class AddSubjectResponse
+{
+    public string Subject { get; set; }
+}
+```
+
 
 #### List Subjects
-
-*[Example](examples/)*
 
 Returns all subject related to Face Collection.
 ```
@@ -638,10 +901,16 @@ Response:
 | -------- | ------ | -------------------------- |
 | subjects | array  | the list of subjects in Face Collection |
 
+This JSON response is deserialized to `GetAllSubjectResponse` data transfer object(DTO).
+
+```
+public class GetAllSubjectResponse
+{
+    public IList<string> Subjects { get; set; }
+}
+```
 
 #### Rename a Subject
-
-*[Example](examples/update_existing_subject.py)*
 
 Rename existing subject. If a new subject name already exists, subjects are merged - all faces from the old subject name are reassigned to the subject with the new name, old subject removed.
 
@@ -652,6 +921,17 @@ await recognitionService.Subject.RenameAsync(request);
 | Argument| Type    		    | Required | Notes                                                                                                                                          |
 | ------- | ------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | request |	RenameSubjectRequest| required | 
+
+`RenameSubjectRequest` this is data transfer object which is serialized to JSON.
+
+```
+public class RenameSubjectRequest
+{
+    public string CurrentSubject { get; set; }
+
+    public string Subject { get; set; }
+}
+```
 
 Response:
 
@@ -665,6 +945,15 @@ Response:
 | -------- | ------  | -------------------------- |
 | updated  | boolean | failed or success          |
 
+This JSON response is deserialized to `RenameSubjectResponse` data transfer object(DTO).
+
+```
+public class RenameSubjectResponse
+{
+    public bool Updated { get; set; }
+}
+```
+
 
 #### Delete a Subject
 
@@ -677,7 +966,18 @@ await recognitionService.Subject.DeleteAsync(request);
 
 | Argument| Type    		    | Required | Notes                                                                                                                                          |
 | ------- | ------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| request |	DeleteSubjectRequest| required |                                            |
+| request |	DeleteSubjectRequest| required |       
+
+`DeleteSubjectRequest` this is data transfer object which is serialized to JSON.
+
+```
+public class RenameSubjectRequest
+{
+    public string CurrentSubject { get; set; }
+
+    public string Subject { get; set; }
+}
+```                                     
 
 Response:
 ```json
@@ -690,10 +990,17 @@ Response:
 | -------- | ------ | -------------------------- |
 | subject  | string | is the name of the subject |
 
+This JSON response is deserialized to `DeleteSubjectResponse` data transfer object(DTO).
+
+```
+public class DeleteSubjectResponse
+{
+    public string Subject { get; set; }
+}
+```
+
 
 #### Delete All Subjects
-
-*[Example](examples/delete_all_subjects.py)*
 
 Delete all existing subjects and all saved faces.
 ```
@@ -711,6 +1018,15 @@ Response:
 | -------- | ------- | -------------------------- |
 | deleted  | integer | number of deleted subjects |
 
+This JSON response is deserialized to `DeleteAllSubjectsResponse` data transfer object(DTO).
+
+```
+public class DeleteAllSubjectsResponse
+{
+    public int Deleted { get; set; }
+}
+```
+
 
 ## Face Detection Service
 
@@ -719,8 +1035,6 @@ Face detection service is used for detecting faces in the image.
 **Methods:**
 
 ### Detect
-
-*[Example](examples/detect_face_from_image.py)*
 
 ```
 await faceDetectionService.DetectAsync(request);
@@ -731,6 +1045,30 @@ Finds all faces on the image.
 | Argument| Type    		              | Required | Notes                                                                                                                                          |
 | ------- | ----------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | request |	FaceDetectionRequestByFilePath| required | 
+
+`FaceDetectionRequestByFilePath` this is data transfer object which is serialized to JSON.
+
+```
+public class FaceDetectionRequestByFilePath : BaseFaceRequest
+{
+	public string FilePath { get; set; }
+}
+```
+
+`BaseFaceRequest` class:
+
+```
+public class BaseFaceRequest
+{
+    public int? Limit { get; set; }
+
+    public decimal DetProbThreshold { get; set; }
+
+    public IList<string> FacePlugins { get; set; }
+
+    public bool Status { get; set; }
+}
+```
 
 Response:
 
@@ -790,10 +1128,41 @@ Response:
 | execution_time                 | object  | execution time of all plugins                       |
 | plugins_versions               | object  | contains information about plugin versions                       |
 
+This JSON response is deserialized to `FaceDetectionResponse` data transfer object(DTO).
+
+```
+public class FaceDetectionResponse
+{
+	public IList<BaseResult> Result { get; set; }
+
+	public PluginVersions PluginsVersions { get; set; }
+}
+```
+
+`BaseResult` class:
+
+```
+public class BaseResult
+{
+    public Age Age { get; set; }
+
+    public Gender Gender { get; set; }
+
+    public Mask Mask { get; set; }
+
+    public Box Box { get; set; }
+
+    public IList<List<int>> Landmarks { get; set; }
+
+    public ExecutionTime ExecutionTime { get; set; }
+
+    public IList<decimal> Embedding { get; set; }
+}
+```
+
 
 ## Face Verification Service
 
-*[Example](examples/verify_face_from_image.py)*
 
 Face verification service is used for comparing two images.
 A source image should contain only one face which will be compared to all faces on the target image.
@@ -811,6 +1180,32 @@ Compares two images provided in arguments. Source image should contain only one 
 | Argument| Type    		                 | Required | Notes                                                                                                                                          |
 | ------- | -------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | request |	FaceVerificationRequestByFilePath| required | 
+
+`FaceVerificationRequestByFilePath` this is data transfer object which is serialized to JSON.
+
+```
+public class FaceVerificationRequestByFilePath : BaseFaceRequest
+{
+    public string SourceImageFilePath { get; set; }
+
+    public string TargetImageFilePath { get; set; }
+}
+```
+
+`BaseFaceRequest` class:
+
+```
+public class BaseFaceRequest
+{
+    public int? Limit { get; set; }
+
+    public decimal DetProbThreshold { get; set; }
+
+    public IList<string> FacePlugins { get; set; }
+
+    public bool Status { get; set; }
+}
+```
 
 Response:
 
@@ -906,6 +1301,53 @@ Response:
 | similarity                     | float   | similarity between this face and the face on the source image               |
 | execution_time                 | object  | execution time of all plugins                       |
 | plugins_versions               | object  | contains information about plugin versions                       |
+
+This JSON response is deserialized to `FaceVerificationResponse` data transfer object(DTO).
+
+```
+public class FaceVerificationResponse 
+{
+    public IList<Result> Result { get; set; }
+}
+
+public class Result
+{
+    public SourceImageFace SourceImageFace { get; set; }
+    
+    public IList<FaceMatches> FaceMatches { get; set; }
+    
+    public PluginVersions PluginsVersions { get; set; }
+}
+
+public class SourceImageFace : BaseResult
+{ }
+
+public class FaceMatches : BaseResult
+{
+    public decimal Similarity { get; set; }
+}
+```
+
+`BaseResult` class:
+
+```
+public class BaseResult
+{
+    public Age Age { get; set; }
+
+    public Gender Gender { get; set; }
+
+    public Mask Mask { get; set; }
+
+    public Box Box { get; set; }
+
+    public IList<List<int>> Landmarks { get; set; }
+
+    public ExecutionTime ExecutionTime { get; set; }
+
+    public IList<decimal> Embedding { get; set; }
+}
+```
 
 
 # Contributing
