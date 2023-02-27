@@ -12,7 +12,7 @@ CompreFace NET SDK makes face recognition into your application even easier.
   - [Webcam demo](#webcam-demo)
 - [Reference](#reference)
   - [CompreFace Global Object](#compreFace-global-object)
-    - [Methods](#methods)
+    - [Services](#Services)
   - [Optional properties](#optional-properties)
   - [Face Recognition Service](#face-recognition-service)
     - [Recognize Faces from a Given Image](#recognize-faces-from-a-given-image)
@@ -956,8 +956,6 @@ public class RenameSubjectResponse
 
 
 #### Delete a Subject
-
-*[Example](examples/delete_subject_by_name.py)*
 
 Delete existing subject and all saved faces.
 ```
