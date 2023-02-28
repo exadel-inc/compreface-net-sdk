@@ -16,6 +16,7 @@ using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
+using Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.RenameSubject;
@@ -47,7 +48,7 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 
 //FaceDetection
 
-//#region Face Detection Service, by File Path
+#region Face Detection Service, by File Path
 //var faceDetectionRequestByFilePath = new FaceDetectionRequestByFilePath()
 //{
 //    FilePath = "C:\\Users\\ukalenik\\source\\repos\\compreface-net-sdk\\Exadel.Compreface.AcceptenceTests\\Resources\\Images\\pexels-jonathan-yakubu.jpg",
@@ -65,9 +66,9 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 //};
 
 //var faceDetectionByFilePathResponse = await faceDetectionService.DetectAsync(faceDetectionRequestByFilePath);
-//#endregion
+#endregion
 
-//#region Face Detection Service, by File Url
+#region Face Detection Service, by File Url
 //var faceDetectionRequestByFileUrl = new FaceDetectionRequestByFileUrl()
 //{
 //    FileUrl = FILE_URL,
@@ -85,31 +86,31 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 //};
 
 //var faceDetectionByUrlResponse = await faceDetectionService.DetectAsync(faceDetectionRequestByFileUrl);
-//#endregion
+#endregion
 
 #region Face Detection Service, Base64
-var faceDetectionBase64Request = new FaceDetectionBase64Request()
-{
-    File = IMAGE_BASE64_STRING,
-    DetProbThreshold = 0.81m,
-    Limit = 1,
-    Status = false,
-    FacePlugins = new List<string>()
-            {
-                "landmarks",
-                "gender",
-                "age",
-                "detector",
-                "calculator"
-            }
-};
+//var faceDetectionBase64Request = new FaceDetectionBase64Request()
+//{
+//    File = IMAGE_BASE64_STRING,
+//    DetProbThreshold = 0.81m,
+//    Limit = 1,
+//    Status = false,
+//    FacePlugins = new List<string>()
+//            {
+//                "landmarks",
+//                "gender",
+//                "age",
+//                "detector",
+//                "calculator"
+//            }
+//};
 
 //var faceDetectionBase64Response = await faceDetectionService.DetectAsync(faceDetectionBase64Request);
-//#endregion
+#endregion
 
-////FaceVerification
+//FaceVerification
 
-//#region Face Verification Service, by File Path
+#region Face Verification Service, by File Path
 //var faceVerificationRequestByFilePath = new FaceVerificationRequestByFilePath()
 //{
 //    SourceImageFilePath = "C:\\Users\\ukalenik\\source\\repos\\compreface-net-sdk\\Exadel.Compreface.AcceptenceTests\\Resources\\Images\\pexels-jonathan-yakubu.jpg",
@@ -128,9 +129,9 @@ var faceDetectionBase64Request = new FaceDetectionBase64Request()
 //};
 
 //var faceVerificationByFilePathResponse = await faceVerificationService.VerifyAsync(faceVerificationRequestByFilePath);
-//#endregion
+#endregion
 
-//#region Face Verification Service, by File Url
+#region Face Verification Service, by File Url
 //var faceVerificationRequestByFileUrl = new FaceVerificationRequestByFileUrl()
 //{
 //    SourceImageFileUrl = FILE_URL,
@@ -149,9 +150,9 @@ var faceDetectionBase64Request = new FaceDetectionBase64Request()
 //};
 
 //var faceVerificationByUrlResponse = await faceVerificationService.VerifyAsync(faceVerificationRequestByFileUrl);
-//#endregion
+#endregion
 
-//#region Face Verification Service, Base64
+#region Face Verification Service, Base64
 //var faceVerificationWithBase64Request = new FaceVerificationWithBase64Request()
 //{
 //    SourceImageWithBase64 = IMAGE_BASE64_STRING,
@@ -170,20 +171,20 @@ var faceDetectionBase64Request = new FaceDetectionBase64Request()
 //};
 
 //var faceVerificationBase64Response = await faceVerificationService.VerifyAsync(faceVerificationWithBase64Request);
-//#endregion
+#endregion
 
-////Subjects
+//Subjects
 
-//#region Add a Subject
+#region Add a Subject
 //var addSubjectRequest = new AddSubjectRequest()
 //{
 //    Subject = TEST_SUBJECT_NAME
 //};
 
 //var addSubjectResponse = await faceRecognitionService.Subject.AddAsync(addSubjectRequest);
-//#endregion
+#endregion
 
-//#region Rename a Subject
+#region Rename a Subject
 //var renameSubjectRequest = new RenameSubjectRequest()
 //{
 //    CurrentSubject = TEST_SUBJECT_NAME,
@@ -191,28 +192,28 @@ var faceDetectionBase64Request = new FaceDetectionBase64Request()
 //};
 
 //var renameSubjectResponse = await faceRecognitionService.Subject.RenameAsync(renameSubjectRequest);
-//#endregion
+#endregion
 
-//#region List Subjects
+#region List Subjects
 //var subjectList = await faceRecognitionService.Subject.ListAsync();
-//#endregion
+#endregion
 
-//#region Delete a Subject
+#region Delete a Subject
 //var deleteSubjectRequest = new DeleteSubjectRequest()
 //{
 //    ActualSubject = RENAMED_SUBJECT_NAME
 //};
 
 //var deleteSubjectResponse = await faceRecognitionService.Subject.DeleteAsync(deleteSubjectRequest);
-//#endregion
+#endregion
 
-//#region Delete All Subjects
+#region Delete All Subjects
 //var deleteAllSubjectsResponse = await faceRecognitionService.Subject.DeleteAllAsync();
-//#endregion
+#endregion
 
-////FaceCollection
+//FaceCollection
 
-//#region Add an Example of a Subject, by File Path
+#region Add an Example of a Subject, by File Path
 //var addSubjectExampleRequestByFilePath = new AddSubjectExampleRequestByFilePath()
 //{
 //    FilePath = "C:\\Users\\ukalenik\\source\\repos\\compreface-net-sdk\\Exadel.Compreface.AcceptenceTests\\Resources\\Images\\pexels-jonathan-yakubu.jpg",
@@ -221,9 +222,9 @@ var faceDetectionBase64Request = new FaceDetectionBase64Request()
 //};
 
 //var addSubjectExampleResponse = await faceRecognitionService.FaceCollection.AddAsync(addSubjectExampleRequestByFilePath);
-//#endregion
+#endregion
 
-//#region Add an Example of a Subject, by URL
+#region Add an Example of a Subject, by URL
 //var addSubjectExampleRequestByFileUrl = new AddSubjectExampleRequestByFileUrl()
 //{
 //    FileUrl = FILE_URL,
@@ -232,9 +233,9 @@ var faceDetectionBase64Request = new FaceDetectionBase64Request()
 //};
 
 //var addSubjectExampleByUrlResponse = await faceRecognitionService.FaceCollection.AddAsync(addSubjectExampleRequestByFileUrl);
-//#endregion
+#endregion
 
-//#region Add an Example of a Subject, Base64
+#region Add an Example of a Subject, Base64
 //var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
 //{
 //    File = IMAGE_BASE64_STRING,
@@ -243,9 +244,9 @@ var faceDetectionBase64Request = new FaceDetectionBase64Request()
 //};
 
 //var addBase64SubjectExampleResponse = await faceRecognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
-//#endregion
+#endregion
 
-//#region List of All Saved Examples of the Subject
+#region List of All Saved Examples of the Subject
 //var listAllSubjectExamplesRequest = new ListAllSubjectExamplesRequest()
 //{
 //    Page = 0,
@@ -254,18 +255,18 @@ var faceDetectionBase64Request = new FaceDetectionBase64Request()
 //};
 
 //var listAllSubjectExamplesResponse = await faceRecognitionService.FaceCollection.ListAsync(listAllSubjectExamplesRequest);
-//#endregion
+#endregion
 
-//#region Delete All Examples of the Subject by Name
+#region Delete All Examples of the Subject by Name
 //var deleteAllExamplesRequest = new DeleteAllExamplesRequest()
 //{
 //    Subject = TEST_SUBJECT_NAME
 //};
 
 //var deleteAllExamplesResponse = await faceRecognitionService.FaceCollection.DeleteAllAsync(deleteAllExamplesRequest);
-//#endregion
+#endregion
 
-//#region Delete Multiple Examples
+#region Delete Multiple Examples
 //var deleteMultipleExampleRequest = new DeleteMultipleExampleRequest()
 //{
 //    ImageIdList = new List<Guid>
@@ -277,38 +278,38 @@ var faceDetectionBase64Request = new FaceDetectionBase64Request()
 //};
 
 //var deleteMultipleExamplesResponse = await faceRecognitionService.FaceCollection.DeleteAsync(deleteMultipleExampleRequest);
-//#endregion
+#endregion
 
-//#region Delete an Example of the Subject by ID
+#region Delete an Example of the Subject by ID
 //var deleteImageByIdRequest = new DeleteImageByIdRequest()
 //{
 //    ImageId = Guid.NewGuid(),
 //};
 
 //var deleteImageByIdResponse = await faceRecognitionService.FaceCollection.DeleteAsync(deleteImageByIdRequest);
-//#endregion
+#endregion
 
-//#region Direct Download an Image example of the Subject by ID
+#region Direct Download an Image example of the Subject by ID
 //var downloadImageByIdDirectlyRequest = new DownloadImageByIdDirectlyRequest()
 //{
 //    ImageId = Guid.NewGuid(),
 //};
 
 //var directDownloadImage = await faceRecognitionService.FaceCollection.DownloadAsync(downloadImageByIdDirectlyRequest);
-//#endregion
+#endregion
 
-//#region Download an Image example of the Subject by ID
+#region Download an Image example of the Subject by ID
 //var downloadImageByIdFromSubjectRequest = new DownloadImageByIdFromSubjectRequest()
 //{
 //    ImageId = Guid.NewGuid(),
 //};
 
 //var image = await faceRecognitionService.FaceCollection.DownloadAsync(downloadImageByIdFromSubjectRequest);
-//#endregion
+#endregion
 
-////RecognizeFaceFromImage
+//RecognizeFaceFromImage
 
-//#region Recognize Faces from a Given Image, by File Path
+#region Recognize Faces from a Given Image, by File Path
 //var recognizeFaceFromImageRequestByFilePath = new RecognizeFaceFromImageRequestByFilePath()
 //{
 //    FilePath = "C:\\Users\\ukalenik\\source\\repos\\compreface-net-sdk\\Exadel.Compreface.AcceptenceTests\\Resources\\Images\\pexels-jonathan-yakubu.jpg",
@@ -327,9 +328,9 @@ var faceDetectionBase64Request = new FaceDetectionBase64Request()
 //};
 
 //var recognizeFaceFromImageByFilePathResponse = await faceRecognitionService.RecognizeFaceFromImage.RecognizeAsync(recognizeFaceFromImageRequestByFilePath);
-//#endregion
+#endregion
 
-//#region Recognize Faces from a Given Image, by URL
+#region Recognize Faces from a Given Image, by URL
 //var RecognizeFaceFromImageRequestByFileUrl = new RecognizeFaceFromImageRequestByFileUrl()
 //{
 //    FileUrl = FILE_URL,
@@ -348,9 +349,9 @@ var faceDetectionBase64Request = new FaceDetectionBase64Request()
 //};
 
 //var recognizeFaceFromImageByUrlResponse = await faceRecognitionService.RecognizeFaceFromImage.RecognizeAsync(RecognizeFaceFromImageRequestByFileUrl);
-//#endregion
+#endregion
 
-//#region Recognize Faces from a Given Image, Base64
+#region Recognize Faces from a Given Image, Base64
 //var recognizeFacesFromImageWithBase64Request = new RecognizeFacesFromImageWithBase64Request()
 //{
 //    FileBase64Value = IMAGE_BASE64_STRING,
@@ -369,9 +370,9 @@ var faceDetectionBase64Request = new FaceDetectionBase64Request()
 //};
 
 //var recognizeFaceFromImageBase64Response = await faceRecognitionService.RecognizeFaceFromImage.RecognizeAsync(recognizeFacesFromImageWithBase64Request);
-//#endregion
+#endregion
 
-//#region Verify Faces from a Given Image, by File Path
+#region Verify Faces from a Given Image, by File Path
 //var verifyFacesFromImageByFilePathRequest = new VerifyFacesFromImageRequest()
 //{
 //    FilePath = "C:\\Users\\ukalenik\\source\\repos\\compreface-net-sdk\\Exadel.Compreface.AcceptenceTests\\Resources\\Images\\pexels-jonathan-yakubu.jpg",
@@ -390,9 +391,30 @@ var faceDetectionBase64Request = new FaceDetectionBase64Request()
 //};
 
 //var verifyFacesFromImageByFilePathResponse = await faceRecognitionService.RecognizeFaceFromImage.VerifyAsync(verifyFacesFromImageByFilePathRequest);
-//#endregion
+#endregion
 
-//#region Verify Faces from a Given Image, Base64
+#region Verify Faces from a Given Image, by File Url
+//var verifyFacesFromImageByFileUrlRequest = new VerifyFacesFromImageByFileUrlRequest()
+//{
+//    FileUrl = FILE_URL,
+//    ImageId = Guid.NewGuid(),
+//    DetProbThreshold = 0.81m,
+//    Limit = 1,
+//    Status = false,
+//    FacePlugins = new List<string>()
+//            {
+//                "landmarks",
+//                "gender",
+//                "age",
+//                "detector",
+//                "calculator"
+//            }
+//};
+
+//var verifyFacesFromImageByFileUrlResponse = await faceRecognitionService.RecognizeFaceFromImage.VerifyAsync(verifyFacesFromImageByFileUrlRequest);
+#endregion
+
+#region Verify Faces from a Given Image, Base64
 //var verifyFacesFromImageWithBase64Request = new VerifyFacesFromImageWithBase64Request()
 //{
 //    FileBase64Value = IMAGE_BASE64_STRING,
@@ -411,4 +433,4 @@ var faceDetectionBase64Request = new FaceDetectionBase64Request()
 //};
 
 //var verifyFacesFromImageBase64Response = await faceRecognitionService.RecognizeFaceFromImage.VerifyAsync(verifyFacesFromImageWithBase64Request);
-//#endregion
+#endregion

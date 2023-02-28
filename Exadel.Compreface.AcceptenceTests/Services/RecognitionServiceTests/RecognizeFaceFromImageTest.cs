@@ -28,7 +28,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         private readonly RecognizeFaceFromImageRequestByFileUrl _requestFromURL;
         private readonly RecognizeFacesFromImageWithBase64Request _request64;
 
-        private readonly VerifyFacesFromImageRequest _verifyRequest;
+        private readonly VerifyFacesFromImageByFilePathRequest _verifyRequest;
         private readonly VerifyFacesFromImageWithBase64Request _verifyRequest64;
 
         public RecognizeFaceFromImageTest()
@@ -94,7 +94,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
                 Status = status,
             };
 
-            _verifyRequest = new VerifyFacesFromImageRequest()
+            _verifyRequest = new VerifyFacesFromImageByFilePathRequest()
             {
                 FilePath = FILE_PATH,
                 DetProbThreshold = detProbThreshold,
@@ -315,7 +315,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         public async Task VerifyAsync_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _recognizeFaceFromImageSubService.VerifyAsync((VerifyFacesFromImageRequest)null!);
+            var func = async () => await _recognizeFaceFromImageSubService.VerifyAsync((VerifyFacesFromImageByFilePathRequest)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -325,7 +325,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         public async Task VerifyAsync_TakesNullRequest_ThrowsServiceException()
         {
             //Arrange
-            var verifyRequest = new VerifyFacesFromImageRequest()
+            var verifyRequest = new VerifyFacesFromImageByFilePathRequest()
             {
                 FilePath = TWO_FACES_IMAGE_PATH,
                 DetProbThreshold = 0.81m,

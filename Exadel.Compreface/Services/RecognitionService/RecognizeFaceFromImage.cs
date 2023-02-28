@@ -5,6 +5,7 @@ using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
+using Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.Helpers;
 using Exadel.Compreface.Services.Interfaces;
 using Flurl;
@@ -62,11 +63,11 @@ namespace Exadel.Compreface.Services.RecognitionService
 
             var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
             {
-                DetProbThreShold = request.DetProbThreshold,
-                File = fileInBase64String,
+               DetProbThreShold = request.DetProbThreshold,
+               File = fileInBase64String,
             };
 
-            var response = await _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+            var response = await _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest );
 
             return response;
         }
@@ -92,7 +93,7 @@ namespace Exadel.Compreface.Services.RecognitionService
             return response;
         }
 
-        public async Task<VerifyFacesFromImageResponse> VerifyAsync(VerifyFacesFromImageRequest request)
+        public async Task<VerifyFacesFromImageResponse> VerifyAsync(VerifyFacesFromImageByFilePathRequest request)
         {
             var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
             var requestUrlWithQueryParameters = requestUrl
@@ -129,6 +130,28 @@ namespace Exadel.Compreface.Services.RecognitionService
                 _apiClient.PostJsonAsync<VerifyFacesFromImageResponse>(
                     requestUrl: requestUrlWithQueryParameters,
                     body: new { file = request.FileBase64Value });
+
+            return response;
+        }
+
+        public async Task<VerifyFacesFromImageResponse> VerifyAsync(VerifyFacesFromImageByFileUrlRequest request)
+        {
+            var requestUrl = $"{_configuration.Domain}:{_configuration.Port}/api/v1/recognition/faces/{request.ImageId}/verify";
+            var requestUrlWithQueryParameters = requestUrl
+                .SetQueryParams(new
+                {
+                    limit = request.Limit,
+                    det_prob_threshold = request.DetProbThreshold,
+                    face_plugins = string.Join(",", request.FacePlugins),
+                    status = request.Status,
+                });
+
+            var fileInBase64String = await ConvertUrlToBase64StringHelpers.ConvertUrlAsync(_apiClient, request.FileUrl);
+
+            var response = await
+                _apiClient.PostJsonAsync<VerifyFacesFromImageResponse>(
+                    requestUrl: requestUrlWithQueryParameters,
+                    body: new { file = fileInBase64String });
 
             return response;
         }
