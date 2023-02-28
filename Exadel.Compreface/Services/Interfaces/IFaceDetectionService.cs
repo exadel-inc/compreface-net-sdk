@@ -10,5 +10,7 @@ namespace Exadel.Compreface.Services.Interfaces
         Task<FaceDetectionResponse> DetectAsync(FaceDetectionRequestByFileUrl faceDetectionRequest);
 
         Task<FaceDetectionResponse> DetectAsync(FaceDetectionBase64Request faceDetectionRequest);
+
+        Task<FaceDetectionResponse> DetectAsync(FaceDetectionRequestByBytes faceDetectionRequest);
     }
 }
