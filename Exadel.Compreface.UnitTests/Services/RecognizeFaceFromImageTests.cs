@@ -368,13 +368,10 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task VerifyFacesFromImageUrlfile_TakesRequestModel_ReturnsProperResponseModel()
+        public async Task VerifyFacesFromImageUrl_TakesRequestModel_ReturnsProperResponseModel()
         {
             // Arrange
-            var request = new VerifyFacesFromImageByFileUrlRequest()
-            {
-                FacePlugins = new List<string>()
-            };
+            var request = new VerifyFacesFromImageByFileUrlRequest();
 
             SetupPostJson<VerifyFacesFromImageResponse, Url>();
 
@@ -389,13 +386,10 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task VerifyFacesFromImageUrlfile_TakesRequestModel_ReturnsNotNull()
+        public async Task VerifyFacesFromImageUrl_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
-            var request = new VerifyFacesFromImageByFileUrlRequest()
-            {
-                FacePlugins = new List<string>()
-            };
+            var request = new VerifyFacesFromImageByFileUrlRequest();
 
             SetupPostJson<VerifyFacesFromImageResponse, Url>();
 
@@ -410,7 +404,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task VerifyFacesFromImageUrlfile_TakesNullRequestModel_ThrowsNullReferenceException()
+        public async Task VerifyFacesFromImageUrl_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
             SetupPostJson<VerifyFacesFromImageResponse, Url>();
@@ -423,7 +417,7 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
-        public async Task VerifyFacesFromImageUrlfile_TakesIncorrectRequestModel_ThrowsArgumentNullException()
+        public async Task VerifyFacesFromImageUrl_TakesIncorrectRequestModel_ThrowsArgumentNullException()
         {
             // Arrange
             var request = new VerifyFacesFromImageByFileUrlRequest();
