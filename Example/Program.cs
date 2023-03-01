@@ -49,23 +49,23 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 //FaceDetection
 
 #region Face Detection Service, by File Path
-//var faceDetectionRequestByFilePath = new FaceDetectionRequestByFilePath()
-//{
-//    FilePath = "C:\\Users\\ukalenik\\source\\repos\\compreface-net-sdk\\Exadel.Compreface.AcceptenceTests\\Resources\\Images\\pexels-jonathan-yakubu.jpg",
-//    DetProbThreshold = 0.81m,
-//    Limit = 1,
-//    Status = false,
-//    FacePlugins = new List<string>()
-//            {
-//                "landmarks",
-//                "gender",
-//                "age",
-//                "detector",
-//                "calculator"
-//            }
-//};
+var faceDetectionRequestByFilePath = new FaceDetectionRequestByFilePath()
+{
+    FilePath = "C:\\Users\\ukalenik\\source\\repos\\compreface-net-sdk\\Exadel.Compreface.AcceptenceTests\\Resources\\Images\\pexels-jonathan-yakubu.jpg",
+    //DetProbThreshold = 0.81m,
+    //Limit = 1,
+    //Status = false,
+    //FacePlugins = new List<string>()
+    //        {
+    //            "landmarks",
+    //            "gender",
+    //            "age",
+    //            "detector",
+    //            "calculator"
+           // }
+};
 
-//var faceDetectionByFilePathResponse = await faceDetectionService.DetectAsync(faceDetectionRequestByFilePath);
+var faceDetectionByFilePathResponse = await faceDetectionService.DetectAsync(faceDetectionRequestByFilePath);
 #endregion
 
 #region Face Detection Service, by File Url
