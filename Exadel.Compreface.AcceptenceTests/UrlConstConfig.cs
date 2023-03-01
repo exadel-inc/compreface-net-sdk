@@ -16,7 +16,7 @@
 
         public const string TEST_SUBJECT_NAME = "Test Subject Name";
 
-        public const string TEST_SUBJECT_RECOGNITION_NAME = "Test Rcognition Subject Name";
+        public const string TEST_SUBJECT_RECOGNITION_NAME = "Test Recognition Subject Name";
 
         public const string RENAMED_SUBJECT_NAME = "Renamed Subject Name";
 

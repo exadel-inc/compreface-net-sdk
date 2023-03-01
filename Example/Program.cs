@@ -26,7 +26,7 @@ using Exadel.Compreface.Services.RecognitionService;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
+using static Exadel.Compreface.AcceptenceTests.ExampleConst;
 
 var host = Host.CreateDefaultBuilder()
     .ConfigureServices((context, collection) =>
@@ -51,7 +51,7 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 #region Face Detection Service, by File Path
 //var faceDetectionRequestByFilePath = new FaceDetectionRequestByFilePath()
 //{
-//    FilePath = "C:\\Users\\ukalenik\\source\\repos\\compreface-net-sdk\\Exadel.Compreface.AcceptenceTests\\Resources\\Images\\pexels-jonathan-yakubu.jpg",
+//    FilePath = "Paste here full file path",
 //    DetProbThreshold = 0.81m,
 //    Limit = 1,
 //    Status = false,
@@ -113,8 +113,8 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 #region Face Verification Service, by File Path
 //var faceVerificationRequestByFilePath = new FaceVerificationRequestByFilePath()
 //{
-//    SourceImageFilePath = "C:\\Users\\ukalenik\\source\\repos\\compreface-net-sdk\\Exadel.Compreface.AcceptenceTests\\Resources\\Images\\pexels-jonathan-yakubu.jpg",
-//    TargetImageFilePath = "C:\\Users\\ukalenik\\source\\repos\\compreface-net-sdk\\Exadel.Compreface.AcceptenceTests\\Resources\\Images\\pexels-jonathan-yakubu.jpg",
+//    SourceImageFilePath = "Paste here full file path",
+//    TargetImageFilePath = "Paste here full file path",
 //    DetProbThreshold = 0.81m,
 //    Limit = 1,
 //    Status = false,
@@ -216,7 +216,7 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 #region Add an Example of a Subject, by File Path
 //var addSubjectExampleRequestByFilePath = new AddSubjectExampleRequestByFilePath()
 //{
-//    FilePath = "C:\\Users\\ukalenik\\source\\repos\\compreface-net-sdk\\Exadel.Compreface.AcceptenceTests\\Resources\\Images\\pexels-jonathan-yakubu.jpg",
+//    FilePath = "Paste here full file path",
 //    DetProbThreShold = 0.81m,
 //    Subject = TEST_SUBJECT_NAME,
 //};
@@ -312,7 +312,7 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 #region Recognize Faces from a Given Image, by File Path
 //var recognizeFaceFromImageRequestByFilePath = new RecognizeFaceFromImageRequestByFilePath()
 //{
-//    FilePath = "C:\\Users\\ukalenik\\source\\repos\\compreface-net-sdk\\Exadel.Compreface.AcceptenceTests\\Resources\\Images\\pexels-jonathan-yakubu.jpg",
+//    FilePath = "Paste here full file path",
 //    PredictionCount = 1,
 //    DetProbThreshold = 0.81m,
 //    Limit = 1,
@@ -375,7 +375,7 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 #region Verify Faces from a Given Image, by File Path
 //var verifyFacesFromImageByFilePathRequest = new VerifyFacesFromImageRequest()
 //{
-//    FilePath = "C:\\Users\\ukalenik\\source\\repos\\compreface-net-sdk\\Exadel.Compreface.AcceptenceTests\\Resources\\Images\\pexels-jonathan-yakubu.jpg",
+//    FilePath = "Paste here full file path",
 //    ImageId = Guid.NewGuid(),
 //    DetProbThreshold = 0.81m,
 //    Limit = 1,
