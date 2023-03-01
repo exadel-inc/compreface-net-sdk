@@ -23,8 +23,8 @@ CompreFace NET SDK makes face recognition into your application even easier.
       - [List of All Saved Examples of the Subject](#list-of-all-saved-examples-of-the-subject)
       - [Delete All Examples of the Subject by Name](#delete-all-examples-of-the-subject-by-name)
       - [Delete an Example of the Subject by ID](#delete-an-example-of-the-subject-by-id)
-	  - [Direct Download an Image example of the Subject by ID](#direct-download-an-image-by-ID)
-	  - [Download an Image example of the Subject by ID](#download-an-image-by-ID)
+	  - [Direct Download an Image example of the Subject by ID](#direct-download-an-image-example-of-the-subject-by-id)
+	  - [Download an Image example of the Subject by ID](#download-an-image-example-of-the-subject-by-id)
     - [Get Subjects](#get-subjects)
       - [Add a Subject](#add-a-subject)
       - [List Subjects](#list-subjects)
@@ -274,7 +274,7 @@ When you upload an unknown face, the service returns the most similar faces to i
 Also, face recognition service supports verify endpoint to check if this person from face collection is the correct one.
 For more information, see [CompreFace page](https://github.com/exadel-inc/CompreFace).
 
-###Face Recognition
+### Face Recognition
 
 **Methods:**
 
