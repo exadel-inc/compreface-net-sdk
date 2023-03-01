@@ -4,6 +4,6 @@ namespace Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample
 {
     public class AddSubjectExampleRequestByBytes : BaseExampleRequest
     {
-        public byte[] Bytes { get; set; }
+        public byte[] ImageInBytes { get; set; }
     }
 }

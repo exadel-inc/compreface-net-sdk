@@ -58,7 +58,7 @@ namespace Exadel.Compreface.Services
         {
             var requestUrlWithQueryParameters = GetRequestUrl(faceDetectionRequest);
             
-            var fileInBase64String = Convert.ToBase64String(faceDetectionRequest.Bytes);
+            var fileInBase64String = Convert.ToBase64String(faceDetectionRequest.ImageInBytes);
             var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
             {
                 DetProbThreShold = faceDetectionRequest.DetProbThreshold,

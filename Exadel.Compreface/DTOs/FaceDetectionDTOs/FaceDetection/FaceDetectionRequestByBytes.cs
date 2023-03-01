@@ -4,6 +4,6 @@ namespace Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection
 {
     public class FaceDetectionRequestByBytes : BaseFaceRequest
     {
-        public byte[] Bytes { get; set; }
+        public byte[] ImageInBytes { get; set; }
     }
 }

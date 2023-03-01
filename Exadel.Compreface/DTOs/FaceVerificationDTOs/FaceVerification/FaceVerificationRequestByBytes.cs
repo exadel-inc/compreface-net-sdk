@@ -4,8 +4,8 @@ namespace Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification
 {
     public class FaceVerificationRequestByBytes : BaseFaceRequest
     {
-        public byte[] SourceImageBytes { get; set; }
+        public byte[] SourceImageInBytes { get; set; }
 
-        public byte[] TargetImageBytes { get; set; }
+        public byte[] TargetImageInBytes { get; set; }
     }
 }

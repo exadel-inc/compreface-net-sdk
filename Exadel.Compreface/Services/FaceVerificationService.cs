@@ -64,8 +64,8 @@ public class FaceVerificationService : IFaceVerificationService
     {
         var requestUrlWithQueryParameters = GetRequestUrl(request);
 
-        var fileSourceImagInBase64String = Convert.ToBase64String(request.SourceImageBytes);
-        var fileTargetImagegInBase64Strin = Convert.ToBase64String(request.TargetImageBytes);
+        var fileSourceImagInBase64String = Convert.ToBase64String(request.SourceImageInBytes);
+        var fileTargetImagegInBase64Strin = Convert.ToBase64String(request.TargetImageInBytes);
 
         var response = await _apiClient.PostJsonAsync<FaceVerificationResponse>(requestUrlWithQueryParameters,
             body: new
