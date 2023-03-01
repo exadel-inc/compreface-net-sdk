@@ -4,11 +4,13 @@ using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
+using Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services.Interfaces;
 using Exadel.Compreface.Services.RecognitionService;
+using System.Runtime.CompilerServices;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
@@ -28,9 +30,9 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         private readonly RecognizeFaceFromImageRequestByFileUrl _requestFromURL;
         private readonly RecognizeFacesFromImageWithBase64Request _request64;
 
-        private readonly VerifyFacesFromImageRequest _verifyRequest;
+        private readonly VerifyFacesFromImageByFilePathRequest _verifyRequest;
         private readonly VerifyFacesFromImageWithBase64Request _verifyRequest64;
-
+        private readonly VerifyFacesFromImageByFileUrlRequest _verifyByUrlRequest;
         public RecognizeFaceFromImageTest()
         {
             var client = new CompreFaceClient(DOMAIN, PORT);
@@ -94,9 +96,17 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
                 Status = status,
             };
 
-            _verifyRequest = new VerifyFacesFromImageRequest()
+            _verifyRequest = new VerifyFacesFromImageByFilePathRequest()
             {
                 FilePath = FILE_PATH,
+                DetProbThreshold = detProbThreshold,
+                FacePlugins = facePlugins,
+                Status = status,
+            };
+
+            _verifyByUrlRequest = new VerifyFacesFromImageByFileUrlRequest()
+            {
+                FileUrl = FILE_URL,
                 DetProbThreshold = detProbThreshold,
                 FacePlugins = facePlugins,
                 Status = status,
@@ -315,7 +325,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         public async Task VerifyAsync_TakesNullRequest_ThrowsException()
         {
             // Act
-            var func = async () => await _recognizeFaceFromImageSubService.VerifyAsync((VerifyFacesFromImageRequest)null!);
+            var func = async () => await _recognizeFaceFromImageSubService.VerifyAsync((VerifyFacesFromImageByFilePathRequest)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);
@@ -325,7 +335,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         public async Task VerifyAsync_TakesNullRequest_ThrowsServiceException()
         {
             //Arrange
-            var verifyRequest = new VerifyFacesFromImageRequest()
+            var verifyRequest = new VerifyFacesFromImageByFilePathRequest()
             {
                 FilePath = TWO_FACES_IMAGE_PATH,
                 DetProbThreshold = 0.81m,
@@ -396,6 +406,74 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
             var verifyRequest = new VerifyFacesFromImageWithBase64Request()
             {
                 FileBase64Value = TWO_FACES_IMAGE_BASE64,
+                DetProbThreshold = 0.81m,
+                FacePlugins = new List<string>()
+            {
+                "landmarks",
+                "gender",
+                "age",
+                "detector",
+                "calculator"
+            },
+                Status = true,
+            };
+
+            // Act
+            var func = async () => await _recognizeFaceFromImageSubService.VerifyAsync(verifyRequest);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
+
+        [Fact]
+        public async Task VerifyFromUrlAsync_TakesRequestModel_ReturnsModelWithProperType()
+        {
+            // Assert
+            await _subjectSubService.AddAsync(_addSubjectRequest);
+            var addExampleResponse = await _faceCollectionSubService.AddAsync(_addSubjectExampleRequest);
+            _verifyByUrlRequest.ImageId = addExampleResponse.ImageId;
+
+            // Act
+            var verifyResponse = await _recognizeFaceFromImageSubService.VerifyAsync(_verifyByUrlRequest);
+
+            // Assert
+            Assert.IsType<VerifyFacesFromImageResponse>(verifyResponse);
+            await _subjectSubService.DeleteAsync(_deleteSubjectRequest);
+        }
+
+        [Fact]
+        public async Task VerifyFromUrlAsync_TakesRequestModel_ReturnsNotNull()
+        {
+            // Assert
+            await _subjectSubService.AddAsync(_addSubjectRequest);
+            var addExampleResponse = await _faceCollectionSubService.AddAsync(_addSubjectExampleRequest);
+            _verifyByUrlRequest.ImageId = addExampleResponse.ImageId;
+
+            // Act
+            var response = await _recognizeFaceFromImageSubService.VerifyAsync(_verifyByUrlRequest);
+
+            // Assert
+            Assert.NotNull(response);
+            await _subjectSubService.DeleteAsync(_deleteSubjectRequest);
+        }
+
+        [Fact]
+        public async Task VerifyFromUrlAsync_TakesNullRequest_ThrowsException()
+        {
+            // Act
+            var func = async () => await _recognizeFaceFromImageSubService.VerifyAsync((VerifyFacesFromImageByFileUrlRequest)null!);
+
+            // Assert
+            await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task VerifyFromUrlAsync_TakesNullRequest_ThrowsServiceException()
+        {
+            //Arrange
+            var verifyRequest = new VerifyFacesFromImageByFileUrlRequest()
+            {
+                FileUrl = WRONG_FILE_URL,
                 DetProbThreshold = 0.81m,
                 FacePlugins = new List<string>()
             {
