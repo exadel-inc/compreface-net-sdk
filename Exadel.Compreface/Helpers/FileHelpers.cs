@@ -6,7 +6,7 @@ public class FileHelpers
     {
         if (!File.Exists(filePath))
         {
-            throw new FileNotFoundException(message: $"file does not exist in path : {filePath}!!!");
+            throw new FileNotFoundException(message: $"File does not exist in path : {filePath}!");
         }
         
         var fileExtension = Path.GetExtension(filePath);

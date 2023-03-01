@@ -2,7 +2,7 @@
 
 namespace Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 
-public class VerifyFacesFromImageRequest : BaseVerifyFacesFromImageRequest
+public class VerifyFacesFromImageByFilePathRequest : BaseVerifyFacesFromImageRequest
 {
     public string FilePath { get; set; }
 }
