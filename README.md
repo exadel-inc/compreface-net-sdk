@@ -28,6 +28,8 @@ CompreFace NET SDK makes face recognition into your application even easier.
       - [Rename a Subject](#rename-a-subject)
       - [Delete a Subject](#delete-a-subject)
       - [Delete All Subjects](#delete-all-subjects)
+	  - [Direct Download an Image example of the Subject by ID](#direct-download-an-image-by-ID)
+	  - [Download an Image example of the Subject by ID](#download-an-image-by-ID)
     - [Face Detection Service](#face-detection-service)
       - [Detect](#detect)
     - [Face Verification Service](#face-verification-service)
@@ -271,6 +273,8 @@ When you upload an unknown face, the service returns the most similar faces to i
 Also, face recognition service supports verify endpoint to check if this person from face collection is the correct one.
 For more information, see [CompreFace page](https://github.com/exadel-inc/CompreFace).
 
+**Methods:**
+
 ### Recognize Faces from a Given Image
 
 Recognizes all faces from the image.
@@ -301,7 +305,7 @@ public class BaseRecognizeFaceFromImageRequest : BaseFaceRequest
 }
 ```
 
-`BaseFaceRequest` class:
+`BaseFaceRequest` class contains **optional** properties:
 
 ```
 public class BaseFaceRequest
@@ -315,6 +319,13 @@ public class BaseFaceRequest
     public bool Status { get; set; }
 }
 ```
+| Option              | Type    | Notes                                     |
+| --------------------| ------  | ----------------------------------------- |
+| det_prob_threshold  | float   | minimum required confidence that a recognized face is actually a face. Value is between 0.0 and 1.0 |
+| limit               | integer | maximum number of faces on the image to be recognized. It recognizes the biggest faces first. Value of 0 represents no limit. Default value: 0       |
+| prediction_count    | integer | maximum number of subject predictions per face. It returns the most similar subjects. Default value: 1    |
+| face_plugins        | string  | comma-separated slugs of face plugins. If empty, no additional information is returned. [Learn more](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md)    |
+| status              | boolean | if true includes system information like execution_time and plugin_version fields. Default value is false    |
 
 Response from ComreFace API:
 
@@ -417,6 +428,176 @@ public class BaseResult
 }
 ```
 
+#### Verify Faces from a Given Image
+
+```
+await recognitionService.RecognizeFaceFromImage.VerifyAsync(request);
+```
+
+Compares similarities of given image with image from your face collection.
+
+| Argument| Type    			       | Required | Notes                                                                                                                                          |
+| ------- | -------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	VerifyFacesFromImageRequest| required | 
+
+`VerifyFacesFromImageRequest` this is data transfer object which is serialized to JSON.
+
+```
+public class VerifyFacesFromImageRequest : BaseVerifyFacesFromImageRequest
+{
+    public string FilePath { get; set; }
+}
+```
+
+`BaseVerifyFacesFromImageRequest` class:
+
+```
+public class BaseVerifyFacesFromImageRequest : BaseFaceRequest
+{
+    public Guid ImageId { get; set; }
+}
+```
+
+`BaseFaceRequest` class contains **optional** properties:
+
+```
+public class BaseFaceRequest
+{
+    public int? Limit { get; set; }
+
+    public decimal DetProbThreshold { get; set; }
+
+    public IList<string> FacePlugins { get; set; }
+
+    public bool Status { get; set; }
+}
+```
+| Option              | Type    | Notes                                     |
+| --------------------| ------  | ----------------------------------------- |
+| det_prob_threshold  | float   | minimum required confidence that a recognized face is actually a face. Value is between 0.0 and 1.0 |
+| limit               | integer | maximum number of faces on the image to be recognized. It recognizes the biggest faces first. Value of 0 represents no limit. Default value: 0       |
+| prediction_count    | integer | maximum number of subject predictions per face. It returns the most similar subjects. Default value: 1    |
+| face_plugins        | string  | comma-separated slugs of face plugins. If empty, no additional information is returned. [Learn more](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md)    |
+| status              | boolean | if true includes system information like execution_time and plugin_version fields. Default value is false    |
+
+Response:
+```json
+{
+  "result" : [ {
+    "age" : {
+      "probability": 0.9308982491493225,
+      "high": 32,
+      "low": 25
+    },
+    "gender" : {
+      "probability": 0.9898611307144165,
+      "value": "female"
+    },
+    "mask" : {
+      "probability": 0.9999470710754395,
+      "value": "without_mask"
+    },
+    "embedding" : [ 9.424854069948196E-4, "...", -0.011415496468544006 ],
+    "box" : {
+      "probability" : 1.0,
+      "x_max" : 1420,
+      "y_max" : 1368,
+      "x_min" : 548,
+      "y_min" : 295
+    },
+    "landmarks" : [ [ 814, 713 ], [ 1104, 829 ], [ 832, 937 ], [ 704, 1030 ], [ 1017, 1133 ] ],
+    "subjects" : [ {
+      "similarity" : 0.97858,
+      "subject" : "subject1"
+    } ],
+    "execution_time" : {
+      "age" : 28.0,
+      "gender" : 26.0,
+      "detector" : 117.0,
+      "calculator" : 45.0,
+      "mask": 36.0
+    }
+  } ],
+  "plugins_versions" : {
+    "age" : "agegender.AgeDetector",
+    "gender" : "agegender.GenderDetector",
+    "detector" : "facenet.FaceDetector",
+    "calculator" : "facenet.Calculator",
+    "mask": "facemask.MaskDetector"
+  }
+}
+```
+
+| Element                        | Type    | Description                                                  |
+| ------------------------------ | ------- | ------------------------------------------------------------ |
+| age                            | object  | detected age range. Return only if [age plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled         |
+| gender                         | object  | detected gender. Return only if [gender plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled         |
+| mask                           | object  | detected mask. Return only if [face mask plugin](https://github.com/exadel-inc/CompreFace/blob/master/docs/Face-services-and-plugins.md) is enabled.          |
+| embedding                      | array   | face embeddings. Return only if [calculator plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled      |
+| box                            | object  | list of parameters of the bounding box for this face         |
+| probability                    | float   | probability that a found face is actually a face             |
+| x_max, y_max, x_min, y_min     | integer | coordinates of the frame containing the face                 |
+| landmarks                      | array   | list of the coordinates of the frame containing the face-landmarks. Return only if [landmarks plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled      |
+| similarity                     | float   | similarity that on that image predicted person               |
+| execution_time                 | object  | execution time of all plugins                       |
+| plugins_versions               | object  | contains information about plugin versions                       |
+
+This JSON response is deserialized to `VerifyFacesFromImageResponse` data transfer object(DTO).
+
+```
+public class VerifyFacesFromImageResponse
+{
+    public IList<Result> Result { get; set; }
+
+    public PluginVersions PluginsVersions { get; set; }
+}
+
+public class Result : BaseResult
+{
+    public string Subject { get; set; }
+    
+    public decimal Similarity { get; set; }
+}
+```
+
+`BaseResult` class:
+
+```
+public class BaseResult
+{
+    public Age Age { get; set; }
+
+    public Gender Gender { get; set; }
+
+    public Mask Mask { get; set; }
+
+    public Box Box { get; set; }
+
+    public IList<List<int>> Landmarks { get; set; }
+
+    public ExecutionTime ExecutionTime { get; set; }
+
+    public IList<decimal> Embedding { get; set; }
+}
+```
+
+`ExecutionTime` class:
+
+```
+public class ExecutionTime
+{
+    public decimal Age { get; set; }
+
+    public decimal Gender { get; set; }
+
+    public decimal Detector { get; set; }
+
+    public decimal Calculator { get; set; }
+
+    public decimal Mask { get; set; }
+}
+```
+
 ### Get Face Collection
 
 ```
@@ -468,6 +649,9 @@ namespace Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs
     }
 }
 ```
+| Option              | Type    | Notes                                     |
+| --------------------| ------  | ----------------------------------------- |
+| det_prob_threshold  | float   | minimum required confidence that a recognized face is actually a face. Value is between 0.0 and 1.0 |
 
 `DetProbThreShold` is optional property.
 
@@ -660,171 +844,54 @@ public class DeleteImageByIdResponse
 }
 ```
 
+#### Direct Download an Image example of the Subject by ID
 
-#### Verify Faces from a Given Image
-
-```
-await recognitionService.RecognizeFaceFromImage.VerifyAsync(request);
-```
-
-Compares similarities of given image with image from your face collection.
-
-| Argument| Type    			       | Required | Notes                                                                                                                                          |
-| ------- | -------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| request |	VerifyFacesFromImageRequest| required | 
-
-`VerifyFacesFromImageRequest` this is data transfer object which is serialized to JSON.
+To download an image by ID:
 
 ```
-public class VerifyFacesFromImageRequest : BaseVerifyFacesFromImageRequest
+await recognitionService.FaceCollection.DownloadAsync(downloadImageByIdRequest);
+```
+| Argument| Type    			            | Required | Notes                                                                                                                                          |
+| ------- | ------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	DownloadImageByIdDirectlyRequest| required | 
+
+`DownloadImageByIdDirectlyRequest` this is data transfer object which is serialized to JSON.
+
+```
+public class DownloadImageByIdDirectlyRequest
 {
-    public string FilePath { get; set; }
+	public Guid ImageId { get; set; }
+
+    public Guid RecognitionApiKey { get; set; }
 }
 ```
 
-`BaseVerifyFacesFromImageRequest` class:
+**Response body** is binary image. Empty bytes if image not found.
+
+#### Download an Image example of the Subject by ID
+`since 0.6 version`
+
+To download an image example of the Subject by ID:
 
 ```
-public class BaseVerifyFacesFromImageRequest : BaseFaceRequest
+await recognitionService.FaceCollection.DownloadAsync(downloadImageBySubjectIdRequest);
+```
+| Argument| Type    			               | Required | Notes                                                                                                                                          |
+| ------- | ---------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	DownloadImageByIdFromSubjectRequest| required | 
+
+`DownloadImageByIdFromSubjectRequest` this is data transfer object which is serialized to JSON.
+
+```
+public class DownloadImageByIdFromSubjectRequest
 {
-    public Guid ImageId { get; set; }
+	public Guid ImageId { get; set; }
 }
 ```
 
-`BaseFaceRequest` class:
+**Response body** is binary image. Empty bytes if image not found.
 
-```
-public class BaseFaceRequest
-{
-    public int? Limit { get; set; }
-
-    public decimal DetProbThreshold { get; set; }
-
-    public IList<string> FacePlugins { get; set; }
-
-    public bool Status { get; set; }
-}
-```
-
-Response:
-```json
-{
-  "result" : [ {
-    "age" : {
-      "probability": 0.9308982491493225,
-      "high": 32,
-      "low": 25
-    },
-    "gender" : {
-      "probability": 0.9898611307144165,
-      "value": "female"
-    },
-    "mask" : {
-      "probability": 0.9999470710754395,
-      "value": "without_mask"
-    },
-    "embedding" : [ 9.424854069948196E-4, "...", -0.011415496468544006 ],
-    "box" : {
-      "probability" : 1.0,
-      "x_max" : 1420,
-      "y_max" : 1368,
-      "x_min" : 548,
-      "y_min" : 295
-    },
-    "landmarks" : [ [ 814, 713 ], [ 1104, 829 ], [ 832, 937 ], [ 704, 1030 ], [ 1017, 1133 ] ],
-    "subjects" : [ {
-      "similarity" : 0.97858,
-      "subject" : "subject1"
-    } ],
-    "execution_time" : {
-      "age" : 28.0,
-      "gender" : 26.0,
-      "detector" : 117.0,
-      "calculator" : 45.0,
-      "mask": 36.0
-    }
-  } ],
-  "plugins_versions" : {
-    "age" : "agegender.AgeDetector",
-    "gender" : "agegender.GenderDetector",
-    "detector" : "facenet.FaceDetector",
-    "calculator" : "facenet.Calculator",
-    "mask": "facemask.MaskDetector"
-  }
-}
-```
-
-| Element                        | Type    | Description                                                  |
-| ------------------------------ | ------- | ------------------------------------------------------------ |
-| age                            | object  | detected age range. Return only if [age plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled         |
-| gender                         | object  | detected gender. Return only if [gender plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled         |
-| mask                           | object  | detected mask. Return only if [face mask plugin](https://github.com/exadel-inc/CompreFace/blob/master/docs/Face-services-and-plugins.md) is enabled.          |
-| embedding                      | array   | face embeddings. Return only if [calculator plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled      |
-| box                            | object  | list of parameters of the bounding box for this face         |
-| probability                    | float   | probability that a found face is actually a face             |
-| x_max, y_max, x_min, y_min     | integer | coordinates of the frame containing the face                 |
-| landmarks                      | array   | list of the coordinates of the frame containing the face-landmarks. Return only if [landmarks plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled      |
-| similarity                     | float   | similarity that on that image predicted person               |
-| execution_time                 | object  | execution time of all plugins                       |
-| plugins_versions               | object  | contains information about plugin versions                       |
-
-This JSON response is deserialized to `VerifyFacesFromImageResponse` data transfer object(DTO).
-
-```
-public class VerifyFacesFromImageResponse
-{
-    public IList<Result> Result { get; set; }
-
-    public PluginVersions PluginsVersions { get; set; }
-}
-
-public class Result : BaseResult
-{
-    public string Subject { get; set; }
-    
-    public decimal Similarity { get; set; }
-}
-```
-
-`BaseResult` class:
-
-```
-public class BaseResult
-{
-    public Age Age { get; set; }
-
-    public Gender Gender { get; set; }
-
-    public Mask Mask { get; set; }
-
-    public Box Box { get; set; }
-
-    public IList<List<int>> Landmarks { get; set; }
-
-    public ExecutionTime ExecutionTime { get; set; }
-
-    public IList<decimal> Embedding { get; set; }
-}
-```
-
-`ExecutionTime` class:
-
-```
-public class ExecutionTime
-{
-    public decimal Age { get; set; }
-
-    public decimal Gender { get; set; }
-
-    public decimal Detector { get; set; }
-
-    public decimal Calculator { get; set; }
-
-    public decimal Mask { get; set; }
-}
-```
-			
-			
+		
 ### Get Subjects
 
 ```
@@ -1053,7 +1120,7 @@ public class FaceDetectionRequestByFilePath : BaseFaceRequest
 }
 ```
 
-`BaseFaceRequest` class:
+`BaseFaceRequest` class contains **optional** properties:
 
 ```
 public class BaseFaceRequest
@@ -1067,6 +1134,13 @@ public class BaseFaceRequest
     public bool Status { get; set; }
 }
 ```
+| Option              | Type    | Notes                                     |
+| --------------------| ------  | ----------------------------------------- |
+| det_prob_threshold  | float   | minimum required confidence that a recognized face is actually a face. Value is between 0.0 and 1.0 |
+| limit               | integer | maximum number of faces on the image to be recognized. It recognizes the biggest faces first. Value of 0 represents no limit. Default value: 0       |
+| prediction_count    | integer | maximum number of subject predictions per face. It returns the most similar subjects. Default value: 1    |
+| face_plugins        | string  | comma-separated slugs of face plugins. If empty, no additional information is returned. [Learn more](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md)    |
+| status              | boolean | if true includes system information like execution_time and plugin_version fields. Default value is false    |
 
 Response:
 
@@ -1190,7 +1264,7 @@ public class FaceVerificationRequestByFilePath : BaseFaceRequest
 }
 ```
 
-`BaseFaceRequest` class:
+`BaseFaceRequest` class contains **optional** properties:
 
 ```
 public class BaseFaceRequest
@@ -1204,6 +1278,13 @@ public class BaseFaceRequest
     public bool Status { get; set; }
 }
 ```
+| Option              | Type    | Notes                                     |
+| --------------------| ------  | ----------------------------------------- |
+| det_prob_threshold  | float   | minimum required confidence that a recognized face is actually a face. Value is between 0.0 and 1.0 |
+| limit               | integer | maximum number of faces on the image to be recognized. It recognizes the biggest faces first. Value of 0 represents no limit. Default value: 0       |
+| prediction_count    | integer | maximum number of subject predictions per face. It returns the most similar subjects. Default value: 1    |
+| face_plugins        | string  | comma-separated slugs of face plugins. If empty, no additional information is returned. [Learn more](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md)    |
+| status              | boolean | if true includes system information like execution_time and plugin_version fields. Default value is false    |
 
 Response:
 
