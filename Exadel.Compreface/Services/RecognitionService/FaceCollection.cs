@@ -8,6 +8,7 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteMultipleExamples;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageById;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageBySubjectId;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
 using Exadel.Compreface.DTOs.HelperDTOs;
 using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
 using Exadel.Compreface.DTOs.SubjectExampleDTOs.AddSubjectExample;
@@ -45,7 +46,7 @@ namespace Exadel.Compreface.Services.RecognitionService
         {
             var requestUrlWithQueryParameters = GetRequestUrl(request);
 
-            var fileInBase64String = ConvertUrlToBase64StringHelpers.ConvertUrlAsync(_apiClient, request.FileUrl).Result;
+            var fileInBase64String = await ConvertUrlToBase64StringHelpers.ConvertUrlAsync(_apiClient, request.FileUrl);
 
             var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
             {
@@ -56,6 +57,24 @@ namespace Exadel.Compreface.Services.RecognitionService
 
             var response = await _apiClient.PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
            
+            return response;
+        }
+
+        public async Task<AddSubjectExampleResponse> AddAsync(AddSubjectExampleRequestByBytes request)
+        {
+            var requestUrlWithQueryParameters = GetRequestUrl(request);
+
+            var fileInBase64String = Convert.ToBase64String(request.ImageInBytes);
+
+            var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
+            {
+                DetProbThreShold = request.DetProbThreShold,
+                File = fileInBase64String,
+                Subject = request.Subject,
+            };
+
+            var response = await _apiClient.PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+
             return response;
         }
 

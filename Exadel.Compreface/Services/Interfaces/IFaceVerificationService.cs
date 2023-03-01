@@ -10,6 +10,8 @@ namespace Exadel.Compreface.Services.Interfaces
 
         Task<FaceVerificationResponse> VerifyAsync(FaceVerificationRequestByFileUrl request);
 
+        Task<FaceVerificationResponse> VerifyAsync(FaceVerificationRequestByBytes request);
+
         Task<FaceVerificationResponse> VerifyAsync(FaceVerificationWithBase64Request request);
     }
 }
