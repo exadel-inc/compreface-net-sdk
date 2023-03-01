@@ -70,6 +70,28 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
+        public async Task DetectAsync_TakesRequestModelUsingImageInBytes_ReturnsProperResponseModel()
+        {
+            // Arrange
+            var request = new FaceDetectionRequestByBytes()
+            {
+                FacePlugins = new List<string>(),
+                ImageInBytes = new byte[] {},
+            };
+
+            SetupPostJson<FaceDetectionResponse>();
+
+            // Act
+            var response = await _faceDetectionService.DetectAsync(request);
+
+            // Assert
+            Assert.IsType<FaceDetectionResponse>(response);
+
+            VerifyPostJson<FaceDetectionResponse>();
+            base.ApiClientMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
         public async Task DetectAsync_TakesRequestModel_ReturnsNotNull()
         {
             // Arrange
@@ -114,6 +136,28 @@ namespace Exadel.Compreface.UnitTests.Services
         }
 
         [Fact]
+        public async Task DetectAsync_TakesRequestModelUsingImageInBytes_ReturnsNotNull()
+        {
+            // Arrange
+            var request = new FaceDetectionRequestByBytes()
+            {
+                FacePlugins = new List<string>(),
+                ImageInBytes= new byte[] {}
+            };
+
+            SetupPostJson<FaceDetectionResponse>();
+
+            // Act
+            var response = await _faceDetectionService.DetectAsync(request);
+
+            // Assert
+            Assert.NotNull(response);
+
+            VerifyPostJson<FaceDetectionResponse>();
+            base.ApiClientMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
         public async Task DetectAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         {
             // Arrange
@@ -135,6 +179,20 @@ namespace Exadel.Compreface.UnitTests.Services
 
             // Act
             var func = async () => await _faceDetectionService.DetectAsync((FaceDetectionRequestByFileUrl)null!);
+
+            // Assert
+            await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task DetectAsync_TakesNullRequestModelUsingImageInBytes_ThrowsNullReferenceException()
+        {
+            // Arrange
+            SetupPostJson<FaceDetectionResponse>();
+            SetupGetBytes();
+
+            // Act
+            var func = async () => await _faceDetectionService.DetectAsync((FaceDetectionRequestByBytes)null!);
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(func);

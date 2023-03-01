@@ -13,6 +13,7 @@ using Exadel.Compreface.Services.RecognitionService;
 using Exadel.Compreface.UnitTests.Helpers;
 using Flurl;
 using Exadel.Compreface.DTOs.SubjectExampleDTOs.AddSubjectExample;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
 
 namespace Exadel.Compreface.UnitTests.Services;
 
@@ -50,6 +51,7 @@ public class FaceCollectionTests : SetupAndVerifyTests
         VerifyPostMultipart<AddSubjectExampleResponse>();
         ApiClientMock.VerifyNoOtherCalls();
     }
+
     [Fact]
     public async Task AddAsync_TakesRequestModelUsingUrl_ReturnsProperResponseModel()
     {
@@ -67,6 +69,27 @@ public class FaceCollectionTests : SetupAndVerifyTests
 
         VerifyPostJson<AddSubjectExampleResponse>();
         VerifySetupGetBytes();
+        ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task AddAsync_TakesRequestModelUsingImageInBytes_ReturnsProperResponseModel()
+    {
+        // Arrange
+        var request = new AddSubjectExampleRequestByBytes()
+        { 
+            ImageInBytes= new byte[] {},
+        };
+
+        SetupPostJson<AddSubjectExampleResponse>();
+
+        // Act
+        var response = await _faceCollection.AddAsync(request);
+
+        // Assert
+        Assert.IsType<AddSubjectExampleResponse>(response);
+
+        VerifyPostJson<AddSubjectExampleResponse>();
         ApiClientMock.VerifyNoOtherCalls();
     }
 
@@ -109,6 +132,27 @@ public class FaceCollectionTests : SetupAndVerifyTests
     }
 
     [Fact]
+    public async Task AddAsync_TakesRequestModelUsingImageInBytes_ReturnsNotNull()
+    {
+        // Arrange
+        var request = new AddSubjectExampleRequestByBytes() 
+        { 
+            ImageInBytes= new byte[] {}
+        };
+
+        SetupPostJson<AddSubjectExampleResponse>();
+
+        // Act
+        var response = await _faceCollection.AddAsync(request);
+
+        // Assert
+        Assert.NotNull(response);
+
+        VerifyPostJson<AddSubjectExampleResponse>();
+        ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
     public async Task AddAsync_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
@@ -130,6 +174,19 @@ public class FaceCollectionTests : SetupAndVerifyTests
 
         // Act
         var func = async () => await _faceCollection.AddAsync((AddSubjectExampleRequestByFileUrl)null!);
+
+        // Assert
+        await Assert.ThrowsAsync<NullReferenceException>(func);
+    }
+
+    [Fact]
+    public async Task AddAsync_TakesNullRequestModelUsingImageInBytes_ThrowsNullReferenceException()
+    {
+        // Arrange
+        SetupPostJson<AddSubjectExampleResponse>();
+
+        // Act
+        var func = async () => await _faceCollection.AddAsync((AddSubjectExampleRequestByBytes)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(func);

@@ -72,6 +72,28 @@ public class FaceVerificationTests : SetupAndVerifyTests
     }
 
     [Fact]
+    public async Task VerifyAsync_TakesRequestModelUsingImageInBytes_ReturnsProperResponseModel()
+    {
+        // Arrange
+        var request = new FaceVerificationRequestByBytes()
+        {
+            FacePlugins = new List<string>(),
+            SourceImageInBytes= new byte[] {},
+            TargetImageInBytes= new byte[] {}
+        };
+
+        SetupPostJson<FaceVerificationResponse>();
+
+        // Act
+        var response = await _faceVerificationService.VerifyAsync(request);
+
+        // Assert
+        Assert.IsType<FaceVerificationResponse>(response);
+        VerifyPostJson<FaceVerificationResponse>();
+        ApiClientMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
     public async Task VerifyAsync_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
@@ -79,6 +101,19 @@ public class FaceVerificationTests : SetupAndVerifyTests
 
         // Act
         var responseCall = async () => await _faceVerificationService.VerifyAsync((FaceVerificationRequestByFilePath)null!);
+
+        // Assert
+        await Assert.ThrowsAsync<NullReferenceException>(responseCall);
+    }
+
+    [Fact]
+    public async Task VerifyAsync_TakesNullRequestModelUsingImageInBytes_ThrowsNullReferenceException()
+    {
+        // Arrange
+        SetupPostMultipart<FaceVerificationResponse>();
+
+        // Act
+        var responseCall = async () => await _faceVerificationService.VerifyAsync((FaceVerificationRequestByBytes)null!);
 
         // Assert
         await Assert.ThrowsAsync<NullReferenceException>(responseCall);
