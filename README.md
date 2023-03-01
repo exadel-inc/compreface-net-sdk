@@ -15,8 +15,9 @@ CompreFace NET SDK makes face recognition into your application even easier.
     - [Services](#Services)
   - [Optional properties](#optional-properties)
   - [Face Recognition Service](#face-recognition-service)
-    - [Recognize Faces from a Given Image](#recognize-faces-from-a-given-image)
-	- [Verify Faces from a Given Image](#verify-faces-from-a-given-image)
+	- [Face Recognition](#face-recognition)
+	  - [Recognize Faces from a Given Image](#recognize-faces-from-a-given-image)
+	  - [Verify Faces from a Given Image](#verify-faces-from-a-given-image)
     - [Get Face Collection](#get-face-collection)
       - [Add an Example of a Subject](#add-an-example-of-a-subject)
       - [List of All Saved Examples of the Subject](#list-of-all-saved-examples-of-the-subject)
@@ -273,9 +274,11 @@ When you upload an unknown face, the service returns the most similar faces to i
 Also, face recognition service supports verify endpoint to check if this person from face collection is the correct one.
 For more information, see [CompreFace page](https://github.com/exadel-inc/CompreFace).
 
+###Face Recognition
+
 **Methods:**
 
-### Recognize Faces from a Given Image
+#### Recognize Faces from a Given Image
 
 Recognizes all faces from the image.
 The first argument is the image location, it can be an url, local path or bytes.
