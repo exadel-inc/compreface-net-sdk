@@ -61,7 +61,7 @@ namespace Exadel.Compreface.Services.RecognitionService
         {
             var requestUrlWithQueryParameters = GetRequestUrl(request);
 
-            var fileInBase64String = Convert.ToBase64String(request.Bytes);
+            var fileInBase64String = Convert.ToBase64String(request.ImageInBytes);
 
             var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
             {
@@ -106,7 +106,7 @@ namespace Exadel.Compreface.Services.RecognitionService
             var response = await
                 _apiClient.PostJsonAsync<VerifyFacesFromImageResponse>(
                     requestUrl: requestUrlWithQueryParameters,
-                    body: new { file = request.Bytes });
+                    body: new { file = request.ImageInBytes });
 
             return response;
         }

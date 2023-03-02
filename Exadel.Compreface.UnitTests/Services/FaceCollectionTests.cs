@@ -13,6 +13,7 @@ using Exadel.Compreface.Services.RecognitionService;
 using Exadel.Compreface.UnitTests.Helpers;
 using Flurl;
 using Exadel.Compreface.DTOs.SubjectExampleDTOs.AddSubjectExample;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
 
 namespace Exadel.Compreface.UnitTests.Services;
 
@@ -46,10 +47,12 @@ public class FaceCollectionTests : SetupAndVerifyTests
 
         // Assert
         Assert.IsType<AddSubjectExampleResponse>(response);
+        Assert.NotNull(response);
 
         VerifyPostMultipart<AddSubjectExampleResponse>();
         ApiClientMock.VerifyNoOtherCalls();
     }
+
     [Fact]
     public async Task AddAsync_TakesRequestModelUsingUrl_ReturnsProperResponseModel()
     {
@@ -64,6 +67,7 @@ public class FaceCollectionTests : SetupAndVerifyTests
 
         // Assert
         Assert.IsType<AddSubjectExampleResponse>(response);
+        Assert.NotNull(response);
 
         VerifyPostJson<AddSubjectExampleResponse>();
         VerifySetupGetBytes();
@@ -71,40 +75,24 @@ public class FaceCollectionTests : SetupAndVerifyTests
     }
 
     [Fact]
-    public async Task AddAsync_TakesRequestModel_ReturnsNotNull()
+    public async Task AddAsync_TakesRequestModelUsingImageInBytes_ReturnsProperResponseModel()
     {
         // Arrange
-        var request = new AddSubjectExampleRequestByFilePath();
-
-        SetupPostMultipart<AddSubjectExampleResponse>();
-
-        // Act
-        var response = await _faceCollection.AddAsync(request);
-
-        // Assert
-        Assert.NotNull(response);
-
-        VerifyPostMultipart<AddSubjectExampleResponse>();
-        ApiClientMock.VerifyNoOtherCalls();
-    }
-
-    [Fact]
-    public async Task AddAsync_TakesRequestModelUsingUrl_ReturnsNotNull()
-    {
-        // Arrange
-        var request = new AddSubjectExampleRequestByFileUrl();
+        var request = new AddSubjectExampleRequestByBytes()
+        { 
+            ImageInBytes= new byte[] {},
+        };
 
         SetupPostJson<AddSubjectExampleResponse>();
-        SetupGetBytes();
 
         // Act
         var response = await _faceCollection.AddAsync(request);
 
         // Assert
+        Assert.IsType<AddSubjectExampleResponse>(response);
         Assert.NotNull(response);
 
         VerifyPostJson<AddSubjectExampleResponse>();
-        VerifySetupGetBytes();
         ApiClientMock.VerifyNoOtherCalls();
     }
 
@@ -136,6 +124,19 @@ public class FaceCollectionTests : SetupAndVerifyTests
     }
 
     [Fact]
+    public async Task AddAsync_TakesNullRequestModelUsingImageInBytes_ThrowsNullReferenceException()
+    {
+        // Arrange
+        SetupPostJson<AddSubjectExampleResponse>();
+
+        // Act
+        var func = async () => await _faceCollection.AddAsync((AddSubjectExampleRequestByBytes)null!);
+
+        // Assert
+        await Assert.ThrowsAsync<NullReferenceException>(func);
+    }
+
+    [Fact]
     public async Task AddBase64Async_TakesRequestModel_ReturnsProperResponseModel()
     {
         // Arrange
@@ -148,23 +149,6 @@ public class FaceCollectionTests : SetupAndVerifyTests
 
         // Assert
         Assert.IsType<AddBase64SubjectExampleResponse>(response);
-
-        VerifyPostJson<AddBase64SubjectExampleResponse, Url>();
-        ApiClientMock.VerifyNoOtherCalls();
-    }
-
-    [Fact]
-    public async Task AddBase64Async_TakesRequestModel_ReturnsNotNull()
-    {
-        // Arrange
-        var request = new AddBase64SubjectExampleRequest();
-
-        SetupPostJson<AddBase64SubjectExampleResponse, Url>();
-
-        // Act
-        var response = await _faceCollection.AddAsync(request);
-
-        // Assert
         Assert.NotNull(response);
 
         VerifyPostJson<AddBase64SubjectExampleResponse, Url>();
@@ -197,23 +181,8 @@ public class FaceCollectionTests : SetupAndVerifyTests
 
         // Assert
         Assert.IsType<DeleteMultipleExamplesResponse>(response);
-        VerifyPostJson<List<Face>, Url>();
-        ApiClientMock.VerifyNoOtherCalls();
-    }
-
-    [Fact]
-    public async Task DeleteMultipleAsync_TakesRequestModel_ReturnsNotNull()
-    {
-        // Arrange
-        var request = new DeleteMultipleExampleRequest();
-
-        SetupPostJson<List<Face>, Url>();
-
-        // Act
-        var response = await _faceCollection.DeleteAsync(request);
-
-        // Assert
         Assert.NotNull(response);
+
         VerifyPostJson<List<Face>, Url>();
         ApiClientMock.VerifyNoOtherCalls();
     }
@@ -244,23 +213,8 @@ public class FaceCollectionTests : SetupAndVerifyTests
 
         // Assert
         Assert.IsType<byte[]>(response);
-        VerifyGetBytesFromRemote();
-        ApiClientMock.VerifyNoOtherCalls();
-    }
-
-    [Fact]
-    public async Task DownloadAsync_TakesRequestModel_ReturnsNotNull()
-    {
-        // Arrange
-        var request = new DownloadImageByIdDirectlyRequest();
-
-        SetupGetBytesFromRemote();
-
-        // Act
-        var response = await _faceCollection.DownloadAsync(request);
-
-        // Assert
         Assert.NotNull(response);
+
         VerifyGetBytesFromRemote();
         ApiClientMock.VerifyNoOtherCalls();
     }
@@ -291,6 +245,8 @@ public class FaceCollectionTests : SetupAndVerifyTests
 
         // Assert
         Assert.IsType<byte[]>(response);
+        Assert.NotNull(response);
+
         VerifyGetBytesFromRemote();
         ApiClientMock.VerifyNoOtherCalls();
     }
@@ -308,6 +264,8 @@ public class FaceCollectionTests : SetupAndVerifyTests
 
         // Assert
         Assert.NotNull(response);
+        Assert.NotNull(response);
+
         VerifyGetBytesFromRemote();
         ApiClientMock.VerifyNoOtherCalls();
     }
@@ -338,24 +296,8 @@ public class FaceCollectionTests : SetupAndVerifyTests
 
         // Assert
         Assert.IsType<ListAllSubjectExamplesResponse>(response);
-
-        VerifyGetJson<ListAllSubjectExamplesResponse, Url>();
-        ApiClientMock.VerifyNoOtherCalls();
-    }
-
-    [Fact]
-    public async Task GetAllAsync_TakesRequestModel_ReturnsNotNull()
-    {
-        // Arrange
-        var request = new ListAllSubjectExamplesRequest();
-
-        SetupGetJson<ListAllSubjectExamplesResponse, Url>();
-
-        // Act
-        var response = await _faceCollection.ListAsync(request);
-
-        // Assert
         Assert.NotNull(response);
+
         VerifyGetJson<ListAllSubjectExamplesResponse, Url>();
         ApiClientMock.VerifyNoOtherCalls();
     }
@@ -386,24 +328,8 @@ public class FaceCollectionTests : SetupAndVerifyTests
 
         // Assert
         Assert.IsType<DeleteAllExamplesResponse>(response);
-
-        VerifyDeleteJson<DeleteAllExamplesResponse, Url>();
-        ApiClientMock.VerifyNoOtherCalls();
-    }
-
-    [Fact]
-    public async Task DeleteAllAsync_TakesRequestModel_ReturnsNotNull()
-    {
-        // Arrange
-        var request = new DeleteAllExamplesRequest();
-
-        SetupDeleteJson<DeleteAllExamplesResponse, Url>();
-
-        // Act
-        var response = await _faceCollection.DeleteAllAsync(request);
-
-        // Assert
         Assert.NotNull(response);
+
         VerifyDeleteJson<DeleteAllExamplesResponse, Url>();
         ApiClientMock.VerifyNoOtherCalls();
     }
@@ -434,24 +360,8 @@ public class FaceCollectionTests : SetupAndVerifyTests
 
         // Assert
         Assert.IsType<DeleteImageByIdResponse>(response);
-
-        VerifyDeleteJson<DeleteImageByIdResponse, Url>();
-        ApiClientMock.VerifyNoOtherCalls();
-    }
-
-    [Fact]
-    public async Task DeleteAsync_TakesRequestModel_ReturnsNotNull()
-    {
-        // Arrange
-        var request = new DeleteImageByIdRequest();
-
-        SetupDeleteJson<DeleteImageByIdResponse, Url>();
-
-        // Act
-        var response = await _faceCollection.DeleteAsync(request);
-
-        // Assert
         Assert.NotNull(response);
+
         VerifyDeleteJson<DeleteImageByIdResponse, Url>();
         ApiClientMock.VerifyNoOtherCalls();
     }

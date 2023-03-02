@@ -4,6 +4,6 @@ namespace Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.RecognizeFaceFromIma
 {
     public class RecognizeFaceFromImageRequestByBytes : BaseRecognizeFaceFromImageRequest
     {
-        public byte[] Bytes { get; set; }
+        public byte[] ImageInBytes { get; set; }
     }
 }
