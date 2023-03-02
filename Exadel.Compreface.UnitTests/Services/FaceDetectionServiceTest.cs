@@ -41,6 +41,7 @@ namespace Exadel.Compreface.UnitTests.Services
 
             // Assert
             Assert.IsType<FaceDetectionResponse>(response);
+            Assert.NotNull(response);
 
             VerifyPostMultipart<FaceDetectionResponse>();
             base.ApiClientMock.VerifyNoOtherCalls();
@@ -63,6 +64,7 @@ namespace Exadel.Compreface.UnitTests.Services
 
             // Assert
             Assert.IsType<FaceDetectionResponse>(response);
+            Assert.NotNull(response);
 
             VerifyPostJson<FaceDetectionResponse>();
             VerifySetupGetBytes();
@@ -86,71 +88,6 @@ namespace Exadel.Compreface.UnitTests.Services
 
             // Assert
             Assert.IsType<FaceDetectionResponse>(response);
-
-            VerifyPostJson<FaceDetectionResponse>();
-            base.ApiClientMock.VerifyNoOtherCalls();
-        }
-
-        [Fact]
-        public async Task DetectAsync_TakesRequestModel_ReturnsNotNull()
-        {
-            // Arrange
-            var request = new FaceDetectionRequestByFilePath()
-            {
-                FacePlugins = new List<string>()
-            };
-
-            SetupPostMultipart<FaceDetectionResponse>();
-
-            // Act
-            var response = await _faceDetectionService.DetectAsync(request);
-
-            // Assert
-            Assert.NotNull(response);
-
-            VerifyPostMultipart<FaceDetectionResponse>();
-            base.ApiClientMock.VerifyNoOtherCalls();
-        }
-
-        [Fact]
-        public async Task DetectAsync_TakesRequestModelUsingUrl_ReturnsNotNull()
-        {
-            // Arrange
-            var request = new FaceDetectionRequestByFileUrl()
-            {
-                FacePlugins = new List<string>()
-            };
-
-            SetupPostJson<FaceDetectionResponse>();
-            SetupGetBytes();
-
-            // Act
-            var response = await _faceDetectionService.DetectAsync(request);
-
-            // Assert
-            Assert.NotNull(response);
-
-            VerifyPostJson<FaceDetectionResponse>();
-            VerifySetupGetBytes();  
-            base.ApiClientMock.VerifyNoOtherCalls();
-        }
-
-        [Fact]
-        public async Task DetectAsync_TakesRequestModelUsingImageInBytes_ReturnsNotNull()
-        {
-            // Arrange
-            var request = new FaceDetectionRequestByBytes()
-            {
-                FacePlugins = new List<string>(),
-                ImageInBytes= new byte[] {}
-            };
-
-            SetupPostJson<FaceDetectionResponse>();
-
-            // Act
-            var response = await _faceDetectionService.DetectAsync(request);
-
-            // Assert
             Assert.NotNull(response);
 
             VerifyPostJson<FaceDetectionResponse>();
@@ -214,30 +151,10 @@ namespace Exadel.Compreface.UnitTests.Services
 
             // Assert
             Assert.IsType<FaceDetectionResponse>(response);
-
-            VerifyPostJson<FaceDetectionResponse, Url>();
-            base.ApiClientMock.VerifyNoOtherCalls();
-        }
-
-        [Fact]
-        public async Task DetectBase64Async_TakesRequestModel_ReturnsNotNull()
-        {
-            // Arrange
-            var request = new FaceDetectionBase64Request()
-            {
-                FacePlugins = new List<string>()
-            };
-
-            SetupPostJson<FaceDetectionResponse, Url>();
-
-            // Act
-            var response = await _faceDetectionService.DetectAsync(request);
-
-            // Assert
             Assert.NotNull(response);
 
             VerifyPostJson<FaceDetectionResponse, Url>();
-            ApiClientMock.VerifyNoOtherCalls();
+            base.ApiClientMock.VerifyNoOtherCalls();
         }
 
         [Fact]

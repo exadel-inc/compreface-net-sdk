@@ -45,6 +45,8 @@ public class FaceVerificationTests : SetupAndVerifyTests
 
         // Assert
         Assert.IsType<FaceVerificationResponse>(response);
+        Assert.NotNull(response);
+
         VerifyPostMultipart<FaceVerificationResponse>();
         ApiClientMock.VerifyNoOtherCalls();
     }
@@ -66,6 +68,8 @@ public class FaceVerificationTests : SetupAndVerifyTests
 
         // Assert
         Assert.IsType<FaceVerificationResponse>(response);
+        Assert.NotNull(response);
+
         VerifyPostJson<FaceVerificationResponse>();
         VerifySetupGetBytes2Times();
         ApiClientMock.VerifyNoOtherCalls();
@@ -89,6 +93,8 @@ public class FaceVerificationTests : SetupAndVerifyTests
 
         // Assert
         Assert.IsType<FaceVerificationResponse>(response);
+        Assert.NotNull(response);
+
         VerifyPostJson<FaceVerificationResponse>();
         ApiClientMock.VerifyNoOtherCalls();
     }
