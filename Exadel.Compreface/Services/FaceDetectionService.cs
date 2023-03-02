@@ -43,13 +43,7 @@ namespace Exadel.Compreface.Services
 
             var fileInBase64String = await ConvertUrlToBase64StringHelpers.ConvertUrlAsync(_apiClient, faceDetectionRequest.FileUrl);
 
-            var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
-            {
-                DetProbThreShold = faceDetectionRequest.DetProbThreshold,
-                File = fileInBase64String,
-            };
-
-            var response = await _apiClient.PostJsonAsync<FaceDetectionResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+            var response = await _apiClient.PostJsonAsync<FaceDetectionResponse>(requestUrlWithQueryParameters, body: new { file = fileInBase64String });
 
             return response;
         }
@@ -59,13 +53,8 @@ namespace Exadel.Compreface.Services
             var requestUrlWithQueryParameters = GetRequestUrl(faceDetectionRequest);
             
             var fileInBase64String = Convert.ToBase64String(faceDetectionRequest.ImageInBytes);
-            var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
-            {
-                DetProbThreShold = faceDetectionRequest.DetProbThreshold,
-                File = fileInBase64String,
-            };
 
-            var response = await _apiClient.PostJsonAsync<FaceDetectionResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+            var response = await _apiClient.PostJsonAsync<FaceDetectionResponse>(requestUrlWithQueryParameters, body: new { file = fileInBase64String });
 
             return response;
         }

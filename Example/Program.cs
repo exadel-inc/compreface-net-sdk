@@ -8,6 +8,7 @@ using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteMultipleExamples;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageById;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageBySubjectId;
 using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
@@ -16,7 +17,9 @@ using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
+using Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.VerifyFacesFromImage;
+using Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.VerifyFacesFromImageWithBytesRequest;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.RenameSubject;
@@ -108,6 +111,26 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 //var faceDetectionBase64Response = await faceDetectionService.DetectAsync(faceDetectionBase64Request);
 #endregion
 
+#region Face Detection Service, Bytes array
+//var faceDetectionRequestByBytes = new FaceDetectionRequestByBytes()
+//{
+//    ImageInBytes = "Here should be byte array."
+//    DetProbThreshold = 0.81m,
+//    Limit = 1,
+//    Status = false,
+//    FacePlugins = new List<string>()
+//            {
+//                "landmarks",
+//                "gender",
+//                "age",
+//                "detector",
+//                "calculator"
+//            }
+//};
+
+//var faceDetectionByBytesResponse = await faceDetectionService.DetectAsync(faceDetectionRequestByBytes);
+#endregion
+
 //FaceVerification
 
 #region Face Verification Service, by File Path
@@ -171,6 +194,27 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 //};
 
 //var faceVerificationBase64Response = await faceVerificationService.VerifyAsync(faceVerificationWithBase64Request);
+#endregion
+
+#region Face Verification Service, Bytes array
+//var faceVerificationRequestByBytes = new FaceVerificationRequestByBytes()
+//{
+//    SourceImageInBytes = "Here should be byte array.",
+//    TargetImageInBytes = "Here should be byte array.",
+//    DetProbThreshold = 0.81m,
+//    Limit = 1,
+//    Status = false,
+//    FacePlugins = new List<string>()
+//            {
+//                "landmarks",
+//                "gender",
+//                "age",
+//                "detector",
+//                "calculator"
+//            }
+//};
+
+//var faceVerificationByBytesResponse = await faceVerificationService.VerifyAsync(faceVerificationRequestByBytes);
 #endregion
 
 //Subjects
@@ -244,6 +288,17 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 //};
 
 //var addBase64SubjectExampleResponse = await faceRecognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
+#endregion
+
+#region Add an Example of a Subject, Bytes array
+//var addSubjectExampleRequestByBytes = new AddSubjectExampleRequestByBytes()
+//{
+//    ImageInBytes = "Here should be byte array.",
+//    DetProbThreShold = 0.9m,
+//    Subject = TEST_SUBJECT_NAME
+//};
+
+//var addSubjectExampleByBytesResponse = await faceRecognitionService.FaceCollection.AddAsync(addSubjectExampleRequestByBytes);
 #endregion
 
 #region List of All Saved Examples of the Subject
@@ -372,6 +427,27 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 //var recognizeFaceFromImageBase64Response = await faceRecognitionService.RecognizeFaceFromImage.RecognizeAsync(recognizeFacesFromImageWithBase64Request);
 #endregion
 
+#region Recognize Faces from a Given Image, Bytes array
+//var recognizeFaceFromImageRequestByBytes = new RecognizeFaceFromImageRequestByBytes()
+//{
+//    ImageInBytes = "Here should be byte array.",
+//    PredictionCount = 1,
+//    DetProbThreshold = 0.81m,
+//    Limit = 1,
+//    Status = false,
+//    FacePlugins = new List<string>()
+//            {
+//                "landmarks",
+//                "gender",
+//                "age",
+//                "detector",
+//                "calculator"
+//            }
+//};
+
+//var recognizeFaceFromImageByBytesResponse = await faceRecognitionService.RecognizeFaceFromImage.RecognizeAsync(recognizeFaceFromImageRequestByBytes);
+#endregion
+
 #region Verify Faces from a Given Image, by File Path
 //var verifyFacesFromImageByFilePathRequest = new VerifyFacesFromImageRequest()
 //{
@@ -433,4 +509,25 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 //};
 
 //var verifyFacesFromImageBase64Response = await faceRecognitionService.RecognizeFaceFromImage.VerifyAsync(verifyFacesFromImageWithBase64Request);
+#endregion
+
+#region Verify Faces from a Given Image, Bytes array
+//var verifyFacesFromImageWithBase64Request = new VerifyFacesFromImageWithBytesRequest()
+//{
+//    ImageInBytes = "Here should be byte array.",
+//    ImageId = Guid.NewGuid(),
+//    DetProbThreshold = 0.81m,
+//    Limit = 1,
+//    Status = false,
+//    FacePlugins = new List<string>()
+//            {
+//                "landmarks",
+//                "gender",
+//                "age",
+//                "detector",
+//                "calculator"
+//            }
+//};
+
+//var verifyFacesFromImageByBytesResponse = await faceRecognitionService.RecognizeFaceFromImage.VerifyAsync(verifyFacesFromImageWithBase64Request);
 #endregion

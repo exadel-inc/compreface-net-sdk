@@ -46,13 +46,7 @@ namespace Exadel.Compreface.Services.RecognitionService
 
             var fileInBase64String = await ConvertUrlToBase64StringHelpers.ConvertUrlAsync(_apiClient, request.FileUrl);
 
-            var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
-            {
-                DetProbThreShold = request.DetProbThreshold,
-                File = fileInBase64String,
-            };
-
-            var response = await _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest);
+            var response = await _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(requestUrlWithQueryParameters, body: new { file = fileInBase64String });
 
             return response;
         }
@@ -61,15 +55,9 @@ namespace Exadel.Compreface.Services.RecognitionService
         {
             var requestUrlWithQueryParameters = GetRequestUrl(request);
 
-            var fileInBase64String = Convert.ToBase64String(request.Bytes);
+            var fileInBase64String = Convert.ToBase64String(request.ImageInBytes);
 
-            var addBase64SubjectExampleRequest = new AddBase64SubjectExampleRequest()
-            {
-               DetProbThreShold = request.DetProbThreshold,
-               File = fileInBase64String,
-            };
-
-            var response = await _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(requestUrlWithQueryParameters, body: addBase64SubjectExampleRequest );
+            var response = await _apiClient.PostJsonAsync<RecognizeFaceFromImageResponse>(requestUrlWithQueryParameters, body: new { file = fileInBase64String });
 
             return response;
         }
@@ -106,7 +94,7 @@ namespace Exadel.Compreface.Services.RecognitionService
             var response = await
                 _apiClient.PostJsonAsync<VerifyFacesFromImageResponse>(
                     requestUrl: requestUrlWithQueryParameters,
-                    body: new { file = request.Bytes });
+                    body: new { file = request.ImageInBytes });
 
             return response;
         }
