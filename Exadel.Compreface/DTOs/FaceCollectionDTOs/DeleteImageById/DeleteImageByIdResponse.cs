@@ -1,4 +1,4 @@
-﻿namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteImageById
+﻿namespace Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteImageById
 {
     public class DeleteImageByIdResponse
     {

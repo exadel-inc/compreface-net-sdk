@@ -13,12 +13,12 @@ using Flurl.Http;
 namespace Exadel.Compreface.Services;
 
 [CompreFaceService]
-public class FaceVerificationService : IFaceVerificationService
+public class VerificationService : IVerificationService
 {
     private readonly IComprefaceConfiguration _configuration;
     private readonly IApiClient _apiClient;
 
-    public FaceVerificationService(IComprefaceConfiguration configuration, IApiClient apiClient)
+    public VerificationService(IComprefaceConfiguration configuration, IApiClient apiClient)
     {
         _configuration = configuration;
         _apiClient = apiClient;

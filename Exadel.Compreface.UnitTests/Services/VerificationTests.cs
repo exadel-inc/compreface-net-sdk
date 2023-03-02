@@ -9,13 +9,13 @@ using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;
 
 namespace Exadel.Compreface.UnitTests.Services;
 
-public class FaceVerificationTests : SetupAndVerifyTests
+public class VerificationTests : SetupAndVerifyTests
 {
     private readonly IComprefaceConfiguration _comprefaceConfiguration;
 
-    private readonly FaceVerificationService _faceVerificationService;
+    private readonly VerificationService _faceVerificationService;
 
-    public FaceVerificationTests()
+    public VerificationTests()
     {
         var apiKey = GetRandomString();
         var domain = GetRandomString();
@@ -23,7 +23,7 @@ public class FaceVerificationTests : SetupAndVerifyTests
 
         _comprefaceConfiguration = new ComprefaceConfiguration(apiKey, domain, port);
 
-        _faceVerificationService = new FaceVerificationService(_comprefaceConfiguration, ApiClientMock.Object);
+        _faceVerificationService = new VerificationService(_comprefaceConfiguration, ApiClientMock.Object);
     }
 
     [Fact]

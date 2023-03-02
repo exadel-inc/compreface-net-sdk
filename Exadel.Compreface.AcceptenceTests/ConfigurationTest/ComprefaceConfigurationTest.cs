@@ -30,7 +30,7 @@ namespace Exadel.Compreface.AcceptenceTests.ConfigurationTest
         public void ConfigConstructor_TakesNullForAPIKEYProperty_ThrowsArgumentNullException()
         {
             // Act
-            var func = () => new CompreFaceClient(DOMAIN, PORT).GetCompreFaceService<FaceDetectionService>(null!);
+            var func = () => new CompreFaceClient(DOMAIN, PORT).GetCompreFaceService<DetectionService>(null!);
 
             // Assert
             Assert.Throws<ArgumentNullException>(func);

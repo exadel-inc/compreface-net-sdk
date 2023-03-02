@@ -1,5 +1,5 @@
 ﻿using Exadel.Compreface.Clients.CompreFaceClient;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteAllSubjectExamples;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteAllSubjectExamples;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.Services.RecognitionService;

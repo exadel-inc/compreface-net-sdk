@@ -1,6 +1,6 @@
 ﻿using Exadel.Compreface.DTOs.HelperDTOs;
 
-namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteMultipleExamples
+namespace Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteMultipleExamples
 {
     public class DeleteMultipleExamplesResponse
     {

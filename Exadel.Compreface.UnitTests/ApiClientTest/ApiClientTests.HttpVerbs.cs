@@ -1,4 +1,4 @@
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
 using Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
 using Moq;
 using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;

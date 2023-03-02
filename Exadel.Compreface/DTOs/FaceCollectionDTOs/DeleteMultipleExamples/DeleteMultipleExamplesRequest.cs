@@ -1,4 +1,4 @@
-﻿namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteMultipleExamples
+﻿namespace Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteMultipleExamples
 {
     public class DeleteMultipleExampleRequest
     {

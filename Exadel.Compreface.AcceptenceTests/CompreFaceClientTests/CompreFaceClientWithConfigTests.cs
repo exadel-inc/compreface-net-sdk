@@ -27,20 +27,20 @@ namespace Exadel.Compreface.AcceptenceTests.CompreFaceClientTests
         public void CompreFaceClientWithConfig_SetFaceDetectionService_ReturnsProperService()
         {
             //Act
-            var service = _compreFaceClient.GetCompreFaceService<FaceDetectionService>(_configuration, "FaceDetectionApiKey");
+            var service = _compreFaceClient.GetCompreFaceService<DetectionService>(_configuration, "FaceDetectionApiKey");
 
             //Assert
-            Assert.IsType<FaceDetectionService>(service);
+            Assert.IsType<DetectionService>(service);
         }
 
         [Fact]
         public void CompreFaceClientWithConfig_SetFaceVerificationService_ReturnsProperService()
         {
             //Act
-            var service = _compreFaceClient.GetCompreFaceService<FaceVerificationService>(_configuration, "FaceVerificationApiKey");
+            var service = _compreFaceClient.GetCompreFaceService<VerificationService>(_configuration, "FaceVerificationApiKey");
 
             //Assert
-            Assert.IsType<FaceVerificationService>(service);
+            Assert.IsType<VerificationService>(service);
         }
 
         [Fact]
@@ -70,7 +70,7 @@ namespace Exadel.Compreface.AcceptenceTests.CompreFaceClientTests
         public void CompreFaceClientWithConfig_TakesNullForDOMAINSection_ThrowsArgumentNullException()
         {
             // Act
-            var func = () => new CompreFaceClient(_configuration, null, "Port").GetCompreFaceService<FaceDetectionService>(_configuration, "FaceDetectionApiKey");
+            var func = () => new CompreFaceClient(_configuration, null, "Port").GetCompreFaceService<DetectionService>(_configuration, "FaceDetectionApiKey");
 
             // Assert
             Assert.Throws<ArgumentNullException>(func);
@@ -80,7 +80,7 @@ namespace Exadel.Compreface.AcceptenceTests.CompreFaceClientTests
         public void CompreFaceClientWithConfig_TakesNullForPORTSection_ThrowsArgumentNullException()
         {
             // Act
-            var func = () => new CompreFaceClient(_configuration, "Domain", null).GetCompreFaceService<FaceDetectionService>(_configuration, "FaceDetectionApiKey");
+            var func = () => new CompreFaceClient(_configuration, "Domain", null).GetCompreFaceService<DetectionService>(_configuration, "FaceDetectionApiKey");
 
             // Assert
             Assert.Throws<ArgumentNullException>(func);
@@ -90,7 +90,7 @@ namespace Exadel.Compreface.AcceptenceTests.CompreFaceClientTests
         public void CompreFaceClientWithConfig_TakesNullForAPIKEYSection_ThrowsArgumentNullException()
         {
             // Act
-            var func = () => new CompreFaceClient(_configuration, "Domain", "Port").GetCompreFaceService<FaceDetectionService>(_configuration, null!);
+            var func = () => new CompreFaceClient(_configuration, "Domain", "Port").GetCompreFaceService<DetectionService>(_configuration, null!);
 
             // Assert
             Assert.Throws<ArgumentNullException>(func);

@@ -8,16 +8,16 @@ using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
 {
-    public class FaceDetectionServiceTest
+    public class DetectionServiceTest
     {
-        private readonly IFaceDetectionService _faceDetectionService;
+        private readonly IDetectionService _faceDetectionService;
 
         private readonly FaceDetectionRequestByFilePath _faceDetectionRequest;
         private readonly FaceDetectionBase64Request _faceDetectionBase64Request;
         private readonly FaceDetectionRequestByFileUrl _faceDetectionFromURIRequest;
 
 
-        public FaceDetectionServiceTest()
+        public DetectionServiceTest()
         {
             var client = new CompreFaceClient(DOMAIN, PORT);
             var detProbThreshold = 0.85m;
@@ -32,7 +32,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 "calculator"
             };
 
-            _faceDetectionService = client.GetCompreFaceService<FaceDetectionService>(API_KEY_DETECTION_SERVICE);
+            _faceDetectionService = client.GetCompreFaceService<DetectionService>(API_KEY_DETECTION_SERVICE);
             _faceDetectionRequest = new FaceDetectionRequestByFilePath
             {
                 FilePath = FILE_PATH,

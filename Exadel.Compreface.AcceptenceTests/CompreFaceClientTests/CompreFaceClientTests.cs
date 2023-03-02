@@ -19,20 +19,20 @@ namespace Exadel.Compreface.AcceptenceTests.CompreFaceClientTests
         public void CompreFaceClient_SetFaceDetectionService_ReturnsProperService()
         {
             //Act
-            var service = _compreFaceClient.GetCompreFaceService<FaceDetectionService>(API_KEY_DETECTION_SERVICE);
+            var service = _compreFaceClient.GetCompreFaceService<DetectionService>(API_KEY_DETECTION_SERVICE);
 
             //Assert
-            Assert.IsType<FaceDetectionService>(service);
+            Assert.IsType<DetectionService>(service);
         }
 
         [Fact]
         public void CompreFaceClient_SetFaceVerificationService_ReturnsProperService()
         {
             //Act
-            var service = _compreFaceClient.GetCompreFaceService<FaceVerificationService>(API_KEY_VERIFICATION_SERVICE);
+            var service = _compreFaceClient.GetCompreFaceService<VerificationService>(API_KEY_VERIFICATION_SERVICE);
 
             //Assert
-            Assert.IsType<FaceVerificationService>(service);
+            Assert.IsType<VerificationService>(service);
         }
 
         [Fact]

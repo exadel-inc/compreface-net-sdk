@@ -1,4 +1,4 @@
-﻿namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageBySubjectId
+﻿namespace Exadel.Compreface.DTOs.FaceCollectionDTOs.DownloadImageByIdFromSubject
 {
     public class DownloadImageByIdFromSubjectRequest
     {

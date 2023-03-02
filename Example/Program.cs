@@ -1,14 +1,13 @@
 ﻿using Exadel.Compreface.Clients.CompreFaceClient;
 using Exadel.Compreface.Configuration;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteAllSubjectExamples;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteImageById;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteMultipleExamples;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageById;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageBySubjectId;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddBase64SubjectExample;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteAllSubjectExamples;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteImageById;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteMultipleExamples;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.DownloadImageById;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.DownloadImageByIdFromSubject;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.ListAllExampleSubject;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
@@ -23,7 +22,6 @@ using Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.VerifyFacesFromImageWith
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.RenameSubject;
-using Exadel.Compreface.DTOs.SubjectExampleDTOs.AddSubjectExample;
 using Exadel.Compreface.Services;
 using Exadel.Compreface.Services.RecognitionService;
 using Microsoft.Extensions.Configuration;
@@ -45,13 +43,13 @@ var client = new CompreFaceClient(
 domain: "http://localhost",
 port: "8000");
 
-var faceDetectionService = client.GetCompreFaceService<FaceDetectionService>(configuration!, "FaceDetectionApiKey");
-var faceVerificationService = client.GetCompreFaceService<FaceVerificationService>("00000000-0000-0000-0000-000000000004");
+var faceDetectionService = client.GetCompreFaceService<DetectionService>(configuration!, "FaceDetectionApiKey");
+var faceVerificationService = client.GetCompreFaceService<VerificationService>("00000000-0000-0000-0000-000000000004");
 var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00000000-0000-0000-0000-000000000002");
 
-//FaceDetection
+//Detection
 
-#region Face Detection Service, by File Path
+#region Detection Service, by File Path
 //var faceDetectionRequestByFilePath = new FaceDetectionRequestByFilePath()
 //{
 //    FilePath = "Paste here full file path",
@@ -71,7 +69,7 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 //var faceDetectionByFilePathResponse = await faceDetectionService.DetectAsync(faceDetectionRequestByFilePath);
 #endregion
 
-#region Face Detection Service, by File Url
+#region Detection Service, by File Url
 //var faceDetectionRequestByFileUrl = new FaceDetectionRequestByFileUrl()
 //{
 //    FileUrl = FILE_URL,
@@ -91,7 +89,7 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 //var faceDetectionByUrlResponse = await faceDetectionService.DetectAsync(faceDetectionRequestByFileUrl);
 #endregion
 
-#region Face Detection Service, Base64
+#region Detection Service, Base64
 //var faceDetectionBase64Request = new FaceDetectionBase64Request()
 //{
 //    File = IMAGE_BASE64_STRING,
@@ -111,7 +109,7 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 //var faceDetectionBase64Response = await faceDetectionService.DetectAsync(faceDetectionBase64Request);
 #endregion
 
-#region Face Detection Service, Bytes array
+#region Detection Service, Bytes array
 //var faceDetectionRequestByBytes = new FaceDetectionRequestByBytes()
 //{
 //    ImageInBytes = "Here should be byte array."
@@ -131,9 +129,9 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 //var faceDetectionByBytesResponse = await faceDetectionService.DetectAsync(faceDetectionRequestByBytes);
 #endregion
 
-//FaceVerification
+//Verification
 
-#region Face Verification Service, by File Path
+#region Verification Service, by File Path
 //var faceVerificationRequestByFilePath = new FaceVerificationRequestByFilePath()
 //{
 //    SourceImageFilePath = "Paste here full file path",
@@ -154,7 +152,7 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 //var faceVerificationByFilePathResponse = await faceVerificationService.VerifyAsync(faceVerificationRequestByFilePath);
 #endregion
 
-#region Face Verification Service, by File Url
+#region Verification Service, by File Url
 //var faceVerificationRequestByFileUrl = new FaceVerificationRequestByFileUrl()
 //{
 //    SourceImageFileUrl = FILE_URL,
@@ -175,7 +173,7 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 //var faceVerificationByUrlResponse = await faceVerificationService.VerifyAsync(faceVerificationRequestByFileUrl);
 #endregion
 
-#region Face Verification Service, Base64
+#region Verification Service, Base64
 //var faceVerificationWithBase64Request = new FaceVerificationWithBase64Request()
 //{
 //    SourceImageWithBase64 = IMAGE_BASE64_STRING,
@@ -196,7 +194,7 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 //var faceVerificationBase64Response = await faceVerificationService.VerifyAsync(faceVerificationWithBase64Request);
 #endregion
 
-#region Face Verification Service, Bytes array
+#region Verification Service, Bytes array
 //var faceVerificationRequestByBytes = new FaceVerificationRequestByBytes()
 //{
 //    SourceImageInBytes = "Here should be byte array.",
