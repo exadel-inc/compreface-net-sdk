@@ -1,19 +1,17 @@
 using Exadel.Compreface.Configuration;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddExampleSubject;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteAllSubjectExamples;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteImageById;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DeleteMultipleExamples;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageById;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.DownloadImageBySubjectId;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddBase64SubjectExample;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteAllSubjectExamples;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteImageById;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteMultipleExamples;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.DownloadImageById;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.ListAllExampleSubject;
 using Exadel.Compreface.DTOs.HelperDTOs;
 using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;
 using Exadel.Compreface.Services.RecognitionService;
 using Exadel.Compreface.UnitTests.Helpers;
 using Flurl;
-using Exadel.Compreface.DTOs.SubjectExampleDTOs.AddSubjectExample;
-using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.DownloadImageByIdFromSubject;
 
 namespace Exadel.Compreface.UnitTests.Services;
 

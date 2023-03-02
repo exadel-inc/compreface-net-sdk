@@ -1,6 +1,6 @@
 ﻿using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
 
-namespace Exadel.Compreface.DTOs.SubjectExampleDTOs.AddSubjectExample
+namespace Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample
 {
     public class AddSubjectExampleRequestByFileUrl : BaseExampleRequest
     {

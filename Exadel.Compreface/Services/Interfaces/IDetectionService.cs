@@ -3,7 +3,7 @@ using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 
 namespace Exadel.Compreface.Services.Interfaces
 {
-    public interface IFaceDetectionService
+    public interface IDetectionService
     {
         Task<FaceDetectionResponse> DetectAsync(FaceDetectionRequestByFilePath faceDetectionRequest);
 

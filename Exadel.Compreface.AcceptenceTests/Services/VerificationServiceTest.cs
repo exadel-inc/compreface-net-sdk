@@ -9,15 +9,15 @@ using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
 namespace Exadel.Compreface.AcceptenceTests.Services
 {
-    public class FaceVerificationServiceTest
+    public class VerificationServiceTest
     {
-        private readonly IFaceVerificationService _faceVerificationService;
+        private readonly IVerificationService _faceVerificationService;
 
         private readonly FaceVerificationRequestByFilePath _faceVerificationRequest;
         private readonly FaceVerificationWithBase64Request _faceVerificationBase64Request;
         private readonly FaceVerificationRequestByFileUrl _faceVerificationFromURLRequest;
 
-        public FaceVerificationServiceTest()
+        public VerificationServiceTest()
         {
             var client = new CompreFaceClient(DOMAIN, PORT);
             var detProbThreshold = 0.85m;
@@ -32,7 +32,7 @@ namespace Exadel.Compreface.AcceptenceTests.Services
                 "calculator"
             };
 
-            _faceVerificationService = client.GetCompreFaceService<FaceVerificationService>(API_KEY_VERIFICATION_SERVICE);
+            _faceVerificationService = client.GetCompreFaceService<VerificationService>(API_KEY_VERIFICATION_SERVICE);
             _faceVerificationRequest = new FaceVerificationRequestByFilePath
             {
                 SourceImageFilePath = FILE_PATH,

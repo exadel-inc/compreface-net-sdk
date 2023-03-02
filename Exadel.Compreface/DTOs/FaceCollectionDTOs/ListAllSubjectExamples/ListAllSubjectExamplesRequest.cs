@@ -1,4 +1,4 @@
-﻿namespace Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject;
+﻿namespace Exadel.Compreface.DTOs.FaceCollectionDTOs.ListAllExampleSubject;
 
 public class ListAllSubjectExamplesRequest
 {

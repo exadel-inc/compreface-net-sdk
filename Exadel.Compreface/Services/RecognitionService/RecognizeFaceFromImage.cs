@@ -1,6 +1,5 @@
 ﻿using Exadel.Compreface.Clients.ApiClient;
 using Exadel.Compreface.Configuration;
-using Exadel.Compreface.DTOs.ExampleSubjectDTOs.AddBase64ExampleSubject;
 using Exadel.Compreface.DTOs.RecognitionDTOs.BaseRequests;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;

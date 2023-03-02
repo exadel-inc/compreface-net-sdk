@@ -4,7 +4,7 @@ using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
 
 namespace Exadel.Compreface.Services.Interfaces
 {
-    public interface IFaceVerificationService
+    public interface IVerificationService
     {
         Task<FaceVerificationResponse> VerifyAsync(FaceVerificationRequestByFilePath request);
 

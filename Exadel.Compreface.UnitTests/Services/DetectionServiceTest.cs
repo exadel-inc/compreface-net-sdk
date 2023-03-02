@@ -8,13 +8,13 @@ using Exadel.Compreface.UnitTests.Helpers;
 
 namespace Exadel.Compreface.UnitTests.Services
 {
-    public class FaceDetectionServiceTest : SetupAndVerifyTests
+    public class DetectionServiceTest : SetupAndVerifyTests
     {
         private readonly IComprefaceConfiguration _comprefaceConfiguration;
 
-        private readonly FaceDetectionService _faceDetectionService;
+        private readonly DetectionService _faceDetectionService;
 
-        public FaceDetectionServiceTest()
+        public DetectionServiceTest()
         {
             var apiKey = GetRandomString();
             var domain = GetRandomString();
@@ -22,7 +22,7 @@ namespace Exadel.Compreface.UnitTests.Services
 
             _comprefaceConfiguration = new ComprefaceConfiguration(apiKey, domain, port);
 
-            _faceDetectionService = new FaceDetectionService(_comprefaceConfiguration, ApiClientMock.Object);
+            _faceDetectionService = new DetectionService(_comprefaceConfiguration, ApiClientMock.Object);
         }
 
         [Fact]
