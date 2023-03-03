@@ -7,7 +7,7 @@ using System.Reflection;
 namespace Exadel.Compreface.Clients.CompreFaceClient;
 
 /// <summary>
-/// Wrapper on top of Flurl.Http package's extension methods
+/// Global CompreFace provider.
 /// </summary>
 public class CompreFaceClient : ICompreFaceClient
 {
@@ -16,18 +16,39 @@ public class CompreFaceClient : ICompreFaceClient
 
     private readonly Dictionary<ServiceDictionaryKey, object> _services = new();
 
+    /// <summary>
+    /// Constructor for string parameters.
+    /// </summary>
+    /// <param name="domain">Domain with protocol where CompreFace is located.</param>
+    /// <param name="port">CompreFace port.</param>
+    /// <exception cref="ArgumentNullException">Is throwed if one of the parameters is null.</exception>
     public CompreFaceClient(string? domain, string? port)
     {
         _domain = domain ?? throw new ArgumentNullException($"{nameof(domain)} cannot be null!");
         _port = port ?? throw new ArgumentNullException($"{nameof(port)} cannot be null!");
     }
 
+    /// <summary>
+    /// Constructor allows to setup CompreFaceClient from appsettings.json.
+    /// </summary>
+    /// <param name="configuration">IConfiguration object.</param>
+    /// <param name="domainSection">Name of the section for domain parameter in an appsetting.json file.</param>
+    /// <param name="portSection">Name of the section for port parameter in an appsetting.json file.</param>
+    /// <exception cref="ArgumentNullException">Is throwed if one of the sections in appseting.json doesn't have a value.</exception>
     public CompreFaceClient(IConfiguration configuration, string? domainSection, string? portSection)
     {
         _domain = configuration.GetSection(domainSection).Value ?? throw new ArgumentNullException($"{nameof(domainSection)} cannot be null!");
         _port = configuration.GetSection(portSection).Value ?? throw new ArgumentNullException($"{nameof(portSection)} cannot be null!");
     }
 
+    /// <summary>
+    /// Creates instance of the service.
+    /// </summary>
+    /// <typeparam name="T">Type of the service.</typeparam>
+    /// <param name="apiKey">Api key string from CompreFace.</param>
+    /// <exception cref="TypeNotBelongCompreFaceException">Is throwed if T doesn't belong to CompreFace services.</exception>
+    /// <example>var faceVerificationService = client.GetCompreFaceService<VerificationService>("00000000-0000-0000-0000-000000000004")</example>
+    /// <returns>Service instance.</returns>
     public T GetCompreFaceService<T>(string apiKey) where T : class
     {
         var compreFaceService = GetService(apiKey, typeof(T));
@@ -35,6 +56,15 @@ public class CompreFaceClient : ICompreFaceClient
         return (T)compreFaceService;
     }
 
+    /// <summary>
+    /// Creates instance of the service with api key from appsettings.json file.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="configuration">IConfiguration object.</param>
+    /// <param name="apiKeySection">Name of the section for api key parameter in an appsetting.json file.</param>
+    /// <exception cref="TypeNotBelongCompreFaceException">Is throwed if T doesn't belong to CompreFace services.</exception>
+    /// <exception cref="ArgumentNullException">Is throwed if api key section in appseting.json doesn't have a value.</exception>
+    /// <returns>Service instance.</returns>
     public T GetCompreFaceService<T>(IConfiguration configuration, string apiKeySection) where T : class
     {
 
@@ -76,7 +106,7 @@ public class CompreFaceClient : ICompreFaceClient
             baseService = Activator.CreateInstance(type, config, apiClient);
 
         if (baseService == null)
-            throw new TypeNotBelongCompreFaceException("Type don't belong CompreFace services. Class should be covered by CompreFaceService attribute.");
+            throw new TypeNotBelongCompreFaceException("Type doesn't belong to CompreFace services. Class should be covered by CompreFaceService attribute.");
 
         return baseService;
     }
