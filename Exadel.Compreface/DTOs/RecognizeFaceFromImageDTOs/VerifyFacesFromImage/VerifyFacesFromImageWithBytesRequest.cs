@@ -1,6 +1,6 @@
 ﻿using Exadel.Compreface.DTOs.RecognitionDTOs.BaseRequests;
 
-namespace Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.VerifyFacesFromImageWithBytesRequest
+namespace Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.VerifyFacesFromImage
 {
     public class VerifyFacesFromImageWithBytesRequest : BaseVerifyFacesFromImageRequest
     {

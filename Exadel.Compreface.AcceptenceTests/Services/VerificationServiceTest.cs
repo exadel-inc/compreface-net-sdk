@@ -1,7 +1,5 @@
 ﻿using Exadel.Compreface.Clients.CompreFaceClient;
-using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
-using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
 using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services;
 using Exadel.Compreface.Services.Interfaces;

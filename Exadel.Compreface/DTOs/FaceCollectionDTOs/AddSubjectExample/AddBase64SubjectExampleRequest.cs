@@ -5,11 +5,11 @@ namespace Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample
     /// <summary>
     /// DTO helps to create an example of the subject by saving images.
     /// </summary>
-    public class AddSubjectExampleRequestByFileUrl : BaseExampleRequest
+    public class AddBase64SubjectExampleRequest : BaseExampleRequest
     {
         /// <summary>
-        /// Url of image.
+        /// Image as base64 string.
         /// </summary>
-        public string FileUrl { get; set; }
+        public string File { get; set; }
     }
 }

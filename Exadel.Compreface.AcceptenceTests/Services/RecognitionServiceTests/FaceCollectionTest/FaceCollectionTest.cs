@@ -1,5 +1,4 @@
 ﻿using Exadel.Compreface.Clients.CompreFaceClient;
-using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddBase64SubjectExample;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteAllSubjectExamples;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteImageById;

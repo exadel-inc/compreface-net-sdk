@@ -1,8 +1,6 @@
 using Exadel.Compreface.Clients.ApiClient;
 using Exadel.Compreface.Configuration;
-using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
-using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
 using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
 using Exadel.Compreface.Helpers;
 using Exadel.Compreface.Services.Attributes;

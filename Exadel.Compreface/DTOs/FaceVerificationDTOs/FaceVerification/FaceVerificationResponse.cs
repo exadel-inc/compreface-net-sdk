@@ -1,9 +1,9 @@
 using Exadel.Compreface.DTOs.HelperDTOs;
 using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
 
-namespace Exadel.Compreface.DTOs.FaceVerificationDTOs;
+namespace Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
 
-public class FaceVerificationResponse 
+public class FaceVerificationResponse
 {
     public IList<Result> Result { get; set; }
 }
@@ -11,9 +11,9 @@ public class FaceVerificationResponse
 public class Result
 {
     public SourceImageFace SourceImageFace { get; set; }
-    
+
     public IList<FaceMatches> FaceMatches { get; set; }
-    
+
     public PluginVersions PluginsVersions { get; set; }
 }
 

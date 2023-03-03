@@ -1,5 +1,4 @@
-﻿using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddBase64SubjectExample;
-using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
+﻿using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteAllSubjectExamples;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteImageById;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteMultipleExamples;
@@ -17,7 +16,7 @@ namespace Exadel.Compreface.Services.Interfaces
 
         Task<AddSubjectExampleResponse> AddAsync(AddSubjectExampleRequestByBytes request);
 
-        Task<AddBase64SubjectExampleResponse> AddAsync(AddBase64SubjectExampleRequest request);
+        Task<AddSubjectExampleResponse> AddAsync(AddBase64SubjectExampleRequest request);
 
         Task<ListAllSubjectExamplesResponse> ListAsync(ListAllSubjectExamplesRequest request);
 

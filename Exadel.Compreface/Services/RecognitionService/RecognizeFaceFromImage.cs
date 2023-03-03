@@ -2,12 +2,9 @@
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.RecognitionDTOs.BaseRequests;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
-using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
-using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.VerifyFacesFromImage;
-using Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.VerifyFacesFromImageWithBytesRequest;
 using Exadel.Compreface.Helpers;
 using Exadel.Compreface.Services.Interfaces;
 using Flurl;
