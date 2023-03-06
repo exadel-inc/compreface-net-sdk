@@ -1,6 +1,5 @@
 ﻿using Exadel.Compreface.Clients.CompreFaceClient;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
-using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Exadel.Compreface.Exceptions;
 using Exadel.Compreface.Services;
 using Exadel.Compreface.Services.Interfaces;

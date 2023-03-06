@@ -1,7 +1,5 @@
 using Exadel.Compreface.Configuration;
-using Exadel.Compreface.DTOs.FaceVerificationDTOs;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
-using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
 using Exadel.Compreface.Services;
 using Exadel.Compreface.UnitTests.Helpers;
 using Flurl;

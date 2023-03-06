@@ -1,6 +1,5 @@
 ﻿using Exadel.Compreface.Clients.CompreFaceClient;
 using Exadel.Compreface.Configuration;
-using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddBase64SubjectExample;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteAllSubjectExamples;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteImageById;
@@ -9,16 +8,11 @@ using Exadel.Compreface.DTOs.FaceCollectionDTOs.DownloadImageById;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.DownloadImageByIdFromSubject;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.ListAllExampleSubject;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
-using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
-using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
-using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
-using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImageWithBase64;
 using Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.VerifyFacesFromImage;
-using Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.VerifyFacesFromImageWithBytesRequest;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.RenameSubject;
@@ -112,7 +106,7 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 #region Detection Service, Bytes array
 //var faceDetectionRequestByBytes = new FaceDetectionRequestByBytes()
 //{
-//    ImageInBytes = "Here should be byte array."
+//    ImageInBytes = "Here should be byte array.",
 //    DetProbThreshold = 0.81m,
 //    Limit = 1,
 //    Status = false,
@@ -300,14 +294,14 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 #endregion
 
 #region List of All Saved Examples of the Subject
-//var listAllSubjectExamplesRequest = new ListAllSubjectExamplesRequest()
-//{
-//    Page = 0,
-//    Size = 0,
-//    Subject = TEST_SUBJECT_NAME,
-//};
+var listAllSubjectExamplesRequest = new ListAllSubjectExamplesRequest()
+{
+    Page = 0,
+    Size = 0,
+    Subject = TEST_SUBJECT_NAME,
+};
 
-//var listAllSubjectExamplesResponse = await faceRecognitionService.FaceCollection.ListAsync(listAllSubjectExamplesRequest);
+var listAllSubjectExamplesResponse = await faceRecognitionService.FaceCollection.ListAsync(listAllSubjectExamplesRequest);
 #endregion
 
 #region Delete All Examples of the Subject by Name

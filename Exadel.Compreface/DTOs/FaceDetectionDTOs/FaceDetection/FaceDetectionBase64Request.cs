@@ -1,6 +1,6 @@
 ﻿using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
 
-namespace Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64
+namespace Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection
 {
     public class FaceDetectionBase64Request : BaseFaceRequest
     {

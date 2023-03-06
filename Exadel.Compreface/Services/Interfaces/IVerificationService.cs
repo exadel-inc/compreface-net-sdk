@@ -1,6 +1,4 @@
 ﻿using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
-using Exadel.Compreface.DTOs.FaceVerificationDTOs;
-using Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerificationWithBase64;
 
 namespace Exadel.Compreface.Services.Interfaces
 {

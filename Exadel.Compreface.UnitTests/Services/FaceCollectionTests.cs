@@ -1,5 +1,4 @@
 using Exadel.Compreface.Configuration;
-using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddBase64SubjectExample;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteAllSubjectExamples;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteImageById;
@@ -140,16 +139,16 @@ public class FaceCollectionTests : SetupAndVerifyTests
         // Arrange
         var request = new AddBase64SubjectExampleRequest();
 
-        SetupPostJson<AddBase64SubjectExampleResponse, Url>();
+        SetupPostJson<AddSubjectExampleResponse, Url>();
 
         //Act
         var response = await _faceCollection.AddAsync(request);
 
         // Assert
-        Assert.IsType<AddBase64SubjectExampleResponse>(response);
+        Assert.IsType<AddSubjectExampleResponse>(response);
         Assert.NotNull(response);
 
-        VerifyPostJson<AddBase64SubjectExampleResponse, Url>();
+        VerifyPostJson<AddSubjectExampleResponse, Url>();
         ApiClientMock.VerifyNoOtherCalls();
     }
 
@@ -157,7 +156,7 @@ public class FaceCollectionTests : SetupAndVerifyTests
     public async Task AddBase64Async_TakesNullRequestModel_ThrowsNullReferenceException()
     {
         // Arrange
-        SetupPostJson<AddBase64SubjectExampleResponse, Url>();
+        SetupPostJson<AddSubjectExampleResponse, Url>();
 
         // Act
         var func = async () => await _faceCollection.AddAsync((AddBase64SubjectExampleRequest)null!);

@@ -1,6 +1,5 @@
 ﻿using Exadel.Compreface.Clients.ApiClient;
 using Exadel.Compreface.Configuration;
-using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddBase64SubjectExample;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteAllSubjectExamples;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteImageById;
@@ -62,11 +61,11 @@ namespace Exadel.Compreface.Services.RecognitionService
             return response;
         }
 
-        public async Task<AddBase64SubjectExampleResponse> AddAsync(AddBase64SubjectExampleRequest request)
+        public async Task<AddSubjectExampleResponse> AddAsync(AddBase64SubjectExampleRequest request)
         {
             var requestUrlWithQueryParameters = GetRequestUrl(request);
 
-            var response = await _apiClient.PostJsonAsync<AddBase64SubjectExampleResponse>(requestUrlWithQueryParameters, new { file = request.File });
+            var response = await _apiClient.PostJsonAsync<AddSubjectExampleResponse>(requestUrlWithQueryParameters, new { file = request.File });
             
             return response;
         }

@@ -1,6 +1,6 @@
 ﻿using Exadel.Compreface.DTOs.RecognitionDTOs.BaseRequests;
 
-namespace Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFacesFromImageWithBase64;
+namespace Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.RecognizeFaceFromImage;
 
 public class RecognizeFacesFromImageWithBase64Request : BaseRecognizeFaceFromImageRequest
 {

@@ -1,6 +1,5 @@
 ﻿using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.Services;
-using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetectionBase64;
 using Flurl;
 using static Exadel.Compreface.UnitTests.Helpers.GetRandomStringHelper;
 using Exadel.Compreface.Configuration;
