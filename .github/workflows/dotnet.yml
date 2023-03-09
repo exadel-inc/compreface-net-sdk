@@ -27,7 +27,7 @@ jobs:
     - name: Docker
       uses: docker-practice/actions-setup-docker@master
       timeout-minutes: 12
-    - run: docker -compose up -d --rm $(docker build -q .) \ -qO- https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip
+    - run: docker-compose up -d --rm $(docker build -q .) \ -qO- https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
