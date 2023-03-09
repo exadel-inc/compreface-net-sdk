@@ -33,7 +33,7 @@ jobs:
       with:
         args: unzip -qq CompreFace_1.1.0.zip -d compreface
     - name: Run CompreFace
-      run: docker-compose up -d compreface
+      run: docker-compose up -d ./compreface/bin/docker-compose.yaml
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
