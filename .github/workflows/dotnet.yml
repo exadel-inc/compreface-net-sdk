@@ -31,9 +31,9 @@ jobs:
       run: wget https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip
     - uses: montudor/action-zip@v1
       with:
-        args: unzip -qq CompreFace_1.1.0.zip -d
+        args: unzip -qq CompreFace_1.1.0.zip -d compreface
     - name: Run CompreFace
-      run: docker-compose up -d
+      run: docker-compose up -d compreface
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
