@@ -23,11 +23,18 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-      
+  
     - name: Docker
       uses: docker-practice/actions-setup-docker@master
       timeout-minutes: 12
-    - run: docker-compose up -d --rm $(docker build -q .) \ -qO- https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip
+      
+    - uses: actions/schmiddim-wget-unzip@v1
+      with:
+        url: 'https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip'
+        destination: arm-release
+      
+    - name: Run docker 
+    - run: docker-compose up -d
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
