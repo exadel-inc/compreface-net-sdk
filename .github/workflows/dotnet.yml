@@ -27,12 +27,7 @@ jobs:
     - name: Docker
       uses: docker-practice/actions-setup-docker@master
       timeout-minutes: 12
-      
-    - name: Show contents
-      run: pwd
-      
-    - name: Build the Docker image
-      run: docker run --rm $(docker build -q .) \ -qO- 'https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip' && unzip tmp.zip && rm tmp.zip
+    - run: docker run --rm $(docker build -q .) \ -qO- 'https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip' && unzip tmp.zip && rm tmp.zip     
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
