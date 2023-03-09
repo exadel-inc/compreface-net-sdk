@@ -27,10 +27,8 @@ jobs:
     - name: Run docker 
       uses: docker-practice/actions-setup-docker@master
       timeout-minutes: 12
-    - uses: actions/schmiddim-wget-unzip@v1
-      with:
-        url: 'https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip'
-        destination: arm-release
+    - name: Download a file
+      run: wget https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip
     - run: docker-compose up -d
       
     - name: Test
