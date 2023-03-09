@@ -28,8 +28,8 @@ jobs:
       uses: docker-practice/actions-setup-docker@master
       timeout-minutes: 12
     - name: Download a file
-      run: wget https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip
-    - run: docker-compose up -d
+      run: wget https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip -O /usr/share/dotnet
+    - run: docker-compose -f /usr/share/dotnet/docker-compose.yml up
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
