@@ -41,7 +41,7 @@ jobs:
       run: pwd
         
     - name: Run CompreFace
-      run: docker-compose up -d /home/runner/work/compreface-net-sdk/compreface-net-sdk
+      run: docker-compose up
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
