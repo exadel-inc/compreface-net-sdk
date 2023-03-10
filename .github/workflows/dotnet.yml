@@ -36,6 +36,9 @@ jobs:
       with:
         args: unzip -qq CompreFace_1.1.0.zip -d compreface 
         
+    - name: Show contents
+      run: pwd
+        
     - name: Run CompreFace
       run: docker-compose up -d
       
