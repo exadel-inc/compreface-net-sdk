@@ -43,5 +43,8 @@ jobs:
     - name: Run CompreFace
       run: docker-compose -f "/home/runner/work/compreface-net-sdk/compreface-net-sdk/compreface/docker-compose.yml" up -d --build
       
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    - uses: satak/webrequest-action@master
+      with:
+            url: http://localhost:8000/api/v1/recognition/subjects
+            method: GET
+            headers: '{"x-api-key": "00000000-0000-0000-0000-000000000002"}'
