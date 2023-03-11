@@ -45,6 +45,6 @@ jobs:
       
     - uses: satak/webrequest-action@master
       with:
-            url: http://localhost:8000/api/v1/recognition/subjects
+            url: http://localhost:8000/api/v1/recognition/subjects/
             method: GET
             headers: '{"x-api-key": "00000000-0000-0000-0000-000000000002"}'
