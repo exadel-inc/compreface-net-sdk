@@ -10,7 +10,7 @@ on:
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -29,7 +29,7 @@ jobs:
       timeout-minutes: 12
       
     - name: Download a file
-      run: https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip
+      run: wget https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip
       
     - name: Unzip CompreFace  
       uses: montudor/action-zip@v1
@@ -41,7 +41,7 @@ jobs:
       run: pwd
         
     - name: Run CompreFace
-      run: docker-compose up
+      run: docker-compose -f "docker-compose.yml" up -d --build
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
