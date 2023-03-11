@@ -37,7 +37,6 @@ jobs:
         args: unzip -qq CompreFace_1.1.0.zip -d compreface 
         
     - name: Show contents
-      working-directory: ./compreface
       run: pwd
         
     - name: Run CompreFace
