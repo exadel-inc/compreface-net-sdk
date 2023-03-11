@@ -29,7 +29,7 @@ jobs:
       timeout-minutes: 12
       
     - name: Download a file
-      run: wget https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip
+      run: https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip
       
     - name: Unzip CompreFace  
       uses: montudor/action-zip@v1
