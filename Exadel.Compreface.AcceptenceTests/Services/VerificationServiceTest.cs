@@ -120,15 +120,15 @@ namespace Exadel.Compreface.AcceptenceTests.Services
         //    await Assert.ThrowsAsync<ServiceException>(func);
         //}
 
-        //[Fact]
-        //public async Task VerifyBase64Async_TakesRequestModel_ReturnsProperResponseModel()
-        //{
-        //    // Act
-        //    var response = await _faceVerificationService.VerifyAsync(_faceVerificationBase64Request);
+        [Fact]
+        public async Task VerifyBase64Async_TakesRequestModel_ReturnsProperResponseModel()
+        {
+            // Act
+            var response = await _faceVerificationService.VerifyAsync(_faceVerificationBase64Request);
 
-        //    // Assert
-        //    Assert.IsType<FaceVerificationResponse>(response);
-        //}
+            // Assert
+            Assert.IsType<FaceVerificationResponse>(response);
+        }
 
         //[Fact]
         //public async Task VerifyBase64Async_TakesRequestModel_ReturnsNotNull()
