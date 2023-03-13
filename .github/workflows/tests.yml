@@ -41,6 +41,12 @@ jobs:
         
     - name: Run CompreFace
       run: docker-compose -f "/home/runner/work/compreface-net-sdk/compreface-net-sdk/compreface/docker-compose.yml" up -d --build
+    
+    - name: Locahost
+      run: docker ps -a
+      
+    - name: Port
+      run: netstat -tunlp | grep 8000
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
