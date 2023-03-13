@@ -10,15 +10,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-     
-    services:
-      postgres:
-        image: postgres:11
-        options: &gt;-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
 
     steps:
     - uses: actions/checkout@v3
