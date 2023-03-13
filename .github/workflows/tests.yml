@@ -41,6 +41,15 @@ jobs:
         
     - name: Run CompreFace
       run: docker-compose -f "/home/runner/work/compreface-net-sdk/compreface-net-sdk/compreface/docker-compose.yml" up -d --build
+      
+      services:
+  postgres:
+    image: postgres:11
+    options: &gt;-
+      --health-cmd pg_isready
+      --health-interval 10s
+      --health-timeout 5s
+      --health-retries 5
     
     - name: Locahost
       run: docker ps -a
