@@ -2,7 +2,7 @@
 {
     public static class UrlConstConfig
     {
-        public const string DOMAIN = "http://local";
+        public const string DOMAIN = "http://localhost";
 
         public const string PORT = "8000";
 
