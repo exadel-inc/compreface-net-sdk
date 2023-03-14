@@ -16,39 +16,37 @@ jobs:
     - name: Setup dotnet
       uses: actions/setup-dotnet@v3
       with:
-
-        dotnet-version: 7.0.x
+        dotnet-version: '7.0.x'
 
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-
       run: dotnet build --no-restore
 
     - name: Run docker 
       uses: docker-practice/actions-setup-docker@master
       timeout-minutes: 12
-      
+
     - name: Download a file
       run: wget https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip
-      
+
     - name: Unzip CompreFace  
       uses: montudor/action-zip@v1
       with:
         args: unzip -qq CompreFace_1.1.0.zip -d compreface 
-        
+
     - name: Show contents
       working-directory: ./compreface
       run: pwd
-        
+
     - name: Run CompreFace
       run: docker-compose -f "/home/runner/work/compreface-net-sdk/compreface-net-sdk/compreface/docker-compose.yml" up -d --build
 
     - name: Locahost
       run: docker ps -a
-      
+
     - name: Port
       run: netstat -tunlp | grep 8000
-      
+
     - name: Test
       run: dotnet test --no-build --verbosity normal
