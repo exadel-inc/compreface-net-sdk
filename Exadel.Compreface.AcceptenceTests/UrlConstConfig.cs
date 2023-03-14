@@ -22,7 +22,7 @@
 
         public const string FILE_NAME = "pexels-jonathan-yakubu.jpg";
 
-        public const string FILE_PATH = @"/Resources/Images/pexels-jonathan-yakubu.jpg";
+        public const string FILE_PATH = @"pexels-jonathan-yakubu.jpg";
         //public const string FILE_PATH = @"..\..\..\Resources\Images\pexels-jonathan-yakubu.jpg";
 
         public const string PATH_OF_WRONG_FILE = @"..\..\..\Resources\Images\pexels.jpg";
