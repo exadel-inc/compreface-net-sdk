@@ -34,7 +34,7 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
       <None Update="Resources\Images\pexels-jonathan-yakubu.jpg">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       </None>
     </ItemGroup>
 
