@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Exadel.Compreface.AcceptenceTests": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
