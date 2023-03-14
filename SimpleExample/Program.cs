@@ -1,14 +1,29 @@
-﻿using Exadel.Compreface.Clients;
+﻿using Exadel.Compreface.Clients.CompreFaceClient;
+using Exadel.Compreface.Services;
+using Exadel.Compreface.Services.RecognitionService;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 // the rest of the other services will be configured like this
-var faceRecognitionClient = new FaceRecognitionClient(
-    apiKey: "recognition api key here...",
+var client = new CompreFaceClient(
     domain: "http://localhost",
     port: "8000");
 
-var subjects = await faceRecognitionClient.SubjectService.GetAllSubject();
+var host = Host.CreateDefaultBuilder()
+    .Build();
 
-foreach (var subject in subjects.Subjects)
-{
-    Console.WriteLine(subject);
-}
+var serviceProvider = host.Services;
+
+var configuration = serviceProvider.GetService<IConfiguration>();
+
+
+var configFaceDetection = configuration.GetSection("FaceDetectionApiKey").Value;
+var detectService = client.GetCompreFaceService<FaceDetectionService>(configFaceDetection);
+
+var configFaceRecognition = configuration.GetSection("FaceRecognitionApiKey").Value;
+var recognitionService = client.GetCompreFaceService<RecognitionService>(configFaceRecognition);
+
+var conf = serviceProvider.GetService<IConfiguration>();
+var subject = client.GetCompreFaceService<RecognitionService>(conf, "FaceRecognitionApiKey");
+await subject.FaceCollection.ListAsync(new Exadel.Compreface.DTOs.ExampleSubjectDTOs.ListAllExampleSubject.ListAllSubjectExamplesRequest() { Subject = "Subject name" });
