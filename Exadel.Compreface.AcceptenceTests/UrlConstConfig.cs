@@ -4,7 +4,7 @@
     {
         public const string DOMAIN = "http://localhost";
 
-        public const string PORT = "80";
+        public const string PORT = "8080";
 
         public const string API_KEY_DETECTION_SERVICE = "00000000-0000-0000-0000-000000000003";
 
