@@ -151,33 +151,33 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         //    Assert.NotNull(expectedAddExampleSubjectResponse);
         //}
 
-        [Fact]
-        public async Task AddFromURLAsync_TakesNullRequestModel_ThrowsNullReferenceException()
-        {
-            //Act
-            var func = async () => await _recognitionService.FaceCollection.AddAsync((AddSubjectExampleRequestByFileUrl)null!);
-
-            // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
-        }
-
         //[Fact]
-        //public async Task AddFromURLAsync_TakesRequestModel_ThrowsServiceException()
+        //public async Task AddFromURLAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         //{
-        //    //Arrange
-        //    var subjectExample = new AddSubjectExampleRequestByFileUrl()
-        //    {
-        //        DetProbThreShold = 0.81m,
-        //        FileUrl = WRONG_FILE_URL,
-        //        Subject = TEST_SUBJECT_EXAMPLE_NAME,
-        //    };
-
         //    //Act
-        //    var func = async () => await _recognitionService.FaceCollection.AddAsync(subjectExample);
+        //    var func = async () => await _recognitionService.FaceCollection.AddAsync((AddSubjectExampleRequestByFileUrl)null!);
 
         //    // Assert
-        //    await Assert.ThrowsAsync<ServiceException>(func);
+        //    await Assert.ThrowsAsync<NullReferenceException>(func);
         //}
+
+        [Fact]
+        public async Task AddFromURLAsync_TakesRequestModel_ThrowsServiceException()
+        {
+            //Arrange
+            var subjectExample = new AddSubjectExampleRequestByFileUrl()
+            {
+                DetProbThreShold = 0.81m,
+                FileUrl = WRONG_FILE_URL,
+                Subject = TEST_SUBJECT_EXAMPLE_NAME,
+            };
+
+            //Act
+            var func = async () => await _recognitionService.FaceCollection.AddAsync(subjectExample);
+
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
 
         //[Fact]
         //[FaceCollectionTestBeforeAfter]
