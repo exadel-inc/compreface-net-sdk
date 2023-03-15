@@ -2,9 +2,9 @@
 {
     public static class UrlConstConfig
     {
-        public const string DOMAIN = "http://localhost";
+        public const string DOMAIN = "https://localhost";
 
-        public const string PORT = "8000";
+        public const string PORT = "5432";
 
         public const string API_KEY_DETECTION_SERVICE = "00000000-0000-0000-0000-000000000003";
 
