@@ -161,44 +161,44 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         //    await Assert.ThrowsAsync<NullReferenceException>(func);
         //}
 
-        [Fact]
-        public async Task AddFromURLAsync_TakesRequestModel_ThrowsServiceException()
-        {
-            //Arrange
-            var subjectExample = new AddSubjectExampleRequestByFileUrl()
-            {
-                DetProbThreShold = 0.81m,
-                FileUrl = WRONG_FILE_URL,
-                Subject = TEST_SUBJECT_EXAMPLE_NAME,
-            };
-
-            //Act
-            var func = async () => await _recognitionService.FaceCollection.AddAsync(subjectExample);
-
-            // Assert
-            await Assert.ThrowsAsync<ServiceException>(func);
-        }
-
         //[Fact]
-        //[FaceCollectionTestBeforeAfter]
-        //public async Task AddBase64Async_TakesRequestModel_ReturnsProperResponseModel()
+        //public async Task AddFromURLAsync_TakesRequestModel_ThrowsServiceException()
         //{
         //    //Arrange
-        //    addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
-
-        //    var expectedAddBase64SubjectExampleResponse = await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
+        //    var subjectExample = new AddSubjectExampleRequestByFileUrl()
+        //    {
+        //        DetProbThreShold = 0.81m,
+        //        FileUrl = WRONG_FILE_URL,
+        //        Subject = TEST_SUBJECT_EXAMPLE_NAME,
+        //    };
 
         //    //Act
-        //    var resultList = await _recognitionService.FaceCollection.ListAsync(
-        //        new ListAllSubjectExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
+        //    var func = async () => await _recognitionService.FaceCollection.AddAsync(subjectExample);
 
-        //    var actualSubjectExample = resultList.Faces
-        //            .First(x => x.ImageId == expectedAddBase64SubjectExampleResponse.ImageId & x.Subject == expectedAddBase64SubjectExampleResponse.Subject);
-
-        //    //Assert
-        //    Assert.Equal(expectedAddBase64SubjectExampleResponse.Subject, actualSubjectExample.Subject);
-        //    Assert.Equal(expectedAddBase64SubjectExampleResponse.ImageId, actualSubjectExample.ImageId);
+        //    // Assert
+        //    await Assert.ThrowsAsync<ServiceException>(func);
         //}
+
+        [Fact]
+        [FaceCollectionTestBeforeAfter]
+        public async Task AddBase64Async_TakesRequestModel_ReturnsProperResponseModel()
+        {
+            //Arrange
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
+
+            var expectedAddBase64SubjectExampleResponse = await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
+
+            //Act
+            var resultList = await _recognitionService.FaceCollection.ListAsync(
+                new ListAllSubjectExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
+
+            var actualSubjectExample = resultList.Faces
+                    .First(x => x.ImageId == expectedAddBase64SubjectExampleResponse.ImageId & x.Subject == expectedAddBase64SubjectExampleResponse.Subject);
+
+            //Assert
+            Assert.Equal(expectedAddBase64SubjectExampleResponse.Subject, actualSubjectExample.Subject);
+            Assert.Equal(expectedAddBase64SubjectExampleResponse.ImageId, actualSubjectExample.ImageId);
+        }
 
         //[Fact]
         //[FaceCollectionTestBeforeAfter]
