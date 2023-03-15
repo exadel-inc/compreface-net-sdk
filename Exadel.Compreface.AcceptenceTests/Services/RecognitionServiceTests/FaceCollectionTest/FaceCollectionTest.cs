@@ -59,34 +59,34 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         //    Assert.Equal(expectedAddExampleSubjectResponse.ImageId, actualSubjectExample.ImageId);
         //}
 
-        [Fact]
-        [FaceCollectionTestBeforeAfter]
-        public async Task AddAsync_TakesRequestModel_ReturnsNotNull()
-        {
-            //Arrange
-            var subjectExample = new AddSubjectExampleRequestByFilePath()
-            {
-                DetProbThreShold = 0.81m,
-                FilePath = FILE_PATH,
-                Subject = TEST_SUBJECT_EXAMPLE_NAME,
-            };
-
-            //Act
-            var expectedAddExampleSubjectResponse = await _recognitionService.FaceCollection.AddAsync(subjectExample);
-
-            // Assert
-            Assert.NotNull(expectedAddExampleSubjectResponse);
-        }
-
         //[Fact]
-        //public async Task AddAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        //[FaceCollectionTestBeforeAfter]
+        //public async Task AddAsync_TakesRequestModel_ReturnsNotNull()
         //{
+        //    //Arrange
+        //    var subjectExample = new AddSubjectExampleRequestByFilePath()
+        //    {
+        //        DetProbThreShold = 0.81m,
+        //        FilePath = FILE_PATH,
+        //        Subject = TEST_SUBJECT_EXAMPLE_NAME,
+        //    };
+
         //    //Act
-        //    var func = async () => await _recognitionService.FaceCollection.AddAsync((AddSubjectExampleRequestByFilePath)null!);
+        //    var expectedAddExampleSubjectResponse = await _recognitionService.FaceCollection.AddAsync(subjectExample);
 
         //    // Assert
-        //    await Assert.ThrowsAsync<NullReferenceException>(func);
+        //    Assert.NotNull(expectedAddExampleSubjectResponse);
         //}
+
+        [Fact]
+        public async Task AddAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        {
+            //Act
+            var func = async () => await _recognitionService.FaceCollection.AddAsync((AddSubjectExampleRequestByFilePath)null!);
+
+            // Assert
+            await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
 
         //[Fact]
         //public async Task AddAsync_TakesRequestModel_ThrowsServiceException()
