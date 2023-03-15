@@ -78,59 +78,59 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         //    Assert.NotNull(expectedAddExampleSubjectResponse);
         //}
 
-        [Fact]
-        public async Task AddAsync_TakesNullRequestModel_ThrowsNullReferenceException()
-        {
-            //Act
-            var func = async () => await _recognitionService.FaceCollection.AddAsync((AddSubjectExampleRequestByFilePath)null!);
-
-            // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
-        }
-
         //[Fact]
-        //public async Task AddAsync_TakesRequestModel_ThrowsServiceException()
+        //public async Task AddAsync_TakesNullRequestModel_ThrowsNullReferenceException()
         //{
-        //    //Arrange
-        //    var subjectExample = new AddSubjectExampleRequestByFilePath()
-        //    {
-        //        DetProbThreShold = 0.81m,
-        //        FilePath = PATH_OF_WRONG_FILE,
-        //        Subject = TEST_SUBJECT_EXAMPLE_NAME,
-        //    };
-
         //    //Act
-        //    var func = async () => await _recognitionService.FaceCollection.AddAsync(subjectExample);
+        //    var func = async () => await _recognitionService.FaceCollection.AddAsync((AddSubjectExampleRequestByFilePath)null!);
 
         //    // Assert
-        //    await Assert.ThrowsAsync<ServiceException>(func);
+        //    await Assert.ThrowsAsync<NullReferenceException>(func);
         //}
 
-        //[Fact]
-        //[FaceCollectionTestBeforeAfter]
-        //public async Task AddFromURLAsync_TakesRequestModel_ReturnsProperResponseModel()
-        //{
-        //    //Arrange
-        //    var subjectExample = new AddSubjectExampleRequestByFileUrl()
-        //    {
-        //        DetProbThreShold = 0.81m,
-        //        FileUrl = FILE_URL,
-        //        Subject = TEST_SUBJECT_EXAMPLE_NAME,
-        //    };
+        [Fact]
+        public async Task AddAsync_TakesRequestModel_ThrowsServiceException()
+        {
+            //Arrange
+            var subjectExample = new AddSubjectExampleRequestByFilePath()
+            {
+                DetProbThreShold = 0.81m,
+                FilePath = PATH_OF_WRONG_FILE,
+                Subject = TEST_SUBJECT_EXAMPLE_NAME,
+            };
 
-        //    var expectedAddExampleSubjectResponse = await _recognitionService.FaceCollection.AddAsync(subjectExample);
+            //Act
+            var func = async () => await _recognitionService.FaceCollection.AddAsync(subjectExample);
 
-        //    //Act
-        //    var resultList = await _recognitionService.FaceCollection.ListAsync(
-        //        new ListAllSubjectExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
 
-        //    var actualSubjectExample = resultList.Faces
-        //        .First(x => x.ImageId == expectedAddExampleSubjectResponse.ImageId & x.Subject == expectedAddExampleSubjectResponse.Subject);
+        [Fact]
+        [FaceCollectionTestBeforeAfter]
+        public async Task AddFromURLAsync_TakesRequestModel_ReturnsProperResponseModel()
+        {
+            //Arrange
+            var subjectExample = new AddSubjectExampleRequestByFileUrl()
+            {
+                DetProbThreShold = 0.81m,
+                FileUrl = FILE_URL,
+                Subject = TEST_SUBJECT_EXAMPLE_NAME,
+            };
 
-        //    //Assert
-        //    Assert.Equal(expectedAddExampleSubjectResponse.Subject, actualSubjectExample.Subject);
-        //    Assert.Equal(expectedAddExampleSubjectResponse.ImageId, actualSubjectExample.ImageId);
-        //}
+            var expectedAddExampleSubjectResponse = await _recognitionService.FaceCollection.AddAsync(subjectExample);
+
+            //Act
+            var resultList = await _recognitionService.FaceCollection.ListAsync(
+                new ListAllSubjectExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
+
+            var actualSubjectExample = resultList.Faces
+                .First(x => x.ImageId == expectedAddExampleSubjectResponse.ImageId & x.Subject == expectedAddExampleSubjectResponse.Subject);
+
+            //Assert
+            Assert.Equal(expectedAddExampleSubjectResponse.Subject, actualSubjectExample.Subject);
+            Assert.Equal(expectedAddExampleSubjectResponse.ImageId, actualSubjectExample.ImageId);
+        }
 
         //[Fact]
         //[FaceCollectionTestBeforeAfter]
