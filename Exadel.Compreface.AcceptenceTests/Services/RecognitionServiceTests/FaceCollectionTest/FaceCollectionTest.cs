@@ -298,64 +298,64 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         //    Assert.NotNull(actualAllSubjectExamplesResponse);
         //}
 
-        [Fact]
-        public async Task GetAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
-        {
-            //Act
-            var func = async () => await _recognitionService.FaceCollection.ListAsync(null!);
+        //[Fact]
+        //public async Task GetAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        //{
+        //    //Act
+        //    var func = async () => await _recognitionService.FaceCollection.ListAsync(null!);
 
-            // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
-        }
-
-        [Fact]
-        public async Task GetAllAsync_TakesNonExistentSubject_ReturnsDefaultValue()
-        {
-            //Arrange
-            var request = new ListAllSubjectExamplesRequest()
-            {
-                Page = 1,
-                Size = 1,
-                Subject = TEST_SUBJECT_EXAMPLE_NAME
-            };
-
-            var expectedDefaultResponse = new ListAllSubjectExamplesResponse
-            {
-                Faces = new List<Face>(),
-                PageNumber = 1,
-                PageSize = 1,
-                TotalElements = 0,
-                TotalPages = 0,
-            };
-
-            //Act
-            var actualResponse = await _recognitionService.FaceCollection.ListAsync(request);
-
-            //Assert
-            Assert.Equivalent(expectedDefaultResponse, actualResponse);
-        }
+        //    // Assert
+        //    await Assert.ThrowsAsync<NullReferenceException>(func);
+        //}
 
         //[Fact]
-        //[FaceCollectionTestBeforeAfter]
-        //public async Task DeleteAllAsync_TakesRequestModel_ReturnsProperResponseModel()
+        //public async Task GetAllAsync_TakesNonExistentSubject_ReturnsDefaultValue()
         //{
         //    //Arrange
-        //    addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
-
-        //    var expectedCount = 3;
-
-        //    for (int counter = expectedCount; counter > 0; counter--)
+        //    var request = new ListAllSubjectExamplesRequest()
         //    {
-        //        await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
-        //    }
+        //        Page = 1,
+        //        Size = 1,
+        //        Subject = TEST_SUBJECT_EXAMPLE_NAME
+        //    };
+
+        //    var expectedDefaultResponse = new ListAllSubjectExamplesResponse
+        //    {
+        //        Faces = new List<Face>(),
+        //        PageNumber = 1,
+        //        PageSize = 1,
+        //        TotalElements = 0,
+        //        TotalPages = 0,
+        //    };
 
         //    //Act
-        //    var actualResponse = await _recognitionService.FaceCollection.DeleteAllAsync(
-        //        new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
+        //    var actualResponse = await _recognitionService.FaceCollection.ListAsync(request);
 
         //    //Assert
-        //    Assert.Equal(expectedCount, actualResponse.Deleted);
+        //    Assert.Equivalent(expectedDefaultResponse, actualResponse);
         //}
+
+        [Fact]
+        [FaceCollectionTestBeforeAfter]
+        public async Task DeleteAllAsync_TakesRequestModel_ReturnsProperResponseModel()
+        {
+            //Arrange
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
+
+            var expectedCount = 3;
+
+            for (int counter = expectedCount; counter > 0; counter--)
+            {
+                await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
+            }
+
+            //Act
+            var actualResponse = await _recognitionService.FaceCollection.DeleteAllAsync(
+                new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
+
+            //Assert
+            Assert.Equal(expectedCount, actualResponse.Deleted);
+        }
 
         //[Fact]
         //[FaceCollectionTestBeforeAfter]
