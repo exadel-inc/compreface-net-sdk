@@ -33,6 +33,10 @@ jobs:
       with:
         url: "https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip"
         target: public/
+        
+    - name: Show contents
+      working-directory: ./compreface
+      run: pwd
     
     - name: Unzip CompreFace  
       run: 7z x CompreFace_1.1.0.zip
