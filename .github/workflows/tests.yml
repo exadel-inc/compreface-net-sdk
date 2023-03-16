@@ -22,10 +22,6 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-
-    - name: Run docker 
-      uses: docker-practice/actions-setup-docker@master
-      timeout-minutes: 12
       
     - name: Download a file
       run: wget https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip
