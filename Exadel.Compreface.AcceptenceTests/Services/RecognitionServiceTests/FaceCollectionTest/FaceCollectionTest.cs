@@ -389,16 +389,16 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         //    await Assert.ThrowsAsync<NullReferenceException>(func);
         //}
 
-        //[Fact]
-        //public async Task DeleteAllAsync_TakesNullRequestModel_ThrowsServiceException()
-        //{
-        //    //Act
-        //    var func = async () => await _recognitionService.FaceCollection.DeleteAllAsync(
-        //        new DeleteAllExamplesRequest());
+        [Fact]
+        public async Task DeleteAllAsync_TakesNullRequestModel_ThrowsServiceException()
+        {
+            //Act
+            var func = async () => await _recognitionService.FaceCollection.DeleteAllAsync(
+                new DeleteAllExamplesRequest());
 
-        //    // Assert
-        //    await Assert.ThrowsAsync<ServiceException>(func);
-        //}
+            // Assert
+            await Assert.ThrowsAsync<ServiceException>(func);
+        }
         //!!!!!
         [Fact]
         [FaceCollectionTestBeforeAfter]
