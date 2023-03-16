@@ -335,31 +335,9 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         //    Assert.Equivalent(expectedDefaultResponse, actualResponse);
         //}
 
-        [Fact]
-        [FaceCollectionTestBeforeAfter]
-        public async Task DeleteAllAsync_TakesRequestModel_ReturnsProperResponseModel()
-        {
-            //Arrange
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
-
-            var expectedCount = 3;
-
-            for (int counter = expectedCount; counter > 0; counter--)
-            {
-                await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
-            }
-
-            //Act
-            var actualResponse = await _recognitionService.FaceCollection.DeleteAllAsync(
-                new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
-
-            //Assert
-            Assert.Equal(expectedCount, actualResponse.Deleted);
-        }
-
         //[Fact]
         //[FaceCollectionTestBeforeAfter]
-        //public async Task DeleteAllAsync_TakesRequestModel_ReturnsNotNull()
+        //public async Task DeleteAllAsync_TakesRequestModel_ReturnsProperResponseModel()
         //{
         //    //Arrange
         //    addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
@@ -375,9 +353,31 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         //    var actualResponse = await _recognitionService.FaceCollection.DeleteAllAsync(
         //        new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
 
-        //    // Assert
-        //    Assert.NotNull(actualResponse);
+        //    //Assert
+        //    Assert.Equal(expectedCount, actualResponse.Deleted);
         //}
+
+        [Fact]
+        [FaceCollectionTestBeforeAfter]
+        public async Task DeleteAllAsync_TakesRequestModel_ReturnsNotNull()
+        {
+            //Arrange
+            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
+
+            var expectedCount = 3;
+
+            for (int counter = expectedCount; counter > 0; counter--)
+            {
+                await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
+            }
+
+            //Act
+            var actualResponse = await _recognitionService.FaceCollection.DeleteAllAsync(
+                new DeleteAllExamplesRequest() { Subject = TEST_SUBJECT_EXAMPLE_NAME });
+
+            // Assert
+            Assert.NotNull(actualResponse);
+        }
 
         //[Fact]
         //public async Task DeleteAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
