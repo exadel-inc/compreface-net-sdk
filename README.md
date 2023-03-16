@@ -51,7 +51,7 @@ Before using our SDK make sure you have installed CompreFace and .NET on your ma
 
 | CompreFace .NET SDK version   | CompreFace 1.1.0 |
 | ------------------------------| ---------------- |
-| ?                             | ✔                |
+| 1.0.0                         | ✔               |
 
 Explanation:
 
@@ -65,7 +65,7 @@ In case if CompreFace version is newer - SDK won't support new features of Compr
 
 To use SDK install NuGet package
 ```
-Install-Package ???
+Install-Package CompreFace.NET.Sdk
 ```
 
 # Usage
