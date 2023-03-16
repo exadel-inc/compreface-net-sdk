@@ -40,6 +40,9 @@ jobs:
       run: pwd
         
     - name: Run CompreFace
+      run: docker run --name nginx -d -v /root/nginx/conf:/etc/nginx/conf.d --net=host nginx
+      
+    - name: Compose 
       run: docker-compose -f "/home/runner/work/compreface-net-sdk/compreface-net-sdk/compreface/docker-compose.yml" up -d --build
 
     - name: Locahost
