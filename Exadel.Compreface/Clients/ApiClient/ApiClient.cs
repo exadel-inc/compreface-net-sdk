@@ -53,10 +53,10 @@ namespace Exadel.Compreface.Clients.ApiClient
             {
                 throw await ThrowServiceTimeoutExceptionAsync(exception);
             }
-            catch (FlurlHttpException exception)
-            {
-                throw await ThrowServiceExceptionAsync(exception);
-            }
+            //catch (FlurlHttpException exception)
+            //{
+            //    throw await ThrowServiceExceptionAsync(exception);
+            //}
         }
 
         /// <summary>
@@ -111,10 +111,10 @@ namespace Exadel.Compreface.Clients.ApiClient
             {
                 throw await ThrowServiceTimeoutExceptionAsync(exception);
             }
-            catch (FlurlHttpException exception)
-            {
-                throw await ThrowServiceExceptionAsync(exception);
-            }
+            //catch (FlurlHttpException exception)
+            //{
+            //    throw await ThrowServiceExceptionAsync(exception);
+            //}
         }
 
         /// <summary>
@@ -169,10 +169,10 @@ namespace Exadel.Compreface.Clients.ApiClient
             {
                 throw await ThrowServiceTimeoutExceptionAsync(exception);
             }
-            catch (FlurlHttpException exception)
-            {
-                throw await ThrowServiceExceptionAsync(exception);
-            }
+            //catch (FlurlHttpException exception)
+            //{
+            //    throw await ThrowServiceExceptionAsync(exception);
+            //}
         }
 
         /// <summary>
@@ -226,10 +226,10 @@ namespace Exadel.Compreface.Clients.ApiClient
             {
                 throw await ThrowServiceTimeoutExceptionAsync(exception);
             }
-            catch (FlurlHttpException exception)
-            {
-                throw await ThrowServiceExceptionAsync(exception);
-            }
+            //catch (FlurlHttpException exception)
+            //{
+            //    throw await ThrowServiceExceptionAsync(exception);
+            //}
         }
 
         /// <summary>
@@ -284,10 +284,10 @@ namespace Exadel.Compreface.Clients.ApiClient
             {
                 throw await ThrowServiceTimeoutExceptionAsync(exception);
             }
-            catch (FlurlHttpException exception)
-            {
-                throw await ThrowServiceExceptionAsync(exception);
-            }
+            //catch (FlurlHttpException exception)
+            //{
+            //    throw await ThrowServiceExceptionAsync(exception);
+            //}
         }
 
         /// <summary>
@@ -341,10 +341,10 @@ namespace Exadel.Compreface.Clients.ApiClient
             {
                 throw await ThrowServiceTimeoutExceptionAsync(exception);
             }
-            catch (FlurlHttpException exception)
-            {
-                throw await ThrowServiceExceptionAsync(exception);
-            }
+            //catch (FlurlHttpException exception)
+            //{
+            //    throw await ThrowServiceExceptionAsync(exception);
+            //}
         }
 
         /// <summary>
@@ -396,10 +396,10 @@ namespace Exadel.Compreface.Clients.ApiClient
             {
                 throw await ThrowServiceTimeoutExceptionAsync(exception);
             }
-            catch (FlurlHttpException exception)
-            {
-                throw await ThrowServiceExceptionAsync(exception);
-            }
+            //catch (FlurlHttpException exception)
+            //{
+            //    throw await ThrowServiceExceptionAsync(exception);
+            //}
         }
 
         private static async Task<ServiceTimeoutException> ThrowServiceTimeoutExceptionAsync(FlurlHttpTimeoutException exception)
