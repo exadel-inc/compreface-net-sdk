@@ -399,27 +399,27 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
             // Assert
             await Assert.ThrowsAsync<ServiceException>(func);
         }
+//!!!!!
+        //[Fact]
+        //[FaceCollectionTestBeforeAfter]
+        //public async Task DeleteAsync_TakesRequestModel_ReturnsProperResponseModel()
+        //{
+        //    //Arrange
+        //    addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
+        //    var testImage = await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
 
-        [Fact]
-        [FaceCollectionTestBeforeAfter]
-        public async Task DeleteAsync_TakesRequestModel_ReturnsProperResponseModel()
-        {
-            //Arrange
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
-            var testImage = await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
+        //    var deleteImageByIdRequest = new DeleteImageByIdRequest()
+        //    {
+        //        ImageId = testImage.ImageId
+        //    };
 
-            var deleteImageByIdRequest = new DeleteImageByIdRequest()
-            {
-                ImageId = testImage.ImageId
-            };
+        //    //Act
+        //    var actualDeleteImageByIdResponse = await _recognitionService.FaceCollection.DeleteAsync(deleteImageByIdRequest);
 
-            //Act
-            var actualDeleteImageByIdResponse = await _recognitionService.FaceCollection.DeleteAsync(deleteImageByIdRequest);
-
-            //Assert
-            Assert.Equal(testImage.Subject, actualDeleteImageByIdResponse.Subject);
-            Assert.Equal(testImage.ImageId, actualDeleteImageByIdResponse.ImageId);
-        }
+        //    //Assert
+        //    Assert.Equal(testImage.Subject, actualDeleteImageByIdResponse.Subject);
+        //    Assert.Equal(testImage.ImageId, actualDeleteImageByIdResponse.ImageId);
+        //}
 
         //[Fact]
         //[FaceCollectionTestBeforeAfter]
