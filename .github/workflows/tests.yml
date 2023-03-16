@@ -27,9 +27,13 @@ jobs:
       uses: docker-practice/actions-setup-docker@master
       timeout-minutes: 12
       
-    - name: Download a file
-      run: wget https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip
-      
+    - uses: suisei-cn/actions-download-file@v1.3.0
+      id: downloadfile  # Remember to give an ID if you need the output filename
+      name: Download the file
+      with:
+        url: "https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip"
+        target: public/
+    
     - name: Unzip CompreFace  
       uses: montudor/action-zip@v1
       with:
