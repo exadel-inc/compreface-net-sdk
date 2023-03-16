@@ -271,69 +271,69 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
         //    Assert.Equal(actualCount, expectedCount);
         //}
 
-        [Fact]
-        [FaceCollectionTestBeforeAfter]
-        public async Task GetAllAsync_TakesRequestModel_ReturnsNotNull()
-        {
-            //Arrange
-            var allSubjectExamples = new ListAllSubjectExamplesRequest()
-            {
-                Page = 0,
-                Size = 0,
-                Subject = TEST_SUBJECT_EXAMPLE_NAME
-            };
-
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
-
-            var expectedCount = 3;
-            for (int counter = expectedCount; counter > 0; counter--)
-            {
-                await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
-            }
-
-            //Act
-            var actualAllSubjectExamplesResponse = await _recognitionService.FaceCollection.ListAsync(allSubjectExamples);
-
-            // Assert
-            Assert.NotNull(actualAllSubjectExamplesResponse);
-        }
-
         //[Fact]
-        //public async Task GetAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
-        //{
-        //    //Act
-        //    var func = async () => await _recognitionService.FaceCollection.ListAsync(null!);
-
-        //    // Assert
-        //    await Assert.ThrowsAsync<NullReferenceException>(func);
-        //}
-
-        //[Fact]
-        //public async Task GetAllAsync_TakesNonExistentSubject_ReturnsDefaultValue()
+        //[FaceCollectionTestBeforeAfter]
+        //public async Task GetAllAsync_TakesRequestModel_ReturnsNotNull()
         //{
         //    //Arrange
-        //    var request = new ListAllSubjectExamplesRequest()
+        //    var allSubjectExamples = new ListAllSubjectExamplesRequest()
         //    {
-        //        Page = 1,
-        //        Size = 1,
+        //        Page = 0,
+        //        Size = 0,
         //        Subject = TEST_SUBJECT_EXAMPLE_NAME
         //    };
 
-        //    var expectedDefaultResponse = new ListAllSubjectExamplesResponse
+        //    addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
+
+        //    var expectedCount = 3;
+        //    for (int counter = expectedCount; counter > 0; counter--)
         //    {
-        //        Faces = new List<Face>(),
-        //        PageNumber = 1,
-        //        PageSize = 1,
-        //        TotalElements = 0,
-        //        TotalPages = 0,
-        //    };
+        //        await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
+        //    }
 
         //    //Act
-        //    var actualResponse = await _recognitionService.FaceCollection.ListAsync(request);
+        //    var actualAllSubjectExamplesResponse = await _recognitionService.FaceCollection.ListAsync(allSubjectExamples);
 
-        //    //Assert
-        //    Assert.Equivalent(expectedDefaultResponse, actualResponse);
+        //    // Assert
+        //    Assert.NotNull(actualAllSubjectExamplesResponse);
         //}
+
+        [Fact]
+        public async Task GetAllAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        {
+            //Act
+            var func = async () => await _recognitionService.FaceCollection.ListAsync(null!);
+
+            // Assert
+            await Assert.ThrowsAsync<NullReferenceException>(func);
+        }
+
+        [Fact]
+        public async Task GetAllAsync_TakesNonExistentSubject_ReturnsDefaultValue()
+        {
+            //Arrange
+            var request = new ListAllSubjectExamplesRequest()
+            {
+                Page = 1,
+                Size = 1,
+                Subject = TEST_SUBJECT_EXAMPLE_NAME
+            };
+
+            var expectedDefaultResponse = new ListAllSubjectExamplesResponse
+            {
+                Faces = new List<Face>(),
+                PageNumber = 1,
+                PageSize = 1,
+                TotalElements = 0,
+                TotalPages = 0,
+            };
+
+            //Act
+            var actualResponse = await _recognitionService.FaceCollection.ListAsync(request);
+
+            //Assert
+            Assert.Equivalent(expectedDefaultResponse, actualResponse);
+        }
 
         //[Fact]
         //[FaceCollectionTestBeforeAfter]
