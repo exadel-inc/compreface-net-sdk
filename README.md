@@ -1,386 +1,1435 @@
-# Compreface .NET SDK client
+# CompreFace .NET SDK
 
-**This library can be used to simplify access to Compreface from .NET**
+CompreFace NET SDK makes face recognition into your application even easier.
 
-**Subject**
+# Table of content
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Initialization](#initialization)
+  - [Adding faces into a face collection](#adding-faces-into-a-face-collection)
+  - [Recognition](#recognition)
+  - [Webcam demo](#webcam-demo)
+- [Reference](#reference)
+  - [CompreFace Global Object](#compreFace-global-object)
+    - [Services](#Services)
+  - [Optional properties](#optional-properties)
+  - [Face Recognition Service](#face-recognition-service)
+	- [Face Recognition](#face-recognition)
+	  - [Recognize Faces from a Given Image](#recognize-faces-from-a-given-image)
+	  - [Verify Faces from a Given Image](#verify-faces-from-a-given-image)
+    - [Get Face Collection](#get-face-collection)
+      - [Add an Example of a Subject](#add-an-example-of-a-subject)
+      - [List of All Saved Examples of the Subject](#list-of-all-saved-examples-of-the-subject)
+      - [Delete All Examples of the Subject by Name](#delete-all-examples-of-the-subject-by-name)
+      - [Delete an Example of the Subject by ID](#delete-an-example-of-the-subject-by-id)
+	  - [Direct Download an Image example of the Subject by ID](#direct-download-an-image-example-of-the-subject-by-id)
+	  - [Download an Image example of the Subject by ID](#download-an-image-example-of-the-subject-by-id)
+    - [Get Subjects](#get-subjects)
+      - [Add a Subject](#add-a-subject)
+      - [List Subjects](#list-subjects)
+      - [Rename a Subject](#rename-a-subject)
+      - [Delete a Subject](#delete-a-subject)
+      - [Delete All Subjects](#delete-all-subjects)
+    - [Face Detection Service](#face-detection-service)
+      - [Detect](#detect)
+    - [Face Verification Service](#face-verification-service)
+      - [Verify](#verify)
+- [Contributing](#contributing)
+    - [Report Bugs](#report-bugs)
+    - [Submit Feedback](#submit-feedback)
+- [License info](#license-info)
+
+# Requirements
+
+Before using our SDK make sure you have installed CompreFace and .NET on your machine.
+
+1. [CompreFace](https://github.com/exadel-inc/CompreFace#getting-started-with-compreface)
+2. [.NET](https://dotnet.microsoft.com/en-us/download) (Version 7+)
+
+## CompreFace compatibility matrix
+
+| CompreFace .NET SDK version   | CompreFace 1.1.0 |
+| ------------------------------| ---------------- |
+| 1.0.0                         | ✔               |
+| 1.0.1                         | ✔               |
+
+Explanation:
+
+* ✔  SDK supports all functionality from CompreFace. 
+* :yellow_circle:  SDK works with this CompreFace version. 
+In case if CompreFace version is newer - SDK won't support new features of CompreFace. In case if CompreFace version is older - new SDK features will fail.
+* ✘ There are major backward compatibility issues. It is not recommended to use these versions together
 
 
-*Get All subjects*
+# Installation
+
+To use SDK install NuGet package
+```
+Install-Package CompreFace.NET.Sdk
+```
+
+# Usage
+
+All examples below you can find in repository inside [examples](/examples) folder.
+
+## Initialization
+
+To start using  Compreface .NET SDK you need to import `CompreFace` object from 'compreface-sdk' dependency.
+
+Then you need to create `CompreFaceClient` object and initialize it with `DOMAIN` and `PORT`. By default, if you run CompreFace on your local machine, it's `DOMAIN` will be `http://localhost`, and `PORT` in this case will be `8000`.
+You can pass optional `options` object when call method to set default parameters, see reference for [more information](#options-structure).
+
+You should use `RecognitionService` service in `CompreFaceClient` object to recognize faces.
+
+However, before recognizing you need first to add subject into the face collection. To do this, get the `Subject` object with the help of `RecognitionService`. `Subject` is included in `RecognitionService` class.
 
 ```
-    
-    var getAllSubjectResponse = await subjectService.GetAllSubject();
-    
-    foreach (var subject in getAllSubjectResponse.Subjects)
+var client = new CompreFaceClient(
+    domain: "http://localhost",
+    port: "8000");
+
+var recognitionService = client.GetCompreFaceService<RecognitionService>(recognition api key);
+
+var subject = recognitionService.Subject;
+
+var subjectRequest = new AddSubjectRequest()
+{
+    Subject = "Subject name"
+};
+
+var subjectResponse = await subject.AddAsync(subjectRequest);
+```
+
+## Adding faces into a face collection
+
+Here is example that shows how to add an image to your face collection from your file system:
+
+```
+var faceCollection = recognitionService.FaceCollection;
+
+var request = new AddSubjectExampleRequestByFilePath()
+{
+    DetProbThreShold = 0.81m,
+    Subject = "Subject name",
+    FilePath = "Full file path"
+};
+
+var response = await faceCollection.AddAsync(request);
+```
+
+## Recognition
+
+This code snippet shows how to recognize unknown face.
+_Recognize faces from a given image_
+
+```
+var recognizeRequest = new RecognizeFaceFromImageRequestByFilePath()
+{
+    FilePath = "Full file path",
+    DetProbThreshold = 0.81m,
+    FacePlugins = new List<string>()
     {
-    
-        Console.WriteLine(subject);
-    
+        "landmarks",
+        "gender",
+        "age",
+        "detector",
+        "calculator"
+    },
+    Limit = 0,
+    PredictionCount = 1,
+    Status = true
+};
+
+var recognizeResponse = await recognitionService.RecognizeFaceFromImage.RecognizeAsync(recognizeRequest);
+```
+
+# Reference
+
+## CompreFace Global Object
+
+Global CompreFace Object is used for initializing connection to CompreFace and setting default values for options.
+Default values will be used in every service method if applicable.
+
+**Constructor:**
+```CompreFaceClient(domain, port)```
+
+| Argument | Type   | Required | Notes                                     | 
+| ---------| ------ | -------- | ----------------------------------------- | 
+| domain   | string | required | Domain with protocol where CompreFace is located. E.g. `http://localhost` |
+| port     | string | required | CompreFace port. E.g. `8000` |
+
+Example:
+
+```
+var client = new CompreFaceClient(
+    domain: "http://localhost",
+    port: "8000");
+
+```
+
+### Services
+
+1. ```client.GetCompreFaceService<RecognitionService>(apiKey)```
+
+Inits face recognition service object.
+
+| Argument | Type   | Required | Notes                                     |
+| ---------| ------ | -------- | ----------------------------------------- |
+| apiKey   | string | required | Face Recognition Api Key in UUID format   |
+
+Example:
+
+```
+var apiKey = "00000000-0000-0000-0000-000000000002";
+
+var recognitionService = client.GetCompreFaceService<RecognitionService>(apiKey);
+```
+
+2. ```client.GetCompreFaceService<FaceDetectionService>(apiKey)```
+
+Inits face detection service object.
+
+| Argument | Type   | Required | Notes                                     |
+| ---------| ------ | -------- | ----------------------------------------- |
+| apiKey   | string | required | Face Detection Api Key in UUID format     |
+
+Example:
+
+```
+var apiKey = "00000000-0000-0000-0000-000000000003";
+
+var faceDetectionService = client.GetCompreFaceService<FaceDetectionService>(api_key);
+```
+
+3. ```client.GetCompreFaceService<FaceVerificationService>(apiKey)```
+
+Inits face verification service object.
+
+| Argument | Type   | Required | Notes                                     |
+| ---------| ------ | -------- | ----------------------------------------- |
+| apiKey   | string | required | Face Verification Api Key in UUID format  |
+
+Example:
+
+```
+var apiKey = "00000000-0000-0000-0000-000000000004";
+
+var faceVerificationService = client.GetCompreFaceService<FaceVerificationService>(api_key);
+```
+
+## Optional properties
+All optional properties are located in the `BaseFaceRequest` class.
+
+```
+public class BaseFaceRequest
+{
+    public int? Limit { get; set; }
+
+    public decimal DetProbThreshold { get; set; }
+
+    public IList<string> FacePlugins { get; set; }
+
+    public bool Status { get; set; }
+}
+```
+
+`BaseFaceRequest` class is inherited by several DTO classes which are serialized to request format.
+
+Here is description how it looks like in request body.
+| Option              | Type    | Notes                                     |
+| --------------------| ------  | ----------------------------------------- |
+| det_prob_threshold  | float   | minimum required confidence that a recognized face is actually a face. Value is between 0.0 and 1.0 |
+| limit               | integer | maximum number of faces on the image to be recognized. It recognizes the biggest faces first. Value of 0 represents no limit. Default value: 0       |
+| prediction_count    | integer | maximum number of subject predictions per face. It returns the most similar subjects. Default value: 1    |
+| face_plugins        | string  | comma-separated slugs of face plugins. If empty, no additional information is returned. [Learn more](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md)    |
+| status              | boolean | if true includes system information like execution_time and plugin_version fields. Default value is false    |
+
+Example of face recognition with object:
+```
+var recognizeRequest = new RecognizeFaceFromImageRequestByFilePath()
+{
+    FilePath = "Full file path",
+    DetProbThreshold = 0.81m,
+    FacePlugins = new List<string>()
+    {
+        "landmarks",
+        "gender",
+        "age",
+        "detector",
+        "calculator"
+    },
+    Limit = 0,
+    PredictionCount = 1,
+    Status = true
+};
+
+var recognizeResponse = await recognitionService.RecognizeFaceFromImage.RecognizeAsync(recognizeRequest);
+```
+
+## Face Recognition Service
+
+Face recognition service is used for face identification.
+This means that you first need to upload known faces to face collection and then recognize unknown faces among them.
+When you upload an unknown face, the service returns the most similar faces to it.
+Also, face recognition service supports verify endpoint to check if this person from face collection is the correct one.
+For more information, see [CompreFace page](https://github.com/exadel-inc/CompreFace).
+
+### Face Recognition
+
+**Methods:**
+
+#### Recognize Faces from a Given Image
+
+Recognizes all faces from the image.
+The first argument is the image location, it can be an url, local path or bytes.
+
+```
+await recognitionService.RecognizeFaceFromImage.RecognizeAsync(recognizeRequest)
+```
+
+| Argument           | Type    						           | Required | Notes                                                                                                                                          |
+| ------------------ | --------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| recognizeRequest	 |	RecognizeFaceFromImageRequestByFilePath| required | 
+
+`RecognizeFaceFromImageRequestByFilePath` this is data transfer object which is serialized to JSON. 
+
+```
+public class RecognizeFaceFromImageRequestByFilePath : BaseRecognizeFaceFromImageRequest
+{
+    public string FilePath { get; set; }
+}
+```
+`BaseRecognizeFaceFromImageRequest` class:
+
+```
+public class BaseRecognizeFaceFromImageRequest : BaseFaceRequest
+{
+    public int? PredictionCount { get; set; }
+}
+```
+
+`BaseFaceRequest` class contains **optional** properties:
+
+```
+public class BaseFaceRequest
+{
+    public int? Limit { get; set; }
+
+    public decimal DetProbThreshold { get; set; }
+
+    public IList<string> FacePlugins { get; set; } = new List<string>()
+
+    public bool Status { get; set; }
+}
+```
+| Option              | Type    | Notes                                     |
+| --------------------| ------  | ----------------------------------------- |
+| det_prob_threshold  | float   | minimum required confidence that a recognized face is actually a face. Value is between 0.0 and 1.0 |
+| limit               | integer | maximum number of faces on the image to be recognized. It recognizes the biggest faces first. Value of 0 represents no limit. Default value: 0       |
+| prediction_count    | integer | maximum number of subject predictions per face. It returns the most similar subjects. Default value: 1    |
+| face_plugins        | string  | comma-separated slugs of face plugins. If empty, no additional information is returned. [Learn more](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md)    |
+| status              | boolean | if true includes system information like execution_time and plugin_version fields. Default value is false    |
+
+Response from ComreFace API:
+
+```
+{
+  "result" : [ {
+    "age" : {
+      "probability": 0.9308982491493225,
+      "high": 32,
+      "low": 25
+    },
+    "gender" : {
+      "probability": 0.9898611307144165,
+      "value": "female"
+    },
+    "mask" : {
+      "probability": 0.9999470710754395,
+      "value": "without_mask"
+    },
+    "embedding" : [ 9.424854069948196E-4, "...", -0.011415496468544006 ],
+    "box" : {
+      "probability" : 1.0,
+      "x_max" : 1420,
+      "y_max" : 1368,
+      "x_min" : 548,
+      "y_min" : 295
+    },
+    "landmarks" : [ [ 814, 713 ], [ 1104, 829 ], [ 832, 937 ], [ 704, 1030 ], [ 1017, 1133 ] ],
+    "subjects" : [ {
+      "similarity" : 0.97858,
+      "subject" : "subject1"
+    } ],
+    "execution_time" : {
+      "age" : 28.0,
+      "gender" : 26.0,
+      "detector" : 117.0,
+      "calculator" : 45.0,
+      "mask": 36.0
     }
-
+  } ],
+  "plugins_versions" : {
+    "age" : "agegender.AgeDetector",
+    "gender" : "agegender.GenderDetector",
+    "detector" : "facenet.FaceDetector",
+    "calculator" : "facenet.Calculator",
+    "mask": "facemask.MaskDetector"
+  }
+}
 ```
 
-*Delete all subjects*
+| Element                    | Type    | Description                                                                                                                                                 |
+| -------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| age                        | object  | detected age range. Return only if [age plugin](https://github.com/exadel-inc/CompreFace/blob/master/docs/Face-services-and-plugins.md) is enabled                                                       |
+| gender                     | object  | detected gender. Return only if [gender plugin](https://github.com/exadel-inc/CompreFace/blob/master/docs/Face-services-and-plugins.md) is enabled                                                       |
+| mask                       | object  | detected mask. Return only if [face mask plugin](https://github.com/exadel-inc/CompreFace/blob/master/docs/Face-services-and-plugins.md) is enabled.          |
+| embedding                  | array   | face embeddings. Return only if [calculator plugin](https://github.com/exadel-inc/CompreFace/blob/master/docs/Face-services-and-plugins.md) is enabled                                                   |
+| box                        | object  | list of parameters of the bounding box for this face                                                                                                        |
+| probability                | float   | probability that a found face is actually a face                                                                                                            |
+| x_max, y_max, x_min, y_min | integer | coordinates of the frame containing the face                                                                                                                |
+| landmarks                  | array   | list of the coordinates of the frame containing the face-landmarks.|
+| subjects                   | list    | list of similar subjects with size of <prediction_count> order by similarity                                                                                |
+| similarity                 | float   | similarity that on that image predicted person                                                                                                              |
+| subject                    | string  | name of the subject in Face Collection                                                                                                                      |
+| execution_time             | object  | execution time of all plugins                                                                                                                               |
+| plugins_versions           | object  | contains information about plugin versions                                                                                                                  |
 
-````
-        var deleteAllSubjectsResponse = await subjectService.DeleteAllSubjects();
-        
-        Console.WriteLine(deleteAllSubjectsResponse.Deleted);
-
-````
-
-*Delete subject*
-
-```
-        var deleteSubjectRequest = new DeleteSubjectRequest()
-        {
-            ActualSubject = "Asadbek Sindarov"
-        };
-        
-        var deleteSubjectResponse = await subjectService.DeleteSubject(deleteSubjectRequest);
-        
-        Console.WriteLine(deleteSubjectResponse.Subject);
+This JSON response is deserialized to `RecognizeFaceFromImageResponse` data transfer object(DTO).
 
 ```
+public class RecognizeFaceFromImageResponse
+{
+    public IList<Result> Result { get; set; }
 
-*Add new Subject*
+    public PluginVersions PluginsVersions { get; set; }
+}
 
-```
-        var addSubjectRequest = new AddSubjectRequest()
-        {
-            Subject = "Some guy's name"
-        };
-        
-        var addSubjectResponse = await subjectService.AddSubject(addSubjectRequest);
-        
-        Console.WriteLine(addSubjectResponse.Subject);
-
+public class Result : BaseResult
+{
+    public IList<SimilarSubject> Subjects { get; set; }
+} 
 ```
 
-*Rename Subject*
-
+`BaseResult` class:
 ```
-    var renameSubjectRequest = new RenameSubjectRequest()
-        {
-            CurrentSubject = "Asadbek",
-            Subject = "Asadbek Sindarov"
-        };
-        
-        var renameSubjectResponse = await subjectService.RenameSubject(renameSubjectRequest);
-        
-        Console.WriteLine(renameSubjectResponse.Updated);
+public class BaseResult
+{
+    public Age Age { get; set; }
 
+    public Gender Gender { get; set; }
 
-```
+    public Mask Mask { get; set; }
 
-**Subject Example**
+    public Box Box { get; set; }
 
-*Get All Example Subject*
+    public IList<List<int>> Landmarks { get; set; }
 
-```
-        var listAllExampleSubjectRequest = new ListAllExampleSubjectRequest()
-        {
-            Page = 1,
-            Size = 1,
-            Subject = "Asadbek Sindarov",
-        };
-        
-        var listAllExampleSubjectResponse = await exampleSubjectService.GetAllExampleSubjects(listAllExampleSubjectRequest);
-        
-        foreach (var exampleSubject in listAllExampleSubjectResponse.Faces)
-        {
-            Console.WriteLine(exampleSubject.Subject);
-            Console.WriteLine(exampleSubject.ImageId);
-        }
-        
-        Console.WriteLine(listAllExampleSubjectResponse.PageNumber);
-        Console.WriteLine(listAllExampleSubjectResponse.PageSize);
-        Console.WriteLine(listAllExampleSubjectResponse.TotalElements);
-        Console.WriteLine(listAllExampleSubjectResponse.TotalPages);
+    public ExecutionTime ExecutionTime { get; set; }
 
+    public IList<decimal> Embedding { get; set; }
+}
 ```
 
-*Add Example Subject*
+#### Verify Faces from a Given Image
 
 ```
-        var addExampleSubjectRequest = new AddExampleSubjectRequest()
-        {
-            DetProbThreShold = 0.81m,
-            FilePath = @"image path here",
-            Subject = "Asadbek Sindarov",
-            FileName = "file name" // Guid.NewGuid().ToString(),
-        };
+await recognitionService.RecognizeFaceFromImage.VerifyAsync(request);
+```
+
+Compares similarities of given image with image from your face collection.
+
+| Argument| Type    			       | Required | Notes                                                                                                                                          |
+| ------- | -------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	VerifyFacesFromImageRequest| required | 
+
+`VerifyFacesFromImageRequest` this is data transfer object which is serialized to JSON.
+
+```
+public class VerifyFacesFromImageRequest : BaseVerifyFacesFromImageRequest
+{
+    public string FilePath { get; set; }
+}
+```
+
+`BaseVerifyFacesFromImageRequest` class:
+
+```
+public class BaseVerifyFacesFromImageRequest : BaseFaceRequest
+{
+    public Guid ImageId { get; set; }
+}
+```
+
+`BaseFaceRequest` class contains **optional** properties:
+
+```
+public class BaseFaceRequest
+{
+    public int? Limit { get; set; }
+
+    public decimal DetProbThreshold { get; set; }
+
+    public IList<string> FacePlugins { get; set; }
+
+    public bool Status { get; set; }
+}
+```
+| Option              | Type    | Notes                                     |
+| --------------------| ------  | ----------------------------------------- |
+| det_prob_threshold  | float   | minimum required confidence that a recognized face is actually a face. Value is between 0.0 and 1.0 |
+| limit               | integer | maximum number of faces on the image to be recognized. It recognizes the biggest faces first. Value of 0 represents no limit. Default value: 0       |
+| prediction_count    | integer | maximum number of subject predictions per face. It returns the most similar subjects. Default value: 1    |
+| face_plugins        | string  | comma-separated slugs of face plugins. If empty, no additional information is returned. [Learn more](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md)    |
+| status              | boolean | if true includes system information like execution_time and plugin_version fields. Default value is false    |
+
+Response:
+```json
+{
+  "result" : [ {
+    "age" : {
+      "probability": 0.9308982491493225,
+      "high": 32,
+      "low": 25
+    },
+    "gender" : {
+      "probability": 0.9898611307144165,
+      "value": "female"
+    },
+    "mask" : {
+      "probability": 0.9999470710754395,
+      "value": "without_mask"
+    },
+    "embedding" : [ 9.424854069948196E-4, "...", -0.011415496468544006 ],
+    "box" : {
+      "probability" : 1.0,
+      "x_max" : 1420,
+      "y_max" : 1368,
+      "x_min" : 548,
+      "y_min" : 295
+    },
+    "landmarks" : [ [ 814, 713 ], [ 1104, 829 ], [ 832, 937 ], [ 704, 1030 ], [ 1017, 1133 ] ],
+    "subjects" : [ {
+      "similarity" : 0.97858,
+      "subject" : "subject1"
+    } ],
+    "execution_time" : {
+      "age" : 28.0,
+      "gender" : 26.0,
+      "detector" : 117.0,
+      "calculator" : 45.0,
+      "mask": 36.0
+    }
+  } ],
+  "plugins_versions" : {
+    "age" : "agegender.AgeDetector",
+    "gender" : "agegender.GenderDetector",
+    "detector" : "facenet.FaceDetector",
+    "calculator" : "facenet.Calculator",
+    "mask": "facemask.MaskDetector"
+  }
+}
+```
+
+| Element                        | Type    | Description                                                  |
+| ------------------------------ | ------- | ------------------------------------------------------------ |
+| age                            | object  | detected age range. Return only if [age plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled         |
+| gender                         | object  | detected gender. Return only if [gender plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled         |
+| mask                           | object  | detected mask. Return only if [face mask plugin](https://github.com/exadel-inc/CompreFace/blob/master/docs/Face-services-and-plugins.md) is enabled.          |
+| embedding                      | array   | face embeddings. Return only if [calculator plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled      |
+| box                            | object  | list of parameters of the bounding box for this face         |
+| probability                    | float   | probability that a found face is actually a face             |
+| x_max, y_max, x_min, y_min     | integer | coordinates of the frame containing the face                 |
+| landmarks                      | array   | list of the coordinates of the frame containing the face-landmarks. Return only if [landmarks plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled      |
+| similarity                     | float   | similarity that on that image predicted person               |
+| execution_time                 | object  | execution time of all plugins                       |
+| plugins_versions               | object  | contains information about plugin versions                       |
+
+This JSON response is deserialized to `VerifyFacesFromImageResponse` data transfer object(DTO).
+
+```
+public class VerifyFacesFromImageResponse
+{
+    public IList<Result> Result { get; set; }
+
+    public PluginVersions PluginsVersions { get; set; }
+}
+
+public class Result : BaseResult
+{
+    public string Subject { get; set; }
     
-        var addExampleSubjectResponse = await exampleSubjectService.AddExampleSubject(addExampleSubjectRequest);
+    public decimal Similarity { get; set; }
+}
+```
+
+`BaseResult` class:
+
+```
+public class BaseResult
+{
+    public Age Age { get; set; }
+
+    public Gender Gender { get; set; }
+
+    public Mask Mask { get; set; }
+
+    public Box Box { get; set; }
+
+    public IList<List<int>> Landmarks { get; set; }
+
+    public ExecutionTime ExecutionTime { get; set; }
+
+    public IList<decimal> Embedding { get; set; }
+}
+```
+
+`ExecutionTime` class:
+
+```
+public class ExecutionTime
+{
+    public decimal Age { get; set; }
+
+    public decimal Gender { get; set; }
+
+    public decimal Detector { get; set; }
+
+    public decimal Calculator { get; set; }
+
+    public decimal Mask { get; set; }
+}
+```
+
+### Get Face Collection
+
+```
+recognitionService.FaceCollection
+```
+
+Returns Face collection object
+
+Face collection could be used to manage known faces, e.g. add, list, or delete them.
+
+Face recognition is performed for the saved known faces in face collection, so before using the `recognize` method you need to save at least one face into the face collection.
+
+More information about face collection and managing examples [here](https://github.com/exadel-inc/CompreFace/blob/master/docs/Rest-API-description.md#managing-subject-examples)
+
+**Methods:**
+
+#### Add an Example of a Subject
+
+This creates an example of the subject by saving images. You can add as many images as you want to train the system. Image should
+contain only one face.
+
+```
+await recognitionService.FaceCollection.AddAsync(request);
+```
+
+| Argument| Type    						       | Required | Notes                                                                                                                                          |
+| ------- | -------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	AddSubjectExampleRequestByFilePath     | required | 
+
+`AddSubjectExampleRequestByFilePath` this is data transfer object which is serialized to JSON.
+
+```
+public class AddSubjectExampleRequestByFilePath : BaseExampleRequest
+{
+    public string FilePath { get; set; }
+}
+``` 
+
+`BaseExampleRequest` class:
+
+```
+namespace Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs
+{
+    public class BaseExampleRequest
+    {
+        public string Subject { get; set; }
+
+        public decimal? DetProbThreShold { get; set; }
+    }
+}
+```
+| Option              | Type    | Notes                                     |
+| --------------------| ------  | ----------------------------------------- |
+| det_prob_threshold  | float   | minimum required confidence that a recognized face is actually a face. Value is between 0.0 and 1.0 |
+
+`DetProbThreShold` is optional property.
+
+Response:
+
+```
+{
+  "image_id": "6b135f5b-a365-4522-b1f1-4c9ac2dd0728",
+  "subject": "SubjectName"
+}
+```
+
+| Element  | Type   | Description                |
+| -------- | ------ | -------------------------- |
+| image_id | UUID   | UUID of uploaded image     |
+| subject  | string | Subject of the saved image |
+
+This JSON response is deserialized to `AddSubjectExampleResponse` data transfer object(DTO).
+
+```
+public class AddSubjectExampleResponse
+{
+    public Guid ImageId { get; set; }
+
+    public string Subject { get; set; }
+}
+```
+
+#### List of All Saved Examples of the Subject
+
+To retrieve a list of subjects saved in a Face Collection:
+
+```
+await recognitionService.FaceCollection.ListAsync(request);
+```
+
+| Argument| Type    					 | Required | Notes                                                                                                                                          |
+| ------- | ---------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	ListAllSubjectExamplesRequest| required | 
+
+`ListAllSubjectExamplesRequest` this is data transfer object which is serialized to JSON.
+
+```
+
+public class ListAllSubjectExamplesRequest
+{
+    public int? Page { get; set; }
     
-        Console.WriteLine(addExampleSubjectResponse.Subject);
-        Console.WriteLine(addExampleSubjectResponse.ImageId);
-```
-*Delete All Examples of the Subject by Name*
-```
-   await exampleSubjectService.ClearSubjectAsync(new DTOs.ExampleSubject.DeleteAllSubjectExamples.DeleteAllExamplesRequest()
-        {
-            Subject = "Stars"
-        });
+    public int? Size { get; set; }
+    
+    public string Subject { get; set; }
+}
 ```
 
-*Delete an Example of the Subject by ID*
+| Argument| Type| Required | Notes                                                                                                                                          |
+| ------- | --- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Page    |	int | optional | Page number of examples to return. Can be used for pagination. Default value is 0. Since 0.6 version.
+| Size    |	int | optional | Faces on page (page size). Can be used for pagination. Default value is 20. Since 0.6 version.
+| Subject |	int | optional | What subject examples endpoint should return. If empty, return examples for all subjects. Since 1.0 version
+
+Response:
 ```
-    await exampleSubjectService.DeleteImageByIdAsync(new DTOs.ExampleSubject.DeleteImageById.DeleteImageByIdRequest
-        {
-            ImageId = Guid.Parse("c3dd56c2-1a51-450f-800f-b9fe230a9a7a")
+{
+  "faces": [
+    {
+      "image_id": <image_id>,
+      "subject": <subject>
+    },
+    ...
+  ]
+}
+```
+
+| Element  | Type   | Description                                                       |
+| -------- | ------ | ----------------------------------------------------------------- |
+| image_id | UUID   | UUID of the face                                                  |
+| subject  | string | <subject> of the person, whose picture was saved for this api key |
+
+This JSON response is deserialized to `ListAllSubjectExamplesResponse` data transfer object(DTO).
+
+```
+public class ListAllSubjectExamplesResponse
+{
+    public IList<Face> Faces { get; set; }
+
+    public int PageNumber { get; set; }
+
+    public int PageSize { get; set; }
+    
+    public int TotalPages { get; set; }
+    
+    public int TotalElements { get; set; }
+}
+```
+
+`Face` class:
+
+```
+public class Face
+{
+    public Guid ImageId { get; set; }
+    
+    public string Subject{ get; set; }
+}
+```
+
+
+#### Delete All Examples of the Subject by Name
+
+To delete all image examples of the <subject>:
+
+```
+recognitionService.FaceCollection.DeleteAllAsync(request);
+```
+
+| Argument| Type    				| Required | Notes                                                                                                                                          |
+| ------- | ----------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	DeleteAllExamplesRequest| required | 
+
+`DeleteAllExamplesRequest` this is data transfer object which is serialized to JSON.
+
+```
+public class DeleteMultipleExampleRequest
+{
+	public IList<Guid> ImageIdList { get; set; }
+}
+```
+
+Response:
+```
+{
+    "deleted": <count>
+}
+```
+| Element  | Type    | Description              |
+| -------- | ------- | ------------------------ |
+| deleted  | integer | Number of deleted faces  |
+
+This JSON response is deserialized to `DeleteMultipleExamplesResponse` data transfer object(DTO).
+
+```
+public class DeleteMultipleExamplesResponse
+{
+	public IList<Face> Faces { get; set; }
+}
+```
+
+
+#### Delete an Example of the Subject by ID
+
+To delete an image by ID:
+
+```
+await recognitionService.FaceCollection.DeleteAsync(request);
+```
+| Argument| Type    			  | Required | Notes                                                                                                                                          |
+| ------- | --------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	DeleteImageByIdRequest| required | 
+
+`DeleteImageByIdRequest` this is data transfer object which is serialized to JSON.
+
+```
+public class DeleteImageByIdRequest
+{
+	public Guid ImageId { get; set; }
+}
+```
+
+Response:
+```
+{
+  "image_id": <image_id>,
+  "subject": <subject>
+}
+```
+
+| Element  | Type   | Description                                                       |
+| -------- | ------ | ----------------------------------------------------------------- |
+| image_id | UUID   | UUID of the removed face                                          |
+| subject  | string | <subject> of the person, whose picture was saved for this api key |
+
+This JSON response is deserialized to `DeleteImageByIdResponse` data transfer object(DTO).
+
+```
+public class DeleteImageByIdResponse
+{
+	public Guid ImageId { get; set; }
+
+	public string Subject { get; set; }
+}
+```
+
+#### Direct Download an Image example of the Subject by ID
+
+To download an image by ID:
+
+```
+await recognitionService.FaceCollection.DownloadAsync(downloadImageByIdRequest);
+```
+| Argument| Type    			            | Required | Notes                                                                                                                                          |
+| ------- | ------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	DownloadImageByIdDirectlyRequest| required | 
+
+`DownloadImageByIdDirectlyRequest` this is data transfer object which is serialized to JSON.
+
+```
+public class DownloadImageByIdDirectlyRequest
+{
+	public Guid ImageId { get; set; }
+
+    public Guid RecognitionApiKey { get; set; }
+}
+```
+
+**Response body** is binary image. Empty bytes if image not found.
+
+#### Download an Image example of the Subject by ID
+`since 0.6 version`
+
+To download an image example of the Subject by ID:
+
+```
+await recognitionService.FaceCollection.DownloadAsync(downloadImageBySubjectIdRequest);
+```
+| Argument| Type    			               | Required | Notes                                                                                                                                          |
+| ------- | ---------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	DownloadImageByIdFromSubjectRequest| required | 
+
+`DownloadImageByIdFromSubjectRequest` this is data transfer object which is serialized to JSON.
+
+```
+public class DownloadImageByIdFromSubjectRequest
+{
+	public Guid ImageId { get; set; }
+}
+```
+
+**Response body** is binary image. Empty bytes if image not found.
+
+		
+### Get Subjects
+
+```
+recognitionService.Subject
+```
+
+Returns subjects object
+Subjects object allows working with subjects directly (not via subject examples).
+More information about subjects [here](https://github.com/exadel-inc/CompreFace/blob/master/docs/Rest-API-description.md#managing-subjects)
+
+
+**Methods:**
+
+#### Add a Subject
+
+Create a new subject in Face Collection.
+```
+await recognitionService.Subject.AddAsync(request);
+```
+
+| Argument| Type    		 | Required | Notes                                                                                                                                          |
+| ------- | ---------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	AddSubjectRequest| required | 
+
+`AddSubjectRequest` this is data transfer object which is serialized to JSON.
+
+```
+public class AddSubjectRequest
+{
+    public string Subject { get; set; }
+}
+```
+
+Response:
+```json
+{
+  "subject": "subject1"
+}
+```
+
+| Element  | Type   | Description                |
+| -------- | ------ | -------------------------- |
+| subject  | string | is the name of the subject |
+
+This JSON response is deserialized to `AddSubjectResponse` data transfer object(DTO).
+
+```
+public class AddSubjectResponse
+{
+    public string Subject { get; set; }
+}
+```
+
+
+#### List Subjects
+
+Returns all subject related to Face Collection.
+```
+await recognitionService.Subject.ListAsync();
+```
+
+Response:
+
+```json
+{
+  "subjects": [
+    "<subject_name1>",
+    "<subject_name2>"
+  ]
+}
+```
+
+| Element  | Type   | Description                |
+| -------- | ------ | -------------------------- |
+| subjects | array  | the list of subjects in Face Collection |
+
+This JSON response is deserialized to `GetAllSubjectResponse` data transfer object(DTO).
+
+```
+public class GetAllSubjectResponse
+{
+    public IList<string> Subjects { get; set; }
+}
+```
+
+#### Rename a Subject
+
+Rename existing subject. If a new subject name already exists, subjects are merged - all faces from the old subject name are reassigned to the subject with the new name, old subject removed.
+
+```
+await recognitionService.Subject.RenameAsync(request);
+```
+
+| Argument| Type    		    | Required | Notes                                                                                                                                          |
+| ------- | ------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	RenameSubjectRequest| required | 
+
+`RenameSubjectRequest` this is data transfer object which is serialized to JSON.
+
+```
+public class RenameSubjectRequest
+{
+    public string CurrentSubject { get; set; }
+
+    public string Subject { get; set; }
+}
+```
+
+Response:
+
+```json
+{
+  "updated": "true|false"
+}
+```
+
+| Element  | Type    | Description                |
+| -------- | ------  | -------------------------- |
+| updated  | boolean | failed or success          |
+
+This JSON response is deserialized to `RenameSubjectResponse` data transfer object(DTO).
+
+```
+public class RenameSubjectResponse
+{
+    public bool Updated { get; set; }
+}
+```
+
+
+#### Delete a Subject
+
+Delete existing subject and all saved faces.
+```
+await recognitionService.Subject.DeleteAsync(request);
+```
+
+| Argument| Type    		    | Required | Notes                                                                                                                                          |
+| ------- | ------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	DeleteSubjectRequest| required |       
+
+`DeleteSubjectRequest` this is data transfer object which is serialized to JSON.
+
+```
+public class RenameSubjectRequest
+{
+    public string CurrentSubject { get; set; }
+
+    public string Subject { get; set; }
+}
+```                                     
+
+Response:
+```json
+{
+  "subject": "subject1"
+}
+```
+
+| Element  | Type   | Description                |
+| -------- | ------ | -------------------------- |
+| subject  | string | is the name of the subject |
+
+This JSON response is deserialized to `DeleteSubjectResponse` data transfer object(DTO).
+
+```
+public class DeleteSubjectResponse
+{
+    public string Subject { get; set; }
+}
+```
+
+
+#### Delete All Subjects
+
+Delete all existing subjects and all saved faces.
+```
+await recognitionService.Subject.DeleteAllAsync();
+```
+
+Response:
+```json
+{
+  "deleted": "<count>"
+}
+```
+
+| Element  | Type    | Description                |
+| -------- | ------- | -------------------------- |
+| deleted  | integer | number of deleted subjects |
+
+This JSON response is deserialized to `DeleteAllSubjectsResponse` data transfer object(DTO).
+
+```
+public class DeleteAllSubjectsResponse
+{
+    public int Deleted { get; set; }
+}
+```
+
+
+## Face Detection Service
+
+Face detection service is used for detecting faces in the image.
+
+**Methods:**
+
+### Detect
+
+```
+await faceDetectionService.DetectAsync(request);
+```
+
+Finds all faces on the image.
+
+| Argument| Type    		              | Required | Notes                                                                                                                                          |
+| ------- | ----------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	FaceDetectionRequestByFilePath| required | 
+
+`FaceDetectionRequestByFilePath` this is data transfer object which is serialized to JSON.
+
+```
+public class FaceDetectionRequestByFilePath : BaseFaceRequest
+{
+	public string FilePath { get; set; }
+}
+```
+
+`BaseFaceRequest` class contains **optional** properties:
+
+```
+public class BaseFaceRequest
+{
+    public int? Limit { get; set; }
+
+    public decimal DetProbThreshold { get; set; }
+
+    public IList<string> FacePlugins { get; set; }
+
+    public bool Status { get; set; }
+}
+```
+| Option              | Type    | Notes                                     |
+| --------------------| ------  | ----------------------------------------- |
+| det_prob_threshold  | float   | minimum required confidence that a recognized face is actually a face. Value is between 0.0 and 1.0 |
+| limit               | integer | maximum number of faces on the image to be recognized. It recognizes the biggest faces first. Value of 0 represents no limit. Default value: 0       |
+| prediction_count    | integer | maximum number of subject predictions per face. It returns the most similar subjects. Default value: 1    |
+| face_plugins        | string  | comma-separated slugs of face plugins. If empty, no additional information is returned. [Learn more](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md)    |
+| status              | boolean | if true includes system information like execution_time and plugin_version fields. Default value is false    |
+
+Response:
+
+```json
+{
+  "result" : [ {
+    "age" : {
+      "probability": 0.9308982491493225,
+      "high": 32,
+      "low": 25
+    },
+    "gender" : {
+      "probability": 0.9898611307144165,
+      "value": "female"
+    },
+    "mask" : {
+      "probability": 0.9999470710754395,
+      "value": "without_mask"
+    },
+    "embedding" : [ -0.03027934394776821, "...", -0.05117142200469971 ],
+    "box" : {
+      "probability" : 0.9987509250640869,
+      "x_max" : 376,
+      "y_max" : 479,
+      "x_min" : 68,
+      "y_min" : 77
+    },
+    "landmarks" : [ [ 156, 245 ], [ 277, 253 ], [ 202, 311 ], [ 148, 358 ], [ 274, 365 ] ],
+    "execution_time" : {
+      "age" : 30.0,
+      "gender" : 26.0,
+      "detector" : 130.0,
+      "calculator" : 49.0,
+      "mask": 36.0
+    }
+  } ],
+  "plugins_versions" : {
+    "age" : "agegender.AgeDetector",
+    "gender" : "agegender.GenderDetector",
+    "detector" : "facenet.FaceDetector",
+    "calculator" : "facenet.Calculator",
+    "mask": "facemask.MaskDetector"
+  }
+}
+```
+
+| Element                        | Type    | Description                                                  |
+| ------------------------------ | ------- | ------------------------------------------------------------ |
+| age                            | object  | detected age range. Return only if [age plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled         |
+| gender                         | object  | detected gender. Return only if [gender plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled         |
+| mask                           | object  | detected mask. Return only if [face mask plugin](https://github.com/exadel-inc/CompreFace/blob/master/docs/Face-services-and-plugins.md) is enabled.          |
+| embedding                      | array   | face embeddings. Return only if [calculator plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled      |
+| box                            | object  | list of parameters of the bounding box for this face (on processedImage) |
+| probability                    | float   | probability that a found face is actually a face (on processedImage)     |
+| x_max, y_max, x_min, y_min     | integer | coordinates of the frame containing the face (on processedImage)         |
+| landmarks                      | array   | list of the coordinates of the frame containing the face-landmarks. Return only if [landmarks plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled      |
+| execution_time                 | object  | execution time of all plugins                       |
+| plugins_versions               | object  | contains information about plugin versions                       |
+
+This JSON response is deserialized to `FaceDetectionResponse` data transfer object(DTO).
+
+```
+public class FaceDetectionResponse
+{
+	public IList<BaseResult> Result { get; set; }
+
+	public PluginVersions PluginsVersions { get; set; }
+}
+```
+
+`BaseResult` class:
+
+```
+public class BaseResult
+{
+    public Age Age { get; set; }
+
+    public Gender Gender { get; set; }
+
+    public Mask Mask { get; set; }
+
+    public Box Box { get; set; }
+
+    public IList<List<int>> Landmarks { get; set; }
+
+    public ExecutionTime ExecutionTime { get; set; }
+
+    public IList<decimal> Embedding { get; set; }
+}
+```
+
+
+## Face Verification Service
+
+
+Face verification service is used for comparing two images.
+A source image should contain only one face which will be compared to all faces on the target image.
+
+**Methods:**
+
+### Verify
+
+```
+await faceVerificationService.VerifyAsync(request);
+```
+
+Compares two images provided in arguments. Source image should contain only one face, it will be compared to all faces in the target image.
+
+| Argument| Type    		                 | Required | Notes                                                                                                                                          |
+| ------- | -------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| request |	FaceVerificationRequestByFilePath| required | 
+
+`FaceVerificationRequestByFilePath` this is data transfer object which is serialized to JSON.
+
+```
+public class FaceVerificationRequestByFilePath : BaseFaceRequest
+{
+    public string SourceImageFilePath { get; set; }
+
+    public string TargetImageFilePath { get; set; }
+}
+```
+
+`BaseFaceRequest` class contains **optional** properties:
+
+```
+public class BaseFaceRequest
+{
+    public int? Limit { get; set; }
+
+    public decimal DetProbThreshold { get; set; }
+
+    public IList<string> FacePlugins { get; set; }
+
+    public bool Status { get; set; }
+}
+```
+| Option              | Type    | Notes                                     |
+| --------------------| ------  | ----------------------------------------- |
+| det_prob_threshold  | float   | minimum required confidence that a recognized face is actually a face. Value is between 0.0 and 1.0 |
+| limit               | integer | maximum number of faces on the image to be recognized. It recognizes the biggest faces first. Value of 0 represents no limit. Default value: 0       |
+| prediction_count    | integer | maximum number of subject predictions per face. It returns the most similar subjects. Default value: 1    |
+| face_plugins        | string  | comma-separated slugs of face plugins. If empty, no additional information is returned. [Learn more](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md)    |
+| status              | boolean | if true includes system information like execution_time and plugin_version fields. Default value is false    |
+
+Response:
+
+```json
+{
+  "result" : [{
+    "source_image_face" : {
+      "age" : {
+        "probability": 0.9308982491493225,
+        "high": 32,
+        "low": 25
+      },
+      "gender" : {
+        "probability": 0.9898611307144165,
+        "value": "female"
+      },
+      "mask" : {
+        "probability": 0.9999470710754395,
+        "value": "without_mask"
+      },
+      "embedding" : [ -0.0010271212086081505, "...", -0.008746841922402382 ],
+      "box" : {
+        "probability" : 0.9997453093528748,
+        "x_max" : 205,
+        "y_max" : 167,
+        "x_min" : 48,
+        "y_min" : 0
+      },
+      "landmarks" : [ [ 92, 44 ], [ 130, 68 ], [ 71, 76 ], [ 60, 104 ], [ 95, 125 ] ],
+      "execution_time" : {
+        "age" : 85.0,
+        "gender" : 51.0,
+        "detector" : 67.0,
+        "calculator" : 116.0,
+        "mask": 36.0
+      }
+    },
+    "face_matches": [
+      {
+        "age" : {
+          "probability": 0.9308982491493225,
+          "high": 32,
+          "low": 25
+        },
+        "gender" : {
+          "probability": 0.9898611307144165,
+          "value": "female"
+        },
+        "mask" : {
+          "probability": 0.9999470710754395,
+          "value": "without_mask"
+        },
+        "embedding" : [ -0.049007344990968704, "...", -0.01753818802535534 ],
+        "box" : {
+          "probability" : 0.99975,
+          "x_max" : 308,
+          "y_max" : 180,
+          "x_min" : 235,
+          "y_min" : 98
+        },
+        "landmarks" : [ [ 260, 129 ], [ 273, 127 ], [ 258, 136 ], [ 257, 150 ], [ 269, 148 ] ],
+        "similarity" : 0.97858,
+        "execution_time" : {
+          "age" : 59.0,
+          "gender" : 30.0,
+          "detector" : 177.0,
+          "calculator" : 70.0,
+          "mask": 36.0
         }
-            );
+      }],
+    "plugins_versions" : {
+      "age" : "agegender.AgeDetector",
+      "gender" : "agegender.GenderDetector",
+      "detector" : "facenet.FaceDetector",
+      "calculator" : "facenet.Calculator",
+      "mask": "facemask.MaskDetector"
+    }
+  }]
+}
 ```
+| Element                        | Type    | Description                                                  |
+| ------------------------------ | ------- | ------------------------------------------------------------ |
+| source_image_face              | object  | additional info about source image face |
+| face_matches                   | array   | result of face verification |
+| age                            | object  | detected age range. Return only if [age plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled         |
+| gender                         | object  | detected gender. Return only if [gender plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled         |
+| mask                           | object  | detected mask. Return only if [face mask plugin](https://github.com/exadel-inc/CompreFace/blob/master/docs/Face-services-and-plugins.md) is enabled.          |
+| embedding                      | array   | face embeddings. Return only if [calculator plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled      |
+| box                            | object  | list of parameters of the bounding box for this face         |
+| probability                    | float   | probability that a found face is actually a face             |
+| x_max, y_max, x_min, y_min     | integer | coordinates of the frame containing the face                 |
+| landmarks                      | array   | list of the coordinates of the frame containing the face-landmarks. Return only if [landmarks plugin](https://github.com/exadel-inc/CompreFace/tree/master/docs/Face-services-and-plugins.md#face-plugins) is enabled      |
+| similarity                     | float   | similarity between this face and the face on the source image               |
+| execution_time                 | object  | execution time of all plugins                       |
+| plugins_versions               | object  | contains information about plugin versions                       |
 
-*Delete multiple examples*
-```
- await exampleSubjectService.DeletMultipleExamplesAsync(
-            new DTOs.ExampleSubjectDTOs.DeleteMultipleExamples.DeleteMultipleExampleRequest()
-            {
-                ImageIdList = new List<Guid>
-                {
-                    Guid.Parse("39bbf8c8-e7de-4b0c-9035-bbbe3621ab89"),
-                    Guid.Parse("208a3002-75cd-4b95-93aa-89c727e454da")
-                }
-            });
-```
-
-*Direct Download an Image example of the Subject by ID*
-```
-      await exampleSubjectService.DownloadImageByIdAsync(
-            new DTOs.ExampleSubject.DownloadImageById.DownloadImageByIdRequest()
-            {
-                ApiKey = Guid.Parse("e468da55-b884-4865-8c83-f1ad5775f00d"),
-                ImageId = Guid.Parse("e0053da2-e0a1-4b6e-b647-5d7108e42aea")
-            });
-```
-
-*Download an Image example of the Subject by ID*
-```
-        await exampleSubjectService.DownloadImageBySubjectIdAsync(
-            new DTOs.ExampleSubject.DownloadImageBySubjectId.DownloadImageBySubjectIdRequest()
-            {
-                ImageId = Guid.Parse("e0053da2-e0a1-4b6e-b647-5d7108e42aea")
-            });
-```
-
-
-*POST Base64, Add an Example of a Subject*
-```
-        await exampleSubjectService.AddBase64ExampleSubjectAsync(
-     new DTOs.ExampleSubject.AddBase64ExampleSubject.AddBase64ExampleSubjectRequest()
-     {
-         DetProbThreShold = 0.81m,
-         Subject = "Stars",
-         File = "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"
-     });
-```
-
-**Recognition Service**
-
-*Recognize faces from a given image*
+This JSON response is deserialized to `FaceVerificationResponse` data transfer object(DTO).
 
 ```
-var recognizeFaceFromImageRequest = new RecognizeFaceFromImageRequest()
-        {
-            FileName = Guid.NewGuid().ToString() + ".jpg", // file name here....
-            FilePath = "", // file path
-            DetProbThreshold = 0.85m,
-            FacePlugins = new List<string>()
-            {
-                "landmarks",
-                "gender",
-                "age",
-            },
-            Status = true,
-        };
+public class FaceVerificationResponse 
+{
+    public IList<Result> Result { get; set; }
+}
 
-        var recognizeFaceFromImageResponse =
-            await recognitionService.RecognizeFaceFromImage(recognizeFaceFromImageRequest);
+public class Result
+{
+    public SourceImageFace SourceImageFace { get; set; }
+    
+    public IList<FaceMatches> FaceMatches { get; set; }
+    
+    public PluginVersions PluginsVersions { get; set; }
+}
 
-        foreach (var result in recognizeFaceFromImageResponse.Result)
-        {
-            foreach (var subject in result.Subjects)
-            {
-                Console.WriteLine($"Subject : {subject.Subject}");
-                Console.WriteLine($"Similarity: {subject.Similarity}");
-            }
-        }
+public class SourceImageFace : BaseResult
+{ }
+
+public class FaceMatches : BaseResult
+{
+    public decimal Similarity { get; set; }
+}
 ```
 
-*Base64, Recognize Faces from a Given Image*
+`BaseResult` class:
 
 ```
-var imageBytes = await File.ReadAllBytesAsync("file path");
+public class BaseResult
+{
+    public Age Age { get; set; }
 
-        var base64ImageValue = Convert.ToBase64String(imageBytes);
+    public Gender Gender { get; set; }
 
-        var recognizeFacesFromImageWithBase64Request = new RecognizeFacesFromImageWithBase64Request()
-        {
-            FileBase64Value = base64ImageValue,
-            DetProbThreshold = 0.85m,
-            FacePlugins = new List<string>()
-            {
-                "landmarks",
-                "gender",
-                "age",
-            },
-            Status = true,
-        };
+    public Mask Mask { get; set; }
 
-        var recognizeFaceFromImageResponse =
-            await recognitionService.RecognizeFaceFromBase64File(recognizeFacesFromImageWithBase64Request);
+    public Box Box { get; set; }
 
-        foreach (var result in recognizeFaceFromImageResponse.Result)
-        {
-            
-        }
-```
+    public IList<List<int>> Landmarks { get; set; }
 
-*Verify Faces from a Given Image*
+    public ExecutionTime ExecutionTime { get; set; }
 
-```
-var verifyFacesFromImageRequest = new VerifyFacesFromImageRequest()
-        {
-            DetProbThreshold = 0.85m,
-            FacePlugins = new List<string>()
-            {
-                "age",
-                "gender",
-                "mask",
-                "calculator",
-            },
-            FilePath = file path here,
-            FileName = Guid.NewGuid().ToString() + ".jpg",
-            ImageId = image_id here
-        };
-
-        var verifyFacesFromImageResponse = await recognitionService.VerifyFacesFromImage(verifyFacesFromImageRequest);
-
-        foreach (var result in verifyFacesFromImageResponse.Result)
-        {
-            
-        }
-```
-
-```
-var imageBytes = File.ReadAllBytes("file path here");
-
-        var base64ImageValue = Convert.ToBase64String(imageBytes);
-        var verifyFacesFromImageWithBase64Request = new VerifyFacesFromImageWithBase64Request()
-        {
-            DetProbThreshold = 0.85m,
-            FacePlugins = new List<string>()
-            {
-                "age",
-                "mask",
-                "gender",
-                "detector",
-                "calculator",
-            },
-            FileBase64Value = base64ImageValue,
-            ImageId = image_id here,
-        };
-
-        var verifyFacesFromImageResponse =
-            await recognitionService.VerifyFacesFromBase64File(verifyFacesFromImageWithBase64Request);
-
-        foreach (var result in verifyFacesFromImageResponse.Result)
-        {
-            
-        }
-```
-
-**Face Setection Service**
-
-*Face Detection Service*
-```
-        await comprefaceClientV2.FaceDetectionService.FaceDetectionAsync(
-            new DTOs.FaceDetectionDTOs.FaceDetection.FaceDetectionRequest()
-            {
-                DetProbThreshold = 0.91m,
-                FacePlugins = new List<string>()
-            {
-                "age",
-                "gender",
-                "mask",
-                "calculator",
-            },
-                Status = true,
-                FileName = file name with format
-                FilePath = full path to the file,
-                Limit = 0
-            }
-            );
-```
-
-*Face Detection Service, Base64*
-```
-         await comprefaceClientV2.FaceDetectionService.FaceDetectionBase64Async(
-        new DTOs.FaceDetectionDTOs.FaceDetectionBase64.FaceDetectionBase64Request()
-        {
-            DetProbThreshold = 0.91m,
-            FacePlugins = new List<string>()
-            {
-                    "age",
-                    "gender",
-                    "mask",
-                    "calculator",
-            },
-            Status = true,
-            Limit = 0,
-            File = "/9j/4AAQSkZJRgABAgAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAFZAVkDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD5qVc1KqUqiplWkMjCU4R5qUCpFFAFcR04R+1WQuaeqc0AQLHUyRVPHHkdKsJFQBDHDVqOGp4YfarccHtUsCtHDV2GH2qWOH2q5DD7UDRCkPHSpkhq2kPHSpVh9qllopeVTWirRMXtTWi9qkpGVJH7VUmirYkiqnPHUsswbiPk1SkSti5j5PFUZI/ahMRmulQMlX5ExULp61aZDRT2UoX1qcx+lG3IzTuKxGBS4p4Sn7cUhkOKTFT7aaVoAhIphFTlaYRTAWIcir8PaqkS81fhFdVJGUizF0qUnimRrUpHFdaRi2QtURqZhUbCm0IiYVGRUxFMYVIyI001IRTSKBEbDNMNSmmMO9AxuaTJpTSUguZSdRUy1XU1Op4rgNh461KoqIVKlAEqipkSo0FWoxyKAJI0q3FFyKjiFXIQKAJoYquRxU2EDircYFS0AkcXtVyGIUxMcVaixQND0i4qVYxQGAFKG9OlJloQoPSo2QVMWyKjZqhopFaSMEVSnjqe9vYrcYJ3SHogPNY9xLNMMyMUB6KmRx/Oko3K5iO5Vd2Cyj6mq3koc7pAPfBqwkRH3IcHsc4z/Wg2kj9VbH1/+tVqEUTzMpSW0BOPO/Qc/rVee1jQcuce9aT2ZUDckgH4VSdRC2yXlR0BGOP5VS5SdSkotg2Du/P/AOtS+VbHKpI2cdxU9xZxzLugbDHt0/LtWVIHikbzOCueR34NUuXsQ7otNCFfG9cU82rkBkG4H0OazTPutic/NTI7poxtViPenyRYczL5Qg4IwaQoal+1hoYzIMsfzxU6okoJiIIHvUSg1sWp3KJWmFOauyoFA47VCV5qBjYl6VehTiooV5q/CldlFGUxY1wKeVqdI+KcY+K7Y7GDKbLUbLVto+aiZaGBVZajIqyy1Gy1LQFdhTCKnIqNhUjITSGnmmmgRERim4qRhxTKAMNGqZGxVNWzUyN61wGxcVqlRqphsVMjUDLqNVqNulUI2q1E3NIDRiNXYTWdCelXYmoA0oWq2jVmxvVhJKANBHqxHJWWJhT1uMd6ANTzR60eYPpWZ9p96PtHI5pWKTNLzifU1WvJ5CCkBBc9Tn7tQrIXGFyc8Cok/c52gu314H41DLRDHbOGO4svqW+8aseQ6/dRMD+KTv8AhVR9ScH5p4FA7AbqjfUrGZSJnViOpUbv0pOVirFqRZBnbcY/65IAapSrMAT9puyPXbj/AOtUjQJJCXtbqNlHcRhsfUYqg8Fy6n7NPb3DDqqgClz3DlEaR93y3sqn0bOP0qKSa52MsmyUDkZ+b/69UJp5o223MbI2OC2SPw9KatwAnUMByPUfjT1ESJMzOTCdj4+4TlW+hp7H7UrBlIlAyB/eHI/Os+SYHcVbnNCXbArggEHKk9j6VRJVIKSbPw+tRhC0qoOucVoagEZ1nj4B+bHv3qvbgCZ3JxtBx9a0TuQ1YbfyqrpGnQDFMt7t0kUqx4NQSAu5NWYLcIu5+PQGi9gSubRdZYg46nrUdVLe4CkqoyDweKvbNwDAECp3K2J7ZcmtOBM1RtxgDNatsvSuukjKTJkj4pxi4qzFHUjR8V2RRkzLeOoHStKSOq0iUNAUGWomX0q261Cy1LQFRlqMirLrULLUAQMKjIqdhUTDFAEZpu0U80mKQHKJ1qZahXqKmWuA2JUPFTJ1qFOlSp1oAsxmrMRqolWIzzQM0ImqyklZyPiplk9KQGks2Kf9o96zPNNMabHegDVNz70hu8d6x2nNReczNgZNMGbf2z3q9p6G5JZiRGOp9awtP2TTqgj8x/YnArrFiaK3VGPlIew4NTJ2KhG5Xu74RDZBH04z6VlyC7vP9Y/lxHsTitGSeKLK28YZu7H5v1NZd3eMSVVVLdyeAKwcjdIjktEAwWjx2HWoiYImG9OR0wen51Rn+zs2WbzJO+3oD9auaXo9zeSARBgp6Y5o23Ba7FyG7jiIeGYAj+8n9RSzXVndFftA8uXPEsRKnPr710WneApJgDKHOe5rpdO+H0ATbOikDkcc1k5xWxqqU2eaT3UmPJnaO8jHRnXD498dfrWZJZlmLxI6rntyBXtw8DWCNxHz2zUsfgy0ySFGOhpqqkP6vJ7nhf8AZkhUsqkjPT0qN9MlyRtOfpXvX/CJ2yA4A4/Sq9zoFsAQYVwBjOMVXtg+rM8IaNwpR1IOe9MliKKeozXq+s+FYZmWSJQrd65PW9BaAkoCTj0rWNRMwnSaOPjAVhkcCnTtkljnA6CpZoTESGBB7k1DlV+Zl3Y6Ken41pe5klYZH5rHjKoOgHGavWdx5MgErDB4wTzVV5ZGG4jI+mBUK437mcE+1JMZ1dvy5wRg1s2g6dK46wn3NsDgH2H+IrrNJcuigkk11UZ62MpxNqBOBUzJxS2yZUetWdny13x2MTMlSqksda0kdVJY6bEZUiVXda0ZUqs6VDGUHXrULCrsi1XdalgiowqJhmrTLULCpGVyKbipWWmYoEceDUyHiqympFNeebFpGqZTVRW4qZDQBbRqmVqrR1MlIZZRqkBqFD0qWgpIXJpppaQ0A0RN1qWABT8/3TyRSRo0jhVGTWlYQRI/mS/OE7ds/wBTSbsCRs6Xut7fzCFi3dlAX/8AXUVxOM4Y7pG7DoKrzzySbV3bSevsKgtySWmzhP4foO9YSZvFW0JbmVYI2MjYx2rBeaW9kxEuEzjj/PNOvbh7648tF2xDj612Pg3w6bqaMyKQnuKPhV2O3M7Ib4U8ItdMstypI7CvVdE8N29uozCOPUVpaVpkdtGqqvTgcVvRQdBXNJuTO6nSUUVYrRVwFUYFWUhwemKvxxcc0pT2qbG9jPlt9w4HNNWPAwRWjsyMGomTB5p3JM+aPI4FZt3ECCMVvSplcYrPuoeORSbCxztzb8YFZN9Zo64dQc+orpnTGaz7qPI5ppkyjc851zw/DKpKJg9a4TUdJaCTgE49a9nu4R82QK5vUdOSbPHJreM2jkqUk9jzJFwCGjzjqCf/AK9QPIgJHlAD6iuj1rTTC+QD9a5i7iZHJBreLTOWSsSxSJnglSO1dRoF0MgHPUdK4pHYEZPStrS7gCVcnB/nWkW4u5Nrqx6laYKgjkEVeMfGaw9Aud6qpO7OBya6YINgr16cuZXOWSs7GZJH1qpLHWvLHVOVKpiMiVOvFVJErVlUVTlSpYGbItVpFrQkWqsi1AFF1qF1q461XdagCswpuKlcUzFAzhVp4popwrzzUlTpU0fWoU6Cp46Bk8fWp061BH1qdBSAmTqKnAqJBk1OgpFiYpACSABmptvFKq4BPc8UrgLAjSNtXAQdT0zVxNqKETG1eSfWqysACi596nIxCoX7xPJPapkXEhy08pjGSW4OPSpb4kw+ShCoOGYfyp8AEELyheW+UH2qm5aaUNK6gdlXoP8AGoUbltlzRbVGmTyot3u1exeELAxIrycZHpj8K898NrFCwbGcdSx6f59K9d8KIbiJZSm1e2Rjj6VlVkb0I9ToI4sRr71diQgDHXvQBnFTRd6wudyQ9FxxUm0emaYM9qeM8dajmLsNKVBImB61aPI+lMcZQ5HWjmJsUlUHrVW5XPbirpXHNVbkgHb6UNhYybiMDpWfMnXNa9woYc1m3CkqTQmJowbxRtNZTxAnBFb11ESvtVDyDgmtYsymjlPEdorQZAGcV5vqiFGORkGvXNVj3fKa8u8RwPDO2Rxn866KTOOtHqc8U5yKt2jFZF4zg9KgXrirFum6QDvW9znO10mcWssUiZ+zvzjP3T3r0SzkE0CuCORXmmlgrabh8xjO7aR2Hb8s13vhdt+nFeGVDgfTqP0Nehh5a2MKiL8sf1qnLEB2rTZPSq0qV2WMTJljqlMla8yVSmSpYzIlTrVSVK1JkwapSp1qGBnSLVd1q9KtVpFqGBTYUzbU7rTcUhnnwpwpop6155sSLU0YqJamjpAWI+lTpUSCp0FAE0fSrCCoYxVlB0oKTFxTscCnKvtUiKOQW6+gpDI7ZOWJx+NTOhdkA6HHt9acAiDA5J9ankZRHuAyxGAKiRcSndHzZPmO2KMYx/Sqqk+YXIJI4Aq5cARBUkBLkZ2Lwfx9Krhl3qOnPQdBU3KOp8MxF5FGBvPU9ce1e6eGrTybJDySR3615X8PtPN3dRmJDsXkse1e2WkaRQBVHA9a5KstbHfQjpck24xUij0ppbA3HpTbeQTAsAwUHAyMVidKROB7VIpz7Ckj96eOgPp6UWHcNoI45qCXO0+gqwOahkBxn0piKjeg7VWmjJOSKvKo3kU+SIbT6UrDMKeNiD9KoyRHaCQQfQ1uyJ19KpzQ7lJHFAjnLtGHGKqvHtjORg1r3EJLcNVSaEkH+tWtDOSOXvkDE55rzzxjbFdzbeDXpd+hRyDXG+LIQ9m7DkDrXRTepy1VdHl5XB/Grdm2JF7EGmvGG3AHn0qNCY5VLdjg11HEd1oBUyyDG5W4z6ZxXaeDEYWzqRldq9vrXA6C4glMh5hByR6ccV6h4RtytgzMOSQB7YH/ANeu/DatGNTQtiM856VDMlackeKqSpXfYxMqZKpSpWtMlUZkqWBkzpVGVK15k4qhMvJqGgMqVaqyLya0ZlqpItQwKLrUeKsSCo8VAHnIFSKtKBTgK843BRU8Y6VGg5qzEtAEyCp4xTUFTIKdgJIxVlBUSDFTJRYCQUMTigUGgBE+ZgK0UXyUDOQrnnJ/hH+NU7YASjIHFT3RZ5MtgIBz7n0rOZrApEtO0suAkWcLuPX3qGwQ3WpRRRLuJbGexp11JuQ72I7BRWz8O7YXHiKFpB8qHhaxbsmzWKu0j3XwTpC6bpsa4+cgFq6oH+Edqp2abIgAKsyutvbM8gJwOg71wbu7PUWmiFubmK1gMtw6pGPWuVu/G9rHIywxO6g4BzjNOvIW1F/NvpCsP8MY9Ky7vTNNCFY0YnthsValGO42pdDUj8d2Q/1qSoCMEkDFadr4v0yZABcKp/2uK84vdIVt3lGTaeisc1jz2U6YAxgfhQ3FkpyW57lFqcMwzHIpB9DUxnDdK8Z0W4u7aVArsB3zXpGl3LNCpc5bHWsm7Gq1RtiX5wSRj0p9xcAIAMVllsDcx/CqV9e7FJzjHrRcdi9LdLk8gd6y9Q1e3gibzJlA6da4XxJ4hlDtHAxHHUVx8t1d3jbVLYPc1rGF9WYzqW2O9vvF9tC5CEkjpWcPGUkhz5S7PfIrDsdHjYb7qUs3oDitqG0sY8bIV49+ta3ijJuciaTU4b1N0ZAbutYWrDzbeVPUEVf1C1iX9/ANki+nQ1WlHmx7vUVpGzWhnK+zPJ2Gy8ZTwQcU+SPcDjGfQ0uuoYdVmwOjdKdCRIgOa6elzhtrY63wxF5uluHUHDZOe9eveH7fytKt0I52jJPrjmuB8EWJktoYkG4suTxnnv8Aoa9VtbcRQhV6CvTwsbK5z1H0KssfUVTlSteSPrVOWPrXYjIyJk61SmStaWOqUyUmBjzJVCdOtbE6VQnTrUNAY8ydeKpSrWrMnWqMq1DAzpFqPFWpFqLb71mwPNgKeq5oVc1Kq15xuKoqwgqNVqVBTETJU61CtSrTsBOtSoQKrhqkBoAsA0tRBqUNSGTK+CPaun0Hw1c+IUY25WOKMZaRhnnsBXJbs16P4dubqPwtapZMYpPOZiR/Fj1rDEy5IXOrCU/aVOVnFX+iS6bdzw3DJujY7SfT1rf+G8anXYSoypYDPrUvi+0lkufOcH94EY7uoyD09uK2fhfpyNqisB8yc4rncrxub8nLUse0xRgQjI7VmarcrDEzOSFXnFbB4iH0rndeheWFkBUZ4yRmuNnfFHF6trjlgYFZwx+UA/e+lYNz4kityPtt6kBbkIgywH4+/tWb4ustWtpylm7CGQYMmen+FEHhC3s/DNxdsftN+QCQedoyM/pmuinTi1dnPVqzWyG/8JRbHKm5umG7aGGQCOx6VtWEyvCk0UouYW6g43CubmjsXgtobTT4Yo8FpZWcsx4AAUduQTn3ratdENjpdrd2Muyd/wDWws2Aw7HnocVpOnGxjSrOTsbO1UZZIvunnaa7jRE8+2Rl7jpXD6RbvqLiNQY5FIJBHX6GvR/DlobcBOSD61wzXY9GHmOurcpFkg1yHiO48q3c5wAK9J1O2H2fPcDNeSeOFeUfZ4hy55Iq4w1InLQ46GBr9mnkOyAHgnqasQ2YYb3kFrbA4ycbm/PpVuQQ6fBBHNl5CPlhUcsaZreiSTwWd/rMjLBLIUMEBH7oYOM+pzj+XFdEVzM5Zy5FdlOW60OJmR7xmZR1Mvf86jSdWwbS43R9cNg5+h61laxZWcs90tlbT29rFxE0z7ml6ckDj1qlrGjvpiR3FjK8W4ZKZrb2cWYqu30OyimMkYP8qUp8hA6Vyug397IhHksVzxjoffJrrrZS0Izjceo60ox5XYvm5lc8u8UR7damqLR7fz7qOIIcucHHWtLxjCV1piOMgGrfh2KKziN7Pkn+EdzW7kkrs5lBynY9k8HaR9gsYwwAkIGfb2rrI4cL0rK8MTm90m0uSMGRATn8q6FE+WvapNcqaOGaak7mfLHVOaPrxWxJHVSaL2rYgw54+tUJkrcnj9qzp46AMWdKz5k61szpis+dKTAxp061QmStidKzp0rNgZci81Htq1KvNRbahgeZKKmRaYg5qZa803CpEptPSmhEi1IKYtOoAeDTlbFRZpw5pATBqdmowvrSnIxigZMhOPl6nv6V6R8PXWaynsyQ0kT+YB6AjFedwEKVJ529vU123whl/wCKoMch4nQpz+dc+Kjz0mjqwU/Z1os7zxrpSQRWVw6ho5IBE4zjkHI/nUXwvtBFqdwQCF28A103iq1F9GLdwcR/dqfw3p/2Jo5CuGdMGvPhU93lPVq0veUzqNmR6VSu7QOOQD+FX4zkfWldd3QUrDVzldS0yOVOYwxHqK5x9PjgLcujHrnkE16G8QOQVJqI2KSN8ycfSkpNbFNK12eZNZQCQH5GweiW67vzxVuCzlYqI7Z/Zpa9H+wwJGcRLketMWzVjkKCx9BWicnuZe6tkc/pemT4G5h1zgDAFdRZW3lMgH1qe3t1iHI5qzEoMmfQVDSbNI3SIdQGYtvfFeXeIrcNqA4wAa9UvR8jHHavNdfI+35rVIzexVgsleUGRA4AxkikvdPSNCViypHTaCPyrX0jE6lT271oTW+w7SAwo9Cbdzyy+toRLlY4gRzkxd/XFZl3ayXbbcvIemMYH5V61LY275/dqT9Koz2UKAFIwD6Cj2kluHs10OI0vRxBGq4A9hWi9sI8+groILLLkkcD2qlqcQQNjoaqEryJlGyPI/Gtqx1tGUHDIOlWZLIsbSFRxgYFa/iVFF9A+0semPoa1dItkvNWsiF+UDJHpW0/etFGNNcrcj0nw9a/ZNOtrcf8s4wp+uOa6CNPlrL07kDPWtqJcivcptJJI8yabd2QPHmqs0ftWoUqCSPit0zFow7iKs64i9q6CaHrxWbcw9aq4jnbiPrWdOnWt26irKuE60MDFuE61nTr1rZuF61m3C1DAyZV5qHbVuZeai21AzyxKlFMQcVIBXmGwU9aYacp4oQiZaGb0pq5NSpHmncBiAseatRpSxRc1aSPipGQhKQqRVoJTWSlcCKEZfYe5rd8E3LWGvQz8jy2Dfrz+lYK8ShgMkVqaVLumhzhZCfzpS1TRpB2aZ9OXBSeSFmXKSAEMKmkK7fk428Vk+C9Viv/AAxbzbi21fLfHJUjirpZIdqCYOkjHb6j2ryHHkke9ze0imaNvJviBq6MYH8qx4ZPK4PQ1chmBPXii9girov7AfalIAXjrTVlU4xUp2kfLVqSFKLKrAnjNTqUjXIGKrzzLE6q2fmqnd3WyMjPFDloJQNB7gGTkgVat2V4yU69K5bTme5vhjIRQSa3Yru2tk2SOQx5qId2ayj0RPdcoQe4xXmfiwCCYv6V6Df6pbCIbGya878WajbTSeTwzPxgVspJsxlF2H+F7gSScHiu0SMSpz2FedeHW+yXqruBRxkf1r0SykV0BByKiWjHFXRUmtdvIAquYFAG8VtXABUFeBis64Iwc8cUua4+UoXAWNTjiuZ1iUZNbF/MUUrnPpmuQ1O5/eHnrV0t7kVNjF1OEXDDH3lbg1veGrYQSbzzhQAfrWHCvnyOSTtHJNdbo0R8mPsT82P5fpXXT1lc5ZbWOu03BVfWt2HpWJpiAAVvQ42ivQhUOWVMeE3e1NaPIqwq5+lSbMiuqMzknCxlzQ57Vm3MNdFJFxVC4h46VopGVjlbuLrxWLdx4zxXWXkHXisG9i68VaYHN3C1mXC9a2rpME1l3C9aTCxkSrzUO32q3MvJqLbUDPJVFSAUxRUgryzUaRzTlFHenDtQBNCuauRxVFbLmtKGOmIZFFVlYuKmhiqwI6ljKfl1G8fHStAx1HJHxSGY8i4bOcYqxpxBu0lbgqOKWaMAEnjFUo5Sm9h2IpFLQ9B8AeI5tKvzbtlreZ9joOxJ4Ir2u4soxLHLJtaHOPNjOdre9fMtnePa3cU8LDzFYSA/SvY7v4k6XB4Ce0t1m/tK4wrxAELGc8sD34HFc1aipO9jro15QVr6HeXUeE3KelQ28+HIzWV4I1ka14ZS5kBDK7RMM56Hj+Yq2/yTcdBXDNW3PUpSuro3InyuQc+tTrc7Qec4rIjm45/Sh5sdDwazTN7XLl3cgj5QCR2rFuJmml2DOM0XdwW+SMZJ4GK0NJsdgEk3LHnBqr3JdkUhJNpoeZQdrDGfSuNk1TxHe68Da2kY05eWaTO5vp6V6rLCjoVKgg1TeziiicRoFz6Cnqthppnm2patNHdOsjFQBmuCv9Zv7jWkNtbbrYk5dgcn6V6ufD9veX8rSpuXd07Vn3/h+KG8KhRsHQCtKcktzGrFsxfDplvb2LbkJHyTj9K9Es52jbY3TtWNp8MVqoWNQorUVlZc+lKbuEPdNJpwy53fhWdcSnk54qKScjhj0qjd3BIOKzTuaO1jP1e42hsY71xeoTM7OV7DitfWrvJYVzd9KsFlJI5xniuukjjqyL+iK9w0akgoOpHTFdxpOGOWG01y+hWrb0likdrYx8cYUtx/Su60uAArxkGu2EbI4+fmZsWSgBcVsQAkAniqlrDtUcVoRqQKd7GyV0Tx1Oq5qvGeatx8iumnUuc1WmNMeRVaeHg1pBeKZJHkV0KRxOJzN5B14rAv4Otdpdwdawb+Dg8VpGQrHC38WM1iXI611mpQYzXM3qbWNa3uIx5R81RbfarEo+amYqGB5Eq07bQlSYryzQhp46ikPWnL1oQF6zHIrYgTgVk2XWtu3HApiLEKVOE9KIRVgLUsZBs46VFKmRxV4occjFVphwcUhow9S4TaOlZLfInoSa2NQIwflyRWJKxLZNCBlmKUFU39R6elWUufMbkgjvWWz7Y9v8TdaZGWDA9umarluClY+gPgjMH0nULfOQkqsPxH/wBau4uIv3jYNeXfAC53XWrwE8+Wjc+xI/rXrTjLc15WJVptHtYSV4IyssjkHtTZWdiQnGe9XLmLB4696YkfBHQkVxs7CraMqSbn5weK6C1mLKG7Vy7xXQV3t0EhXgKTisi+1LXBiKS2kiQDkRfNn8RWtNXJ3djv5dQjiyC43fWs6fWV6A9TjiuKSfU5GUW9pOMdS4wD+dNmj1nzELWymIHLKH5NbpHRGmtzpFv44JHZZTyc4IrO1HV1llLckjgmuWvLjUJLgxRadKoLdeDx+dVzY6w5b/RlTno7dvwqlFClHpY6mHVISMFwPrU4vwBkH8RXC3kWo2sf7+LP+4d1UbW41X7QEtozsPXzDgU+S6OSp7p6QLtZsLxk9Kz9QmdE64zTvDdpczmN50Cc9jmo/EICSsmeAM1zpe9Ynm905e8fzJeawPGKltMt41zlph/I10ATgsepNY3iEeZcafEP+emT+YrtpnJVejO48LQ7beFOyqBXf6bD+7Tj0riNAIQqO1eh6SoKJjFd0dUcSdma1rF8vSrBi2ipbZOKsugK1nNHZSkZo4NWoTmoJVIanwNg4rKE7M6KlO6uaMYzUhQEVFAelWlGa7YTueVVhZlC4iyKxL6Dg8V08sfFZl7DkHitVIwscHqlvweK5DU4sE16NqdvweK4zWIMbuK3hITRxko+am4qe7j2ymosVUmJI8fjqYVClTCvMLI5BzQvWlk60g60IDQsRyK3bYcCsOw6it62HFMRfgXpnpVpTgfKMVXhFWAOKTAa2T1NVp+hq2RxVWccGpGYOo9TWLJy1bWpd6xJPvGmgInPzE4ozntSNTRWiEemfBTUltPF5gZsC5t2Qe7DB/oa96Vt3PQ18laTfS6dqVpfQHDwOGHvjtX014e1mDVNOhuYHBSVQw9j6V5uMg01JHq4ComnFm2drcGonUjGOtLv3HilzuXjrXnM9MdbKMsQPzqG7td4LJgEdqu2ycZFTNFkmrjdbCvY5d5mt8KQQV9aQX8WP3m3PvXRT2ayJtK5zWJeeG1mY5RhnuDitFVaNY1rFOC4t1mMuU4XGM1lanrUIkbYRnpVyfwmEQ7GlGT2c1VXw1HEw/dsT1yTmtFV8hSrPojmr25lumKoDt+nNWdPtihGRya3Dpiw8hefSojBtLEjHNP2lzknJyepp2EwhAROv8q53W5PNuJTkelaCuYw7dO1YVzIHcnPFSlrciT0sUpuAo7VgSH7V4ijUcrEMfj1/rWpfz+WjtjOBwB3PpVTQrNomM03Msh3Ma6aaOStLodtoj4kXNei6MQVXHWvM9MO1ga9A0CXKrzXfT2ORnaWoyBVzZkVTsjlRWgo4onE2pSM67j71SB2tWzOm5TWPOpVq8+p7ruetRalGxftnzitCI5rEtpMHFasD5xXRSqXOPE0rMtlciqlxFkGrinIpkq5FdSZ5rVmcvqMGQeK47WbfhuK9Dv4sg1ymrQcNxWkZENHmGpQ4kPFUNh9K6TV7fEh4rJ8n2rfmJseFpUwNQIalDVwDEc5NCjmkPWlHWhAaNh1Fb9t0FYNh1Fb9r0FMRowirAFQQ1ZApANaqs44NW2HFVZ+hoGc/qXesSQcmtzUu9YknU0ICu9Np70ytEIkRgQFPTt9a7X4d+IrrS7+KyOXtp3ChSfuse4rhq0tImMV7bv3SRSD9DWdSClGzLpzcJJo+m7a9wxjlBWReCD1rSimQ4ORVG9s1u4I5RwzKGDL1GRWO8t5Yv+8XzIx/Ev+FeC1rY+hjLQ7i2ZcVaXHUVx9hrCMR834Gt6C9VgCDx9aE7FaM1wATk9amCjb2xWUl4F6kU59TRVxVqSJ5SxcRrszWPdR53Fe1NuNUDkjPGfWq0uoDYfaq5h2Ks2Op/Wsq8dd3GKS/1EBjkg1gX2qKqsxbj61aRjJpEupXiquAcDqa5+4uweFOWPSs2+1Jp5ML0q1p0QKGRslycZraML6HNOpZXJlt1dV8zlutWUULgAU5fcVIq5INb2tocjbbuzRsB0rsNDl2lRXK2C9K6PTflYV10SJI9C0uQFBWyh4FcvpE3ArpIHyorWSuhRdmSuMisu/j6mtXtVa5TcprgrQPTw9SzMNG2vWnay5rMuVKOaktJcHFc1OXK7HfWp88bo6KJ8ipTyKoW8vAq4rZFd8JXPCrQsytdICDXN6pBkNxXUTjisfUI8qa0TOc851e3yx4rH+z+1ddq0GWPFY/ke1bKQmj5aU1IGqBTmpErnJJR0py9aYvSnr1oQGlp/UV0Fr0FYGn9RXQWvQUxGjBVkdKrQdKsjpSARqqXHQ1bbpVW4+6aAOf1LvWJL1NbWpd6xZOtNAV5OtNp0nWm1aEFWLdiM469qr96ngIVwx6elDBH1j4df7T4c02U8l7eMn/vkU+4tgwyRmqfw/k87wZpLkf8ALAD8uK3tmc189VVps+jou8Ecle6YpYugKt6jiqQlu7NsA71rsJ7cFDWRc24DHioUrF8vYw5ddki++jAj0qnN4nyuCcVpXdkGydtc/qGmL121pFxZEnJCP4jTdlmJqpc+KBswGNZ11p6g/drLuLIKx4reMYswc5Fi51uWZiE4H1rPubiWY4ZjSmLaakjh3GtdEZO73K8CEuM10lguLdfcmstYduOK27IYgQd6uG5lW0iTCpUHIpqipoxyK0ZjE1LBeldBZjGOKxdPXpXQ2i8CumixSRs6bJtIFdRZS5WuTt+CDW3YzcAZrrtoZHQq2QDSOMrUEEmRU9ctWJ00Z2MjUIu4FZisUeuhuk3KRXP3SbHNeZVjyu57mHmpx5WadpNnFaUUmRXN2s2DjNa9vLnHNdFGdzgxdGzNFjkVn3YyDVoPkVBcciupHlSVmcxqcWSeKyvJ9q6G/TOazfLq0yT4vSpkqJBxUq1BBKtPXrTFp69aaA1LDqK37XpWBYdRW/a9qCTSh6VYHSq8PSpx0pDEaqtweDVk1VuPumgDn9SPWsWTrWzqXU1iv1NNARP1ptK1JVoQd6fGpd1UDLE4AplekfCHwXNreqxaldxldOtnDZYf6xh0A9qmclFXZUIubsj2/wAHWD6Z4X02zk+/HAu76nk/zrbVR3pP4sUuTwT0rwaju2z6CmuWKQ2Qc8Dis65iVj0rVYAjNU5wCxPOaxaNUzJlg+XkZFZF9bjaeM107DjjrWdexRyDkYNNBJaHEXcHJ+XGawb235PFd3eW0ZUkZrBv7aNRuI/DNdEJHPOJyLwkv/WrMEHy8CrE6hpcIOKvQwAJ0ra5lYzJY8CtC0GYU+lVbsYJA7VdsBm3WtaZzYj4Swq1Mi8ikVelTxr8wrVmEWaunITjFdNY25YCsnR4MheK7HTbXgcVvSdhyY2G0JHSrcFuUPSte1tOBxVr7HjnFdSmZMqWiHFXvLOKfBb47VdEPFRN3HF2ZlyocVkX9tu5xXTPDxVK4t8g8VxVKdz0aFflZySxFXrRtwcDNWJbXDdKdHFis6cOVnRWrKaHqTimyNkU8qRUUnSuuJ5VQzrsdaz8VoXfeqNUYnxNHUy1ClTLSIJFp6daYKen3qEBq6f1Fb9r2rn9P6iugte1MRpQ9KmFQxdBUwpMBG6VUuPumrbdKqXP3TQBzupdTWO/WtrUEZ2IUZrLaALzK6rVJNiuU2606OJ5GARSc1ZURc+XE0h9T0qQPOrrlVRB2AqtFuGrOo+HPhGLxHr3lXLkWduA0u3rIf7tfS1jawWNpHb2kSxQRjaqKMACvDfgdfRR6veQPgSSKGX3r3ZTlQK87EzfNZnqYSEeXmQAZHvQDyRxTk6kdqbMMNxXns70ISQOMGqk8gzjPNWVPTFNmjVgSQM+tZlrQqL8wxVK5THTFTyboyQDn61XeUHO4YNCQ2zLuuMiub1POSBXS3WSTtHHrXO6l/rMdTW0DKo9DGghLTAmtCQYjIX86k0+1y5eUcelS34CRkKMVte7MbWRz865Y1Z0wnDL3BzTGXc1MDSQ7miAL44B6GtoOzMKkeaLRsoPWrEAyw+tclZ+LIFuxa6pC9nPnALfdP0NddasrlGQhlPIIroaOKLOx0KLIXiu40yDgVyPh4ZC13umIMCrgNs07WDgcVcFuNtPtU+WrQArVMybsURBg1II+KslRSFadxXKrx+1VpYq0SKhkWpaNIzMWeAZ6VXMWK2JI6qSx8VPKae0M51xVWYcVoSriqFxVJEN3Mu671Qq7d9DVGmQfFCVMlQoKlVgDjqfQUiCWnpyafbQGRgXPHpWiLVABxRdIpRbG2MiJjcwH1ragvLdQCZVrCe3UHgU+OBeM5p3QuRnURanZ4/1wH4GnPrFko/1ufoprnUtUb1FPk08EZRyPrReIcjNKfxDCB+5hdz78VmT61eTHEcaRj86rtZyqfWjZInJXpTuuguV9RGF1McySn8OKWOyXOTlj7809JuOalWb0xQ22UopEiQYwOAKWS3VkIJpplYiozJLn5WxUu5egzRNTm0bWYLuIkSQvyPUdxX1N4b1SDW9LgvLVg0ci5+h9K+Tr2KQky8se/Fdl8LfHL+G74W14S2mzN8w/uH1FYYil7SN1ua4er7KVnsfSuzAzSsuRmmWF5b39pHPayLJE43KynINTYx0rymrHrJ32KuMHinDDAinSDmmr1x2qGirmbdjByPzqkRuBGc1p6kn7piB0rEhk+cg00gbGTW5IODj61kzWmGZjg+9bsucGqM0ZYgVaZLKEEQBzVDVR2zXRi22pkjpXO6rzLtAxVxd2ZyVkZaxZ5xSNFxWhHCdo4pxhzxitbmdjndY0mDVLJobhAXA+R+4NcroXie78O3DWN6vnQxNjnqB7V6Obc7SMcivNPiFYGC9juQuA42mumjO7szlrwsuZHuXgbxbo+qqggu40l7xyHaRXrulMGRSCCO2K+BInZGDRsVI9DXo3gn4s6/4aCQmQXlov/LObkgexrqUexyc3c+17b7oqevCvCv7QWi3cixaxay2RP8Ay0HzLXq2jeMfD+sxK+n6ray7ui+YAfyp2Iepv0GkDgjIII9RTS4oCwGonpzOKidxQWkRSVVl6Gp5HFVJXGKBlWc1m3Jq9O4xWbcuOeaAsZl2etUc1au3HNUN9AHxWsgZgA2BWjbQqACOaxyhHTkVNbXLwMMHK+lD8jNO250Mfyn2q2jZHJrOimWRA6nINWInBPWs2bJlhwKVF4pEIIp4BHQcUDJI8g89Ksqc1VH1qWNjmgEWglSJEO4HNNi5ANWlTcBUt2LWpTewR88D8Kqy6WQfkatkAqKerAgDHNJTaBwTOYe3niz8pNReayn5gRXXtErjoKp3Gmo6ngZq1Ml0+xhRTMf41H1FUb60cEyxYIPUCta40orkrmqb2ZU4Iz9aaa6EuL6m54B8e33hecRktPYk/NCx+77j0r6K8LeKdM8R2izWFwrNj5kJwy/UV8nT2WSWXCtTdP1C+0i7We0mkt5lOQ6HFZVaEamq3NKdeVLR7H2fgN3pGix9K8U8FfGBCI7bxCmxuguEHB+or2LTNWtNRtVntJ45o35DIwINefVoyhuejSrRnsxbyINCa4yeQwXhHYmu+bay9iDXD+KYDFPvXpms4robStbQtqQ6Ag06KDzHHFQ6W/nRKR0xW9Z2+WHFDVhIry2uLckCuM1OHN1x616hPABbsSOMVxN3a7p2IHenB2YTV0ZcduBGeO1RtHhs46VqrF8uO9R3EahCTgYHJNaJmdig8YADV5z8VZYVtoIwR5rNnb3Arb8UeObHSY3hs2W5u+mFOVU+5rx7UdQutXvnmuHMkjnk9hXXQpu/MzixFVW5FuNtgGQnDZz2qUoAOhqaCFI0C+Yw/CpWiBHDt+VdVzl5dCmMipobmaFw0UjIwPBU4NK8IUdahIwarnJ5DutE+J3i/SY1jtdWmaNeiyneP1rpLb48+MIMed9kmH+1HivJ42qRjkdKnmHynt9j+0TqwwLzSLaT1KORWzb/ALQ1sxH2rRZl9SkgNfOy9akBouOx9U6N8aPDGqSrFLPJZyNwBOuBn612y38VxCssEiyRsMqynINfDsiqy811Pgj4g6n4TmWFne500n5oWOSvutK9y4u3xH1dPdD1rNuboc81zGi+LtP1+yW4sLhXyPmQn5lPoRT7m/681m6ltGdSocyui7d3Q55qh9qHrWTd33XmqP273p+0D6ufMca02eEgb1HHerMSd6tJHkYI4rTmODlKWl3GyXy3PyP+hraMZB4rnJ4zDMR07iuis5fPtEc9cYP1ol3CHYfG5BwauI2RVE5zViNiKk0LRHHFOTOajVuKkjpDRdticVeiziqNuPxq8h471JSJdv50BOeaA3bvTs81JY5cjvSMeeaBweaRuaQDJCCOKrSRqwOQM1O6+lRP6GmgKL2654A5qF7OORSHUEVeamEGquxWRg3OkEEm3bB/umnaRrur+G7nfZ3Etuc8rnKN9R0raC5NRXMCyqQwBHpT5r6MzdPrE7/w38aE2JFrlmQ3/PaDkfiprrrnxboGvWn+iajB5mPuyHYf1r56n0hCcxEpn0qo+nXUZ+Qhv0rOVCEtVoaxxFWG+p9K+HLpCSodWAPGDmu505lAB9RXxhFcajaMGie4jPqjkVoweLfEluMRapqKAdhI1Zywt9marGd4n2fcOht2PAGK4vVdY0jTVZ76/tYSOzSDP5da+YL3xL4gv12XOo38q+jStis8W13cHc5692OaUcJ3YPGv7MT2bxF8VNMtXddHge7foHb5U/xNeZ+IPG2s64zJJOyRH/llD8o/+vWdFpIyPOkLew4FWo7UQN+4C49CK3jThDZHNOpUnuzNg06ec5mOxfTvWrbWPkpiNl/KpRK2CGT8RSLOFPcVbbYoxSJNhH3sVFMB2pzTgjrUUhzSQyrKahxkVYdeaaBVCY1BgVMvI9qVQKkwAOKBERWmHOamIqNhQAzOahlGRUpHNMYUAMsdQvNJuhcWEzxSA84PB+or0jQviNb3sUcOo/ubk/KT2NeZSrkVm3a7eRRKCmrMqnWnRd4nvs+oB13K2QehFVPt3vXnvg3X2niFjcv+8UfIxPUeldP5h9a4Z80HZnuUnCtBTieZxirUdVY+gq3F0rtPARS1SLMayAcrwfpS6NMfnizweRU+of8AHtJ9Ko6P/wAfY/3TVLYh6SN4LzzTl46UdqT/ABqTQsRnNWYx0qpF96rkPUUmUXIRjFW1OBVWLpVkdvpUspEoORSnPrSJSNSGPByM0u70xTF+6aRfvUDFJyAajbmlPQUwfep2JZGRgnFJinnvTB1NAINvPFIRzyKU9qD0poorsPboaZInTP0qc96jf7tBLKpQcg0LEM81IfvUq0CK7IuTwPWl4HSlk+8Kafun6UxCt933FQu+DnipG6VVl+8aEgZYSTk0pCt1FV06iphQwFMC9RUbxlehzVpeg+lMagCowqMjH0qd6hbvTExykU8GoV60+gVx5IqNqWm0AM6EZ70OtK33qcelAFWVcVm34/dGtabrWVqP+qamiZGbbTSQTJLESHQ5Brpf+Eun/uVy69DSU5QjLdDp1p0/hdj/2Q=="
-            
-        }
-    );
-```
-
-
-**Face Verification Service**
-
-*Face Verification Service endpoint*
-
-```
-var faceVerificationRequest = new FaceVerificationWithBase64Request()
-        {
-            DetProbThreshold = 0.88m,
-            FacePlugins = new List<string>()
-            {
-                "age",
-                "mask",
-                "calculator",
-                "gender",
-            },
-            SourceImageFileName = file name for source image,
-            SourceImageFilePath = file path for source image,
-            TargetImageFileName = file name for target image,
-            TargetImageFilePath = file path for target image,
-            Status = true,
-        };
-        
-        var faceVerificationResponse = await comprefaceClient.FaceVerificationService.VerifyImageAsync(faceVerificationRequest);
-```
-
-*Face Verification Service endpoint, Base64*
-
-```
-var faceVerificationWith64Request = new FaceVerificationWithBase64Request()
-        {
-            DetProbThreshold = 0.88m,
-            FacePlugins = new List<string>()
-            {
-                "age",
-                "mask",
-                "calculator",
-                "gender",
-            },
-            SourceImageWithBase64 = source image's base64 value,
-            TargetImageWithBase64 = target image's base64 value,
-            Status = true,
-        };
-        
-        var faceVerificationResponse = await comprefaceClientV2.FaceVerificationService.VerifyBase64ImageAsync(faceVerificationRequest);
+    public IList<decimal> Embedding { get; set; }
+}
 ```
 
 
@@ -388,34 +1437,33 @@ var faceVerificationWith64Request = new FaceVerificationWithBase64Request()
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are greatly appreciated.
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the Branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
 
 After creating your first contributing pull request, you will receive a request to sign our Contributor License Agreement by commenting your pull request with a special message.
 
 ## Report Bugs
 
-Please report any bugs [here](https://github.com/exadel-inc/compreface-net-sdk/issues).
+Please report any bugs  [here](https://github.com/exadel-inc/compreface-net-sdk/issues).
 
 If you are reporting a bug, please specify:
 
-- Your operating system name and version
-- Any details about your local setup that might be helpful in troubleshooting
-- Detailed steps to reproduce the bug
-
+-   Your operating system name and version
+-   Any details about your local setup that might be helpful in troubleshooting
+-   Detailed steps to reproduce the bug
 
 ## Submit Feedback
 
-The best way to send us feedback is to file an issue at https://github.com/exadel-inc/compreface-net-sdk/issues.
+
+The best way to send us feedback is to file an issue at  [https://github.com/exadel-inc/compreface-net-sdk/issues](https://github.com/exadel-inc/compreface-net-sdk/issues).
 
 If you are proposing a feature, please:
 
-- Explain in detail how it should work.
-- Keep the scope as narrow as possible to make it easier to implement.
-
+-   Explain in detail how it should work.
+-   Keep the scope as narrow as possible to make it easier to implement.
 
 # License info
 
