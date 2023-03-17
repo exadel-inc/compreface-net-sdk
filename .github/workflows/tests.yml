@@ -22,6 +22,10 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+
+    - name: Run docker 
+      uses: docker-practice/actions-setup-docker@master
+      timeout-minutes: 12
       
     - name: Download a file
       run: wget https://github.com/exadel-inc/CompreFace/releases/download/v1.1.0/CompreFace_1.1.0.zip
@@ -34,13 +38,13 @@ jobs:
     - name: Show contents
       working-directory: ./compreface
       run: pwd
-      
-    - name: Compose 
+        
+    - name: Run CompreFace
       run: docker-compose -f "/home/runner/work/compreface-net-sdk/compreface-net-sdk/compreface/docker-compose.yml" up -d --build
       
-    - name: Run CompreFace
-      run: docker run --name nginx -d -v /root/nginx/conf:/etc/nginx/conf.d --net=host nginx
-
+    - name: Logs
+      run: docker-compose logs
+      
     - name: Locahost
       run: docker ps -a
       
