@@ -52,6 +52,7 @@ Before using our SDK make sure you have installed CompreFace and .NET on your ma
 | CompreFace .NET SDK version   | CompreFace 1.1.0 |
 | ------------------------------| ---------------- |
 | 1.0.0                         | ✔               |
+| 1.0.1                         | ✔               |
 
 Explanation:
 
