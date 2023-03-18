@@ -40,7 +40,7 @@ jobs:
       run: pwd
         
     - name: Run CompreFace
-      run: docker-compose -f "/home/runner/work/compreface-net-sdk/compreface-net-sdk/compreface/docker-compose.yml" up --build
+      run: docker-compose "/home/runner/work/compreface-net-sdk/compreface-net-sdk/compreface/docker-compose.yml" up --build
       
     - name: Logs
       run: docker-compose -f "/home/runner/work/compreface-net-sdk/compreface-net-sdk/compreface/docker-compose.yml" logs
