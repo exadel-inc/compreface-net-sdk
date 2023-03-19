@@ -48,6 +48,10 @@ jobs:
     - name: Locahost
       run: docker ps -a
       
+    - name: Sleep for 30 seconds
+      run: sleep 30s
+      shell: bash
+      
     - name: Port
       run: netstat -tunlp | grep 8000
       
