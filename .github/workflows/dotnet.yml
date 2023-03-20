@@ -1,4 +1,4 @@
-name: Run tests
+name: Check tests
 
 on:
   push:
@@ -45,14 +45,14 @@ jobs:
     - name: Logs
       run: docker-compose -f "/home/runner/work/compreface-net-sdk/compreface-net-sdk/compreface/docker-compose.yml" logs
       
-    - name: Locahost
+    - name: Show both running and stopped containers
       run: docker ps -a
       
     - name: Sleep for 30 seconds
       run: sleep 30s
       shell: bash
       
-    - name: Port
+    - name: Is listening on a port 
       run: netstat -tunlp | grep 8000
       
     - name: Test
