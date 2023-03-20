@@ -235,5 +235,5 @@ namespace Exadel.Compreface.AcceptenceTests.Services
     //        // Assert
     //        await Assert.ThrowsAsync<ServiceException>(func);
     //    }
-    //}
+    }
 }
