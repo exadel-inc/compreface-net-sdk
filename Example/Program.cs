@@ -294,14 +294,14 @@ var faceRecognitionService = client.GetCompreFaceService<RecognitionService>("00
 #endregion
 
 #region List of All Saved Examples of the Subject
-var listAllSubjectExamplesRequest = new ListAllSubjectExamplesRequest()
-{
-    Page = 0,
-    Size = 0,
-    Subject = TEST_SUBJECT_NAME,
-};
+//var listAllSubjectExamplesRequest = new ListAllSubjectExamplesRequest()
+//{
+//    Page = 0,
+//    Size = 0,
+//    Subject = TEST_SUBJECT_NAME,
+//};
 
-var listAllSubjectExamplesResponse = await faceRecognitionService.FaceCollection.ListAsync(listAllSubjectExamplesRequest);
+//var listAllSubjectExamplesResponse = await faceRecognitionService.FaceCollection.ListAsync(listAllSubjectExamplesRequest);
 #endregion
 
 #region Delete All Examples of the Subject by Name
