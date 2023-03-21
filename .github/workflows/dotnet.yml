@@ -57,3 +57,7 @@ jobs:
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
+      timeout-minutes: 3
+      
+    - name: Logs
+      run: docker-compose -f "/home/runner/work/compreface-net-sdk/compreface-net-sdk/compreface/docker-compose.yml" logs
