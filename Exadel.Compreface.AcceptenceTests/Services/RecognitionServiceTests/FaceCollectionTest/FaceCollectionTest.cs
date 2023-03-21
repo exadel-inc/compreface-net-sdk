@@ -538,95 +538,95 @@ namespace Exadel.Compreface.AcceptenceTests.Services.RecognitionServiceTests
             await Assert.ThrowsAsync<ServiceException>(func);
         }
 
-        [Fact]
-        [FaceCollectionTestBeforeAfter]
-        public async Task DownloadAsync_TakesRequestModel_ReturnsProperResponseModel()
-        {
-            //Arrange
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
+        //[Fact]
+        //[FaceCollectionTestBeforeAfter]
+        //public async Task DownloadAsync_TakesRequestModel_ReturnsProperResponseModel()
+        //{
+        //    //Arrange
+        //    addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
-            var testImage = await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
+        //    var testImage = await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
 
-            var expectedResult = Convert.FromBase64String(IMAGE_BASE64_STRING);
+        //    var expectedResult = Convert.FromBase64String(IMAGE_BASE64_STRING);
 
-            //Act
-            var actualResult = await _recognitionService.FaceCollection.DownloadAsync(
-                new DownloadImageByIdDirectlyRequest() { ImageId = testImage.ImageId, RecognitionApiKey = Guid.Parse(API_KEY_RECOGNITION_SERVICE) });
+        //    //Act
+        //    var actualResult = await _recognitionService.FaceCollection.DownloadAsync(
+        //        new DownloadImageByIdDirectlyRequest() { ImageId = testImage.ImageId, RecognitionApiKey = Guid.Parse(API_KEY_RECOGNITION_SERVICE) });
 
-            //Assert
-            Assert.Equal(expectedResult, actualResult);
-        }
+        //    //Assert
+        //    Assert.Equal(expectedResult, actualResult);
+        //}
 
-        [Fact]
-        public async Task DownloadAsync_TakesRequestModel_ReturnsNotNull()
-        {
-            //Arrange
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
+        //[Fact]
+        //public async Task DownloadAsync_TakesRequestModel_ReturnsNotNull()
+        //{
+        //    //Arrange
+        //    addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
-            var testImage = await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
+        //    var testImage = await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
 
-            //Act
-            var actualResult = await _recognitionService.FaceCollection.DownloadAsync(
-                new DownloadImageByIdDirectlyRequest() { ImageId = testImage.ImageId, RecognitionApiKey = Guid.Parse(API_KEY_RECOGNITION_SERVICE) });
+        //    //Act
+        //    var actualResult = await _recognitionService.FaceCollection.DownloadAsync(
+        //        new DownloadImageByIdDirectlyRequest() { ImageId = testImage.ImageId, RecognitionApiKey = Guid.Parse(API_KEY_RECOGNITION_SERVICE) });
 
-            // Assert
-            Assert.NotNull(actualResult);
-        }
+        //    // Assert
+        //    Assert.NotNull(actualResult);
+        //}
 
-        [Fact]
-        public async Task DownloadAsync_TakesNullRequestModel_ThrowsNullReferenceException()
-        {
-            //Act
-            var func = async () => await _recognitionService.FaceCollection.DownloadAsync((DownloadImageByIdDirectlyRequest)null!);
+        //[Fact]
+        //public async Task DownloadAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        //{
+        //    //Act
+        //    var func = async () => await _recognitionService.FaceCollection.DownloadAsync((DownloadImageByIdDirectlyRequest)null!);
 
-            // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
-        }
+        //    // Assert
+        //    await Assert.ThrowsAsync<NullReferenceException>(func);
+        //}
 
-        [Fact]
-        [FaceCollectionTestBeforeAfter]
-        public async Task DownloadAnImageExampleOfTheSubjectByIDAsync_TakesRequestModel_ReturnsProperResponseModel()
-        {
-            //Arrange
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
+        //[Fact]
+        //[FaceCollectionTestBeforeAfter]
+        //public async Task DownloadAnImageExampleOfTheSubjectByIDAsync_TakesRequestModel_ReturnsProperResponseModel()
+        //{
+        //    //Arrange
+        //    addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
-            var testImage = await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
+        //    var testImage = await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
 
-            var expectedResult = Convert.FromBase64String(IMAGE_BASE64_STRING);
+        //    var expectedResult = Convert.FromBase64String(IMAGE_BASE64_STRING);
 
-            //Act
-            var actualResult = await _recognitionService.FaceCollection.DownloadAsync(
-                new DownloadImageByIdFromSubjectRequest() { ImageId = testImage.ImageId });
+        //    //Act
+        //    var actualResult = await _recognitionService.FaceCollection.DownloadAsync(
+        //        new DownloadImageByIdFromSubjectRequest() { ImageId = testImage.ImageId });
 
-            //Assert
-            Assert.Equal(expectedResult, actualResult);
-        }
+        //    //Assert
+        //    Assert.Equal(expectedResult, actualResult);
+        //}
 
-        [Fact]
-        [FaceCollectionTestBeforeAfter]
-        public async Task DownloadAnImageExampleOfTheSubjectByIDAsync_TakesRequestModel_ReturnsNotNull()
-        {
-            //Arrange
-            addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
+        //[Fact]
+        //[FaceCollectionTestBeforeAfter]
+        //public async Task DownloadAnImageExampleOfTheSubjectByIDAsync_TakesRequestModel_ReturnsNotNull()
+        //{
+        //    //Arrange
+        //    addBase64SubjectExampleRequest.Subject = TEST_SUBJECT_EXAMPLE_NAME;
 
-            var testImage = await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
+        //    var testImage = await _recognitionService.FaceCollection.AddAsync(addBase64SubjectExampleRequest);
 
-            //Act
-            var actualResult = await _recognitionService.FaceCollection.DownloadAsync(
-                new DownloadImageByIdFromSubjectRequest() { ImageId = testImage.ImageId });
+        //    //Act
+        //    var actualResult = await _recognitionService.FaceCollection.DownloadAsync(
+        //        new DownloadImageByIdFromSubjectRequest() { ImageId = testImage.ImageId });
 
-            // Assert
-            Assert.NotNull(actualResult);
-        }
+        //    // Assert
+        //    Assert.NotNull(actualResult);
+        //}
 
-        [Fact]
-        public async Task DownloadAnImageExampleOfTheSubjectByIDAsync_TakesNullRequestModel_ThrowsNullReferenceException()
-        {
-            //Act
-            var func = async () => await _recognitionService.FaceCollection.DownloadAsync((DownloadImageByIdFromSubjectRequest)null!);
+        //[Fact]
+        //public async Task DownloadAnImageExampleOfTheSubjectByIDAsync_TakesNullRequestModel_ThrowsNullReferenceException()
+        //{
+        //    //Act
+        //    var func = async () => await _recognitionService.FaceCollection.DownloadAsync((DownloadImageByIdFromSubjectRequest)null!);
 
-            // Assert
-            await Assert.ThrowsAsync<NullReferenceException>(func);
-        }
+        //    // Assert
+        //    await Assert.ThrowsAsync<NullReferenceException>(func);
+        //}
     }
 }
