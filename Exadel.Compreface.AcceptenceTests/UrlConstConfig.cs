@@ -3,8 +3,9 @@
     public static class UrlConstConfig
     {
 
-        public static string FILE_PATH;
+        //public const string FILE_PATH = @"Resources/Images/pexels-jonathan-yakubu.jpg";
 
+        public static string FILE_PATH;
 
         public static string PATH_OF_WRONG_FILE { get; }
 
@@ -22,6 +23,7 @@
             PATH_OF_WRONG_FILE = Path.Combine(projectPath!, "Resources", "Images", "pexels.jpg");
             TWO_FACES_IMAGE_PATH = Path.Combine(projectPath!, "Resources", "Images", "pexels-14344696.jpg");
         }
+
         public const string DOMAIN = "http://localhost";
 
         public const string PORT = "8000";
