@@ -5,7 +5,7 @@ using Exadel.Compreface.Services;
 using Exadel.Compreface.Services.Interfaces;
 using static Exadel.Compreface.AcceptenceTests.UrlConstConfig;
 
-//[assembly: CollectionBehavior(DisableTestParallelization = true)]
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
 namespace Exadel.Compreface.AcceptenceTests.Services
 {
     public class VerificationServiceTest
