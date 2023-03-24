@@ -49,7 +49,7 @@ jobs:
       run: docker ps -a
       
     - name: Sleep for 30 seconds
-      run: sleep 600s
+      run: sleep 900s
       shell: bash
       
     - name: Is listening on a port 
