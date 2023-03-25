@@ -1,16 +1,17 @@
-﻿using Exadel.Compreface.ExampleApp.Models;
+﻿using Exadel.Compreface.Clients.CompreFaceClient;
+using Exadel.Compreface.ExampleApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace Exadel.Compreface.ExampleApp.Controllers
 {
-    public class HomeController : Controller
+    public class CompreFaceController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ICompreFaceClient _compreFaceClient;
 
-        public HomeController(ILogger<HomeController> logger)
+        public CompreFaceController(ICompreFaceClient compreFaceClient)
         {
-            _logger = logger;
+            _compreFaceClient = compreFaceClient;
         }
 
         public IActionResult Index()
