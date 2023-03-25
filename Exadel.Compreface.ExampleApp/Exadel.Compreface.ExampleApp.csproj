@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ImageExamples\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="CompreFace.NET.Sdk" Version="1.0.1" />
   </ItemGroup>
 
