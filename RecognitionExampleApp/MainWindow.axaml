@@ -1,0 +1,96 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="RecognitionExampleApp.MainWindow"
+        Title="RecognitionExampleApp">
+	
+<Grid ShowGridLines="False">
+
+	<Grid.ColumnDefinitions>
+		<ColumnDefinition></ColumnDefinition>
+		<ColumnDefinition></ColumnDefinition>
+		<ColumnDefinition></ColumnDefinition>
+	</Grid.ColumnDefinitions>
+	<Grid.RowDefinitions>
+		<RowDefinition Height="Auto"></RowDefinition>
+		<RowDefinition Height="*"></RowDefinition>
+	</Grid.RowDefinitions>
+
+	<StackPanel Spacing="20" Grid.Column="0" Grid.Row="0" Margin="20, 0, 0, 0">
+		<StackPanel>
+			<Label HorizontalAlignment="Center" FontWeight="Bold">Choose folder and upload.</Label>
+		</StackPanel>
+		<StackPanel>
+			<Label HorizontalAlignment="Center" FontWeight="Bold">Path</Label>
+			<Grid ShowGridLines="False">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"></ColumnDefinition>
+					<ColumnDefinition  Width="Auto"></ColumnDefinition>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"></RowDefinition>
+				</Grid.RowDefinitions>
+				<TextBox VerticalAlignment="Center" Margin="10, 0, 0, 0" TextWrapping="WrapWithOverflow" Grid.Column="0" Grid.Row="0" Name="folderPath"/>
+				<Button VerticalAlignment="Center" Margin="10, 0, 10, 0" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Click="OnBrowseClick">Browse</Button>
+			</Grid>
+			<Button VerticalAlignment="Center" Margin="10, 0, 10, 0" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Click="OnUploadClick">Upload</Button>
+		</StackPanel>
+	</StackPanel>
+
+	<StackPanel Spacing="20" Grid.Column="1" Grid.Row="0" Margin="20, 0, 0, 0">
+		<StackPanel>
+			<Label HorizontalAlignment="Center" FontWeight="Bold">Choose image for recognition</Label>
+		</StackPanel>
+		<StackPanel>
+			<Grid ShowGridLines="False">
+				<Button VerticalAlignment="Center" Margin="10, 0, 10, 0" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Click="OnChooseClick">Choose</Button>
+			</Grid>
+		</StackPanel>
+
+	</StackPanel>
+	<StackPanel Spacing="20" Grid.Column="2" Grid.Row="0" Margin="20, 0, 20, 0">
+		<StackPanel>
+			<Label HorizontalAlignment="Center" FontWeight="Bold">File role</Label>
+			<Label HorizontalAlignment="Center">Department overview</Label>
+		</StackPanel>
+		<StackPanel>
+			<Label HorizontalAlignment="Center" FontWeight="Bold">Path</Label>
+			<Grid ShowGridLines="False">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"></ColumnDefinition>
+					<ColumnDefinition  Width="Auto"></ColumnDefinition>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"></RowDefinition>
+				</Grid.RowDefinitions>
+				<TextBox VerticalAlignment="Center" Margin="10, 0, 0, 0" TextWrapping="WrapWithOverflow" Grid.Column="0" Grid.Row="0" Name="filePath3"/>
+				<Button VerticalAlignment="Center" Margin="10, 0, 10, 0" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Click="OnBrowseClick3">Browse</Button>
+			</Grid>
+		</StackPanel>
+		<StackPanel>
+			<Label HorizontalAlignment="Center" FontWeight="Bold">Sheet name</Label>
+			<TextBox Margin="10, 0, 10, 0"></TextBox>
+		</StackPanel>
+		<StackPanel>
+			<Label HorizontalAlignment="Center" FontWeight="Bold">Header Row index</Label>
+			<TextBox Margin="10, 0, 10, 0"></TextBox>
+		</StackPanel>
+		<StackPanel>
+			<Label HorizontalAlignment="Center" FontWeight="Bold">Date Format</Label>
+			<ComboBox HorizontalAlignment="Stretch" Margin="10, 0, 10, 10">
+				<ComboBoxItem>dd.mm.yyyy</ComboBoxItem>
+				<ComboBoxItem>mm/dd/yyyy</ComboBoxItem>
+				<ComboBoxItem>dd-mm-yyyy</ComboBoxItem>
+			</ComboBox>
+		</StackPanel>
+	</StackPanel>
+
+	<StackPanel Spacing="10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1">
+		<Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,0,10,0">Configuration</Button>
+		<Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,0,10,0">Start</Button>
+	</StackPanel>
+
+</Grid>
+</Window>
