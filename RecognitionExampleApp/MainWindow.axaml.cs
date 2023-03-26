@@ -1,23 +1,36 @@
-using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Exadel.Compreface.Clients.CompreFaceClient;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.Services.RecognitionService;
+using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using System.IO;
+using System.Collections.Generic;
+using Avalonia.Controls;
+using System;
+using Avalonia.Platform;
+using Avalonia;
+using Avalonia.Media.Imaging;
+using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace RecognitionExampleApp
 {
     public partial class MainWindow : Window
     {
-        private readonly ICompreFaceClient compreFaceClient;
+        private ICompreFaceClient compreFaceClient;
+        private RecognitionService recognitionService;
         private string[] imagePathList;
+
+        private string recognizeImagePath;
+
+        private string domain;
+        private string port;
+        private string apiKey;
 
         public MainWindow()
         {
             InitializeComponent();
-
-            compreFaceClient = new CompreFaceClient("http://localhost", "8000");
         }
 
         private async void OnBrowseClick(object sender, RoutedEventArgs e)
@@ -31,9 +44,10 @@ namespace RecognitionExampleApp
             }
         }
 
-        private async void OnUploadClick(object sender, RoutedEventArgs e)
+        private async void OnCreateClick(object sender, RoutedEventArgs e)
         {
-            var recognitionService = compreFaceClient.GetCompreFaceService<RecognitionService>("439503b1-3788-4b8b-9c91-93a03dd4ffb5");
+            ConfigureRecognitionService();
+
             foreach (var imagePath in imagePathList)
             {
                 var imageName = Path.GetFileName(imagePath);
@@ -42,20 +56,74 @@ namespace RecognitionExampleApp
             }
         }
 
+        private async void OnClearClick(object sender, RoutedEventArgs e)
+        {
+            ConfigureRecognitionService();
+            await recognitionService.Subject.DeleteAllAsync();
+        }
+
         private async void OnChooseClick(object sender, RoutedEventArgs e)
         {
             var dialogWindow = new OpenFileDialog();
             var inputFile = await dialogWindow.ShowAsync(new Window());
             if (inputFile != null)
-                filePath2.Text = inputFile[0];
+            {
+                imagePath.Text = inputFile[0];
+                recognizeImagePath = inputFile[0];
+
+                FileStream file = null;
+
+                if (File.Exists(recognizeImagePath))
+                {
+                    file = File.OpenRead(recognizeImagePath);
+                }
+
+                using (var imageStream = file)
+                {
+                    uploadedImage.Source = Bitmap.DecodeToHeight(imageStream, 500);
+                }
+            }
         }
 
-        private async void OnBrowseClick3(object sender, RoutedEventArgs e)
+        private async void OnStartClick(object sender, RoutedEventArgs e)
         {
-            var dialogWindow = new OpenFileDialog();
-            var inputFile = await dialogWindow.ShowAsync(new Window());
-            if (inputFile != null)
-                filePath3.Text = inputFile[0];
+            var recognizeRequest = new RecognizeFaceFromImageRequestByFilePath()
+            {
+                FilePath = recognizeImagePath,
+                DetProbThreshold = 0.81m,
+                Limit = 1,
+                Status = false,
+                FacePlugins = new List<string>()
+                            {
+                                "landmarks",
+                                "gender",
+                                "age",
+                                "detector",
+                                "calculator"
+                            }
+            };
+
+            var recognitionResponse = await recognitionService.RecognizeFaceFromImage.RecognizeAsync(recognizeRequest);
+
+            string resultText = "Images from folder, which contains provided image: ";
+
+            foreach (var result in recognitionResponse.Result)
+            {
+                foreach (var subjectName in result.Subjects)
+                    resultText += subjectName.Subject + ", ";
+            }
+
+            recognitionResult.Text = resultText;
+        }
+
+        private void ConfigureRecognitionService()
+        {
+            domain = domainTextBox.Text;
+            port = portTextBox.Text;
+            apiKey = apiKeyTextBox.Text;
+
+            compreFaceClient = new CompreFaceClient(domain, port);
+            recognitionService = compreFaceClient.GetCompreFaceService<RecognitionService>(apiKey);
         }
     }
 }

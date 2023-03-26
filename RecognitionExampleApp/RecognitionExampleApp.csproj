@@ -24,5 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Exadel.Compreface\Exadel.Compreface.csproj" />
+	<AvaloniaResource Include="Assets\**" />
   </ItemGroup>
 </Project>
