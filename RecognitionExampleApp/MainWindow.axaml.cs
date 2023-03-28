@@ -5,14 +5,8 @@ using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.Services.RecognitionService;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using System.IO;
-using System.Collections.Generic;
 using Avalonia.Controls;
-using System;
-using Avalonia.Platform;
-using Avalonia;
 using Avalonia.Media.Imaging;
-using System.Threading.Tasks;
-using System.Net.Http;
 
 namespace RecognitionExampleApp
 {
@@ -90,17 +84,9 @@ namespace RecognitionExampleApp
             var recognizeRequest = new RecognizeFaceFromImageRequestByFilePath()
             {
                 FilePath = recognizeImagePath,
-                DetProbThreshold = 0.81m,
                 Limit = 1,
+                PredictionCount = 100,
                 Status = false,
-                FacePlugins = new List<string>()
-                            {
-                                "landmarks",
-                                "gender",
-                                "age",
-                                "detector",
-                                "calculator"
-                            }
             };
 
             var recognitionResponse = await recognitionService.RecognizeFaceFromImage.RecognizeAsync(recognizeRequest);
@@ -109,8 +95,11 @@ namespace RecognitionExampleApp
 
             foreach (var result in recognitionResponse.Result)
             {
-                foreach (var subjectName in result.Subjects)
-                    resultText += subjectName.Subject + ", ";
+                foreach (var subject in result.Subjects)
+                {
+                    if (subject.Similarity >= (decimal)similarity.Value)
+                        resultText += subject.Subject + ", ";
+                }
             }
 
             recognitionResult.Text = resultText;
