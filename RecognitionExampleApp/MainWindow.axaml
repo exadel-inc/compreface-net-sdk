@@ -1,0 +1,92 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="RecognitionExampleApp.MainWindow"
+		Icon ="/Assets/compreface-icon.ico"
+        Title="RecognitionExampleApp">
+	
+<Grid ShowGridLines="False">
+
+	<Grid.ColumnDefinitions>
+		<ColumnDefinition></ColumnDefinition>
+		<ColumnDefinition></ColumnDefinition>
+		<ColumnDefinition></ColumnDefinition>
+	</Grid.ColumnDefinitions>
+	<Grid.RowDefinitions>
+		<RowDefinition Height="Auto"></RowDefinition>
+		<RowDefinition Height="*"></RowDefinition>
+	</Grid.RowDefinitions>
+
+	<StackPanel Spacing="20" Grid.Column="0" Grid.Row="0" Margin="20, 0, 0, 0">
+		<StackPanel>
+			<Label HorizontalAlignment="Center" FontWeight="Bold">Choose folder and upload.</Label>
+		</StackPanel>
+		<StackPanel>
+			<Label HorizontalAlignment="Center" FontWeight="Bold">Domain</Label>
+			<TextBox Name="domainTextBox" Margin="10, 0, 10, 0"></TextBox>
+		</StackPanel>
+		<StackPanel>
+			<Label HorizontalAlignment="Center" FontWeight="Bold">Port</Label>
+			<TextBox Name="portTextBox" Margin="10, 0, 10, 0"></TextBox>
+		</StackPanel>
+		<StackPanel>
+			<Label HorizontalAlignment="Center" FontWeight="Bold">ApiKey from CompreFace</Label>
+			<TextBox Name="apiKeyTextBox" Margin="10, 0, 10, 0"></TextBox>
+		</StackPanel>
+		<StackPanel>
+			<Label HorizontalAlignment="Center" FontWeight="Bold">Folder path</Label>
+			<Grid ShowGridLines="False">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"></ColumnDefinition>
+					<ColumnDefinition  Width="Auto"></ColumnDefinition>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"></RowDefinition>
+				</Grid.RowDefinitions>
+				<TextBox VerticalAlignment="Center" Margin="10, 0, 0, 0" TextWrapping="WrapWithOverflow" Grid.Column="0" Grid.Row="0" Name="folderPath"/>
+				<Button VerticalAlignment="Center" Margin="10, 0, 10, 0" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Click="OnBrowseClick">Browse</Button>
+			</Grid>
+			<Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,20,10,10" Click="OnCreateClick">Create subjects</Button>
+			<Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,10,10,10" Click="OnClearClick">Clear service</Button>
+		</StackPanel>
+	</StackPanel>
+
+	<StackPanel Spacing="20" Grid.Column="1" Grid.Row="0" Margin="20, 0, 0, 0">
+		<StackPanel>
+			<Label HorizontalAlignment="Center" FontWeight="Bold">Choose image for recognition</Label>
+		</StackPanel>
+		<StackPanel>
+			<Grid ShowGridLines="False">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"></ColumnDefinition>
+					<ColumnDefinition  Width="Auto"></ColumnDefinition>
+				</Grid.ColumnDefinitions>
+				<TextBox VerticalAlignment="Center" Margin="10, 0, 0, 0" TextWrapping="WrapWithOverflow" Grid.Column="0" Grid.Row="0" Name="imagePath"/>
+				<Button VerticalAlignment="Center" Margin="10, 0, 10, 0" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Click="OnChooseClick">Choose</Button>
+			</Grid>
+			<Label HorizontalAlignment="Center" Margin="10, 10, 10, 0">Similarity threshold</Label>
+			<NumericUpDown Margin="10, 0, 10, 10" Value="0.5" Increment="0.01" Name="similarity" Minimum="0" Maximum="1"/>
+			<Image Height="300" Width="300" Margin="10, 10, 10, 10" Name="uploadedImage"></Image>
+			<Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,10,10,10" Click="OnStartClick">Start</Button>
+		</StackPanel>
+
+	</StackPanel>
+	<StackPanel Spacing="20" Grid.Column="2" Grid.Row="0" Margin="20, 0, 20, 0">
+		<StackPanel>
+			<Label HorizontalAlignment="Center" FontWeight="Bold"></Label>
+		</StackPanel>
+		<StackPanel>
+			<Label HorizontalAlignment="Center" FontWeight="Bold">Recognition result</Label>
+			<TextBox Name="recognitionResult" Height="300" Margin="10, 0, 10, 0" AcceptsReturn="True" TextWrapping="Wrap"></TextBox>
+		</StackPanel>
+	</StackPanel>
+
+	<StackPanel Spacing="10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1">
+		
+		
+	</StackPanel>
+
+</Grid>
+</Window>
