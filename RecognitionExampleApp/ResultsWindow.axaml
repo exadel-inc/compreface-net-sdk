@@ -5,5 +5,14 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="RecognitionExampleApp.ResultsWindow"
         Title="ResultsWindow">
-  Welcome to Avalonia!
+
+	<Grid Name="ImagesGrid" ShowGridLines="true">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition></ColumnDefinition>
+			<ColumnDefinition></ColumnDefinition>
+			<ColumnDefinition></ColumnDefinition>
+			<ColumnDefinition></ColumnDefinition>
+			<ColumnDefinition></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+	</Grid>
 </Window>

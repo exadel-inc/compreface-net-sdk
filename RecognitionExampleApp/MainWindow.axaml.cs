@@ -91,18 +91,11 @@ namespace RecognitionExampleApp
 
             var recognitionResponse = await recognitionService.RecognizeFaceFromImage.RecognizeAsync(recognizeRequest);
 
-            string resultText = "Images from folder, which contains provided image: ";
+            var similarityValue = (decimal)similarity.Value;
 
-            foreach (var result in recognitionResponse.Result)
-            {
-                foreach (var subject in result.Subjects)
-                {
-                    if (subject.Similarity >= (decimal)similarity.Value)
-                        resultText += subject.Subject + ", ";
-                }
-            }
+            var resultsWindow = new ResultsWindow(recognitionResponse, similarityValue, imagePathList);
 
-            recognitionResult.Text = resultText;
+            resultsWindow.Show();
         }
 
         private void ConfigureRecognitionService()
