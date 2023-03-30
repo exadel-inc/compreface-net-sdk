@@ -19,11 +19,11 @@
     <PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.18" />
+    <PackageReference Include="CompreFace.NET.Sdk" Version="1.0.2" />
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Exadel.Compreface\Exadel.Compreface.csproj" />
 	<AvaloniaResource Include="Assets\**" />
   </ItemGroup>
 </Project>

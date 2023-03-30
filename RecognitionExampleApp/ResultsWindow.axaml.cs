@@ -10,6 +10,7 @@ namespace RecognitionExampleApp
 {
     public partial class ResultsWindow : Window
     {
+        //http://localhost
         public ResultsWindow()
         {
             InitializeComponent();
@@ -20,45 +21,73 @@ namespace RecognitionExampleApp
             ShowImages(recognizeResponse, similarityValue, imagePathList);
         }
 
-            private void ShowImages(RecognizeFaceFromImageResponse recognizeResponse, decimal similarityValue, string[] imagePathList)
+        private void ShowImages(RecognizeFaceFromImageResponse recognizeResponse, decimal similarityValue, string[] imagePathList)
         {
             foreach (var result in recognizeResponse.Result)
             {
                 var subjects = result.Subjects.Where(x => x.Similarity >= similarityValue).ToList();
-                decimal count = (decimal)subjects.Count / 5m;
-                for (int i = 0; i < Math.Ceiling(count); i++)
+                var subjectCounter = subjects.Count();
+                var counter = 0;
+                decimal rowCount = Math.Ceiling((decimal)subjects.Count / 5m);
+                for (int i = 0; i < rowCount; i++)
                 {
-                    ImagesGrid.RowDefinitions.Add(new RowDefinition());
-                    for (int k = 0; i < 5; i++)
+                    ImagesGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(300)});
+
+                    for (int k = 0; k < 5; k++)
                     {
+                        if (subjectCounter == 0)
+                            break;
+
                         Image image = new Image()
                         {
                             VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
                             HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
                             [Grid.ColumnProperty] = k,
                             [Grid.RowProperty] = i,
-                            Height = 300,
-                            Width = 300,
-                            Margin = Thickness.Parse("10, 10, 10, 10")
+                            Height = 250,
+                            Width = 250,
+                            Margin = Thickness.Parse("0, 10, 0, 10")
                         };
 
-                        FileStream file = null;
-
-                        var filePath = imagePathList.FirstOrDefault(x => x.Contains(subjects[k].Subject));
-
-                        if (File.Exists(filePath))
+                        Label label = new Label()
                         {
-                            file = File.OpenRead(filePath);
-                        }
+                            VerticalAlignment = Avalonia.Layout.VerticalAlignment.Bottom,
+                            HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+                            [Grid.ColumnProperty] = k,
+                            [Grid.RowProperty] = i,
+                            Margin = Thickness.Parse("0, 5, 5, 5")
+                        };
 
-                        using (var imageStream = file)
-                        {
-                            image.Source = Bitmap.DecodeToHeight(imageStream, 500);
-                        }
+                        label.Content = subjects[counter].Subject;
+
+                        var filePath = imagePathList.FirstOrDefault(x => Path.GetFileName(x) == subjects[counter].Subject);
+
+                        AddImageToGrid(image, filePath);
+
                         ImagesGrid.Children.Add(image);
+                        ImagesGrid.Children.Add(label);
+
+                        counter++;
+                        subjectCounter--;
                     }
                 }
             }
+        }
+
+        private Image AddImageToGrid(Image image, string filePath)
+        {
+            FileStream file = null;
+            if (File.Exists(filePath))
+            {
+                file = File.OpenRead(filePath);
+            }
+
+            using (var imageStream = file)
+            {
+                image.Source = Bitmap.DecodeToHeight(imageStream, 500);
+            }
+
+            return image;
         }
     }
 }

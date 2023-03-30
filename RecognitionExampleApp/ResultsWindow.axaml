@@ -4,15 +4,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="RecognitionExampleApp.ResultsWindow"
+		Width="1500"
         Title="ResultsWindow">
-
-	<Grid Name="ImagesGrid" ShowGridLines="true">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition></ColumnDefinition>
-			<ColumnDefinition></ColumnDefinition>
-			<ColumnDefinition></ColumnDefinition>
-			<ColumnDefinition></ColumnDefinition>
-			<ColumnDefinition></ColumnDefinition>
-		</Grid.ColumnDefinitions>
-	</Grid>
+	<ScrollViewer VerticalScrollBarVisibility="Visible">
+		<Grid Name="ImagesGrid" ShowGridLines="false">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="300"></ColumnDefinition>
+				<ColumnDefinition Width="300"></ColumnDefinition>
+				<ColumnDefinition Width="300"></ColumnDefinition>
+				<ColumnDefinition Width="300"></ColumnDefinition>
+				<ColumnDefinition Width="300"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+		</Grid>
+	</ScrollViewer>
 </Window>
