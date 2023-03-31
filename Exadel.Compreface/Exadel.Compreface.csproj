@@ -1,22 +1,58 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
 		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageId>CompreFace.NET.Sdk</PackageId>
+		<Title>CompreFace NET SDK makes face recognition into your application even easier.</Title>
+		<Company>Exadel</Company>
+		<Product>Exadel</Product>
+		<Description>.Net SDK for CompreFace - free and open-source face recognition system from Exadel</Description>
+		<PackageProjectUrl>https://exadel.com/solutions/compreface/</PackageProjectUrl>		
+		<RepositoryUrl>https://github.com/exadel-inc/compreface-net-sdk</RepositoryUrl>
+		<PackageTags>compreface</PackageTags>
+		<NeutralLanguage>en</NeutralLanguage>
+		<Version>1.0.2</Version>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>		
+		<PackageIcon>compreface_icon.png</PackageIcon>
+	</PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
+      <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
+      <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0|AnyCPU'">
+      <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0|AnyCPU'">
+      <DebugType>embedded</DebugType>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Flurl.Http" Version="4.0.0-pre2" />
-      <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
-      <PackageReference Include="System.Net.Http" Version="4.3.4" />
+      <None Include="images\compreface_icon.png">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
     </ItemGroup>
 
-    <ItemGroup>
-        <None Update="appsettings.json">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
-    
+	<ItemGroup>
+		<PackageReference Include="Flurl.Http" Version="4.0.0-pre2" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+		<PackageReference Include="System.Net.Http" Version="4.3.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
 </Project>
