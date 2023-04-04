@@ -45,7 +45,7 @@ CompreFace NET SDK makes face recognition into your application even easier.
 Before using our SDK make sure you have installed CompreFace and .NET on your machine.
 
 1. [CompreFace](https://github.com/exadel-inc/CompreFace#getting-started-with-compreface)
-2. [.NET](https://dotnet.microsoft.com/en-us/download) (Version 7+)
+2. [.NET](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) (Version 6+)
 
 ## CompreFace compatibility matrix
 
