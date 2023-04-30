@@ -1,0 +1,22 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		Width="500"
+		Height="170"
+        x:Class="RecognitionExampleApp.CreateSubjectHelpWindow"
+        Title="Create subject help">
+
+	<ScrollViewer HorizontalScrollBarVisibility = "Visible">
+		<StackPanel>
+			<TextBlock Margin="3,3,3,3">1. Install and run CompreFace from Docker on your local machine.</TextBlock>
+			<TextBlock Margin="3,3,3,3">2. In your browser sign up for the system and login into the account you've just created or use the one you already have. After that, the system redirects you to the main page.</TextBlock>
+			<TextBlock Margin="3,3,3,3">3. Create an application (left section) using the "Create" link at the bottom of the page. An application is where you can create and manage your Face Collections.</TextBlock>
+			<TextBlock Margin="3,3,3,3">4. To recognize subjects among the known subjects, you need to create a Face Recognition Service. After creating a new Face Service, you can see it in the Services List with an appropriate name and API key.</TextBlock>
+			<TextBlock Margin="3,3,3,3">5. Copy Api Key and paste it here to ApiKey field.</TextBlock>
+			<TextBlock Margin="3,3,3,3">6. Choose folder with photos.</TextBlock>
+			<TextBlock Margin="3,3,3,3">7. Click "Create object" button for process starting.</TextBlock>
+		</StackPanel>
+	</ScrollViewer>
+</Window>

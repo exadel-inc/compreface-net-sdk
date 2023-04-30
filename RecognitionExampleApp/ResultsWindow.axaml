@@ -6,6 +6,7 @@
         x:Class="RecognitionExampleApp.ResultsWindow"
 		Width="1500"
         Title="ResultsWindow">
+	
 	<ScrollViewer VerticalScrollBarVisibility="Visible">
 		<Grid Name="ImagesGrid" ShowGridLines="false">
 			<Grid.ColumnDefinitions>

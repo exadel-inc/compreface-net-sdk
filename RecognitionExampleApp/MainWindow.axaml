@@ -6,87 +6,93 @@
         x:Class="RecognitionExampleApp.MainWindow"
 		Icon ="/Assets/compreface-icon.ico"
         Title="RecognitionExampleApp">
-	
-<Grid ShowGridLines="False">
 
-	<Grid.ColumnDefinitions>
-		<ColumnDefinition></ColumnDefinition>
-		<ColumnDefinition></ColumnDefinition>
-		<ColumnDefinition></ColumnDefinition>
-	</Grid.ColumnDefinitions>
-	<Grid.RowDefinitions>
-		<RowDefinition Height="Auto"></RowDefinition>
-		<RowDefinition Height="*"></RowDefinition>
-	</Grid.RowDefinitions>
+	<Grid ShowGridLines="False">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition></ColumnDefinition>
+			<ColumnDefinition></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+		</Grid.RowDefinitions>
 
-	<StackPanel Spacing="20" Grid.Column="0" Grid.Row="0" Margin="20, 0, 0, 0">
-		<StackPanel>
-			<Label HorizontalAlignment="Center" FontWeight="Bold">Choose folder and upload.</Label>
-		</StackPanel>
-		<StackPanel>
-			<Label HorizontalAlignment="Center" FontWeight="Bold">Domain</Label>
-			<TextBox Name="domainTextBox" Margin="10, 0, 10, 0"></TextBox>
-		</StackPanel>
-		<StackPanel>
-			<Label HorizontalAlignment="Center" FontWeight="Bold">Port</Label>
-			<TextBox Name="portTextBox" Margin="10, 0, 10, 0"></TextBox>
-		</StackPanel>
-		<StackPanel>
-			<Label HorizontalAlignment="Center" FontWeight="Bold">ApiKey from CompreFace</Label>
-			<TextBox Name="apiKeyTextBox" Margin="10, 0, 10, 0"></TextBox>
-		</StackPanel>
-		<StackPanel>
-			<Label HorizontalAlignment="Center" FontWeight="Bold">Folder path</Label>
-			<Grid ShowGridLines="False">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition  Width="Auto"></ColumnDefinition>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="*"></RowDefinition>
-				</Grid.RowDefinitions>
-				<TextBox VerticalAlignment="Center" Margin="10, 0, 0, 0" TextWrapping="WrapWithOverflow" Grid.Column="0" Grid.Row="0" Name="folderPath"/>
-				<Button VerticalAlignment="Center" Margin="10, 0, 10, 0" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Click="OnBrowseClick">Browse</Button>
-			</Grid>
-			<Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,20,10,10" Click="OnCreateClick">Create subjects</Button>
-			<Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,10,10,10" Click="OnClearClick">Clear service</Button>
-		</StackPanel>
-	</StackPanel>
+		<Border Grid.Column="0" Grid.RowSpan="4" BorderBrush="Black"
+	BorderThickness="0,3,0,3"/>
+		<Border Grid.Column="1" Grid.RowSpan="4" BorderBrush="Black"
+	BorderThickness="3,3,0,3"/>
 
-	<StackPanel Spacing="20" Grid.Column="1" Grid.Row="0" Margin="20, 0, 0, 0">
-		<StackPanel>
-			<Label HorizontalAlignment="Center" FontWeight="Bold">Choose image for recognition</Label>
-		</StackPanel>
-		<StackPanel>
-			<Grid ShowGridLines="False">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*"></ColumnDefinition>
-					<ColumnDefinition  Width="Auto"></ColumnDefinition>
-				</Grid.ColumnDefinitions>
-				<TextBox VerticalAlignment="Center" Margin="10, 0, 0, 0" TextWrapping="WrapWithOverflow" Grid.Column="0" Grid.Row="0" Name="imagePath"/>
-				<Button VerticalAlignment="Center" Margin="10, 0, 10, 0" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Click="OnChooseClick">Choose</Button>
-			</Grid>
-			<Label HorizontalAlignment="Center" Margin="10, 10, 10, 0">Similarity threshold</Label>
-			<NumericUpDown Margin="10, 0, 10, 10" Value="0.5" Increment="0.01" Name="similarity" Minimum="0" Maximum="1"/>
-			<Image Height="300" Width="300" Margin="10, 10, 10, 10" Name="uploadedImage"></Image>
-			<Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,10,10,10" Click="OnStartClick">Start</Button>
+		<StackPanel Spacing="20" Grid.Column="0" Grid.Row="0" Margin="20, 0, 0, 0">
+			<StackPanel>
+				<Label HorizontalAlignment="Center" FontWeight="Bold">Step 1. Choose folder and upload.</Label>
+				<Button HorizontalAlignment="Center" Click = "OnCreateSubjectHelpClick">Help</Button>
+			</StackPanel>
+			<StackPanel>
+				<Label HorizontalAlignment="Center" FontWeight="Bold">Domain</Label>
+				<TextBox Name="domainTextBox" Text="http://localhost" Margin="10, 0, 10, 0"></TextBox>
+			</StackPanel>
+			<StackPanel>
+				<Label HorizontalAlignment="Center" FontWeight="Bold">Port</Label>
+				<TextBox Name="portTextBox" Text="8000" Margin="10, 0, 10, 0"></TextBox>
+			</StackPanel>
+			<StackPanel>
+				<Label HorizontalAlignment="Center" FontWeight="Bold">ApiKey from CompreFace</Label>
+				<TextBox Name="apiKeyTextBox" Margin="10, 0, 10, 0"></TextBox>
+			</StackPanel>
+			<StackPanel>
+				<Label HorizontalAlignment="Center" FontWeight="Bold">Folder path</Label>
+				<Grid ShowGridLines="False">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+						<ColumnDefinition  Width="Auto"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*"></RowDefinition>
+					</Grid.RowDefinitions>
+					<TextBox VerticalAlignment="Center" Margin="10, 0, 0, 0" TextWrapping="WrapWithOverflow" Grid.Column="0" Grid.Row="0" Name="folderPath"/>
+					<Button VerticalAlignment="Center" Margin="10, 0, 10, 0" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Click="OnBrowseClick">Browse</Button>
+				</Grid>
+				<Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,20,10,10" Click="OnCreateClick">Create subjects</Button>
+			</StackPanel>
 		</StackPanel>
 
-	</StackPanel>
-	<StackPanel Spacing="20" Grid.Column="2" Grid.Row="0" Margin="20, 0, 20, 0">
-		<StackPanel>
-			<Label HorizontalAlignment="Center" FontWeight="Bold"></Label>
+		<StackPanel Spacing="20" Grid.Column="1" Grid.Row="0" Margin="20, 0, 0, 0">
+			<StackPanel>
+				<Label HorizontalAlignment="Center" FontWeight="Bold">Step 2. Choose image for recognition</Label>
+			</StackPanel>
+			<StackPanel>
+				<Grid ShowGridLines="False">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+						<ColumnDefinition  Width="Auto"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+					<TextBox VerticalAlignment="Center" Margin="10, 0, 0, 0" TextWrapping="WrapWithOverflow" Grid.Column="0" Grid.Row="0" Name="imagePath"/>
+					<Button VerticalAlignment="Center" Margin="10, 0, 10, 0" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Click="OnChooseClick">Choose</Button>
+				</Grid>
+				<Label HorizontalAlignment="Center" Margin="10, 10, 10, 0">Similarity threshold</Label>
+				<NumericUpDown Margin="10, 0, 10, 10" Value="0.5" Increment="0.01" Name="similarity" Minimum="0" Maximum="1"/>
+				<Image Height="300" Width="300" Margin="10, 10, 10, 10" Name="uploadedImage"></Image>
+				<Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,10,10,10" Click="OnProcessingClick">Processing</Button>
+			</StackPanel>
 		</StackPanel>
-		<StackPanel>
-			<Label HorizontalAlignment="Center" FontWeight="Bold">Recognition result</Label>
-			<TextBox Name="recognitionResult" Height="300" Margin="10, 0, 10, 0" AcceptsReturn="True" TextWrapping="Wrap"></TextBox>
-		</StackPanel>
-	</StackPanel>
 
-	<StackPanel Spacing="10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1">
-		
-		
-	</StackPanel>
-
-</Grid>
+		<Border Grid.Column="0" Grid.Row="1" BorderBrush="Black"
+	BorderThickness="0,3,0,3">
+			<StackPanel Grid.Column="0" Grid.Row="1">
+				<Grid Grid.Row="1">
+					<Label FontWeight="Bold" HorizontalAlignment="Center" Margin="10, 10, 10, 0">Optional step.</Label>
+					<ToolTip.Tip>
+						<StackPanel>
+							<TextBlock Classes="h1">Use this option to clear all previous created subjects </TextBlock>
+							<TextBlock Classes="h2">in application according to the chosen Api Key.</TextBlock>
+						</StackPanel>
+					</ToolTip.Tip>
+					<Button BorderThickness="0" Padding="0" Width="25" Height="25" HorizontalAlignment="Right">
+						<Image Source="/Assets/question_mark.png" />
+					</Button>
+				</Grid>
+				<Button Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,10,10,10" Click="OnClearClick">Clear service</Button>
+			</StackPanel>
+		</Border>
+	</Grid>
 </Window>
