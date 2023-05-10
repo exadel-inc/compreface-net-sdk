@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 
 namespace RecognitionExampleApp
 {
@@ -7,6 +8,11 @@ namespace RecognitionExampleApp
         public DoneWindow()
         {
             InitializeComponent();
+        }
+
+        private void OnCloseClick(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

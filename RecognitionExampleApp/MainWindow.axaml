@@ -70,7 +70,7 @@
 					<Button VerticalAlignment="Center" Margin="10, 0, 10, 0" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Click="OnChooseClick">Choose</Button>
 				</Grid>
 				<Label HorizontalAlignment="Center" Margin="10, 10, 10, 0">Similarity threshold</Label>
-				<NumericUpDown Margin="10, 0, 10, 10" Value="0.5" Increment="0.01" Name="similarity" Minimum="0" Maximum="1"/>
+				<NumericUpDown Margin="10, 0, 10, 10" Value="0.5" Increment="0.01" Name="similarity" Minimum="0" Maximum="1" FormatString="{}{0:0.00}"/>
 				<Image Height="300" Width="300" Margin="10, 10, 10, 10" Name="uploadedImage"></Image>
 				<Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,10,10,10" Click="OnProcessingClick">Processing</Button>
 			</StackPanel>
