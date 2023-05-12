@@ -81,7 +81,7 @@ namespace RecognitionExampleApp
             }
         }
 
-        private async void OnProcessingClick(object sender, RoutedEventArgs e)
+        private async void OnProcessClick(object sender, RoutedEventArgs e)
         {
             var recognizeRequest = new RecognizeFaceFromImageRequestByFilePath()
             {
