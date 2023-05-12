@@ -71,7 +71,8 @@ Install-Package CompreFace.NET.Sdk
 
 # Usage
 
-All examples below you can find in repository inside [examples](/examples) folder.
+All examples below you can find in repository inside [examples](https://github.com/exadel-inc/compreface-net-sdk/tree/main/Example) folder. 
+Also you can review [Recognition example](https://github.com/exadel-inc/compreface-net-sdk/tree/main/RecognitionExampleApp) application. It is a simple example of CompreFace usage.
 
 ## Initialization
 
