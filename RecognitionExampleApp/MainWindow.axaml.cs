@@ -133,17 +133,13 @@ namespace RecognitionExampleApp
 
             Image<Bgr, byte> image = new Image<Bgr, byte>(imagePath);
 
-            // Load the face detection classifier
             var face_quality_plugin_path = GetFacePluginPath();
             CascadeClassifier faceDetector = new CascadeClassifier(face_quality_plugin_path);
 
-            // Detect faces in the image
             var faces = faceDetector.DetectMultiScale(image, 1.05, 10);
 
-            // Loop through each detected face
             foreach (var face in faces)
             {
-                // Crop the face from the image
                 var faceImage = image.Copy(face).ToJpegData();
 
                 var imageBase64 = Convert.ToBase64String(faceImage);
