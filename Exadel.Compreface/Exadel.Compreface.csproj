@@ -4,7 +4,7 @@
 		<TargetFrameworks>netstandard2.0</TargetFrameworks>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<PackageId>CompreFace.NET.Sdk</PackageId>
+		<PackageId>DeepThink.CompreFace.NET.Sdk</PackageId>
 		<Title>CompreFace NET SDK makes face recognition into your application even easier.</Title>
 		<Company>Exadel</Company>
 		<Product>Exadel</Product>
