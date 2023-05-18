@@ -1,4 +1,6 @@
-﻿namespace Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteImageById
+﻿using System;
+
+namespace Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteImageById
 {
     public class DeleteImageByIdRequest
     {

@@ -1,4 +1,8 @@
-﻿using Exadel.Compreface.Configuration;
+﻿using System;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Exadel.Compreface.Configuration;
 using Flurl.Http.Content;
 using Flurl.Http;
 using Flurl;

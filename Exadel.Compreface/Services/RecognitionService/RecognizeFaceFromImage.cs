@@ -1,4 +1,6 @@
-﻿using Exadel.Compreface.Clients.ApiClient;
+﻿using System;
+using System.Threading.Tasks;
+using Exadel.Compreface.Clients.ApiClient;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.RecognitionDTOs.BaseRequests;
 using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;

@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
+﻿using System.Threading.Tasks;
+using Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.RecognitionDTOs.VerifyFacesFromImage;
 using Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.RecognizeFaceFromImage;
 using Exadel.Compreface.DTOs.RecognizeFaceFromImageDTOs.VerifyFacesFromImage;

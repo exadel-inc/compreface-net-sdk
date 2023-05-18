@@ -1,6 +1,8 @@
-﻿namespace Exadel.Compreface.DTOs.SubjectDTOs.RenameSubject;
-
-public class RenameSubjectResponse
+﻿namespace Exadel.Compreface.DTOs.SubjectDTOs.RenameSubject
 {
-    public bool Updated { get; set; }
+
+    public class RenameSubjectResponse
+    {
+        public bool Updated { get; set; }
+    }
 }

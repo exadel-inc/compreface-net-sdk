@@ -1,6 +1,8 @@
-﻿namespace Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
-
-public class DeleteSubjectRequest
+﻿namespace Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject
 {
-    public string ActualSubject { get; set; }
+
+    public class DeleteSubjectRequest
+    {
+        public string ActualSubject { get; set; }
+    }
 }

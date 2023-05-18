@@ -1,6 +1,8 @@
-﻿namespace Exadel.Compreface.DTOs.SubjectDTOs.DeleteAllSubjects;
-
-public class DeleteAllSubjectsResponse
+﻿namespace Exadel.Compreface.DTOs.SubjectDTOs.DeleteAllSubjects
 {
-    public int Deleted { get; set; }
+
+    public class DeleteAllSubjectsResponse
+    {
+        public int Deleted { get; set; }
+    }
 }

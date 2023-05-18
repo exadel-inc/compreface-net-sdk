@@ -1,18 +1,22 @@
-namespace Exadel.Compreface.Helpers;
+using System;
+using System.IO;
 
-public class FileHelpers
+namespace Exadel.Compreface.Helpers
 {
-    public static string GenerateFileName(string filePath)
+    public class FileHelpers
     {
-        if (!File.Exists(filePath))
+        public static string GenerateFileName(string filePath)
         {
-            throw new FileNotFoundException(message: $"File does not exist in path : {filePath}!");
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException(message: $"File does not exist in path : {filePath}!");
+            }
+
+            var fileExtension = Path.GetExtension(filePath);
+
+            var generatedFileName = $"{Guid.NewGuid()}{fileExtension}";
+
+            return generatedFileName;
         }
-        
-        var fileExtension = Path.GetExtension(filePath);
-
-        var generatedFileName = $"{Guid.NewGuid()}{fileExtension}";
-
-        return generatedFileName;
     }
 }

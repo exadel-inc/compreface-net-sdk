@@ -1,4 +1,7 @@
-﻿using Exadel.Compreface.Clients.ApiClient;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Exadel.Compreface.Clients.ApiClient;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteAllSubjectExamples;

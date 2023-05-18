@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
+﻿using System.Threading.Tasks;
+using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 
 namespace Exadel.Compreface.Services.Interfaces
 {

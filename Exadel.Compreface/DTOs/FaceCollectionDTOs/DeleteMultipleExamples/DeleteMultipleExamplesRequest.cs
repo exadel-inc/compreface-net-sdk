@@ -1,4 +1,7 @@
-﻿namespace Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteMultipleExamples
+﻿using System;
+using System.Collections.Generic;
+
+namespace Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteMultipleExamples
 {
     public class DeleteMultipleExampleRequest
     {

@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
+﻿using System.Threading.Tasks;
+using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteAllSubjects;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;

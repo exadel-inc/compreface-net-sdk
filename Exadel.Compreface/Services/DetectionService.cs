@@ -1,4 +1,6 @@
-﻿using Exadel.Compreface.Clients.ApiClient;
+﻿using System;
+using System.Threading.Tasks;
+using Exadel.Compreface.Clients.ApiClient;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection;
 using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;

@@ -1,4 +1,6 @@
-﻿namespace Exadel.Compreface.Exceptions
+﻿using System;
+
+namespace Exadel.Compreface.Exceptions
 {
     public class TypeNotBelongCompreFaceException : Exception
     {

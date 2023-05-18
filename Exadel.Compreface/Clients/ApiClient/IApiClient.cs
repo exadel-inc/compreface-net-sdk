@@ -1,4 +1,8 @@
-﻿using Flurl;
+﻿using System;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Flurl;
 using Flurl.Http.Content;
 
 namespace Exadel.Compreface.Clients.ApiClient

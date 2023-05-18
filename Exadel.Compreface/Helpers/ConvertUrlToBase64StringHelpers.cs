@@ -1,4 +1,6 @@
-﻿using Exadel.Compreface.Clients.ApiClient;
+﻿using System;
+using System.Threading.Tasks;
+using Exadel.Compreface.Clients.ApiClient;
 
 namespace Exadel.Compreface.Helpers
 {

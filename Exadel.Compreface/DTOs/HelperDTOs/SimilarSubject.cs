@@ -1,8 +1,10 @@
-﻿namespace Exadel.Compreface.DTOs.HelperDTOs;
-
-public class SimilarSubject
+﻿namespace Exadel.Compreface.DTOs.HelperDTOs
 {
-    public decimal Similarity { get; set; }
 
-    public string Subject { get; set; }
+    public class SimilarSubject
+    {
+        public decimal Similarity { get; set; }
+
+        public string Subject { get; set; }
+    }
 }

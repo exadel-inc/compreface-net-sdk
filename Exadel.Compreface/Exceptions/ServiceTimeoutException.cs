@@ -1,15 +1,22 @@
-﻿namespace Exadel.Compreface.Exceptions;
+﻿using System;
 
-public class ServiceTimeoutException : Exception
+namespace Exadel.Compreface.Exceptions
 {
-    public ServiceTimeoutException()
-    { }
 
-    public ServiceTimeoutException(string message)
-        : base(message)
-    { }
+    public class ServiceTimeoutException : Exception
+    {
+        public ServiceTimeoutException()
+        {
+        }
 
-    public ServiceTimeoutException(string message, Exception inner)
-        : base(message, inner)
-    { }
+        public ServiceTimeoutException(string message)
+            : base(message)
+        {
+        }
+
+        public ServiceTimeoutException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+    }
 }

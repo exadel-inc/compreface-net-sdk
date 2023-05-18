@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.Clients.ApiClient;
+﻿using System.Threading.Tasks;
+using Exadel.Compreface.Clients.ApiClient;
 using Exadel.Compreface.Configuration;
 using Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
 using Exadel.Compreface.DTOs.SubjectDTOs.DeleteAllSubjects;

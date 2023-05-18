@@ -1,8 +1,10 @@
 ﻿using Exadel.Compreface.DTOs.RecognitionDTOs.BaseRequests;
 
-namespace Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage;
-
-public class RecognizeFaceFromImageRequestByFilePath : BaseRecognizeFaceFromImageRequest
+namespace Exadel.Compreface.DTOs.RecognitionDTOs.RecognizeFaceFromImage
 {
-    public string FilePath { get; set; }
+
+    public class RecognizeFaceFromImageRequestByFilePath : BaseRecognizeFaceFromImageRequest
+    {
+        public string FilePath { get; set; }
+    }
 }

@@ -1,6 +1,10 @@
-﻿namespace Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList;
+﻿using System.Collections.Generic;
 
-public class GetAllSubjectResponse
+namespace Exadel.Compreface.DTOs.SubjectDTOs.GetSubjectList
 {
-    public IList<string> Subjects { get; set; }
+
+    public class GetAllSubjectResponse
+    {
+        public IList<string> Subjects { get; set; }
+    }
 }
