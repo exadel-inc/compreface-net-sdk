@@ -1,5 +1,5 @@
 # Recognition demo.
-This cross-platform desktop app is a simple example how to use CompreFace SDK for .NET. App is crossplatform and can be used with Linux, Mac and Windows. 
+This cross-platform desktop app is a simple example how to use CompreFace SDK for .NET. App is cross-platform and can be used with Linux, Mac and Windows. 
 Before using our SDK make sure you have installed CompreFace, .NET and AvaloniaUI framework on your machine.
 
 # Description
