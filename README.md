@@ -9,7 +9,6 @@ CompreFace NET SDK makes face recognition into your application even easier.
   - [Initialization](#initialization)
   - [Adding faces into a face collection](#adding-faces-into-a-face-collection)
   - [Recognition](#recognition)
-  - [Webcam demo](#webcam-demo)
 - [Reference](#reference)
   - [CompreFace Global Object](#compreFace-global-object)
     - [Services](#Services)
