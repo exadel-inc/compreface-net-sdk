@@ -6,15 +6,15 @@ Before using our SDK make sure you have installed CompreFace, .NET and AvaloniaU
 Application provide an ability to recognize face from a list of photos in a folder.
 
 # How demo app works.
-1. Exapnd CompreFace on you local machine.
+1. Expand CompreFace on your local machine.
 2. Create an application in your CompreFace account.
 3. Create recognition service in this new application and copy its apikey.
 4. Start the RecognitionExampleApp project from your IDE.
 5. Fill the Domain, Port(by default: http://localhost:8000) and ApiKey(which was copied) fields in main window of application.
 6. Then choose the folder with photos and click "Create subject" button.
-7. Move to the "Step 2" and choose the photo with one person for recognition. Choose similarity treshhold and click "Process" button.
+7. Move to the "Step 2" and choose the photo with one person for recognition. Choose similarity threshold and click "Process" button.
 
-App will crop the faces from photos in a choosen folder and will save them as a subjects with names of a photo in your created service in CompreFace account. And then the window with results will be shown. Raise the similarity treshhold if you need more accurate result.
+App will crop the faces from photos in a chosen folder and will save them as a subjects with names of a photo in your created service in CompreFace account. And then the window with results will be shown. Raise the similarity threshhold if you need more accurate result.
 
 ## Optional step.
 "Clear service" button clear your recognition service from previous created subjects by provided apikey. Please, to avoid exception use this button if you try to create subjects repeatedly from the same folder with photos.
