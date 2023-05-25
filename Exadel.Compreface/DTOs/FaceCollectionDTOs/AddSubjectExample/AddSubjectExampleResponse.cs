@@ -1,8 +1,11 @@
-﻿namespace Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
+﻿using System;
 
-public class AddSubjectExampleResponse
+namespace Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample
 {
-    public Guid ImageId { get; set; }
+    public class AddSubjectExampleResponse
+    {
+        public Guid ImageId { get; set; }
 
-    public string Subject { get; set; }
+        public string Subject { get; set; }
+    }
 }

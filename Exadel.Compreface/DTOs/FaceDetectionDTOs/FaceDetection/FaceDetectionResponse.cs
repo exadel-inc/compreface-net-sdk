@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.DTOs.HelperDTOs;
+﻿using System.Collections.Generic;
+using Exadel.Compreface.DTOs.HelperDTOs;
 using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
 
 namespace Exadel.Compreface.DTOs.FaceDetectionDTOs.FaceDetection

@@ -1,8 +1,11 @@
-﻿using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
+﻿using System;
+using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
 
-namespace Exadel.Compreface.DTOs.RecognitionDTOs.BaseRequests;
-
-public class BaseVerifyFacesFromImageRequest : BaseFaceRequest
+namespace Exadel.Compreface.DTOs.RecognitionDTOs.BaseRequests
 {
-    public Guid ImageId { get; set; }
+
+    public class BaseVerifyFacesFromImageRequest : BaseFaceRequest
+    {
+        public Guid ImageId { get; set; }
+    }
 }

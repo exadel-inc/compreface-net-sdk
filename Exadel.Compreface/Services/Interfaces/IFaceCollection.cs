@@ -1,4 +1,5 @@
-﻿using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
+﻿using System.Threading.Tasks;
+using Exadel.Compreface.DTOs.FaceCollectionDTOs.AddSubjectExample;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteAllSubjectExamples;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteImageById;
 using Exadel.Compreface.DTOs.FaceCollectionDTOs.DeleteMultipleExamples;

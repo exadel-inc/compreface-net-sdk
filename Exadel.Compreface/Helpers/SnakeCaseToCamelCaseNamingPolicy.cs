@@ -1,12 +1,15 @@
 ﻿using System.Text.Json;
 
-namespace Exadel.Compreface.Helpers;
-
-public class SnakeCaseToCamelCaseNamingPolicy : JsonNamingPolicy
+namespace Exadel.Compreface.Helpers
 {
-    public static SnakeCaseToCamelCaseNamingPolicy Policy { get; } = new SnakeCaseToCamelCaseNamingPolicy();
-    public override string ConvertName(string name)
+
+    public class SnakeCaseToCamelCaseNamingPolicy : JsonNamingPolicy
     {
-        return name.ToSnakeCase();
+        public static SnakeCaseToCamelCaseNamingPolicy Policy { get; } = new SnakeCaseToCamelCaseNamingPolicy();
+
+        public override string ConvertName(string name)
+        {
+            return name.ToSnakeCase();
+        }
     }
 }

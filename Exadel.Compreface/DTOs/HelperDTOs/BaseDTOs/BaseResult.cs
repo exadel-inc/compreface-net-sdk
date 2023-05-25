@@ -1,18 +1,22 @@
-﻿namespace Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
+﻿using System.Collections.Generic;
 
-public class BaseResult
+namespace Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs
 {
-    public Age Age { get; set; }
 
-    public Gender Gender { get; set; }
+    public class BaseResult
+    {
+        public Age Age { get; set; }
 
-    public Mask Mask { get; set; }
+        public Gender Gender { get; set; }
 
-    public Box Box { get; set; }
+        public Mask Mask { get; set; }
 
-    public IList<List<int>> Landmarks { get; set; }
+        public Box Box { get; set; }
 
-    public ExecutionTime ExecutionTime { get; set; }
+        public IList<List<int>> Landmarks { get; set; }
 
-    public IList<decimal> Embedding { get; set; }
+        public ExecutionTime ExecutionTime { get; set; }
+
+        public IList<decimal> Embedding { get; set; }
+    }
 }

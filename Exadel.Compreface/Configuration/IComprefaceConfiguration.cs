@@ -1,10 +1,11 @@
-﻿namespace Exadel.Compreface.Configuration;
-
-public interface IComprefaceConfiguration
+﻿namespace Exadel.Compreface.Configuration
 {
-    public string Domain { get; }
+    public interface IComprefaceConfiguration
+    {
+        string Domain { get; }
 
-    public string Port { get; }
+        string Port { get; }
 
-    public string ApiKey { get; }
+        string ApiKey { get; }
+    }
 }

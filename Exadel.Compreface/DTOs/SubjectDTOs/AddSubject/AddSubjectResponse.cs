@@ -1,6 +1,8 @@
-﻿namespace Exadel.Compreface.DTOs.SubjectDTOs.AddSubject;
-
-public class AddSubjectResponse
+﻿namespace Exadel.Compreface.DTOs.SubjectDTOs.AddSubject
 {
-    public string Subject { get; set; }
+
+    public class AddSubjectResponse
+    {
+        public string Subject { get; set; }
+    }
 }

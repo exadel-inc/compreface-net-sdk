@@ -1,26 +1,30 @@
+using System.Collections.Generic;
 using Exadel.Compreface.DTOs.HelperDTOs;
 using Exadel.Compreface.DTOs.HelperDTOs.BaseDTOs;
 
-namespace Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification;
-
-public class FaceVerificationResponse
+namespace Exadel.Compreface.DTOs.FaceVerificationDTOs.FaceVerification
 {
-    public IList<Result> Result { get; set; }
-}
 
-public class Result
-{
-    public SourceImageFace SourceImageFace { get; set; }
+    public class FaceVerificationResponse
+    {
+        public IList<Result> Result { get; set; }
+    }
 
-    public IList<FaceMatches> FaceMatches { get; set; }
+    public class Result
+    {
+        public SourceImageFace SourceImageFace { get; set; }
 
-    public PluginVersions PluginsVersions { get; set; }
-}
+        public IList<FaceMatches> FaceMatches { get; set; }
 
-public class SourceImageFace : BaseResult
-{ }
+        public PluginVersions PluginsVersions { get; set; }
+    }
 
-public class FaceMatches : BaseResult
-{
-    public decimal Similarity { get; set; }
+    public class SourceImageFace : BaseResult
+    {
+    }
+
+    public class FaceMatches : BaseResult
+    {
+        public decimal Similarity { get; set; }
+    }
 }

@@ -1,8 +1,11 @@
-﻿namespace Exadel.Compreface.DTOs.HelperDTOs;
+﻿using System;
 
-public class Face
+namespace Exadel.Compreface.DTOs.HelperDTOs
 {
-    public Guid ImageId { get; set; }
-    
-    public string Subject{ get; set; }
+    public class Face
+    {
+        public Guid ImageId { get; set; }
+
+        public string Subject { get; set; }
+    }
 }

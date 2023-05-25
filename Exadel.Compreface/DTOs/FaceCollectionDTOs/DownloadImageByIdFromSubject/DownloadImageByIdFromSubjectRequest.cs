@@ -1,4 +1,6 @@
-﻿namespace Exadel.Compreface.DTOs.FaceCollectionDTOs.DownloadImageByIdFromSubject
+﻿using System;
+
+namespace Exadel.Compreface.DTOs.FaceCollectionDTOs.DownloadImageByIdFromSubject
 {
     /// <summary>
     /// DTO for downloading of example from subject.
